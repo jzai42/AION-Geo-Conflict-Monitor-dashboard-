@@ -8,8 +8,9 @@ export default defineConfig(({mode}) => {
   return {
     // GitHub Pages (project site) serves app from:
     // https://<user>.github.io/<repo>/
-    // Using relative base paths ensures assets load correctly.
-    base: './',
+    // Use an absolute base path to avoid issues when the URL is opened
+    // without a trailing "/" (relative "./assets/..." can resolve incorrectly).
+    base: '/AION-Geo-Conflict-Monitor-dashboard-/',
     plugins: [react(), tailwindcss()],
     define: {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
