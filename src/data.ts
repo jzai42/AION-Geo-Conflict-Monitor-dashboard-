@@ -60,7 +60,7 @@ export interface DashboardData {
 
 export const DATA_ZH: DashboardData = {
   date: "2026-04-02",
-  version: "v2.3",
+  version: "v2.4",
   keyStats: [
     { label: "冲突天数", value: "D33", unit: "2月28日起", color: "#ff851b" },
     { label: "评分变化", value: "↓4", unit: "较上期", color: "#39ff14" },
@@ -240,7 +240,7 @@ export const DATA_ZH: DashboardData = {
 
 export const DATA_EN: DashboardData = {
   date: "2026-04-02",
-  version: "v2.3",
+  version: "v2.4",
   keyStats: [
     { label: "Conflict Days", value: "D33", unit: "Since Feb 28", color: "#ff851b" },
     { label: "Score Change", value: "↓4", unit: "vs Prev", color: "#39ff14" },
@@ -453,7 +453,7 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.2 · 阶段过渡版",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.4 · 阶段过渡版",
     sources: "来源",
     vs: "较",
     bannerSignal: "叙事收口转向：美方明确释放「即将结束」信号 - 评分降至82，结构性风险（霍尔木兹）仍是核心阻力",
@@ -504,7 +504,7 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.2 · Transition Edition",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.4 · Transition Edition",
     sources: "Sources",
     vs: "vs",
     bannerSignal: "Narrative Shift: US signals 'end soon' - Score down to 82, structural risk (Hormuz) remains the primary hurdle",
