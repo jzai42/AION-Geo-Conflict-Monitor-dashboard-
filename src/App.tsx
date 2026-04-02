@@ -36,14 +36,14 @@ import { cn } from './lib/utils';
 // --- Components ---
 
 const TopBanner = ({ t }: { t: any }) => (
-  <div className="bg-green-500/10 border-b border-green-500/20 px-6 py-1.5 flex items-center justify-between text-[10px] font-mono">
-    <div className="flex items-center gap-2 text-green-500">
-      <ChevronDown className="w-3 h-3" />
-      <span>{t.bannerSignal}</span>
+  <div className="bg-green-500/10 border-b border-green-500/20 px-12 py-3 flex items-center justify-between text-[12px] font-sans font-bold tracking-tight">
+    <div className="flex items-center gap-3 text-green-500">
+      <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+      <span className="uppercase tracking-widest">{t.bannerSignal}</span>
     </div>
-    <div className="flex items-center gap-2 text-aion-red">
-      <AlertTriangle className="w-3 h-3" />
-      <span>{t.bannerWarning}</span>
+    <div className="flex items-center gap-3 text-aion-red">
+      <AlertTriangle className="w-4 h-4" />
+      <span className="uppercase tracking-widest">{t.bannerWarning}</span>
     </div>
   </div>
 );
@@ -68,41 +68,44 @@ const Header = ({ date, version, warPhase, language, setLanguage, theme, setThem
   }, []);
 
   return (
-    <header className="flex items-center justify-between px-6 py-4 border-b border-aion-gray bg-aion-bg sticky top-0 z-50">
-      <div className="flex items-center gap-4">
+    <header className="flex items-center justify-between px-12 py-10 border-b border-aion-gray bg-aion-bg sticky top-0 z-50 backdrop-blur-3xl bg-opacity-80">
+      <div className="flex items-center gap-6">
         <div className="flex flex-col">
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold tracking-[0.2em] font-mono text-aion-text">{t.title}</h1>
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-aion-orange rounded-lg flex items-center justify-center">
+              <ShieldAlert className="w-5 h-5 text-white" />
+            </div>
+            <h1 className="text-3xl font-bold tracking-tighter font-sans text-aion-text">{t.title}</h1>
           </div>
-          <div className="flex items-center gap-3 mt-1">
-            <span className="aion-label text-[9px]">{t.conflictName}</span>
+          <div className="flex items-center gap-4 mt-3">
+            <span className="text-[13px] font-sans font-bold text-aion-text tracking-tight">{t.conflictName}</span>
             <span className="w-1 h-1 rounded-full bg-aion-gray" />
-            <span className="aion-label text-[9px]">{t.dayCount}</span>
+            <span className="text-[13px] font-sans font-bold text-aion-orange uppercase tracking-widest">{t.dayCount}</span>
             <span className="w-1 h-1 rounded-full bg-aion-gray" />
-            <span className="aion-label text-[9px]">{date}</span>
+            <span className="text-[13px] font-sans font-medium text-aion-text-dim">{date}</span>
             <span className="w-1 h-1 rounded-full bg-aion-gray" />
-            <span className="aion-label text-[9px]">{version}</span>
+            <span className="text-[13px] font-sans font-medium text-aion-text-dim">{version}</span>
           </div>
         </div>
       </div>
       
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-10">
         <div className="flex items-center gap-4">
           <button 
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-2 rounded-sm border border-aion-gray hover:bg-aion-text/5 transition-colors text-aion-text-dim hover:text-aion-text"
+            className="p-3 rounded-xl border border-aion-gray hover:bg-aion-text/5 transition-all text-aion-text-dim hover:text-aion-text"
             title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           >
-            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
 
-          <div className="flex items-center gap-1 bg-aion-text/5 p-1 rounded-sm border border-aion-gray/50">
+          <div className="flex items-center gap-1 bg-aion-text/5 p-1.5 rounded-xl border border-aion-gray/50">
             <button 
               onClick={() => setLanguage('zh')}
               className={cn(
-                "px-3 py-1 rounded-sm text-[10px] font-mono transition-all",
+                "px-5 py-2 rounded-lg text-[14px] font-sans font-bold transition-all",
                 language === 'zh' 
-                  ? "bg-aion-orange text-white font-bold shadow-[0_0_10px_rgba(255,136,0,0.3)]" 
+                  ? "bg-aion-orange text-white shadow-lg" 
                   : "text-aion-text-dim hover:text-aion-text"
               )}
             >
@@ -111,9 +114,9 @@ const Header = ({ date, version, warPhase, language, setLanguage, theme, setThem
             <button 
               onClick={() => setLanguage('en')}
               className={cn(
-                "px-3 py-1 rounded-sm text-[10px] font-mono transition-all",
+                "px-5 py-2 rounded-lg text-[14px] font-sans font-bold transition-all",
                 language === 'en' 
-                  ? "bg-aion-orange text-white font-bold shadow-[0_0_10px_rgba(255,136,0,0.3)]" 
+                  ? "bg-aion-orange text-white shadow-lg" 
                   : "text-aion-text-dim hover:text-aion-text"
               )}
             >
@@ -121,16 +124,16 @@ const Header = ({ date, version, warPhase, language, setLanguage, theme, setThem
             </button>
           </div>
         </div>
-        <div className="flex flex-col items-end gap-1">
-          <div className="flex items-center gap-2 font-mono text-[11px]">
+        <div className="flex flex-col items-end gap-2">
+          <div className="flex items-center gap-2 font-sans text-[14px] font-bold">
             <div className="w-2 h-2 rounded-full bg-aion-orange animate-pulse" />
-            <span className="text-aion-text-dim">{t.realtime} ·</span>
-            <span className="text-aion-text-dim">{time}</span>
+            <span className="text-aion-text uppercase tracking-widest">{t.realtime}</span>
+            <span className="text-aion-text-dim font-medium ml-1">{time}</span>
           </div>
-          <div className="flex items-center gap-2 text-[9px] font-mono text-aion-text-dim">
+          <div className="flex items-center gap-3 text-[12px] font-sans font-bold text-aion-text-dim uppercase tracking-widest">
             <span>{t.phaseTransition}：{warPhase.level} → {warPhase.targetLevel}</span>
             <span className="w-1 h-1 rounded-full bg-aion-gray" />
-            <span>{t.node406}</span>
+            <span className="text-aion-orange">{t.node406}</span>
           </div>
         </div>
       </div>
@@ -141,12 +144,12 @@ const Header = ({ date, version, warPhase, language, setLanguage, theme, setThem
 const StatCard = ({ label, value, unit, color }: { label: string, value: string, unit: string, color: string, key?: React.Key }) => {
   return (
     <div 
-      className="aion-card flex flex-col items-center justify-center text-center min-h-[120px] group transition-all"
+      className="aion-card flex flex-col items-center justify-center text-center min-h-[180px] group transition-all hover:scale-[1.02] p-8"
       style={{ borderColor: `${color}40`, backgroundColor: `${color}08` }}
     >
-      <div className="text-4xl font-mono font-bold mb-1" style={{ color, textShadow: `0 0 15px ${color}40` }}>{value}</div>
-      <div className="aion-label mb-1" style={{ color: `${color}cc` }}>{unit}</div>
-      <div className="text-[10px] text-aion-text-dim font-mono uppercase tracking-tighter">{label}</div>
+      <div className="text-6xl font-sans font-bold tracking-tighter mb-3" style={{ color }}>{value}</div>
+      <div className="aion-label mb-3 text-[14px] font-bold" style={{ color: `${color}cc` }}>{unit}</div>
+      <div className="text-[12px] text-aion-text-dim font-sans font-bold uppercase tracking-widest">{label}</div>
     </div>
   );
 };
@@ -158,11 +161,11 @@ const TrendChart = ({ trend }: { trend: DashboardData['scoreTrend'] }) => {
   const range = maxScore - minScore;
 
   return (
-    <div className="flex items-end justify-between gap-1 h-28 w-full mt-4 px-1">
+    <div className="flex items-end justify-between gap-2 h-32 w-full mt-8 px-2">
       {trend.map((t, i) => (
         <div key={i} className="flex flex-col items-center flex-1 h-full justify-end group">
           <span className={cn(
-            "text-[10px] font-mono mb-1 font-bold transition-colors", 
+            "text-[12px] font-sans font-semibold mb-2 transition-colors", 
             t.active ? "text-aion-green drop-shadow-[0_0_5px_rgba(57,255,20,0.5)]" : "text-aion-text-dim group-hover:text-aion-text/70"
           )}>
             {t.score}
@@ -172,13 +175,13 @@ const TrendChart = ({ trend }: { trend: DashboardData['scoreTrend'] }) => {
             animate={{ height: `${((t.score - minScore) / range) * 60 + 20}%` }}
             transition={{ duration: 1, delay: i * 0.1, ease: "easeOut" }}
             className={cn(
-              "w-full max-w-[36px] rounded-t-[4px] transition-all duration-500",
+              "w-full max-w-[40px] rounded-t-lg transition-all duration-500",
               t.active 
                 ? "bg-aion-green shadow-[0_0_20px_rgba(57,255,20,0.6)]" 
                 : "bg-aion-gray border-t border-x border-aion-text/5"
             )}
           />
-          <span className="text-[8px] font-mono text-aion-text-dim mt-2">{t.date}</span>
+          <span className="text-[10px] font-sans font-medium text-aion-text-dim mt-3">{t.date}</span>
         </div>
       ))}
     </div>
@@ -187,44 +190,46 @@ const TrendChart = ({ trend }: { trend: DashboardData['scoreTrend'] }) => {
 
 const RiskGauge = ({ score, prev, trend, t }: { score: number, prev: number, trend: DashboardData['scoreTrend'], t: any }) => {
   const delta = score - prev;
-  const radius = 70;
+  const radius = 80;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (score / 100) * circumference;
 
   return (
-    <div className="aion-card flex flex-col items-center justify-center p-6 relative overflow-hidden">
-      <div className="aion-label mb-6 text-center whitespace-pre-line">{t.riskScoreTitle}</div>
+    <div className="aion-card flex flex-col items-center justify-center p-10 relative overflow-hidden">
+      <div className="aion-label mb-8 text-center whitespace-pre-line text-[15px] font-semibold tracking-tight">{t.riskScoreTitle}</div>
       
       <div className="relative flex items-center justify-center">
-        <svg className="w-48 h-48 transform -rotate-90">
-          <circle cx="96" cy="96" r={radius} stroke="currentColor" strokeWidth="12" fill="transparent" className="text-aion-gray" />
-          <motion.circle
-            cx="96" cy="96" r={radius} stroke="currentColor" strokeWidth="12" fill="transparent"
+        <svg className="w-56 h-56 transform -rotate-90">
+          <circle cx="112" cy="112" r={radius} stroke="currentColor" strokeWidth="14" fill="transparent" className="text-aion-gray" />
+          <motion.circle 
+            cx="112" cy="112" r={radius} 
+            stroke="currentColor" strokeWidth="14" 
+            fill="transparent" 
             strokeDasharray={circumference}
             initial={{ strokeDashoffset: circumference }}
             animate={{ strokeDashoffset: offset }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="text-aion-orange drop-shadow-[0_0_8px_rgba(255,136,0,0.5)]"
+            className="text-aion-orange"
+            strokeLinecap="round"
           />
         </svg>
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-6xl font-mono font-bold">{score}</span>
-          <span className="aion-label text-[10px] mt-1">{t.weightedScore}</span>
+        <div className="absolute flex flex-col items-center">
+          <span className="text-6xl font-sans font-bold tracking-tighter text-aion-text">{score}</span>
+          <span className="aion-label text-[12px] mt-2">{t.weightedScore}</span>
         </div>
       </div>
 
-      <div className="mt-6 flex flex-col items-center gap-4 w-full">
-        <div className="bg-green-500/10 border border-green-500/30 px-6 py-1 rounded-sm flex items-center gap-2">
-          <ChevronDown className="w-3 h-3 text-green-500" />
-          <span className="font-mono text-xs text-green-500">
-            {Math.abs(delta)} {t.vsPrev}
-          </span>
+      <div className="mt-10 w-full">
+        <div className="flex items-center justify-between mb-4">
+          <div className="aion-label text-[11px] font-semibold">{t.trendTitle}</div>
+          <div className="flex items-center gap-2">
+            <span className={cn("text-[13px] font-sans font-bold", delta > 0 ? "text-aion-red" : "text-aion-green")}>
+              {delta > 0 ? '▲' : '▼'} {Math.abs(delta)}
+            </span>
+            <span className="text-[11px] font-sans text-aion-text-dim">{t.vsPrev}</span>
+          </div>
         </div>
-
-        <div className="w-full pt-4 border-t border-aion-gray">
-          <div className="aion-label text-[9px] mb-2">{t.trendTitle}</div>
-          <TrendChart trend={trend} />
-        </div>
+        <TrendChart trend={trend} />
       </div>
     </div>
   );
@@ -233,44 +238,45 @@ const RiskGauge = ({ score, prev, trend, t }: { score: number, prev: number, tre
 const WarPhase = ({ phase, keyChange, t }: { phase: DashboardData['warPhase'], keyChange: string, t: any }) => {
   return (
     <div className={cn(
-      "aion-card flex-1 flex flex-col p-6 border-t-4 transition-all",
+      "aion-card flex-1 flex flex-col p-10 border-t-4 transition-all",
       phase.targetLevel.includes('5') ? "border-t-green-500 border-x-green-500/10 border-b-green-500/10 bg-green-500/5" : "border-t-aion-red border-x-aion-red/10 border-b-aion-red/10 bg-aion-red/5"
     )}>
-      <div className="flex items-center justify-between mb-6">
-        <div className="aion-label">{t.conflictPhase}</div>
-        <div className="flex items-center gap-2 bg-aion-orange/10 border border-aion-orange/30 px-3 py-1 rounded-sm">
-          <Clock className="w-3 h-3 text-aion-orange" />
-          <span className="text-[10px] font-mono text-aion-orange uppercase tracking-widest">{t.node406}</span>
+      <div className="flex items-center justify-between mb-8">
+        <div className="aion-label text-[15px] font-semibold tracking-tight">{t.conflictPhase}</div>
+        <div className="flex items-center gap-2 bg-aion-orange/10 border border-aion-orange/30 px-4 py-1.5 rounded-xl">
+          <Clock className="w-4 h-4 text-aion-orange" />
+          <span className="text-[12px] font-sans font-semibold text-aion-orange uppercase tracking-wider">{t.node406}</span>
         </div>
       </div>
 
-      <div className="flex items-baseline gap-4 mb-2">
-        <span className="text-2xl font-mono font-bold text-aion-red">{phase.level}</span>
-        <span className="text-xl font-mono text-aion-text-dim">→</span>
-        <span className="text-2xl font-mono font-bold text-green-500">{phase.targetLevel}</span>
-        <span className="text-sm font-mono text-aion-text tracking-widest uppercase ml-2">{phase.title}</span>
+      <div className="flex items-baseline gap-6 mb-4">
+        <span className="text-4xl font-sans font-bold text-aion-red tracking-tighter">{phase.level}</span>
+        <span className="text-2xl font-sans font-medium text-aion-text-dim">→</span>
+        <span className="text-4xl font-sans font-bold text-green-500 tracking-tighter">{phase.targetLevel}</span>
       </div>
-      <div className="text-xs font-mono text-aion-orange mb-6 tracking-widest">{phase.subTitle}</div>
+      <div className="text-2xl font-sans font-bold text-aion-text mb-2 tracking-tight">{phase.title}</div>
+      <div className="text-[15px] font-sans font-medium text-aion-text-dim mb-8">{phase.subTitle}</div>
 
-      <div className="bg-green-500/10 border border-green-500/20 p-4 rounded-sm mb-6">
-        <div className="text-[9px] font-mono text-green-500 uppercase mb-2 tracking-widest">{t.importantChange}</div>
-        <div className="text-sm text-aion-text/90 font-mono leading-relaxed">{keyChange}</div>
+      <div className="bg-green-500/10 border border-green-500/20 p-6 rounded-xl mb-8">
+        <div className="text-[12px] font-sans font-bold text-green-500 uppercase mb-3 tracking-wider">{t.importantChange}</div>
+        <div className="text-[16px] text-aion-text font-sans leading-relaxed">{keyChange}</div>
       </div>
 
-      <div className="flex flex-wrap gap-3 mb-6">
+      <div className="space-y-4 mb-8">
         {phase.points.map((point, i) => (
-          <div key={i} className="bg-aion-text/5 border border-aion-gray px-3 py-2 rounded-sm flex items-center gap-2">
-            <div className="w-1.5 h-1.5 bg-aion-text-dim rotate-45" />
-            <span className="text-[10px] text-aion-text-dim">{point}</span>
+          <div key={i} className="bg-aion-text/5 border border-aion-gray px-4 py-3 rounded-xl flex items-center gap-3">
+            <div className="w-1.5 h-1.5 rounded-full bg-aion-orange" />
+            <span className="text-[14px] font-sans font-medium text-aion-text">{point}</span>
           </div>
         ))}
       </div>
 
-      <div className="mt-auto flex items-center gap-2 text-aion-orange">
-        <span className="text-lg">↳</span>
-        <span className="text-[11px] font-mono italic">
-          {phase.note}
-        </span>
+      <div className="mt-auto p-5 rounded-xl bg-aion-amber/10 border border-aion-amber/30">
+        <div className="flex items-center gap-2 mb-2">
+          <Info className="w-4 h-4 text-aion-amber" />
+          <span className="text-[12px] font-sans font-bold text-aion-amber uppercase tracking-wider">STATUS NOTE</span>
+        </div>
+        <p className="text-[14px] font-sans font-medium text-aion-amber leading-relaxed">{phase.note}</p>
       </div>
     </div>
   );
@@ -286,33 +292,33 @@ const EventItem = ({ event, index, t }: { event: KeyEvent, index: number, t: any
     )}>
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-4 hover:bg-aion-text/5 transition-colors text-left"
+        className="w-full flex items-center justify-between p-6 hover:bg-aion-text/5 transition-colors text-left"
       >
-        <div className="flex items-center gap-6">
-          <span className="font-mono text-[10px] text-aion-text-dim">{t.event} {String(index + 1).padStart(2, '0')}</span>
-          <div className="flex items-center gap-3">
+        <div className="flex items-center gap-8">
+          <span className="font-sans text-[12px] font-bold text-aion-text-dim uppercase tracking-widest">{t.event} {String(index + 1).padStart(2, '0')}</span>
+          <div className="flex items-center gap-4">
             {event.verification === 'confirmed' && (
-              <div className="flex items-center gap-1 bg-green-500/10 border border-green-500/30 px-2 py-0.5 rounded-sm">
-                <CheckCircle2 className="w-2.5 h-2.5 text-green-500" />
-                <span className="text-[8px] font-mono text-green-500 uppercase">{t.verified}</span>
+              <div className="flex items-center gap-1.5 bg-green-500/10 border border-green-500/30 px-3 py-1 rounded-full">
+                <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                <span className="text-[10px] font-sans font-bold text-green-500 uppercase tracking-wider">{t.verified}</span>
               </div>
             )}
             {event.verification === 'single' && (
-              <div className="flex items-center gap-1 bg-aion-red/10 border border-aion-red/30 px-2 py-0.5 rounded-sm">
-                <AlertCircle className="w-2.5 h-2.5 text-aion-red" />
-                <span className="text-[8px] font-mono text-aion-red uppercase">{t.singleSource}</span>
+              <div className="flex items-center gap-1.5 bg-aion-red/10 border border-aion-red/30 px-3 py-1 rounded-full">
+                <AlertCircle className="w-3.5 h-3.5 text-aion-red" />
+                <span className="text-[10px] font-sans font-bold text-aion-red uppercase tracking-wider">{t.singleSource}</span>
               </div>
             )}
             {event.highlight && (
-              <div className="flex items-center gap-1 bg-aion-orange/10 border border-aion-orange/30 px-2 py-0.5 rounded-sm">
-                <Zap className="w-2.5 h-2.5 text-aion-orange" />
-                <span className="text-[8px] font-mono text-aion-orange uppercase">{t.keyChange}</span>
+              <div className="flex items-center gap-1.5 bg-aion-orange/10 border border-aion-orange/30 px-3 py-1 rounded-full">
+                <Zap className="w-3.5 h-3.5 text-aion-orange" />
+                <span className="text-[10px] font-sans font-bold text-aion-orange uppercase tracking-wider">{t.keyChange}</span>
               </div>
             )}
-            <h3 className="text-sm font-mono tracking-tight text-aion-text">{event.title}</h3>
+            <h3 className="text-[16px] font-sans font-bold tracking-tight text-aion-text">{event.title}</h3>
           </div>
         </div>
-        <ChevronDown className={cn("w-4 h-4 text-aion-text-dim transition-transform", isOpen && "rotate-180")} />
+        <ChevronDown className={cn("w-5 h-5 text-aion-text-dim transition-transform", isOpen && "rotate-180")} />
       </button>
       
       <AnimatePresence>
@@ -323,19 +329,19 @@ const EventItem = ({ event, index, t }: { event: KeyEvent, index: number, t: any
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <div className="px-16 pb-6 pt-2">
-              <p className="text-xs text-aion-text/70 leading-relaxed max-w-3xl mb-4">
+            <div className="px-24 pb-8 pt-2">
+              <p className="text-[15px] text-aion-text/80 font-sans leading-relaxed max-w-3xl mb-6">
                 {event.description}
               </p>
               {event.significance && (
-                <div className="bg-aion-text/5 p-3 rounded-sm border border-aion-gray mb-4">
-                  <div className="text-[8px] font-mono text-aion-text-dim uppercase mb-1 tracking-widest">{t.judgementSignificance}</div>
-                  <p className="text-[11px] text-aion-text-dim font-mono italic">{event.significance}</p>
+                <div className="bg-aion-text/5 p-5 rounded-xl border border-aion-gray mb-6">
+                  <div className="text-[11px] font-sans font-bold text-aion-text-dim uppercase mb-2 tracking-wider">{t.judgementSignificance}</div>
+                  <p className="text-[14px] text-aion-text font-sans italic leading-relaxed">{event.significance}</p>
                 </div>
               )}
-              <div className="flex items-center gap-4">
-                <span className="text-[9px] font-mono text-aion-text-dim uppercase">{t.source}: {event.verification === 'confirmed' ? t.verified : t.singleSource}</span>
-                <span className="text-[9px] font-mono text-aion-text-dim uppercase">{t.time}: {event.timestamp}</span>
+              <div className="flex items-center gap-6">
+                <span className="text-[11px] font-sans font-bold text-aion-text-dim uppercase tracking-wider">{t.source}: {event.verification === 'confirmed' ? t.verified : t.singleSource}</span>
+                <span className="text-[11px] font-sans font-bold text-aion-text-dim uppercase tracking-wider">{t.time}: {event.timestamp}</span>
               </div>
             </div>
           </motion.div>
@@ -349,49 +355,60 @@ const RiskFactorRow = ({ factor, t }: { factor: RiskFactor, t: any, key?: React.
   const delta = factor.score - factor.prev;
   
   return (
-    <div className="py-4 border-b border-aion-gray last:border-0">
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-3">
-          <h4 className="text-sm font-mono tracking-widest text-aion-text">{factor.name}</h4>
-          {factor.status === 'AT CEILING' && (
-            <div className="px-2 py-0.5 rounded-sm text-[8px] font-mono bg-aion-red/10 border border-aion-red/30 text-aion-red flex items-center gap-1">
-              <AlertTriangle className="w-2.5 h-2.5" />
-              {t.atCeiling}
-            </div>
-          )}
-          {factor.change === 'structural' && (
-            <div className="px-2 py-0.5 rounded-sm text-[8px] font-mono bg-aion-yellow/10 border border-aion-yellow/30 text-aion-yellow flex items-center gap-1">
-              <Zap className="w-2.5 h-2.5" />
-              {t.structuralChange}
-            </div>
-          )}
-          {factor.status === 'FAST' && (
-            <div className="px-2 py-0.5 rounded-sm text-[8px] font-mono bg-aion-orange/10 border border-aion-orange/30 text-aion-orange">
-              {t.fastVar}
-            </div>
-          )}
-          {factor.status === 'SLOW' && (
-            <div className="px-2 py-0.5 rounded-sm text-[8px] font-mono bg-blue-500/10 border border-blue-500/30 text-blue-400">
-              {t.slowVar}
-            </div>
-          )}
-        </div>
+    <div className="py-6 border-b border-aion-gray last:border-0">
+      <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-4">
+          <h4 className="text-[16px] font-sans font-bold tracking-tight text-aion-text">{factor.name}</h4>
+          <div className="flex items-center gap-2">
+            {factor.status === 'AT CEILING' && (
+              <div className="px-3 py-1 rounded-full text-[10px] font-sans font-bold bg-aion-red/10 border border-aion-red/30 text-aion-red flex items-center gap-1.5">
+                <AlertTriangle className="w-3.5 h-3.5" />
+                {t.atCeiling}
+              </div>
+            )}
+            {factor.change === 'structural' && (
+              <div className="px-3 py-1 rounded-full text-[10px] font-sans font-bold bg-aion-yellow/10 border border-aion-yellow/30 text-aion-yellow flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5" />
+                {t.structuralChange}
+              </div>
+            )}
+            {factor.status === 'FAST' && (
+              <div className="px-3 py-1 rounded-full text-[10px] font-sans font-bold bg-aion-orange/10 border border-aion-orange/30 text-aion-orange">
+                {t.fastVar}
+              </div>
+            )}
+            {factor.status === 'SLOW' && (
+              <div className="px-3 py-1 rounded-full text-[10px] font-sans font-bold bg-blue-500/10 border border-blue-500/30 text-blue-400">
+                {t.slowVar}
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="flex items-center gap-6">
           <div className="text-right">
-            <div className="flex items-center gap-2">
-              <span className="text-[9px] font-mono text-aion-text-dim">{t.weight}:{Math.round(factor.weight * 100)}%</span>
+            <div className="flex items-center gap-4">
+              <div className="flex flex-col items-end">
+                <span className="text-[11px] font-sans font-bold text-aion-text-dim uppercase tracking-wider">{t.weight}</span>
+                <span className="text-[14px] font-sans font-bold text-aion-text">{Math.round(factor.weight * 100)}%</span>
+              </div>
               {delta !== 0 && (
-                <span className={cn("text-[10px] font-mono", delta > 0 ? "text-aion-red" : "text-green-500")}>
-                  {delta > 0 ? '▲' : '▼'}{Math.abs(delta).toFixed(1)}
-                </span>
+                <div className="flex flex-col items-end">
+                  <span className="text-[11px] font-sans font-bold text-aion-text-dim uppercase tracking-wider">CHG</span>
+                  <span className={cn("text-[14px] font-sans font-bold", delta > 0 ? "text-aion-red" : "text-green-500")}>
+                    {delta > 0 ? '▲' : '▼'}{Math.abs(delta).toFixed(1)}
+                  </span>
+                </div>
               )}
-              <span className="text-2xl font-mono font-bold text-aion-red">{factor.score.toFixed(1)}</span>
+              <div className="flex flex-col items-end">
+                <span className="text-[11px] font-sans font-bold text-aion-text-dim uppercase tracking-wider">SCORE</span>
+                <span className="text-3xl font-sans font-bold text-aion-text tracking-tighter">{factor.score.toFixed(1)}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
       
-      <div className="relative h-1.5 bg-aion-gray rounded-full overflow-hidden mb-2">
+      <div className="relative h-2 bg-aion-gray rounded-full overflow-hidden mb-4">
         <motion.div 
           initial={{ width: 0 }}
           animate={{ width: `${(factor.score / 5) * 100}%` }}
@@ -402,41 +419,41 @@ const RiskFactorRow = ({ factor, t }: { factor: RiskFactor, t: any, key?: React.
           )}
         />
         {factor.status === 'AT CEILING' && (
-          <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_5px,var(--aion-stripe)_5px,var(--aion-stripe)_10px)]" />
+          <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_5px,var(--aion-stripe)_5px,var(--aion-stripe)_10px)] opacity-30" />
         )}
       </div>
       
-      <p className="text-[10px] text-aion-text-dim font-mono leading-relaxed">{factor.description}</p>
+      <p className="text-[14px] text-aion-text-dim font-sans leading-relaxed">{factor.description}</p>
     </div>
   );
 };
 
 const SituationTab = ({ situations, coreContradiction, t }: { situations: SituationCard[], coreContradiction: DashboardData['coreContradiction'], t: any }) => {
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="space-y-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {situations.map((card, i) => (
           <div 
             key={i} 
             className={cn(
-              "aion-card border-t-4 transition-all",
+              "aion-card border-t-4 transition-all p-10",
               card.tagColor === 'red' && "border-t-aion-red border-x-aion-red/30 border-b-aion-red/30 bg-aion-red/10",
               card.tagColor === 'yellow' && "border-t-aion-yellow border-x-aion-yellow/30 border-b-aion-yellow/30 bg-aion-yellow/10",
               card.tagColor === 'orange' && "border-t-aion-orange border-x-aion-orange/30 border-b-aion-orange/30 bg-aion-orange/10",
               card.tagColor === 'green' && "border-t-aion-green border-x-aion-green/30 border-b-aion-green/30 bg-aion-green/10"
             )}
           >
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                {card.icon === 'Military' && <Sword className={cn("w-5 h-5", card.tagColor === 'red' ? "text-aion-red" : "text-aion-text")} />}
-                {card.icon === 'Shipping' && <Anchor className={cn("w-5 h-5", card.tagColor === 'yellow' ? "text-aion-yellow" : "text-aion-text")} />}
-                {card.icon === 'Energy' && <Activity className={cn("w-5 h-5", card.tagColor === 'orange' ? "text-aion-orange" : "text-aion-text")} />}
-                {card.icon === 'Leadership' && <Compass className={cn("w-5 h-5", card.tagColor === 'green' ? "text-aion-green" : "text-aion-text")} />}
-                <h4 className="text-sm font-mono font-bold tracking-widest text-aion-text">{card.title}</h4>
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-4">
+                {card.icon === 'Military' && <Sword className={cn("w-6 h-6", card.tagColor === 'red' ? "text-aion-red" : "text-aion-text")} />}
+                {card.icon === 'Shipping' && <Anchor className={cn("w-6 h-6", card.tagColor === 'yellow' ? "text-aion-yellow" : "text-aion-text")} />}
+                {card.icon === 'Energy' && <Activity className={cn("w-6 h-6", card.tagColor === 'orange' ? "text-aion-orange" : "text-aion-text")} />}
+                {card.icon === 'Leadership' && <Compass className={cn("w-6 h-6", card.tagColor === 'green' ? "text-aion-green" : "text-aion-text")} />}
+                <h4 className="text-[18px] font-sans font-bold tracking-tight text-aion-text">{card.title}</h4>
               </div>
               {card.tag && (
                 <div className={cn(
-                  "px-2 py-0.5 rounded-sm text-[8px] font-mono border",
+                  "px-3 py-1 rounded-full text-[10px] font-sans font-bold border uppercase tracking-wider",
                   card.tagColor === 'red' && "bg-aion-red/10 border-aion-red/30 text-aion-red",
                   card.tagColor === 'yellow' && "bg-aion-yellow/10 border-aion-yellow/30 text-aion-yellow",
                   card.tagColor === 'orange' && "bg-aion-orange/10 border-aion-orange/30 text-aion-orange",
@@ -446,17 +463,18 @@ const SituationTab = ({ situations, coreContradiction, t }: { situations: Situat
                 </div>
               )}
             </div>
-            <ul className="space-y-2">
+            
+            <ul className="space-y-4">
               {card.points.map((p, j) => (
-                <li key={j} className="flex items-start gap-2">
+                <li key={j} className="flex items-start gap-4 group">
                   <div className={cn(
-                    "w-1 h-1 mt-1.5 rotate-45 shrink-0",
+                    "w-1.5 h-1.5 rounded-full mt-2 transition-transform group-hover:scale-150",
                     card.tagColor === 'red' && "bg-aion-red",
                     card.tagColor === 'yellow' && "bg-aion-yellow",
                     card.tagColor === 'orange' && "bg-aion-orange",
                     card.tagColor === 'green' && "bg-aion-green"
                   )} />
-                  <span className="text-[11px] text-aion-text-dim font-mono leading-relaxed">{p}</span>
+                  <span className="text-[14px] font-sans font-medium text-aion-text/80 leading-relaxed">{p}</span>
                 </li>
               ))}
             </ul>
@@ -464,37 +482,37 @@ const SituationTab = ({ situations, coreContradiction, t }: { situations: Situat
         ))}
       </div>
 
-      <div className="aion-card border-aion-amber/20 bg-aion-amber/5 p-6">
-        <div className="flex items-center gap-2 mb-6">
-          <Zap className="w-4 h-4 text-aion-amber" />
-          <span className="aion-label text-aion-amber">{t.coreContradiction}</span>
+      <div className="aion-card border-aion-amber/20 bg-aion-amber/5 p-10">
+        <div className="flex items-center gap-3 mb-8">
+          <Zap className="w-6 h-6 text-aion-amber" />
+          <span className="aion-label text-[15px] font-bold text-aion-amber tracking-tight">{t.coreContradiction}</span>
         </div>
         
-        <div className="flex flex-col md:flex-row items-center gap-8 relative">
-          <div className="flex-1 w-full bg-green-500/5 border border-green-500/20 p-6 rounded-sm">
-            <div className="text-[10px] font-mono text-green-500 uppercase mb-4">{t.politicalLevel}</div>
-            <ul className="space-y-2">
+        <div className="flex flex-col md:flex-row items-center gap-12 relative">
+          <div className="flex-1 w-full bg-green-500/5 border border-green-500/20 p-8 rounded-xl">
+            <div className="text-[12px] font-sans font-bold text-green-500 uppercase mb-6 tracking-wider">{t.politicalLevel}</div>
+            <ul className="space-y-3">
               {coreContradiction.political.map((p, i) => (
-                <li key={i} className="text-xs text-aion-text/80 font-mono">{p}</li>
+                <li key={i} className="text-[15px] text-aion-text font-sans leading-relaxed">{p}</li>
               ))}
             </ul>
-            <div className="mt-4 text-[10px] font-mono text-green-500/70">{t.deescalationIntent}</div>
+            <div className="mt-6 text-[12px] font-sans font-bold text-green-500/70 uppercase tracking-wider">{t.deescalationIntent}</div>
           </div>
 
-          <div className="text-3xl font-mono text-aion-amber">≠</div>
+          <div className="text-4xl font-sans font-bold text-aion-amber">≠</div>
 
-          <div className="flex-1 w-full bg-aion-red/5 border border-aion-red/20 p-6 rounded-sm">
-            <div className="text-[10px] font-mono text-aion-red uppercase mb-4">{t.militaryLevel}</div>
-            <ul className="space-y-2">
+          <div className="flex-1 w-full bg-aion-red/5 border border-aion-red/20 p-8 rounded-xl">
+            <div className="text-[12px] font-sans font-bold text-aion-red uppercase mb-6 tracking-wider">{t.militaryLevel}</div>
+            <ul className="space-y-3">
               {coreContradiction.military.map((p, i) => (
-                <li key={i} className="text-xs text-aion-text/80 font-mono">{p}</li>
+                <li key={i} className="text-[15px] text-aion-text font-sans leading-relaxed">{p}</li>
               ))}
             </ul>
-            <div className="mt-4 text-[10px] font-mono text-aion-red/70">{t.structuralRisk}</div>
+            <div className="mt-6 text-[12px] font-sans font-bold text-aion-red/70 uppercase tracking-wider">{t.structuralRisk}</div>
           </div>
         </div>
 
-        <p className="mt-8 text-[10px] font-mono text-aion-amber/80 italic leading-relaxed">
+        <p className="mt-10 text-[14px] font-sans font-bold text-aion-amber/80 uppercase tracking-widest leading-relaxed text-center">
           {t.contradictionNote}
         </p>
       </div>
@@ -544,46 +562,62 @@ export default function App() {
         t={t}
       />
       
-      <main className="flex-1 max-w-[1600px] mx-auto w-full p-6 space-y-6">
+      <main className="flex-1 max-w-[1600px] mx-auto w-full px-10 py-12 space-y-12">
         {/* Top Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {data.keyStats.map((stat, i) => (
             <StatCard key={i} label={stat.label} value={stat.value} unit={stat.unit} color={stat.color} />
           ))}
         </div>
 
         {/* Main Dashboard Area */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* Left: Risk Gauge */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-4 flex flex-col">
             <RiskGauge score={data.riskScore} prev={data.prevRiskScore} trend={data.scoreTrend} t={t} />
           </div>
 
-          {/* Right: War Phase & Signal */}
-          <div className="lg:col-span-9 flex flex-col gap-6">
+          {/* Center: War Phase */}
+          <div className="lg:col-span-5 flex flex-col">
             <WarPhase phase={data.warPhase} keyChange={data.keyChange} t={t} />
-            
-            <div className="aion-card border-l-4 border-l-aion-amber bg-aion-amber/5">
-              <div className="flex items-center gap-2 mb-2">
-                <TrendingUp className="w-4 h-4 text-aion-amber" />
-                <span className="aion-label text-aion-amber">{t.investmentSignal}</span>
+          </div>
+
+          {/* Right: Signal & Status */}
+          <div className="lg:col-span-3 flex flex-col gap-10">
+            <div className="aion-card flex-1 border-l-4 border-l-aion-amber bg-aion-amber/5 p-10 flex flex-col justify-center">
+              <div className="flex items-center gap-3 mb-6">
+                <TrendingUp className="w-6 h-6 text-aion-amber" />
+                <span className="aion-label text-[15px] font-bold text-aion-amber tracking-tight">{t.investmentSignal}</span>
               </div>
-              <p className="text-sm font-mono italic leading-relaxed text-aion-text/90">
+              <p className="text-[18px] font-sans font-bold italic leading-relaxed text-aion-text">
                 {data.investmentSignal}
               </p>
+            </div>
+
+            <div className="aion-card border-l-4 border-l-green-500 bg-green-500/5 p-10 flex flex-col justify-center">
+              <div className="flex items-center gap-3 mb-4">
+                <CheckCircle2 className="w-6 h-6 text-green-500" />
+                <span className="aion-label text-[15px] font-bold text-green-500 tracking-tight">{t.verified}</span>
+              </div>
+              <div className="text-[24px] font-sans font-bold text-aion-text tracking-tight">
+                {data.events.filter(e => e.verification === 'confirmed').length} {t.keyEvents}
+              </div>
+              <div className="text-[14px] font-sans font-medium text-aion-text-dim mt-2">
+                {t.node406} {t.verified}
+              </div>
             </div>
           </div>
         </div>
 
         {/* Tabbed Detailed View */}
         <div className="aion-card p-0 overflow-hidden">
-          <div className="flex border-b border-aion-gray">
+          <div className="flex border-b border-aion-gray bg-aion-text/5">
             {(['events', 'factors', 'situations'] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={cn(
-                  "px-8 py-4 text-[11px] font-mono tracking-[0.2em] uppercase transition-all relative",
+                  "px-12 py-6 text-[13px] font-sans font-bold tracking-widest uppercase transition-all relative",
                   activeTab === tab ? "text-aion-orange" : "text-aion-text-dim hover:text-aion-text"
                 )}
               >
@@ -593,14 +627,14 @@ export default function App() {
                 {activeTab === tab && (
                   <motion.div 
                     layoutId="activeTab"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-aion-orange"
+                    className="absolute bottom-0 left-0 right-0 h-1 bg-aion-orange"
                   />
                 )}
               </button>
             ))}
           </div>
 
-          <div className="p-6 bg-aion-card">
+          <div className="p-10 bg-aion-card">
             <AnimatePresence mode="wait">
               {activeTab === 'events' && (
                 <motion.div
@@ -610,7 +644,7 @@ export default function App() {
                   exit={{ opacity: 0, y: -10 }}
                   className="space-y-1"
                 >
-                  <div className="flex items-center gap-4 mb-6 text-[10px] font-mono text-aion-text-dim">
+                  <div className="flex items-center gap-6 mb-8 text-[12px] font-sans font-bold text-aion-text-dim uppercase tracking-wider">
                     <span>{data.events.filter(e => e.verification === 'confirmed').length} {t.verified}</span>
                     <span>•</span>
                     <span>{data.events.filter(e => e.verification === 'single').length} {t.singleSource}</span>
@@ -629,53 +663,67 @@ export default function App() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="grid grid-cols-1 lg:grid-cols-12 gap-8"
+                  className="grid grid-cols-1 lg:grid-cols-12 gap-12"
                 >
-                  <div className="lg:col-span-7 space-y-2">
-                    <div className="aion-label mb-4 text-[9px]">{language === 'zh' ? '加权因子评分 · ▲▼ 较03-28 · 权重占比' : 'Weighted Factor Score · ▲▼ vs 03-28 · Weight'}</div>
+                  <div className="lg:col-span-8 space-y-2">
+                    <div className="aion-label mb-6 text-[11px] font-bold tracking-widest uppercase text-aion-text-dim">
+                      {language === 'zh' ? '加权因子评分 · ▲▼ 较03-28 · 权重占比' : 'Weighted Factor Score · ▲▼ vs 03-28 · Weight'}
+                    </div>
                     {data.riskFactors.map((factor) => (
                       <RiskFactorRow key={factor.name} factor={factor} t={t} />
                     ))}
                   </div>
 
-                  <div className="lg:col-span-5 flex flex-col border-l border-aion-gray pl-8">
-                    <div className="aion-card border-aion-gray/50 bg-aion-text/5 mb-6 flex flex-col items-center justify-center py-8">
-                      <div className="aion-label mb-4">{language === 'zh' ? '加 权 综 合 评 分' : 'WEIGHTED COMPOSITE SCORE'}</div>
-                      <div className="text-[10px] font-mono text-aion-text-dim mb-4">{t.weightedFormula} = 4.300</div>
-                      <div className="text-8xl font-mono font-bold text-aion-orange mb-2">{data.riskScore}</div>
-                      <div className="aion-label text-aion-orange">{t.riskScoreTitle.replace('\n', ' ')}</div>
+                  <div className="lg:col-span-4 flex flex-col gap-8">
+                    <div className="aion-card border-aion-gray/50 bg-aion-text/5 flex flex-col items-center justify-center p-10">
+                      <div className="aion-label mb-6 text-[13px] font-bold tracking-widest uppercase text-aion-text-dim">
+                        {language === 'zh' ? '加 权 综 合 评 分' : 'WEIGHTED COMPOSITE SCORE'}
+                      </div>
+                      <div className="text-[12px] font-sans font-bold text-aion-text-dim mb-6 tracking-wider">
+                        {t.weightedFormula} = 4.300
+                      </div>
+                      <div className="text-8xl font-sans font-bold text-aion-orange mb-4 tracking-tighter">
+                        {data.riskScore}
+                      </div>
+                      <div className="aion-label text-aion-orange text-[15px] font-bold tracking-tight">
+                        {t.riskScoreTitle.replace('\n', ' ')}
+                      </div>
                     </div>
 
-                    <div className="aion-card border-aion-gray/50 bg-aion-text/5 mb-6">
-                      <div className="aion-label mb-4">{t.trendTitle}</div>
+                    <div className="aion-card border-aion-gray/50 bg-aion-text/5 p-10">
+                      <div className="aion-label mb-6 text-[13px] font-bold tracking-widest uppercase text-aion-text-dim">
+                        {t.trendTitle}
+                      </div>
                       <TrendChart trend={data.scoreTrend} />
                     </div>
                     
-                    <div className="grid grid-cols-3 gap-2 mb-6">
-                      <div className="border border-green-500/30 bg-green-500/5 p-3 text-center rounded-sm">
-                        <div className="text-green-500 text-[10px] font-mono mb-1">&lt;40</div>
-                        <div className="text-green-500/50 text-[8px] font-mono">{t.lowRisk}</div>
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="border border-green-500/30 bg-green-500/5 p-4 text-center rounded-xl">
+                        <div className="text-green-500 text-[14px] font-sans font-bold mb-1">&lt;40</div>
+                        <div className="text-green-500/50 text-[10px] font-sans font-bold uppercase tracking-wider">{t.lowRisk}</div>
                       </div>
-                      <div className="border border-aion-yellow/30 bg-aion-yellow/5 p-3 text-center rounded-sm">
-                        <div className="text-aion-yellow text-[10px] font-mono mb-1">40-70</div>
-                        <div className="text-aion-yellow/50 text-[8px] font-mono">{t.highRisk}</div>
+                      <div className="border border-aion-yellow/30 bg-aion-yellow/5 p-4 text-center rounded-xl">
+                        <div className="text-aion-yellow text-[14px] font-sans font-bold mb-1">40-70</div>
+                        <div className="text-aion-yellow/50 text-[10px] font-sans font-bold uppercase tracking-wider">{t.highRisk}</div>
                       </div>
-                      <div className="border border-aion-red/50 bg-aion-red/10 p-3 text-center rounded-sm">
-                        <div className="text-aion-red text-[10px] font-mono mb-1">&gt;70</div>
-                        <div className="text-aion-red/50 text-[8px] font-mono">{t.extremeRisk}</div>
+                      <div className="border border-aion-red/50 bg-aion-red/10 p-4 text-center rounded-xl">
+                        <div className="text-aion-red text-[14px] font-sans font-bold mb-1">&gt;70</div>
+                        <div className="text-aion-red/50 text-[10px] font-sans font-bold uppercase tracking-wider">{t.extremeRisk}</div>
                       </div>
                     </div>
 
-                    <div className="aion-card border-aion-yellow/20 bg-aion-yellow/5">
-                      <div className="flex items-center gap-2 mb-4">
-                        <Clock className="w-4 h-4 text-aion-yellow" />
-                        <span className="aion-label text-aion-yellow">{t.observationNodes}</span>
+                    <div className="aion-card border-aion-yellow/20 bg-aion-yellow/5 p-10">
+                      <div className="flex items-center gap-3 mb-6">
+                        <Clock className="w-5 h-5 text-aion-yellow" />
+                        <span className="aion-label text-[15px] font-bold text-aion-yellow tracking-tight">{t.observationNodes}</span>
                       </div>
-                      <div className="text-4xl font-mono font-bold text-aion-yellow mb-2">{language === 'zh' ? '4月6日' : 'April 6'}</div>
-                      <ul className="space-y-1">
-                        <li className="text-[10px] font-mono text-aion-text-dim">{t.energyDeadline}</li>
-                        <li className="text-[10px] font-mono text-aion-text-dim">{t.negotiationValidity}</li>
-                        <li className="text-[10px] font-mono text-aion-text-dim">{t.signalConfirmation}</li>
+                      <div className="text-4xl font-sans font-bold text-aion-yellow mb-4 tracking-tighter">
+                        {language === 'zh' ? '4月6日' : 'April 6'}
+                      </div>
+                      <ul className="space-y-3">
+                        <li className="text-[14px] font-sans font-medium text-aion-text-dim leading-relaxed">• {t.energyDeadline}</li>
+                        <li className="text-[14px] font-sans font-medium text-aion-text-dim leading-relaxed">• {t.negotiationValidity}</li>
+                        <li className="text-[14px] font-sans font-medium text-aion-text-dim leading-relaxed">• {t.signalConfirmation}</li>
                       </ul>
                     </div>
                   </div>
@@ -698,17 +746,17 @@ export default function App() {
       </main>
 
       {/* Footer Info */}
-      <footer className="px-6 py-4 border-t border-aion-gray bg-aion-bg flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-[9px] font-mono text-aion-text-dim uppercase tracking-widest">
+      <footer className="px-10 py-8 border-t border-aion-gray bg-aion-bg flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3">
+            <span className="text-[11px] font-sans font-bold text-aion-text-dim uppercase tracking-widest">
               {t.systemInfo}
             </span>
           </div>
         </div>
         
-        <div className="flex items-center gap-4">
-          <span className="text-[9px] font-mono text-aion-text-dim uppercase tracking-widest">
+        <div className="flex items-center gap-6">
+          <span className="text-[11px] font-sans font-bold text-aion-text-dim uppercase tracking-widest">
             {t.sources}: Reuters · Guardian · The Times · Wired · 2026-04-01
           </span>
         </div>

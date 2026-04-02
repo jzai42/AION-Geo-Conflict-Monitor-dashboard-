@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "SF Pro Display", "SF Pro Text", "PingFang SC", "SF Pro SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   --color-aion-bg: var(--aion-bg);
@@ -43,15 +43,15 @@
 
 @layer components {
   .aion-card {
-    @apply bg-aion-card border border-aion-gray rounded-sm p-4;
+    @apply bg-aion-card border border-aion-gray rounded-[20px] p-8 transition-all duration-300;
   }
 
   .aion-label {
-    @apply font-mono text-[10px] tracking-widest text-aion-text-dim uppercase;
+    @apply font-sans text-[13px] font-medium tracking-normal text-aion-text-dim;
   }
 
   .aion-value {
-    @apply font-mono text-2xl font-bold;
+    @apply font-sans text-3xl font-semibold tracking-tight;
   }
 
   .glow-red {
