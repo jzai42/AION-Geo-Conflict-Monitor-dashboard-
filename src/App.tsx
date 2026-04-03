@@ -632,7 +632,7 @@ export default function App() {
                   className="grid grid-cols-1 lg:grid-cols-12 gap-8"
                 >
                   <div className="lg:col-span-7 space-y-2">
-                    <div className="aion-label mb-4 text-[9px]">{language === 'zh' ? '加权因子评分 · ▲▼ 较03-28 · 权重占比' : 'Weighted Factor Score · ▲▼ vs 03-28 · Weight'}</div>
+                    <div className="aion-label mb-4 text-[9px]">{language === 'zh' ? '加权因子评分 · ▲▼ 较04-02 · 权重占比' : 'Weighted Factor Score · ▲▼ vs 04-02 · Weight'}</div>
                     {data.riskFactors.map((factor) => (
                       <RiskFactorRow key={factor.name} factor={factor} t={t} />
                     ))}
@@ -709,7 +709,7 @@ export default function App() {
         
         <div className="flex items-center gap-4">
           <span className="text-[9px] font-mono text-aion-text-dim uppercase tracking-widest">
-            {t.sources}: Reuters · Guardian · The Times · Wired · 2026-04-01
+            {t.sources}: Reuters (primary) · 2026-04-03
           </span>
         </div>
       </footer>
