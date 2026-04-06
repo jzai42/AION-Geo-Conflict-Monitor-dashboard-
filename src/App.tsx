@@ -632,7 +632,7 @@ export default function App() {
                   className="grid grid-cols-1 lg:grid-cols-12 gap-8"
                 >
                   <div className="lg:col-span-7 space-y-2">
-                    <div className="aion-label mb-4 text-[9px]">{language === 'zh' ? '加权因子评分 · ▲▼ 较04-02 · 权重占比' : 'Weighted Factor Score · ▲▼ vs 04-02 · Weight'}</div>
+                    <div className="aion-label mb-4 text-[9px]">{language === 'zh' ? '加权因子评分 · ▲▼ 较04-03 · 权重占比' : 'Weighted Factor Score · ▲▼ vs 04-03 · Weight'}</div>
                     {data.riskFactors.map((factor) => (
                       <RiskFactorRow key={factor.name} factor={factor} t={t} />
                     ))}
@@ -641,7 +641,7 @@ export default function App() {
                   <div className="lg:col-span-5 flex flex-col border-l border-aion-gray pl-8">
                     <div className="aion-card border-aion-gray/50 bg-aion-text/5 mb-6 flex flex-col items-center justify-center py-8">
                       <div className="aion-label mb-4">{language === 'zh' ? '加 权 综 合 评 分' : 'WEIGHTED COMPOSITE SCORE'}</div>
-                      <div className="text-[10px] font-mono text-aion-text-dim mb-4">{t.weightedFormula} = 4.300</div>
+                      <div className="text-[10px] font-mono text-aion-text-dim mb-4">{t.weightedFormula} = 3.400</div>
                       <div className="text-8xl font-mono font-bold text-aion-orange mb-2">{data.riskScore}</div>
                       <div className="aion-label text-aion-orange">{t.riskScoreTitle.replace('\n', ' ')}</div>
                     </div>
@@ -709,7 +709,7 @@ export default function App() {
         
         <div className="flex items-center gap-4">
           <span className="text-[9px] font-mono text-aion-text-dim uppercase tracking-widest">
-            {t.sources}: Reuters (primary) · 2026-04-03
+            {t.sources}: Reuters (primary) · 2026-04-06
           </span>
         </div>
       </footer>
