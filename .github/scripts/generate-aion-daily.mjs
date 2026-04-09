@@ -131,6 +131,25 @@ function extractJsonObject(text) {
   return text.slice(start, end + 1);
 }
 
+async function repairJsonWithModel(badJsonText) {
+  const repairPrompt = `你是JSON修复器。请将下面文本修复为严格合法JSON。
+要求：
+1) 只输出JSON对象本身
+2) 不添加解释
+3) 不改key名
+4) 保留原语义
+
+待修复文本：
+${badJsonText}`;
+
+  const repairedResp = await callOpenAI({
+    model: OPENAI_MODEL,
+    input: repairPrompt,
+  });
+  const repairedText = collectTextFromResponse(repairedResp);
+  return extractJsonObject(repairedText) || repairedText;
+}
+
 function toTsObjectLiteral(obj) {
   return JSON.stringify(obj, null, 2).replace(/"([^"]+)":/g, "$1:");
 }
@@ -209,10 +228,16 @@ let payload;
 try {
   payload = JSON.parse(jsonText);
 } catch (err) {
-  const debugDir = path.join(process.cwd(), "reports", "daily");
-  await mkdir(debugDir, { recursive: true });
-  await writeFile(path.join(debugDir, `${todayNy}.raw.txt`), `${output}\n`, "utf8");
-  throw new Error(`Failed to parse model JSON: ${err.message}`);
+  try {
+    const repairedJsonText = await repairJsonWithModel(jsonText);
+    payload = JSON.parse(repairedJsonText);
+    console.warn("Primary JSON parse failed, recovered via repair pass.");
+  } catch (repairErr) {
+    const debugDir = path.join(process.cwd(), "reports", "daily");
+    await mkdir(debugDir, { recursive: true });
+    await writeFile(path.join(debugDir, `${todayNy}.raw.txt`), `${output}\n`, "utf8");
+    throw new Error(`Failed to parse model JSON: ${err.message}; repair failed: ${repairErr.message}`);
+  }
 }
 
 const requiredTopKeys = ["reportMarkdownZh", "dataZh", "dataEn", "translationsDynamic"];
