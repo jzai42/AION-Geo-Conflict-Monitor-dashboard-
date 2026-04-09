@@ -94,10 +94,34 @@ try {
   });
 }
 
-const output = data.output_text?.trim();
+function collectTextFromResponse(resp) {
+  if (typeof resp?.output_text === "string" && resp.output_text.trim()) {
+    return resp.output_text.trim();
+  }
+
+  const pieces = [];
+  const outputItems = Array.isArray(resp?.output) ? resp.output : [];
+  for (const item of outputItems) {
+    const contents = Array.isArray(item?.content) ? item.content : [];
+    for (const content of contents) {
+      if (typeof content?.text === "string" && content.text.trim()) {
+        pieces.push(content.text.trim());
+      }
+    }
+  }
+  if (pieces.length) {
+    return pieces.join("\n").trim();
+  }
+  return "";
+}
+
+const output = collectTextFromResponse(data);
 
 if (!output) {
-  throw new Error("OpenAI response did not include output_text");
+  const debugDir = path.join(process.cwd(), "reports", "daily");
+  await mkdir(debugDir, { recursive: true });
+  await writeFile(path.join(debugDir, `${todayNy}.response.json`), JSON.stringify(data, null, 2), "utf8");
+  throw new Error("OpenAI response did not include any text content");
 }
 
 function extractJsonObject(text) {

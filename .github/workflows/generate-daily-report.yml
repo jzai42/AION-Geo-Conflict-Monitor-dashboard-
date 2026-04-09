@@ -13,6 +13,7 @@ permissions:
 jobs:
   generate:
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Check New York time guard
         id: ny_guard
