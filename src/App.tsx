@@ -303,6 +303,12 @@ const EventItem = ({ event, index, t }: { event: KeyEvent, index: number, t: any
                 <span className="text-[8px] font-mono text-aion-red uppercase">{t.singleSource}</span>
               </div>
             )}
+            {event.verification === 'partial' && (
+              <div className="flex items-center gap-1 bg-aion-orange/10 border border-aion-orange/30 px-2 py-0.5 rounded-sm">
+                <AlertCircle className="w-2.5 h-2.5 text-aion-orange" />
+                <span className="text-[8px] font-mono text-aion-orange uppercase">{t.partialVerify}</span>
+              </div>
+            )}
             {event.highlight && (
               <div className="flex items-center gap-1 bg-aion-orange/10 border border-aion-orange/30 px-2 py-0.5 rounded-sm">
                 <Zap className="w-2.5 h-2.5 text-aion-orange" />
@@ -334,7 +340,7 @@ const EventItem = ({ event, index, t }: { event: KeyEvent, index: number, t: any
                 </div>
               )}
               <div className="flex items-center gap-4">
-                <span className="text-[9px] font-mono text-aion-text-dim uppercase">{t.source}: {event.verification === 'confirmed' ? t.verified : t.singleSource}</span>
+                <span className="text-[9px] font-mono text-aion-text-dim uppercase">{t.source}: {event.verification === 'confirmed' ? t.verified : event.verification === 'partial' ? t.partialVerify : t.singleSource}</span>
                 <span className="text-[9px] font-mono text-aion-text-dim uppercase">{t.time}: {event.timestamp}</span>
               </div>
             </div>
@@ -614,6 +620,12 @@ export default function App() {
                     <span>{data.events.filter(e => e.verification === 'confirmed').length} {t.verified}</span>
                     <span>•</span>
                     <span>{data.events.filter(e => e.verification === 'single').length} {t.singleSource}</span>
+                    {data.events.filter(e => e.verification === 'partial').length > 0 && (
+                      <>
+                        <span>•</span>
+                        <span>{data.events.filter(e => e.verification === 'partial').length} {t.partialVerify}</span>
+                      </>
+                    )}
                     <span>•</span>
                     <span>{t.clickExpand}</span>
                   </div>
@@ -632,7 +644,7 @@ export default function App() {
                   className="grid grid-cols-1 lg:grid-cols-12 gap-8"
                 >
                   <div className="lg:col-span-7 space-y-2">
-                    <div className="aion-label mb-4 text-[9px]">{language === 'zh' ? '加权因子评分 · ▲▼ 较04-07 · 权重占比' : 'Weighted Factor Score · ▲▼ vs 04-07 · Weight'}</div>
+                    <div className="aion-label mb-4 text-[9px]">{language === 'zh' ? '加权因子评分 · ▲▼ 较04-08 · 权重占比' : 'Weighted Factor Score · ▲▼ vs 04-08 · Weight'}</div>
                     {data.riskFactors.map((factor) => (
                       <RiskFactorRow key={factor.name} factor={factor} t={t} />
                     ))}
@@ -641,7 +653,7 @@ export default function App() {
                   <div className="lg:col-span-5 flex flex-col border-l border-aion-gray pl-8">
                     <div className="aion-card border-aion-gray/50 bg-aion-text/5 mb-6 flex flex-col items-center justify-center py-8">
                       <div className="aion-label mb-4">{language === 'zh' ? '加 权 综 合 评 分' : 'WEIGHTED COMPOSITE SCORE'}</div>
-                      <div className="text-[10px] font-mono text-aion-text-dim mb-4">{t.weightedFormula} = 2.800</div>
+                      <div className="text-[10px] font-mono text-aion-text-dim mb-4">{t.weightedFormula} = 3.200</div>
                       <div className="text-8xl font-mono font-bold text-aion-orange mb-2">{data.riskScore}</div>
                       <div className="aion-label text-aion-orange">{t.riskScoreTitle.replace('\n', ' ')}</div>
                     </div>
@@ -709,7 +721,7 @@ export default function App() {
         
         <div className="flex items-center gap-4">
           <span className="text-[9px] font-mono text-aion-text-dim uppercase tracking-widest">
-            {t.sources}: Reuters (primary), Washington Post / tier-1 · 2026-04-08
+            {t.sources}: Reuters (primary), EU / WaPo / tier-1 · 2026-04-09
           </span>
         </div>
       </footer>
