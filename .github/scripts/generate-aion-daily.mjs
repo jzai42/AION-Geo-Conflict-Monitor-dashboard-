@@ -216,6 +216,19 @@ function replaceTranslationField(sourceText, locale, key, value) {
   return sourceText.slice(0, localeBraceStart) + replaced + sourceText.slice(localeBraceEnd + 1);
 }
 
+function readTranslationField(sourceText, locale, key) {
+  const localeStart = sourceText.indexOf(`${locale}: {`);
+  if (localeStart === -1) throw new Error(`Cannot find locale ${locale}`);
+  const localeBraceStart = sourceText.indexOf("{", localeStart);
+  const localeBraceEnd = findObjectEnd(sourceText, localeBraceStart);
+  if (localeBraceEnd === -1) throw new Error(`Cannot parse locale ${locale}`);
+  const block = sourceText.slice(localeBraceStart, localeBraceEnd + 1);
+  const re = new RegExp(`^\\s*${key}:\\s*"((?:\\\\.|[^"\\\\])*)",?\\s*$`, "m");
+  const m = block.match(re);
+  if (!m) throw new Error(`Cannot read translation key ${locale}.${key}`);
+  return JSON.parse(`"${m[1]}"`);
+}
+
 const jsonText = extractJsonObject(output);
 if (!jsonText) {
   const debugDir = path.join(process.cwd(), "reports", "daily");
@@ -240,7 +253,7 @@ try {
   }
 }
 
-const requiredTopKeys = ["reportMarkdownZh", "dataZh", "dataEn", "translationsDynamic"];
+const requiredTopKeys = ["reportMarkdownZh", "dataZh", "dataEn"];
 for (const key of requiredTopKeys) {
   if (!(key in payload)) {
     throw new Error(`Missing key in payload: ${key}`);
@@ -283,9 +296,50 @@ const translationKeys = [
   "dayCount",
 ];
 
+function buildFallbackTranslations() {
+  const zhNode = `${Number(payload.dataZh?.date?.slice(5, 7) || "1")}月${Number(payload.dataZh?.date?.slice(8, 10) || "1")}日节点`;
+  const enDate = payload.dataEn?.date || payload.dataZh?.date || todayNy;
+  const [y, m, d] = enDate.split("-").map(Number);
+  const monthShort = new Date(Date.UTC(y, (m || 1) - 1, d || 1)).toLocaleString("en-US", { month: "short", timeZone: "UTC" });
+  const enNode = `${monthShort} ${Number(d || 1)} Node`;
+  const version = payload.dataZh?.version || payload.dataEn?.version || "vX.X";
+  const dayZhValue = payload.dataZh?.keyStats?.find((x) => x.label === "冲突天数")?.value;
+  const dayEnValue = payload.dataEn?.keyStats?.find((x) => x.label === "Conflict Days")?.value;
+  const dayZh = dayZhValue ? `${dayZhValue.replace("D", "第")}天` : "";
+  const dayEn = dayEnValue ? dayEnValue.replace("D", "Day ") : "";
+
+  return {
+    zh: {
+      node406: zhNode,
+      systemInfo: `AION 智能分析系统 · 地缘冲突模块 ${version} · Daily`,
+      bannerSignal: readTranslationField(dataTs, "zh", "bannerSignal"),
+      bannerWarning: readTranslationField(dataTs, "zh", "bannerWarning"),
+      deescalationIntent: readTranslationField(dataTs, "zh", "deescalationIntent"),
+      structuralRisk: readTranslationField(dataTs, "zh", "structuralRisk"),
+      contradictionNote: readTranslationField(dataTs, "zh", "contradictionNote"),
+      dayCount: dayZh || readTranslationField(dataTs, "zh", "dayCount"),
+    },
+    en: {
+      node406: enNode,
+      systemInfo: `AION Intelligence System · Geo-Conflict Module ${version} · Daily`,
+      bannerSignal: readTranslationField(dataTs, "en", "bannerSignal"),
+      bannerWarning: readTranslationField(dataTs, "en", "bannerWarning"),
+      deescalationIntent: readTranslationField(dataTs, "en", "deescalationIntent"),
+      structuralRisk: readTranslationField(dataTs, "en", "structuralRisk"),
+      contradictionNote: readTranslationField(dataTs, "en", "contradictionNote"),
+      dayCount: dayEn || readTranslationField(dataTs, "en", "dayCount"),
+    },
+  };
+}
+
+const fallbackTranslations = buildFallbackTranslations();
+const dynamic = payload.translationsDynamic || fallbackTranslations;
+
 for (const key of translationKeys) {
-  dataTs = replaceTranslationField(dataTs, "zh", key, payload.translationsDynamic.zh[key]);
-  dataTs = replaceTranslationField(dataTs, "en", key, payload.translationsDynamic.en[key]);
+  const zhValue = dynamic?.zh?.[key] ?? fallbackTranslations.zh[key];
+  const enValue = dynamic?.en?.[key] ?? fallbackTranslations.en[key];
+  dataTs = replaceTranslationField(dataTs, "zh", key, zhValue);
+  dataTs = replaceTranslationField(dataTs, "en", key, enValue);
 }
 
 await writeFile(dataPath, dataTs, "utf8");
