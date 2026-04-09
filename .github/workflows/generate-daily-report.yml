@@ -1,0 +1,51 @@
+name: Generate Daily AION Report
+
+on:
+  schedule:
+    # 9:00 AM New York time: covers both EST/EDT, guard below keeps exact 09:00 ET.
+    - cron: "0 13 * * *"
+    - cron: "0 14 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check New York time guard
+        id: ny_guard
+        run: |
+          ny_hour="$(TZ=America/New_York date +%H)"
+          if [ "$ny_hour" = "09" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "NY hour is 09, continue."
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "NY hour is $ny_hour, skip."
+          fi
+
+      - name: Checkout
+        if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate report via OpenAI
+        if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-4.1
+        run: node .github/scripts/generate-aion-daily.mjs
+
+      - name: Commit report
+        if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(report): auto-generate daily AION report"
+          file_pattern: reports/daily/*.md
