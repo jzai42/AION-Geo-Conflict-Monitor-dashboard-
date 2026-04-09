@@ -235,21 +235,113 @@ function toArray(value) {
   return [];
 }
 
+function asString(value, fallback = "") {
+  if (typeof value === "string") return value;
+  if (value === null || value === undefined) return fallback;
+  return String(value);
+}
+
+function asNumber(value, fallback = 0) {
+  const n = typeof value === "number" ? value : Number(value);
+  return Number.isFinite(n) ? n : fallback;
+}
+
+function pickVerification(value) {
+  return ["confirmed", "partial", "single"].includes(value) ? value : "single";
+}
+
+function pickChange(value) {
+  return ["up", "down", "structural"].includes(value) ? value : undefined;
+}
+
+function normalizeKeyStats(arr) {
+  return toArray(arr).slice(0, 4).map((item, i) => ({
+    label: asString(item?.label, `Stat ${i + 1}`),
+    value: asString(item?.value, "-"),
+    unit: asString(item?.unit, ""),
+    color: asString(item?.color, "#ff851b"),
+  }));
+}
+
+function normalizeRiskFactors(arr) {
+  return toArray(arr).slice(0, 5).map((item, i) => ({
+    name: asString(item?.name, `Factor ${i + 1}`),
+    score: asNumber(item?.score, 3),
+    prev: asNumber(item?.prev, 3),
+    weight: asNumber(item?.weight, 0.2),
+    description: asString(item?.description, ""),
+    status: asString(item?.status, "FAST"),
+    ...(pickChange(item?.change) ? { change: pickChange(item?.change) } : {}),
+  }));
+}
+
+function normalizeEvents(arr) {
+  return toArray(arr).slice(0, 5).map((item, i) => ({
+    id: asString(item?.id, `EVT-${String(i + 1).padStart(2, "0")}`),
+    title: asString(item?.title, `Event ${i + 1}`),
+    description: asString(item?.description, ""),
+    verification: pickVerification(item?.verification),
+    timestamp: asString(item?.timestamp, ""),
+    significance: asString(item?.significance, ""),
+    ...(item?.highlight ? { highlight: true } : {}),
+  }));
+}
+
+function normalizeScoreTrend(arr, dateFallback, riskScoreFallback) {
+  const trend = toArray(arr).map((item) => ({
+    date: asString(item?.date, ""),
+    score: asNumber(item?.score, riskScoreFallback),
+    ...(item?.active ? { active: true } : {}),
+  })).filter((x) => x.date);
+  if (!trend.length) {
+    trend.push({ date: dateFallback.slice(5), score: riskScoreFallback, active: true });
+    return trend;
+  }
+  for (const p of trend) delete p.active;
+  trend[trend.length - 1].active = true;
+  return trend.slice(-5);
+}
+
+function normalizeSituations(arr) {
+  return toArray(arr).slice(0, 4).map((item, i) => ({
+    title: asString(item?.title, `Situation ${i + 1}`),
+    icon: asString(item?.icon, "Military"),
+    tag: asString(item?.tag, ""),
+    tagColor: asString(item?.tagColor, "orange"),
+    points: toArray(item?.points).map((p) => asString(p)).filter(Boolean).slice(0, 3),
+  }));
+}
+
 function normalizeDashboardData(data) {
   const normalized = { ...data };
-  normalized.keyStats = toArray(normalized.keyStats);
-  normalized.riskFactors = toArray(normalized.riskFactors);
-  normalized.events = toArray(normalized.events);
-  normalized.scoreTrend = toArray(normalized.scoreTrend);
-  normalized.situations = toArray(normalized.situations);
+  const date = asString(normalized.date, todayNy);
+  const riskScore = asNumber(normalized.riskScore, 60);
+  const prevRiskScore = asNumber(normalized.prevRiskScore, riskScore);
+
+  normalized.date = date;
+  normalized.version = asString(normalized.version, "vAuto");
+  normalized.riskScore = riskScore;
+  normalized.prevRiskScore = prevRiskScore;
+  normalized.investmentSignal = asString(normalized.investmentSignal, "");
+  normalized.keyChange = asString(normalized.keyChange, "");
+  normalized.keyStats = normalizeKeyStats(normalized.keyStats);
+  normalized.riskFactors = normalizeRiskFactors(normalized.riskFactors);
+  normalized.events = normalizeEvents(normalized.events);
+  normalized.scoreTrend = normalizeScoreTrend(normalized.scoreTrend, date, riskScore);
+  normalized.situations = normalizeSituations(normalized.situations);
   normalized.warPhase = {
     ...(normalized.warPhase || {}),
-    points: toArray(normalized.warPhase?.points),
+    level: asString(normalized.warPhase?.level, ""),
+    targetLevel: asString(normalized.warPhase?.targetLevel, ""),
+    title: asString(normalized.warPhase?.title, ""),
+    subTitle: asString(normalized.warPhase?.subTitle, ""),
+    points: toArray(normalized.warPhase?.points).map((p) => asString(p)).filter(Boolean).slice(0, 3),
+    note: asString(normalized.warPhase?.note, ""),
   };
   normalized.coreContradiction = {
     ...(normalized.coreContradiction || {}),
-    political: toArray(normalized.coreContradiction?.political),
-    military: toArray(normalized.coreContradiction?.military),
+    political: toArray(normalized.coreContradiction?.political).map((p) => asString(p)).filter(Boolean).slice(0, 2),
+    military: toArray(normalized.coreContradiction?.military).map((p) => asString(p)).filter(Boolean).slice(0, 2),
   };
   return normalized;
 }

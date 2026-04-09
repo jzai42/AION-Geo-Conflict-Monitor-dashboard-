@@ -49,4 +49,12 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore(report): auto-generate daily AION report"
-          file_pattern: reports/daily/*.md
+          file_pattern: reports/daily/* src/data.ts
+
+      - name: Upload debug artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-report-debug
+          path: reports/daily/*
+          if-no-files-found: ignore
