@@ -229,6 +229,31 @@ function readTranslationField(sourceText, locale, key) {
   return JSON.parse(`"${m[1]}"`);
 }
 
+function toArray(value) {
+  if (Array.isArray(value)) return value;
+  if (value && typeof value === "object") return Object.values(value);
+  return [];
+}
+
+function normalizeDashboardData(data) {
+  const normalized = { ...data };
+  normalized.keyStats = toArray(normalized.keyStats);
+  normalized.riskFactors = toArray(normalized.riskFactors);
+  normalized.events = toArray(normalized.events);
+  normalized.scoreTrend = toArray(normalized.scoreTrend);
+  normalized.situations = toArray(normalized.situations);
+  normalized.warPhase = {
+    ...(normalized.warPhase || {}),
+    points: toArray(normalized.warPhase?.points),
+  };
+  normalized.coreContradiction = {
+    ...(normalized.coreContradiction || {}),
+    political: toArray(normalized.coreContradiction?.political),
+    military: toArray(normalized.coreContradiction?.military),
+  };
+  return normalized;
+}
+
 const jsonText = extractJsonObject(output);
 if (!jsonText) {
   const debugDir = path.join(process.cwd(), "reports", "daily");
@@ -259,6 +284,9 @@ for (const key of requiredTopKeys) {
     throw new Error(`Missing key in payload: ${key}`);
   }
 }
+
+payload.dataZh = normalizeDashboardData(payload.dataZh || {});
+payload.dataEn = normalizeDashboardData(payload.dataEn || {});
 
 const outDir = path.join(process.cwd(), "reports", "daily");
 await mkdir(outDir, { recursive: true });
@@ -303,8 +331,8 @@ function buildFallbackTranslations() {
   const monthShort = new Date(Date.UTC(y, (m || 1) - 1, d || 1)).toLocaleString("en-US", { month: "short", timeZone: "UTC" });
   const enNode = `${monthShort} ${Number(d || 1)} Node`;
   const version = payload.dataZh?.version || payload.dataEn?.version || "vX.X";
-  const dayZhValue = payload.dataZh?.keyStats?.find((x) => x.label === "冲突天数")?.value;
-  const dayEnValue = payload.dataEn?.keyStats?.find((x) => x.label === "Conflict Days")?.value;
+  const dayZhValue = toArray(payload.dataZh?.keyStats).find((x) => x?.label === "冲突天数")?.value;
+  const dayEnValue = toArray(payload.dataEn?.keyStats).find((x) => x?.label === "Conflict Days")?.value;
   const dayZh = dayZhValue ? `${dayZhValue.replace("D", "第")}天` : "";
   const dayEn = dayEnValue ? dayEnValue.replace("D", "Day ") : "";
 
