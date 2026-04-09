@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
@@ -12,155 +12,52 @@ const todayNy = new Date().toLocaleDateString("en-CA", {
   timeZone: "America/New_York",
 });
 
-const prompt = `[System Role]
-You are an institutional-grade geopolitical intelligence engine.
-Your output must be structured, auditable, concise, and consistent across days.
+const prompt = `你是AION地缘冲突数据引擎。请搜索过去24小时美伊冲突动态，输出“仅JSON对象”，禁止markdown与解释。
 
-[Task]
-Search for the latest developments in the US–Iran conflict over the past 24 hours and produce a DAILY AION Geo-Conflict Monitor report.
+核心规则：
+1) 重大事件必须 >=2独立来源，或1个一级官方声明。
+2) 单一来源必须标记为未验证，并不得用于评分依据。
+3) 中文与英文都要给，结构固定，字段齐全。
+4) 输出必须可直接映射到前端数据结构（DashboardData）。
+5) 日期请用纽约时区今天：${todayNy}。
 
-[Strict Source Rules]
-1. Prioritize:
-   - Tier 1 Primary: White House, US DoD, Iranian official agencies, IDF
-   - Tier 2: Reuters, Bloomberg, AP, Financial Times
-2. Any MAJOR EVENT must have:
-   - ≥2 independent sources
-   - OR 1 primary official statement
-3. If only single-source → mark as:
-   → "Unverified" (must be EXCLUDED from scoring)
+请严格按以下JSON结构返回（key名不能改）：
+{
+  "reportMarkdownZh": "一个中文日报，必须是单个代码块字符串",
+  "dataZh": DashboardData对象,
+  "dataEn": DashboardData对象,
+  "translationsDynamic": {
+    "zh": {
+      "node406": "如 4月9日节点",
+      "systemInfo": "如 AION 智能分析系统 · 地缘冲突模块 vX.X · Daily",
+      "bannerSignal": "...",
+      "bannerWarning": "...",
+      "deescalationIntent": "...",
+      "structuralRisk": "...",
+      "contradictionNote": "...",
+      "dayCount": "如 第40天"
+    },
+    "en": {
+      "node406": "如 Apr 9 Node",
+      "systemInfo": "如 AION Intelligence System · Geo-Conflict Module vX.X · Daily",
+      "bannerSignal": "...",
+      "bannerWarning": "...",
+      "deescalationIntent": "...",
+      "structuralRisk": "...",
+      "contradictionNote": "...",
+      "dayCount": "如 Day 40"
+    }
+  }
+}
 
-[Output Language]
-→ Chinese ONLY
-
-[Output Format]
-→ MUST be inside ONE code block (for one-click copy)
-→ NO markdown outside
-→ NO emojis
-→ NO explanations
-
-────────────────────────────────
-[AION Geo-Conflict Monitor | YYYY-MM-DD]
-────────────────────────────────
-
-[Scope]
-Last 24h
-
-────────────────────────────────
-1) KEY EVENTS (Auditable)
-────────────────────────────────
-
-Format STRICTLY:
-
-Event X: <一句话标题>
-- Description:
-- Timestamp:
-- Sources:
-- Cross-verification: YES / PARTIAL / NO (Unverified)
-
-Rules:
-- Max 5 events
-- Only include HIGH SIGNAL events
-- Unverified events MUST be clearly marked
-
-────────────────────────────────
-2) DOMAIN SUMMARY
-────────────────────────────────
-
-[Military]
-- ...
-
-[Hormuz / Shipping]
-- ...
-
-[Energy Market]
-- ...
-
-[Leadership Signals]
-- ...
-
-Rules:
-- 每部分 ≤3条
-- 只写“变化”，不写废话
-
-────────────────────────────────
-3) RISK SCORING (AION Framework)
-────────────────────────────────
-
-评分维度（固定）：
-
-1. Military Escalation Intensity:
-2. Hormuz Disruption:
-3. Energy Shock:
-4. Great Power Involvement:
-5. De-escalation Probability:
-
-Format:
-
-X / 5  
-Justification: <一句话原因>
-
-Rules:
-- 不允许模糊语言
-- 必须可解释
-
-────────────────────────────────
-4) GEO-CONFLICT RISK SCORE
-────────────────────────────────
-
-Step 1: Average (0–5)
-Step 2: ×20 → 0–100
-
-Format:
-
-Average = X.X  
-Score = XX / 100
-
-────────────────────────────────
-5) WAR PHASE ASSESSMENT
-────────────────────────────────
-
-Format:
-
-Phase:
-→ <标准化阶段名称>
-
-Key Shift:
-→ <过去24h变化>
-
-Interpretation:
-→ <一句话本质>
-
-────────────────────────────────
-6) INVESTMENT SIGNAL
-────────────────────────────────
-
-Format (ONLY ONE SENTENCE):
-
-→ <明确、可执行、无废话的投资信号>
-
-Rules:
-- 不允许模糊表达（如“可能”“关注”）
-- 必须有方向（risk-on / risk-off / hedge / energy等）
-
-────────────────────────────────
-[Hard Constraints]
-────────────────────────────────
-
-1. 禁止输出未经验证的“重大事件”
-2. 禁止重复历史信息（必须是24h内变化）
-3. 禁止 narrative / storytelling
-4. 禁止情绪化词汇
-5. 禁止长句（每句 ≤20字优先）
-6. 输出必须稳定、结构不可变
-
-────────────────────────────────
-[Goal]
-────────────────────────────────
-
-Produce a report that:
-- 可以日更对比（结构一致）
-- 可以直接用于交易决策
-- 可以被第三方 audit`;
+DashboardData要求：
+- 必含字段：date/version/keyStats/warPhase/riskScore/prevRiskScore/investmentSignal/riskFactors/events/keyChange/scoreTrend/situations/coreContradiction
+- events.verification 仅可为 confirmed/partial/single
+- riskFactors.change 仅可为 up/down/structural，或省略
+- 分数必须和公式一致：Score = 平均值 * 20
+- scoreTrend 最后一个点 active=true，日期与data.date一致
+- 只写过去24h变化，最多5个事件。
+`;
 
 const response = await fetch("https://api.openai.com/v1/responses", {
   method: "POST",
@@ -187,10 +84,137 @@ if (!output) {
   throw new Error("OpenAI response did not include output_text");
 }
 
+function extractJsonObject(text) {
+  const start = text.indexOf("{");
+  const end = text.lastIndexOf("}");
+  if (start === -1 || end === -1 || end <= start) return null;
+  return text.slice(start, end + 1);
+}
+
+function toTsObjectLiteral(obj) {
+  return JSON.stringify(obj, null, 2).replace(/"([^"]+)":/g, "$1:");
+}
+
+function findObjectEnd(text, openBraceIndex) {
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+  for (let i = openBraceIndex; i < text.length; i += 1) {
+    const ch = text[i];
+    if (inString) {
+      if (escaped) {
+        escaped = false;
+      } else if (ch === "\\") {
+        escaped = true;
+      } else if (ch === '"') {
+        inString = false;
+      }
+      continue;
+    }
+    if (ch === '"') {
+      inString = true;
+      continue;
+    }
+    if (ch === "{") depth += 1;
+    if (ch === "}") depth -= 1;
+    if (depth === 0) return i;
+  }
+  return -1;
+}
+
+function replaceExportObject(sourceText, exportPrefix, nextExportPrefix, objectLiteral) {
+  const start = sourceText.indexOf(exportPrefix);
+  if (start === -1) throw new Error(`Cannot find ${exportPrefix}`);
+  const braceStart = sourceText.indexOf("{", start);
+  const braceEnd = findObjectEnd(sourceText, braceStart);
+  if (braceStart === -1 || braceEnd === -1) {
+    throw new Error(`Cannot parse object for ${exportPrefix}`);
+  }
+  const afterObject = sourceText.indexOf(nextExportPrefix, braceEnd);
+  if (afterObject === -1) throw new Error(`Cannot find boundary ${nextExportPrefix}`);
+  return (
+    sourceText.slice(0, start) +
+    `${exportPrefix}${objectLiteral};\n\n` +
+    sourceText.slice(afterObject)
+  );
+}
+
+function replaceTranslationField(sourceText, locale, key, value) {
+  const localeStart = sourceText.indexOf(`${locale}: {`);
+  if (localeStart === -1) throw new Error(`Cannot find locale ${locale}`);
+  const localeBraceStart = sourceText.indexOf("{", localeStart);
+  const localeBraceEnd = findObjectEnd(sourceText, localeBraceStart);
+  if (localeBraceEnd === -1) throw new Error(`Cannot parse locale ${locale}`);
+
+  const block = sourceText.slice(localeBraceStart, localeBraceEnd + 1);
+  const escaped = JSON.stringify(value);
+  const re = new RegExp(`(^\\s*${key}:\\s*)(?:\"(?:\\\\.|[^\"])*\"|[\\s\\S]*?)(,?)$`, "m");
+  if (!re.test(block)) throw new Error(`Cannot find translation key ${locale}.${key}`);
+  const replaced = block.replace(re, `$1${escaped}$2`);
+  return sourceText.slice(0, localeBraceStart) + replaced + sourceText.slice(localeBraceEnd + 1);
+}
+
+const jsonText = extractJsonObject(output);
+if (!jsonText) {
+  throw new Error("Model output did not contain a JSON object");
+}
+
+let payload;
+try {
+  payload = JSON.parse(jsonText);
+} catch (err) {
+  throw new Error(`Failed to parse model JSON: ${err.message}`);
+}
+
+const requiredTopKeys = ["reportMarkdownZh", "dataZh", "dataEn", "translationsDynamic"];
+for (const key of requiredTopKeys) {
+  if (!(key in payload)) {
+    throw new Error(`Missing key in payload: ${key}`);
+  }
+}
+
 const outDir = path.join(process.cwd(), "reports", "daily");
 await mkdir(outDir, { recursive: true });
 
 const outPath = path.join(outDir, `${todayNy}.md`);
-await writeFile(outPath, `${output}\n`, "utf8");
+await writeFile(outPath, `${payload.reportMarkdownZh}\n`, "utf8");
+
+const dataPath = path.join(process.cwd(), "src", "data.ts");
+let dataTs = await readFile(dataPath, "utf8");
+
+const dataZhLiteral = toTsObjectLiteral(payload.dataZh);
+const dataEnLiteral = toTsObjectLiteral(payload.dataEn);
+
+dataTs = replaceExportObject(
+  dataTs,
+  "export const DATA_ZH: DashboardData = ",
+  "export const DATA_EN: DashboardData = ",
+  dataZhLiteral
+);
+dataTs = replaceExportObject(
+  dataTs,
+  "export const DATA_EN: DashboardData = ",
+  "export const TRANSLATIONS = ",
+  dataEnLiteral
+);
+
+const translationKeys = [
+  "node406",
+  "systemInfo",
+  "bannerSignal",
+  "bannerWarning",
+  "deescalationIntent",
+  "structuralRisk",
+  "contradictionNote",
+  "dayCount",
+];
+
+for (const key of translationKeys) {
+  dataTs = replaceTranslationField(dataTs, "zh", key, payload.translationsDynamic.zh[key]);
+  dataTs = replaceTranslationField(dataTs, "en", key, payload.translationsDynamic.en[key]);
+}
+
+await writeFile(dataPath, dataTs, "utf8");
 
 console.log(`Saved report: ${path.relative(process.cwd(), outPath)}`);
+console.log("Updated src/data.ts from generated payload");
