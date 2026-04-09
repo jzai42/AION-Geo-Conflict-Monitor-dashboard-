@@ -28,11 +28,11 @@ jobs:
 
       - name: Checkout
         if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node
         if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 20
 

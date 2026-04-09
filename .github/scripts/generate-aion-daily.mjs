@@ -59,25 +59,41 @@ DashboardData要求：
 - 只写过去24h变化，最多5个事件。
 `;
 
-const response = await fetch("https://api.openai.com/v1/responses", {
-  method: "POST",
-  headers: {
-    Authorization: `Bearer ${OPENAI_API_KEY}`,
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
+async function callOpenAI(payload) {
+  const response = await fetch("https://api.openai.com/v1/responses", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${OPENAI_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+  const bodyText = await response.text();
+  if (!response.ok) {
+    throw new Error(`OpenAI API error ${response.status}: ${bodyText}`);
+  }
+  try {
+    return JSON.parse(bodyText);
+  } catch (err) {
+    throw new Error(`OpenAI response JSON parse failed: ${err.message}; body=${bodyText}`);
+  }
+}
+
+let data;
+try {
+  data = await callOpenAI({
     model: OPENAI_MODEL,
     input: prompt,
     tools: [{ type: "web_search_preview" }],
-  }),
-});
-
-if (!response.ok) {
-  const body = await response.text();
-  throw new Error(`OpenAI API error ${response.status}: ${body}`);
+  });
+} catch (firstErr) {
+  console.warn(`Primary call failed, retrying without web tool. reason=${firstErr.message}`);
+  data = await callOpenAI({
+    model: OPENAI_MODEL,
+    input: prompt,
+  });
 }
 
-const data = await response.json();
 const output = data.output_text?.trim();
 
 if (!output) {
@@ -148,7 +164,10 @@ function replaceTranslationField(sourceText, locale, key, value) {
 
   const block = sourceText.slice(localeBraceStart, localeBraceEnd + 1);
   const escaped = JSON.stringify(value);
-  const re = new RegExp(`(^\\s*${key}:\\s*)(?:\"(?:\\\\.|[^\"])*\"|[\\s\\S]*?)(,?)$`, "m");
+  const re = new RegExp(
+    `(^\\s*${key}:\\s*)(?:"(?:\\\\.|[^"\\\\])*"|\\n\\s*"(?:\\\\.|[^"\\\\])*")(,?)`,
+    "m"
+  );
   if (!re.test(block)) throw new Error(`Cannot find translation key ${locale}.${key}`);
   const replaced = block.replace(re, `$1${escaped}$2`);
   return sourceText.slice(0, localeBraceStart) + replaced + sourceText.slice(localeBraceEnd + 1);
@@ -156,6 +175,9 @@ function replaceTranslationField(sourceText, locale, key, value) {
 
 const jsonText = extractJsonObject(output);
 if (!jsonText) {
+  const debugDir = path.join(process.cwd(), "reports", "daily");
+  await mkdir(debugDir, { recursive: true });
+  await writeFile(path.join(debugDir, `${todayNy}.raw.txt`), `${output}\n`, "utf8");
   throw new Error("Model output did not contain a JSON object");
 }
 
@@ -163,6 +185,9 @@ let payload;
 try {
   payload = JSON.parse(jsonText);
 } catch (err) {
+  const debugDir = path.join(process.cwd(), "reports", "daily");
+  await mkdir(debugDir, { recursive: true });
+  await writeFile(path.join(debugDir, `${todayNy}.raw.txt`), `${output}\n`, "utf8");
   throw new Error(`Failed to parse model JSON: ${err.message}`);
 }
 
