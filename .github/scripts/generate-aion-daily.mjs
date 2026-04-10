@@ -167,11 +167,27 @@ if (!output) {
   throw new Error("OpenAI response did not include any text content");
 }
 
+function stripMarkdownFences(text) {
+  let t = asString(text).trim();
+  const m = t.match(/^```(?:json)?\s*\r?\n([\s\S]*?)\r?\n```\s*$/im);
+  if (m) return m[1].trim();
+  const idx = t.indexOf("```");
+  if (idx !== -1) {
+    const after = t.slice(idx + 3).replace(/^json\s*\r?\n/i, "");
+    const endFence = after.lastIndexOf("```");
+    if (endFence !== -1) return after.slice(0, endFence).trim();
+  }
+  return t;
+}
+
+/** 用括号深度截取第一个完整 JSON 对象（避免 lastIndexOf("}") 截断嵌套结构）。 */
 function extractJsonObject(text) {
-  const start = text.indexOf("{");
-  const end = text.lastIndexOf("}");
-  if (start === -1 || end === -1 || end <= start) return null;
-  return text.slice(start, end + 1);
+  const cleaned = stripMarkdownFences(text);
+  const start = cleaned.indexOf("{");
+  if (start === -1) return null;
+  const end = findObjectEnd(cleaned, start);
+  if (end === -1 || end < start) return null;
+  return cleaned.slice(start, end + 1);
 }
 
 async function repairJsonWithModel(badJsonText) {
@@ -191,6 +207,42 @@ ${badJsonText}`;
   });
   const repairedText = collectTextFromResponse(repairedResp);
   return extractJsonObject(repairedText) || repairedText;
+}
+
+async function resolveJsonTextFromModelOutput(primaryOutput) {
+  let jsonText = extractJsonObject(primaryOutput);
+  if (jsonText) return jsonText;
+
+  const debugDir = path.join(process.cwd(), "reports", "daily");
+  await mkdir(debugDir, { recursive: true });
+  await writeFile(path.join(debugDir, `${todayNy}.raw.txt`), `${primaryOutput}\n`, "utf8");
+
+  try {
+    const repaired = await repairJsonWithModel(primaryOutput.slice(0, 32000));
+    jsonText = extractJsonObject(repaired);
+    if (jsonText) {
+      console.warn("Recovered JSON via repairJsonWithModel.");
+      return jsonText;
+    }
+  } catch (e) {
+    console.warn(`repairJsonWithModel failed: ${e.message}`);
+  }
+
+  const strictPrompt = `你是数据管道。上一次输出无法解析为单个 JSON 对象（可能含 markdown、说明文字或括号不匹配）。请根据下列内容中的事实与数字，输出**仅一个**合法 JSON 对象，顶层键必须包含：reportMarkdownZh, dataZh, dataEn, translationsDynamic。不要 markdown 围栏，不要解释。
+
+上一次输出：
+${primaryOutput.slice(0, 28000)}`;
+
+  const follow = await callOpenAI({
+    model: OPENAI_MODEL,
+    input: strictPrompt,
+  });
+  const followText = collectTextFromResponse(follow);
+  jsonText = extractJsonObject(followText);
+  if (jsonText) {
+    console.warn("Recovered JSON via strict follow-up call.");
+  }
+  return jsonText;
 }
 
 function toTsObjectLiteral(obj) {
@@ -569,12 +621,9 @@ function enforceV29Layout(data, lang) {
   return data;
 }
 
-const jsonText = extractJsonObject(output);
+const jsonText = await resolveJsonTextFromModelOutput(output);
 if (!jsonText) {
-  const debugDir = path.join(process.cwd(), "reports", "daily");
-  await mkdir(debugDir, { recursive: true });
-  await writeFile(path.join(debugDir, `${todayNy}.raw.txt`), `${output}\n`, "utf8");
-  throw new Error("Model output did not contain a JSON object");
+  throw new Error("Model output did not contain a JSON object (after fence strip, bracket match, repair, and retry)");
 }
 
 let payload;
