@@ -165,19 +165,76 @@ const outputSchema = {
   additionalProperties: false,
 };
 
+// ── Read previous day data from data.ts ────────────────────────────
+const dataFilePath = path.join(process.cwd(), "src", "data.ts");
+let dataTsSnapshot = "";
+try { dataTsSnapshot = await readFile(dataFilePath, "utf8"); } catch { /* ok */ }
+
+function extractPrevData(snapshot) {
+  const dateM = snapshot.match(/date:\s*"(\d{4}-\d{2}-\d{2})"/);
+  const versionM = snapshot.match(/version:\s*"(v\d+\.\d+)"/);
+  const scoreM = snapshot.match(/riskScore:\s*(\d+)/);
+  const prevScoreM = snapshot.match(/prevRiskScore:\s*(\d+)/);
+  const trendM = snapshot.match(/scoreTrend:\s*\[([\s\S]*?)\]/);
+  const dayM = snapshot.match(/value:\s*"D(\d+)"/);
+  const factorsM = snapshot.match(/riskFactors:\s*\[([\s\S]*?)\],\s*events/);
+
+  let trendStr = "[]";
+  if (trendM) {
+    const points = [...trendM[1].matchAll(/date:\s*"([^"]+)".*?score:\s*(\d+)/g)];
+    trendStr = JSON.stringify(points.map(p => ({ date: p[1], score: Number(p[2]) })));
+  }
+
+  let factorScores = "";
+  if (factorsM) {
+    const names = [...factorsM[1].matchAll(/name:\s*"([^"]+)"/g)].map(m => m[1]);
+    const scores = [...factorsM[1].matchAll(/\bscore:\s*([\d.]+)/g)].map(m => Number(m[1]));
+    factorScores = names.map((n, i) => `${n}: ${scores[i] ?? "?"}`).join(", ");
+  }
+
+  return {
+    date: dateM?.[1] || "",
+    version: versionM?.[1] || "v2.9",
+    riskScore: Number(scoreM?.[1]) || 64,
+    prevRiskScore: Number(prevScoreM?.[1]) || 56,
+    conflictDay: Number(dayM?.[1]) || 40,
+    scoreTrend: trendStr,
+    factorScores,
+  };
+}
+
+const prev = extractPrevData(dataTsSnapshot);
+const conflictStartDate = "2026-02-28";
+const msPerDay = 86400000;
+const correctConflictDay = Math.round((new Date(todayNy) - new Date(conflictStartDate)) / msPerDay);
+const prevTrendLast4 = JSON.parse(prev.scoreTrend).slice(-4);
+
+console.log(`Previous: ${prev.date} ${prev.version}, riskScore=${prev.riskScore}, D${prev.conflictDay}`);
+console.log(`Today conflict day: D${correctConflictDay}`);
+
 // ── Prompt ──────────────────────────────────────────────────────────
 const systemPrompt = `你是 AION Geo-Conflict Monitor 的结构化数据引擎。用网络搜索获取近 24h 美伊相关公开信息后，按 JSON Schema 输出结构化日报。
 
+## 前一天数据（必须作为基准，不可忽略）
+- 日期: ${prev.date}，版本: ${prev.version}
+- 冲突天数: D${prev.conflictDay}（冲突起始日 ${conflictStartDate}，**今天是 D${correctConflictDay}**）
+- 综合评分: ${prev.riskScore}（上期: ${prev.prevRiskScore}）
+- 五维因子分: ${prev.factorScores}
+- 近5日趋势: ${prev.scoreTrend}
+
 ## 规则
 - date 必须是 "${todayNy}"
-- version 形如 "v2.10"（每日递增小版本）
-- keyStats 恰好 4 项，顺序：冲突天数(Dxx)、评分变化(±N)、油价、霍尔木兹。每项 unit 非空
+- version: "${prev.version}" 的下一个版本（小版本号 +1）
+- keyStats[0] 冲突天数: 必须是 "D${correctConflictDay}"（不要自己算，用这个值）
+- keyStats[1] 评分变化: 今日 riskScore 与前一天 ${prev.riskScore} 的差值（如 ↑3 或 ↓2 或 持平）
+- keyStats 恰好 4 项，顺序：冲突天数、评分变化、油价、霍尔木兹。每项 unit 非空
 - riskFactors 恰好 5 项，顺序：军事升级烈度、霍尔木兹航运扰动、能源冲击、大国介入深度、降级谈判前景。weight 一律 0.2。riskScore = round(avg(scores) × 20)
+- riskFactors 的 prev 字段必须等于前一天对应因子的 score
 - events 1–5 条。verification 只能是 confirmed/partial/single。highlight/critical 不需要时设 false
 - warPhase 所有字段非空；points 1–3 条
 - situations 恰好 4 张卡，顺序：军事行动、航运/霍尔木兹、能源市场、领导层信号。每张 points 1–3 条非空
 - coreContradiction.political 和 .military 各 1–2 条非空
-- scoreTrend 恰好 5 个点，date 为 MM-DD，最后一项 date="${todayMmDd}" active=true score=riskScore
+- scoreTrend 恰好 5 个点：前 4 个点取自前一天趋势的后 4 个（${JSON.stringify(prevTrendLast4)}），第 5 个是今天 date="${todayMmDd}" active=true score=今日riskScore
 - keyChange、investmentSignal 非空
 - change 字段：有变化填 up/down/structural，无变化填 "none"
 - dataZh 中文、dataEn 英文，结构完全一致，仅文案语言不同，数值相同
@@ -259,7 +316,6 @@ try {
   payload = JSON.parse(cleaned);
 }
 console.log("Parsed structured output successfully.");
-console.log("Parsed structured output successfully.");
 
 // ── Post-process: enforce v2.9 canonical layout ────────────────────
 function s(v, fb = "") { return typeof v === "string" ? v : fb; }
@@ -270,17 +326,28 @@ function enforceLayout(d, lang) {
   const c = CANONICAL[lang];
   d.date = todayNy;
 
-  // keyStats
+  // keyStats — force correct conflict day
   const ks = Array.isArray(d.keyStats) ? d.keyStats : [];
-  d.keyStats = c.keyStatLabels.map((label, i) => ({
-    label,
-    value: s(ks[i]?.value, "-"),
-    unit: i < 2 ? c.keyStatUnitsFixed[i] : (s(ks[i]?.unit).trim() || c.keyStatDefaultUnits34[i - 2]),
-    color: s(ks[i]?.color, c.keyStatColors[i]),
-  }));
+  d.keyStats = c.keyStatLabels.map((label, i) => {
+    let value = s(ks[i]?.value, "-");
+    if (i === 0) value = `D${correctConflictDay}`;
+    if (i === 1) {
+      const delta = d.riskScore - prev.riskScore;
+      value = delta > 0 ? `↑${delta}` : delta < 0 ? `↓${Math.abs(delta)}` : "持平";
+    }
+    return {
+      label,
+      value,
+      unit: i < 2 ? c.keyStatUnitsFixed[i] : (s(ks[i]?.unit).trim() || c.keyStatDefaultUnits34[i - 2]),
+      color: s(ks[i]?.color, c.keyStatColors[i]),
+    };
+  });
 
-  // riskFactors
+  // riskFactors — force prev from previous day's actual scores
   const rf = Array.isArray(d.riskFactors) ? d.riskFactors : [];
+  const prevFactorScores = prev.factorScores
+    ? prev.factorScores.split(", ").map(s => Number(s.split(": ")[1]) || 3)
+    : [3, 3, 3, 3, 3];
   d.riskFactors = c.riskFactorNames.map((name, i) => {
     const src = rf[i] || {};
     const validStatus = ["NORMAL", "AT CEILING", "FAST", "SLOW"];
@@ -288,7 +355,7 @@ function enforceLayout(d, lang) {
     return {
       name,
       score: n(src.score, 3),
-      prev: n(src.prev, 3),
+      prev: prevFactorScores[i] ?? 3,
       weight: 0.2,
       description: s(src.description),
       status: validStatus.includes(src.status) ? src.status : "FAST",
@@ -296,9 +363,10 @@ function enforceLayout(d, lang) {
     };
   });
 
-  // riskScore from factors
+  // riskScore from factors; prevRiskScore from previous day
   const avg = d.riskFactors.reduce((sum, f) => sum + f.score, 0) / 5;
   d.riskScore = Math.round(avg * 20);
+  d.prevRiskScore = prev.riskScore;
 
   // situations
   const sit = Array.isArray(d.situations) ? d.situations : [];
@@ -310,25 +378,20 @@ function enforceLayout(d, lang) {
     points: (Array.isArray(sit[i]?.points) ? sit[i].points : []).filter(Boolean).slice(0, 3),
   }));
 
-  // scoreTrend: ensure 5 points, last = today
-  let trend = (Array.isArray(d.scoreTrend) ? d.scoreTrend : [])
-    .map(p => ({ date: s(p.date), score: n(p.score, d.riskScore) }))
-    .filter(p => /^\d{2}-\d{2}$/.test(p.date));
-  if (!trend.length) trend.push({ date: todayMmDd, score: d.riskScore });
-  while (trend.length < 5) {
-    const h = trend[0];
+  // scoreTrend: use previous day's last 4 points + today (never trust model for history)
+  const historyPoints = prevTrendLast4.map(p => ({ date: p.date, score: p.score }));
+  while (historyPoints.length < 4) {
+    const h = historyPoints[0] || { date: todayMmDd, score: prev.riskScore };
     const [mm, dd] = h.date.split("-").map(Number);
     const dt = new Date(Date.UTC(2026, mm - 1, dd));
     dt.setUTCDate(dt.getUTCDate() - 1);
-    const prev = `${String(dt.getUTCMonth() + 1).padStart(2, "0")}-${String(dt.getUTCDate()).padStart(2, "0")}`;
-    trend.unshift({ date: prev, score: n(d.prevRiskScore, h.score) });
+    const pd = `${String(dt.getUTCMonth() + 1).padStart(2, "0")}-${String(dt.getUTCDate()).padStart(2, "0")}`;
+    historyPoints.unshift({ date: pd, score: prev.riskScore });
   }
-  trend = trend.slice(-5);
-  d.scoreTrend = trend.map((p, i) => {
-    const obj = { date: p.date, score: p.score };
-    if (i === 4) { obj.date = todayMmDd; obj.score = d.riskScore; obj.active = true; }
-    return obj;
-  });
+  d.scoreTrend = [
+    ...historyPoints.slice(-4),
+    { date: todayMmDd, score: d.riskScore, active: true },
+  ];
 
   // events: clean up booleans
   d.events = (Array.isArray(d.events) ? d.events : []).slice(0, 5).map((e, i) => {
@@ -399,20 +462,8 @@ function syncEnFromZh(zh, en) {
   }));
 }
 
-// Version from existing data.ts
-const dataFilePath = path.join(process.cwd(), "src", "data.ts");
-let dataTsSnapshot = "";
-try { dataTsSnapshot = await readFile(dataFilePath, "utf8"); } catch { /* ok */ }
-
-function bumpVersion(snapshot) {
-  const m = snapshot.match(/version:\s*"v(\d+)\.(\d+)"/);
-  if (!m) return "v2.10";
-  return `v${m[1]}.${Number(m[2]) + 1}`;
-}
-
-const version = /^v\d+\.\d+$/.test(s(payload.dataZh?.version))
-  ? payload.dataZh.version
-  : bumpVersion(dataTsSnapshot);
+// Version: bump from previous
+const version = `v${prev.version.match(/(\d+)\.(\d+)/)?.[1] || 2}.${(Number(prev.version.match(/\d+\.(\d+)/)?.[1]) || 9) + 1}`;
 
 payload.dataZh.version = version;
 payload.dataEn.version = version;
