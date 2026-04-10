@@ -59,419 +59,368 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-04-10",
-  version: "v2.12",
-  riskScore: 80,
-  prevRiskScore: 80,
-  investmentSignal: "谨慎偏防御，维持高地缘风险溢价配置。",
-  keyChange: "停火与谈判仍在推进，但霍尔木兹通行恢复不稳，油价回落后仍高度敏感，综合风险保持高位不变。",
+  date: "2026-04-09",
+  version: "v2.9",
   keyStats: [
-    {
-      label: "冲突天数",
-      value: "D41",
-      unit: "2月28日起",
-      color: "red"
-    },
-    {
-      label: "评分变化",
-      value: "持平",
-      unit: "较上期",
-      color: "gray"
-    },
-    {
-      label: "油价",
-      value: "约 95–103",
-      unit: "美元/桶",
-      color: "orange"
-    },
-    {
-      label: "霍尔木兹",
-      value: "低流量 / 高摩擦",
-      unit: "状态",
-      color: "red"
-    }
+    { label: "冲突天数", value: "D40", unit: "2月28日起", color: "#ff851b" },
+    { label: "评分变化", value: "↑8", unit: "较上期", color: "#ff4136" },
+    { label: "油价", value: "<100", unit: "危机峰下", color: "#ff4136" },
+    { label: "霍尔木兹", value: "许可制", unit: "<10% 常态", color: "#ffdc00" },
   ],
   warPhase: {
-    level: "4",
-    targetLevel: "5",
-    title: "高压拉锯期",
-    subTitle: "停火存在但执行脆弱，航运与能源价格仍处高敏感状态",
+    level: "脆弱停火",
+    targetLevel: "代理延续",
+    title: "脆弱停火 / 代理冲突延续阶段",
+    subTitle: "由直接对抗转向「间接冲突 + 谈判张力」；系统性风险回落，但失败概率仍不可忽视",
     points: [
-      "谈判继续，但条件交换复杂。",
-      "霍尔木兹恢复通行仍不稳，市场定价偏悲观。",
-      "军事外溢风险未消失，仍可能被局部事件重新点燃。"
+      "两周美伊停火形式上仍有效，但间接敌对仍在（以黎战线、海湾事件等）；伊朗称在持续打击下谈判可能「不合理」",
+      "霍尔木兹未正常化：仅伊方军事授权下通行，船舶被告知须获许可否则面临风险；流量仍远低于常态（约一成以下）",
+      "外交动能上升：欧盟公开支持停火并推动谈判；伊朗对接触持谨慎态度；马士基等称停火未带来「充分海事确定性」",
     ],
-    note: "当前更像高压管控而非真正降级，风险中枢仍高。"
+    note: "事件5：违反停火指控与地区外溢叙述争议大、互证不完整——监测项，不纳入主评分",
   },
+  riskScore: 64,
+  prevRiskScore: 56,
+  keyChange:
+    "24h要点：停火名义上延续但早期承压（路透+分析）；咽喉点仍为许可制高压、流量极低；班轮巨头维持暂停；欧盟与联合国渠道外交推进；油价在危机峰下企稳（<100美元）但航运与设施损伤带来的结构性风险仍在。",
+  investmentSignal:
+    "「从峰值危机仓位转向更均衡敞口；保留对冲——停火破裂风险仍具实质性。」",
+  scoreTrend: [
+    { date: "04-05", score: 74 },
+    { date: "04-06", score: 68 },
+    { date: "04-07", score: 68 },
+    { date: "04-08", score: 56 },
+    { date: "04-09", score: 64, active: true },
+  ],
   riskFactors: [
     {
       name: "军事升级烈度",
-      score: 4,
-      prev: 4,
+      score: 3.0,
+      prev: 2.0,
       weight: 0.2,
-      description: "未见统一确认的大规模新打击，但局势仍脆弱。",
-      status: "FAST"
+      description: "美伊直接冲突暂停，但代理/外围战线仍有交火与事件；升级路径未关闭",
+      status: "FAST",
+      change: "up",
     },
     {
       name: "霍尔木兹航运扰动",
-      score: 5,
-      prev: 5,
+      score: 4.0,
+      prev: 3.0,
       weight: 0.2,
-      description: "通行恢复有限，航运仍受政治条件约束。",
-      status: "FAST"
+      description: "名义重开下仍高度受限：许可制通行、流量约一成以下常态；伊方事实控制咽喉",
+      status: "FAST",
+      change: "up",
     },
     {
       name: "能源冲击",
-      score: 4,
-      prev: 4,
+      score: 3.0,
+      prev: 3.0,
       weight: 0.2,
-      description: "油价回落但仍处高敏感区间。",
-      status: "FAST"
+      description: "价格自危机峰值回落（<100美元），但体系仍承压；航运约束与设施损伤带来持续尾部",
+      status: "FAST",
     },
     {
       name: "大国介入深度",
-      score: 4,
-      prev: 4,
+      score: 3.0,
+      prev: 3.0,
       weight: 0.2,
-      description: "欧洲与美国均继续推动降温与谈判。",
-      status: "FAST"
+      description: "欧盟等区域外交活跃；未见新的成规模直接军事入场",
+      status: "SLOW",
     },
     {
       name: "降级/谈判前景",
-      score: 3,
-      prev: 3,
+      score: 3.0,
+      prev: 3.0,
       weight: 0.2,
-      description: "存在谈判窗口，但执行与条件分歧较大。",
-      status: "FAST"
-    }
+      description: "停火仍在但可信度脆弱；谈判活跃但不稳定",
+      status: "FAST",
+    },
   ],
   events: [
     {
-      id: "e1",
-      title: "霍尔木兹谈判继续推进",
-      description: "公开报道显示，围绕停火与重开霍尔木兹的谈判仍在进行，伊方坚持若干附带条件。",
+      id: "EVT-01",
+      title: "停火形式上延续但现早期承压迹象",
+      description:
+        "两周美伊停火仍有效，但间接敌对持续（以黎、海湾等）；伊朗称在持续打击下谈判可能「不合理」。",
       verification: "confirmed",
-      timestamp: "2026-04-09",
-      significance: "high",
-      highlight: true
+      timestamp: "2026-04-08 → 2026-04-09",
+      significance: "路透 + 路透分析互证",
+      highlight: true,
     },
     {
-      id: "e2",
-      title: "欧洲继续推动政治解决",
-      description: "欧洲领导人呼吁尽快稳定停火并恢复航运秩序。",
+      id: "EVT-02",
+      title: "霍尔木兹仍高度受限、伊方掌控通行授权",
+      description:
+        "船舶仅在伊方军事授权下通行；未获许可或面临被针对警告；流量仍低于常态约九成。",
       verification: "confirmed",
-      timestamp: "2026-04-09",
-      significance: "medium"
+      timestamp: "2026-04-08",
+      significance: "路透（航运+能源）互证",
+      highlight: true,
     },
     {
-      id: "e3",
-      title: "油价高位回落但仍敏感",
-      description: "停火预期推动油价回撤，但市场仍担忧霍尔木兹流量不足。",
+      id: "EVT-03",
+      title: "马士基：停火未带来充分海事确定性",
+      description:
+        "大型航运公司确认：停火不足以恢复「充分海事确定性」，常规航运运营尚未恢复。",
       verification: "confirmed",
-      timestamp: "2026-04-09",
-      significance: "high",
-      highlight: true
+      timestamp: "2026-04-08",
+      significance: "公司声明 + 路透报道互证",
+      highlight: true,
     },
     {
-      id: "e4",
-      title: "EIA 将霍尔木兹关闭纳入供给假设",
-      description: "美国能源部/EIA 公开材料继续把霍尔木兹风险视为供给冲击核心变量。",
+      id: "EVT-04",
+      title: "外交动能上升，尚无持久框架",
+      description:
+        "欧盟领导人公开支持停火并推动谈判；伊朗驻联合国大使等释放信号，在深度不信任下谨慎接触会谈。",
       verification: "confirmed",
-      timestamp: "2026-04-07",
-      significance: "high"
+      timestamp: "2026-04-08",
+      significance: "路透（欧盟表态；伊朗驻联合国大使）互证",
+      highlight: true,
     },
     {
-      id: "e5",
-      title: "4月10日谈判节点",
-      description: "报道提及 4 月 10 日伊朗与美方谈判安排。",
-      verification: "single",
-      timestamp: "2026-04-10",
-      significance: "low"
-    }
-  ],
-  scoreTrend: [
-    {
-      date: "04-06",
-      score: 80
+      id: "EVT-05",
+      title: "违反停火指控与地区外溢（监测）",
+      description:
+        "伊朗指责美/以违反停火（黎巴嫩打击、无人机活动等）；以方在停火范围外继续行动。指控争议大、互证不完整。",
+      verification: "partial",
+      timestamp: "2026-04-08",
+      significance: "部分互证；争议叙事；不纳入评分",
     },
-    {
-      date: "04-07",
-      score: 80
-    },
-    {
-      date: "04-08",
-      score: 80
-    },
-    {
-      date: "04-09",
-      score: 80
-    },
-    {
-      date: "04-10",
-      score: 80,
-      active: true
-    }
   ],
   situations: [
     {
       title: "军事行动",
       icon: "Military",
-      tag: "高压但受控",
-      tagColor: "red",
+      tag: "直接暂停",
+      tagColor: "yellow",
       points: [
-        "未见统一确认的新一轮大规模升级。",
-        "局势仍可能因局部事件快速反转。"
-      ]
+        "美伊核心直接冲突暂停",
+        "代理与外围战线仍有冲突与事件",
+        "停火稳定性脆弱，升级通道仍敞开",
+      ],
     },
     {
       title: "航运 / 霍尔木兹",
       icon: "Shipping",
-      tag: "通行受限",
-      tagColor: "red",
+      tag: "许可制",
+      tagColor: "orange",
       points: [
-        "通行恢复不完全，规则仍有摩擦。",
-        "少量恢复不等于风险解除。"
-      ]
+        "未恢复正常：许可制通行体系",
+        "流量仍严重压制（约一成以下常态）",
+        "伊朗对咽喉点保持事实作战控制",
+      ],
     },
     {
       title: "能源市场",
       icon: "Energy",
-      tag: "高波动",
+      tag: "脆弱均衡",
       tagColor: "orange",
       points: [
-        "油价较高位回落，但仍在敏感区。",
-        "市场继续交易地缘风险溢价。"
-      ]
+        "油价在危机峰下企稳（<100美元）",
+        "由恐慌向脆弱均衡过渡",
+        "航运受限与战争设施损伤带来结构性风险",
+      ],
     },
     {
       title: "领导层信号",
       icon: "Leadership",
-      tag: "谈判与威慑并行",
+      tag: "谈判不稳",
       tagColor: "yellow",
       points: [
-        "美方释放谈判与施压双重信号。",
-        "伊方强调对霍尔木兹的规则主导权。"
-      ]
-    }
+        "美国（特朗普）：称停火成功，同时保留谈判失败时的威胁姿态",
+        "伊朗：不信任升温，会谈条件化",
+        "欧盟：强力推动持续降级",
+      ],
+    },
   ],
   coreContradiction: {
-    political: [
-      "停火需要条件交换，但各方都不愿先让步。",
-      "通行恢复与政治谈判被绑定，导致降级速度受限。"
-    ],
-    military: [
-      "军事打击暂未全面升级，但威慑仍在持续。",
-      "霍尔木兹航运压力成为替代性施压手段。"
-    ]
-  }
+    political: ["外交与谈判被激活", "仍无持久安全框架"],
+    military: ["直接动能对抗降温", "代理冲突与指控使停火可信度受考验"],
+  },
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-04-10",
-  version: "v2.12",
-  riskScore: 80,
-  prevRiskScore: 80,
-  investmentSignal: "Cautious defensive stance; maintain a premium for geopolitical risk.",
-  keyChange: "Ceasefire talks are still moving, but Hormuz transit remains unstable and oil remains highly sensitive after the pullback, keeping the composite risk unchanged at a high level.",
+  date: "2026-04-09",
+  version: "v2.9",
   keyStats: [
-    {
-      label: "Conflict Days",
-      value: "D41",
-      unit: "Since Feb 28",
-      color: "red"
-    },
-    {
-      label: "Score Change",
-      value: "持平",
-      unit: "vs Prev",
-      color: "gray"
-    },
-    {
-      label: "Oil",
-      value: "约 95–103",
-      unit: "USD/bbl",
-      color: "orange"
-    },
-    {
-      label: "Hormuz",
-      value: "低流量 / 高摩擦",
-      unit: "status",
-      color: "red"
-    }
+    { label: "Conflict Days", value: "D40", unit: "Since Feb 28", color: "#ff851b" },
+    { label: "Score Change", value: "↑8", unit: "vs Prev", color: "#ff4136" },
+    { label: "Oil", value: "<100", unit: "Below crisis peak", color: "#ff4136" },
+    { label: "Hormuz", value: "Permit-only", unit: "<10% of normal", color: "#ffdc00" },
   ],
   warPhase: {
-    level: "4",
-    targetLevel: "5",
-    title: "High-pressure stalemate",
-    subTitle: "A ceasefire exists on paper, but implementation is fragile and shipping/energy prices remain highly sensitive.",
+    level: "Fragile Ceasefire",
+    targetLevel: "Proxy War",
+    title: "Fragile Ceasefire / Proxy Conflict Continuation Phase",
+    subTitle: "Transition from direct war → indirect conflict + negotiation tension; systemic risk declining, but failure probability remains non-trivial",
     points: [
-      "Talks continue, but the exchange of conditions is complex.",
-      "Hormuz transit recovery remains shaky; market pricing stays pessimistic.",
-      "Military spillover risk has not disappeared and could be reignited by a local incident."
+      "Two-week US–Iran ceasefire holds formally, but hostilities continue indirectly (Israel–Lebanon theater, Gulf incidents); Iran signals talks may be “unreasonable” under continued strikes",
+      "Hormuz not normalized: shipping only under Iranian military authorization; vessels warned to obtain permission or risk being targeted; traffic remains <10% of normal",
+      "Diplomatic momentum rises: EU backs ceasefire and pushes talks; Iran signals cautious engagement amid deep mistrust; Maersk says ceasefire does not provide “full maritime certainty”",
     ],
-    note: "This is more a regime of tight control than true de-escalation; the risk center remains elevated."
+    note: "EVT-05: violation claims and spillover—contested narrative, partial verification—monitoring only, excluded from scoring",
   },
+  riskScore: 64,
+  prevRiskScore: 56,
+  keyChange:
+    "Last 24h: ceasefire formally holds but shows early strain (Reuters + analysis); Hormuz remains permission-based with severely suppressed traffic; major liners still paused; EU-led diplomacy accelerates; oil stabilized below crisis peak (<100) while shipping and war-damage overhang persist.",
+  investmentSignal:
+    "Shift from peak crisis positioning to balanced exposure; maintain hedges—ceasefire breakdown risk remains material.",
+  scoreTrend: [
+    { date: "04-05", score: 74 },
+    { date: "04-06", score: 68 },
+    { date: "04-07", score: 68 },
+    { date: "04-08", score: 56 },
+    { date: "04-09", score: 64, active: true },
+  ],
   riskFactors: [
     {
       name: "Military Escalation Intensity",
-      score: 4,
-      prev: 4,
+      score: 3.0,
+      prev: 2.0,
       weight: 0.2,
-      description: "No newly confirmed large-scale strike, but the situation remains fragile.",
-      status: "FAST"
+      description:
+        "Core US–Iran direct conflict paused, but proxy conflict continues; escalation pathways remain open",
+      status: "FAST",
+      change: "up",
     },
     {
       name: "Hormuz Disruption",
-      score: 5,
-      prev: 5,
+      score: 4.0,
+      prev: 3.0,
       weight: 0.2,
-      description: "Transit recovery is limited and still constrained by political conditions.",
-      status: "FAST"
+      description:
+        "Severe restriction persists despite nominal reopening; permit-based transit; Iran retains de facto chokepoint control",
+      status: "FAST",
+      change: "up",
     },
     {
       name: "Energy Shock",
-      score: 4,
-      prev: 4,
+      score: 3.0,
+      prev: 3.0,
       weight: 0.2,
-      description: "Oil has pulled back, but remains in a highly sensitive range.",
-      status: "FAST"
+      description:
+        "Prices corrected below crisis peak (<100) but the system remains stressed; constrained shipping and infrastructure damage sustain structural risk",
+      status: "FAST",
     },
     {
       name: "Great Power Involvement",
-      score: 4,
-      prev: 4,
+      score: 3.0,
+      prev: 3.0,
       weight: 0.2,
-      description: "Europe and the United States continue to push for de-escalation and talks.",
-      status: "FAST"
+      description: "EU + regional diplomacy active; no new large-scale military entrants",
+      status: "SLOW",
     },
     {
       name: "De-escalation Probability",
-      score: 3,
-      prev: 3,
+      score: 3.0,
+      prev: 3.0,
       weight: 0.2,
-      description: "A negotiation window exists, but implementation and condition gaps are substantial.",
-      status: "FAST"
-    }
+      description: "Ceasefire holds but credibility fragile; negotiation phase active but unstable",
+      status: "FAST",
+    },
   ],
   events: [
     {
-      id: "e1",
-      title: "Hormuz negotiations continue",
-      description: "Public reporting indicates talks on the ceasefire and reopening Hormuz are still underway, with Tehran maintaining several attached conditions.",
+      id: "EVT-01",
+      title: "Ceasefire Holds Formally but Shows Early Strain",
+      description:
+        "The two-week ceasefire remains in effect, but hostilities continue indirectly (Israel–Lebanon theater, Gulf incidents). Iran signals talks may be “unreasonable” under continued strikes.",
       verification: "confirmed",
-      timestamp: "2026-04-09",
-      significance: "high",
-      highlight: true
+      timestamp: "2026-04-08 → 2026-04-09",
+      significance: "YES: Reuters; Reuters analysis",
+      highlight: true,
     },
     {
-      id: "e2",
-      title: "Europe keeps pushing for a political settlement",
-      description: "European leaders called for rapid stabilization of the ceasefire and restoration of shipping order.",
+      id: "EVT-02",
+      title: "Strait of Hormuz Remains Restricted Under Iranian Control",
+      description:
+        "Shipping allowed only under Iranian military authorization; vessels warned they must obtain permission or risk being targeted. Traffic remains <10% of normal levels.",
       verification: "confirmed",
-      timestamp: "2026-04-09",
-      significance: "medium"
+      timestamp: "2026-04-08",
+      significance: "YES: Reuters (shipping + energy)",
+      highlight: true,
     },
     {
-      id: "e3",
-      title: "Oil falls from highs but remains sensitive",
-      description: "Ceasefire hopes pushed oil lower, yet markets still worry that Hormuz flow will not fully normalize.",
+      id: "EVT-03",
+      title: "Global Shipping Firms Maintain Suspension Despite Ceasefire",
+      description:
+        "Maersk confirms the ceasefire does not provide “full maritime certainty”; normal shipping operations have not resumed.",
       verification: "confirmed",
-      timestamp: "2026-04-09",
-      significance: "high",
-      highlight: true
+      timestamp: "2026-04-08",
+      significance: "YES: corporate statement + Reuters reporting",
+      highlight: true,
     },
     {
-      id: "e4",
-      title: "EIA keeps Hormuz closure in supply assumptions",
-      description: "The U.S. Energy Department / EIA continues to treat Hormuz disruption as a core supply-shock variable in its public materials.",
+      id: "EVT-04",
+      title: "Diplomatic Momentum Increases but No Durable Framework",
+      description:
+        "EU leaders publicly support the ceasefire and push for negotiations; Iran signals cautious engagement amid deep mistrust (incl. Iranian UN ambassador commentary per Reuters).",
       verification: "confirmed",
-      timestamp: "2026-04-07",
-      significance: "high"
+      timestamp: "2026-04-08",
+      significance: "YES: Reuters (EU statements; Iranian UN ambassador)",
+      highlight: true,
     },
     {
-      id: "e5",
-      title: "April 10 negotiation milestone",
-      description: "Reporting mentions a scheduled April 10 Iran-U.S. negotiation point.",
-      verification: "single",
-      timestamp: "2026-04-10",
-      significance: "low"
-    }
-  ],
-  scoreTrend: [
-    {
-      date: "04-06",
-      score: 80
+      id: "EVT-05",
+      title: "Ceasefire Violation Claims and Regional Spillover",
+      description:
+        "Iran accuses the U.S./Israel of violations (Lebanon strikes, drone activity); Israel continues operations outside ceasefire scope. Claims contested—excluded from scoring.",
+      verification: "partial",
+      timestamp: "2026-04-08",
+      significance: "PARTIAL / contested; excluded from scoring",
     },
-    {
-      date: "04-07",
-      score: 80
-    },
-    {
-      date: "04-08",
-      score: 80
-    },
-    {
-      date: "04-09",
-      score: 80
-    },
-    {
-      date: "04-10",
-      score: 80,
-      active: true
-    }
   ],
   situations: [
     {
       title: "Military Action",
       icon: "Military",
-      tag: "High pressure, controlled",
-      tagColor: "red",
+      tag: "Proxy Continues",
+      tagColor: "orange",
       points: [
-        "No newly confirmed large-scale escalation was seen.",
-        "The situation could still reverse quickly because of a local incident."
-      ]
+        "Core US–Iran direct conflict paused",
+        "Active conflict persists via proxies and peripheral theaters",
+        "Ceasefire stability fragile; escalation pathways remain open",
+      ],
     },
     {
       title: "Shipping / Hormuz",
       icon: "Shipping",
-      tag: "Transit constrained",
-      tagColor: "red",
+      tag: "Permit System",
+      tagColor: "orange",
       points: [
-        "Transit recovery remains incomplete and still carries friction.",
-        "Partial recovery does not mean risk is gone."
-      ]
+        "Not normalized: permission-based transit",
+        "Traffic still severely suppressed (<10% of normal)",
+        "Iran retains de facto operational control of the chokepoint",
+      ],
     },
     {
       title: "Energy Market",
       icon: "Energy",
-      tag: "High volatility",
+      tag: "Fragile Equilibrium",
       tagColor: "orange",
       points: [
-        "Oil has pulled back from highs, but remains in a sensitive zone.",
-        "Markets continue to price a geopolitical risk premium."
-      ]
+        "Oil stabilized below crisis peak (<100)",
+        "Market shifting panic → fragile equilibrium",
+        "Structural risk from constrained shipping and war damage to infrastructure",
+      ],
     },
     {
       title: "Leadership Signals",
       icon: "Leadership",
-      tag: "Talks plus deterrence",
+      tag: "Unstable Talks",
       tagColor: "yellow",
       points: [
-        "Washington is sending both negotiation and pressure signals.",
-        "Tehran continues to emphasize rule-setting power over Hormuz."
-      ]
-    }
+        "U.S. (Trump): claims ceasefire success; retains threat posture if a deal fails",
+        "Iran: mistrust; conditional engagement in talks",
+        "EU: strong push for sustained de-escalation",
+      ],
+    },
   ],
   coreContradiction: {
-    political: [
-      "Ceasefire requires condition swapping, but neither side wants to concede first.",
-      "Transit normalization is tied to political talks, slowing de-escalation."
-    ],
-    military: [
-      "Military strikes have not fully escalated, but deterrence remains active.",
-      "Pressure on Hormuz shipping is functioning as an alternative coercive tool."
-    ]
-  }
+    political: ["Diplomatic momentum without a durable framework", "Deep mistrust on both sides"],
+    military: ["Direct kinetic pause", "Proxy conflict + violation narratives test ceasefire credibility"],
+  },
 };
 
 export const TRANSLATIONS = {
@@ -479,7 +428,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "4月10日节点",
+    node406: "4月9日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -510,22 +459,22 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.12 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.9 · Daily",
     sources: "来源",
     vs: "较",
     bannerSignal:
-      "综合评分 80（持平）：停火与谈判仍在推进，但霍尔木兹通行恢复不稳，油价回落后仍高度敏感，综合风险保持高位不变。",
-    bannerWarning: "谨慎偏防御，维持高地缘风险溢价配置。",
-    deescalationIntent: "停火需要条件交换，但各方都不愿先让步。",
-    structuralRisk: "通行恢复有限，航运仍受政治条件约束。",
+      "综合评分 64（↑8）：停火承压 + 霍尔木兹许可制&流量极低 + 班轮仍停；路透为主，欧盟/华邮等互证、可审计",
+    bannerWarning: "由峰值危机仓位转向均衡敞口；保留对冲——停火可信度仍脆弱",
+    deescalationIntent: "外交动能上升但框架未立",
+    structuralRisk: "咽喉未正常化；海事不确定性仍压制航运",
     contradictionNote:
-      "停火需要条件交换，但各方都不愿先让步。；军事打击暂未全面升级，但威慑仍在持续。",
+      "系统性风险回落，但失败概率仍不可忽视：直接对抗降温而代理线与指控拉扯谈判张力。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
     clickExpand: "点击展开详情",
     conflictName: "美伊冲突",
-    dayCount: "第41天",
+    dayCount: "第40天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -533,7 +482,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Apr 10 Node",
+    node406: "Apr 9 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -564,22 +513,22 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.12 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.9 · Daily",
     sources: "Sources",
     vs: "vs",
     bannerSignal:
-      "Composite 80 (持平): Ceasefire talks are still moving, but Hormuz transit remains unstable and oil remains highly sensitive after the pullback, keeping the comp…",
-    bannerWarning: "Cautious defensive stance; maintain a premium for geopolitical risk.",
-    deescalationIntent: "Ceasefire requires condition swapping, but neither side wants to concede first.",
-    structuralRisk: "Transit recovery is limited and still constrained by political conditions.",
+      "Composite 64 (↑8): ceasefire strain + permit-only Hormuz & ultra-low traffic + liners still paused; Reuters-primary, EU/WaPo cross-check, auditable",
+    bannerWarning: "From peak-crisis to balanced exposure; keep hedges—ceasefire credibility fragile",
+    deescalationIntent: "Diplomatic momentum, no durable framework yet",
+    structuralRisk: "Chokepoint not normalized; maritime uncertainty still suppresses shipping",
     contradictionNote:
-      "Ceasefire requires condition swapping, but neither side wants to concede first.; Military strikes have not fully escalated, but deterrence remains active.",
+      "Systemic risk declining but failure probability non-trivial: direct war cools while proxy lines and claims pull negotiation tension.",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
     clickExpand: "Click to expand details",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 41",
+    dayCount: "Day 40",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
