@@ -235,6 +235,24 @@ function toArray(value) {
   return [];
 }
 
+/** Never spread unknown values into `{...x}` — spreading a string becomes {0:"a",1:"b"...} and corrupts data. */
+function isPlainObject(value) {
+  return Boolean(value && typeof value === "object" && !Array.isArray(value));
+}
+
+function normalizeLineArray(value) {
+  if (Array.isArray(value)) return value.map((x) => asString(x)).filter(Boolean);
+  if (typeof value === "string" && value.trim()) return [value.trim()];
+  if (isPlainObject(value)) {
+    const vals = Object.values(value);
+    if (vals.length > 4 && vals.every((x) => typeof x === "string" && x.length <= 2)) {
+      return [vals.join("")];
+    }
+    return vals.map((x) => asString(x)).filter(Boolean);
+  }
+  return [];
+}
+
 function asString(value, fallback = "") {
   if (typeof value === "string") return value;
   if (value === null || value === undefined) return fallback;
@@ -329,21 +347,43 @@ function normalizeDashboardData(data) {
   normalized.events = normalizeEvents(normalized.events);
   normalized.scoreTrend = normalizeScoreTrend(normalized.scoreTrend, date, riskScore);
   normalized.situations = normalizeSituations(normalized.situations);
+
+  const wpSrc = normalized.warPhase;
+  const wp = isPlainObject(wpSrc) ? wpSrc : {};
   normalized.warPhase = {
-    ...(normalized.warPhase || {}),
-    level: asString(normalized.warPhase?.level, ""),
-    targetLevel: asString(normalized.warPhase?.targetLevel, ""),
-    title: asString(normalized.warPhase?.title, ""),
-    subTitle: asString(normalized.warPhase?.subTitle, ""),
-    points: toArray(normalized.warPhase?.points).map((p) => asString(p)).filter(Boolean).slice(0, 3),
-    note: asString(normalized.warPhase?.note, ""),
+    level: asString(wp.level, ""),
+    targetLevel: asString(wp.targetLevel, ""),
+    title: asString(wp.title, ""),
+    subTitle: asString(wp.subTitle, ""),
+    points: normalizeLineArray(wp.points).slice(0, 3),
+    note: asString(wp.note, ""),
   };
+
+  const ccSrc = normalized.coreContradiction;
+  const cc = isPlainObject(ccSrc) ? ccSrc : {};
   normalized.coreContradiction = {
-    ...(normalized.coreContradiction || {}),
-    political: toArray(normalized.coreContradiction?.political).map((p) => asString(p)).filter(Boolean).slice(0, 2),
-    military: toArray(normalized.coreContradiction?.military).map((p) => asString(p)).filter(Boolean).slice(0, 2),
+    political: normalizeLineArray(cc.political).slice(0, 2),
+    military: normalizeLineArray(cc.military).slice(0, 2),
   };
   return normalized;
+}
+
+function assertValidDashboard(data, label) {
+  const errs = [];
+  if (!asString(data.warPhase?.title).trim()) errs.push(`${label}: warPhase.title empty`);
+  if (!asString(data.investmentSignal).trim()) errs.push(`${label}: investmentSignal empty`);
+  if (!asString(data.keyChange).trim()) errs.push(`${label}: keyChange empty`);
+  if (data.riskFactors?.length !== 5) errs.push(`${label}: riskFactors must have 5 items`);
+  if (data.events?.length < 1) errs.push(`${label}: events empty`);
+  if (data.keyStats?.some((s) => /^Stat \d+$/.test(asString(s?.label)))) {
+    errs.push(`${label}: keyStats look like placeholders`);
+  }
+  if (!data.coreContradiction?.political?.length || !data.coreContradiction?.military?.length) {
+    errs.push(`${label}: coreContradiction political/military empty`);
+  }
+  if (errs.length) {
+    throw new Error(`Dashboard validation failed:\n${errs.join("\n")}`);
+  }
 }
 
 const jsonText = extractJsonObject(output);
@@ -379,6 +419,8 @@ for (const key of requiredTopKeys) {
 
 payload.dataZh = normalizeDashboardData(payload.dataZh || {});
 payload.dataEn = normalizeDashboardData(payload.dataEn || {});
+assertValidDashboard(payload.dataZh, "dataZh");
+assertValidDashboard(payload.dataEn, "dataEn");
 
 const outDir = path.join(process.cwd(), "reports", "daily");
 await mkdir(outDir, { recursive: true });
