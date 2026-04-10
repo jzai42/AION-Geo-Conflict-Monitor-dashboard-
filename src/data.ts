@@ -89,29 +89,20 @@ export const DATA_ZH: DashboardData = {
   ],
   riskFactors: [
     {
-      name: "停火协议的脆弱性",
+      name: "停火协议达成",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "停火初期即出现多起违反事件，显示协议执行存在问题。",
+      description: "",
       status: "FAST",
       change: "down"
     },
     {
-      name: "地区紧张局势",
+      name: "持续袭击事件",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "以色列明确表示停火不适用于黎巴嫩，继续在该地区进行军事行动。",
-      status: "FAST",
-      change: "up"
-    },
-    {
-      name: "能源基础设施安全",
-      score: 3,
-      prev: 3,
-      weight: 0.2,
-      description: "伊朗拉万岛炼油厂在停火生效后发生多次爆炸，原因尚在调查中。",
+      description: "",
       status: "FAST",
       change: "up"
     }
@@ -119,74 +110,63 @@ export const DATA_ZH: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "美伊同意两周停火",
-      description: "美国和伊朗在巴基斯坦斡旋下，同意自4月8日起停火两周。",
+      title: "停火协议达成",
+      description: "美国总统特朗普同意在两周内暂停对伊朗的军事行动，前提是伊朗同意全面、立即且安全地开放霍尔木兹海峡。",
       verification: "confirmed",
       timestamp: "",
       significance: ""
     },
     {
       id: "EVT-02",
-      title: "以色列继续在黎巴嫩行动",
-      description: "以色列总理办公室声明，停火不适用于黎巴嫩，以军继续在黎巴嫩南部打击真主党武装。",
+      title: "伊朗接受停火提议",
+      description: "伊朗最高国家安全委员会接受巴基斯坦提出的停火提议，表示将与美方进行谈判，但对美国完全不信任。",
       verification: "confirmed",
       timestamp: "",
       significance: ""
     },
     {
       id: "EVT-03",
-      title: "伊朗拉万岛炼油厂爆炸",
-      description: "停火生效后，伊朗拉万岛炼油厂发生多次爆炸，原因尚在调查中。",
+      title: "美军准备恢复作战",
+      description: "美军参谋首长联席会议主席凯恩表示，一旦伊朗拒绝达成最终协议，美军已准备好随时恢复对伊朗的作战行动。",
       verification: "confirmed",
       timestamp: "",
       significance: ""
     },
     {
       id: "EVT-04",
-      title: "科威特和阿联酋遭袭",
-      description: "科威特和阿联酋称，尽管停火生效，仍遭到伊朗无人机和导弹袭击。",
+      title: "海湾多国遭袭",
+      description: "尽管停火协议已达成，伊朗被指仍持续发动攻击，目标包括沙特阿拉伯的原油出口通道。沙特方面证实，在过去数小时内拦截了9架无人机；科威特也表示，境内多处设施遭到伊朗无人机袭击。",
       verification: "confirmed",
       timestamp: "",
       significance: ""
     },
     {
       id: "EVT-05",
-      title: "伊朗提出停战条件",
-      description: "伊朗向巴基斯坦传达了10点停战条件，包括永久停止战争、解除制裁等。",
+      title: "以色列继续袭击伊朗",
+      description: "停火生效4小时后，以色列仍在袭击伊朗目标，导致局势进一步紧张。",
       verification: "confirmed",
       timestamp: "",
       significance: ""
     }
   ],
-  keyChange: "[object Object]",
+  keyChange: "停火协议达成，但持续的袭击事件增加了局势的不确定性。",
   scoreTrend: [
     {
       date: "2026-04-09",
-      score: 65
-    },
-    {
-      date: "2026-04-08",
-      score: 70,
+      score: 85,
       active: true
     }
   ],
   situations: [
     {
-      title: "停火协议的脆弱性",
+      title: "停火协议达成",
       icon: "Military",
       tag: "",
       tagColor: "orange",
       points: []
     },
     {
-      title: "地区紧张局势",
-      icon: "Military",
-      tag: "",
-      tagColor: "orange",
-      points: []
-    },
-    {
-      title: "能源基础设施安全",
+      title: "持续袭击事件",
       icon: "Military",
       tag: "",
       tagColor: "orange",
@@ -194,8 +174,53 @@ export const DATA_ZH: DashboardData = {
     }
   ],
   coreContradiction: {
-    title: "停火协议的执行与地区军事行动的持续",
-    description: "停火协议的执行情况与地区军事行动的持续存在矛盾，可能导致局势进一步升级。",
+    0: "美",
+    1: "伊",
+    2: "双",
+    3: "方",
+    4: "对",
+    5: "停",
+    6: "火",
+    7: "协",
+    8: "议",
+    9: "的",
+    10: "执",
+    11: "行",
+    12: "和",
+    13: "信",
+    14: "任",
+    15: "问",
+    16: "题",
+    17: "，",
+    18: "以",
+    19: "及",
+    20: "以",
+    21: "色",
+    22: "列",
+    23: "在",
+    24: "冲",
+    25: "突",
+    26: "中",
+    27: "的",
+    28: "持",
+    29: "续",
+    30: "军",
+    31: "事",
+    32: "行",
+    33: "动",
+    34: "，",
+    35: "构",
+    36: "成",
+    37: "当",
+    38: "前",
+    39: "局",
+    40: "势",
+    41: "的",
+    42: "核",
+    43: "心",
+    44: "矛",
+    45: "盾",
+    46: "。",
     political: [],
     military: []
   },
@@ -243,31 +268,13 @@ export const DATA_EN: DashboardData = {
   ],
   riskFactors: [
     {
-      name: "Fragility of Ceasefire Agreement",
+      name: "Ceasefire Agreement Reached",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Multiple violations occurred in the early stages of the ceasefire, indicating issues with its implementation.",
+      description: "",
       status: "FAST",
       change: "down"
-    },
-    {
-      name: "Regional Tensions",
-      score: 3,
-      prev: 3,
-      weight: 0.2,
-      description: "Israel explicitly stated that the ceasefire does not apply to Lebanon and continues military actions in the region.",
-      status: "FAST",
-      change: "up"
-    },
-    {
-      name: "Energy Infrastructure Security",
-      score: 3,
-      prev: 3,
-      weight: 0.2,
-      description: "Multiple explosions occurred at Iran's Lavan Island refinery after the ceasefire took effect; causes are under investigation.",
-      status: "FAST",
-      change: "up"
     }
   ],
   riskScore: 60,
