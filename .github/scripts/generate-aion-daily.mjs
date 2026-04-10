@@ -85,8 +85,9 @@ const dashboardSchema = {
           description: { type: "string" },
           status:      { type: "string" },
           change:      { type: "string" },
+          evidence:    { type: "string" },
         },
-        required: ["name", "score", "prev", "weight", "description", "status", "change"],
+        required: ["name", "score", "prev", "weight", "description", "status", "change", "evidence"],
         additionalProperties: false,
       },
     },
@@ -222,6 +223,52 @@ const systemPrompt = `你是 AION Geo-Conflict Monitor 的结构化数据引擎�
 - 五维因子分: ${prev.factorScores}
 - 近5日趋势: ${prev.scoreTrend}
 
+## 评分标准（Scoring Rubric）——必须严格对照打分
+
+每个因子 1–5 分（整数），必须根据下列条件对号入座，不可凭感觉。
+若 24h 内无充分多源证据支持变化，**默认沿用前一天分数**。
+
+### 1. 军事升级烈度
+- 1 = 无任何军事活动或威胁言论
+- 2 = 口头威胁/小规模兵力调动/防御部署，无实际交火
+- 3 = 有限打击或代理冲突（如无人机事件、零星交火），未扩大
+- 4 = 直接交火/多战线活跃/重大军事行动（如导弹互射、大规模空袭）
+- 5 = 全面战争状态/大规模地面入侵/核威胁
+
+### 2. 霍尔木兹航运扰动
+- 1 = 完全正常通行，无任何限制
+- 2 = 偶发骚扰或警告，流量基本正常（>90%）
+- 3 = 许可制或部分限制，流量降至 50–90%
+- 4 = 严重受限/扣押事件，流量降至 <50%，主要班轮暂停
+- 5 = 完全封锁，商业航运停止
+
+### 3. 能源冲击
+- 1 = 油价在正常区间波动（<$75），供应链正常
+- 2 = 油价温和上涨（$75–85），市场紧张但可控
+- 3 = 油价显著上涨（$85–100），供应担忧明显
+- 4 = 油价危机水平（$100–120），供应中断或恐慌性买入
+- 5 = 油价极端飙升（>$120），全球能源危机
+
+### 4. 大国介入深度
+- 1 = 大国未介入，仅外交关注
+- 2 = 大国发表声明/制裁调整，无实质军事介入
+- 3 = 大国提供军事援助/情报共享/联合军演
+- 4 = 大国直接军事部署/参与作战行动
+- 5 = 多个大国直接军事对抗/全球联盟对峙
+
+### 5. 降级/谈判前景
+- 1 = 正式和平协议签署或全面停火生效
+- 2 = 实质性谈判进展，双方释放善意信号
+- 3 = 谈判渠道存在但进展有限，停火脆弱
+- 4 = 谈判停滞或破裂风险高，双方立场强硬
+- 5 = 完全无谈判渠道，双方拒绝对话
+
+### 评分纪律
+- 每个因子的 evidence 字段必须写出具体依据（引用的事件/报道来源）
+- 同一事件须 ≥2 个独立来源才能驱动评分变化
+- 仅有单源报道时：维持前一天分数，verification 标记为 "single"
+- 评分变化幅度限制：单日单因子变化不超过 ±1 分（除非有重大突发且多源确认）
+
 ## 规则
 - date 必须是 "${todayNy}"
 - version: "${prev.version}" 的下一个版本（小版本号 +1）
@@ -231,7 +278,7 @@ const systemPrompt = `你是 AION Geo-Conflict Monitor 的结构化数据引擎�
 - riskFactors 恰好 5 项，顺序：军事升级烈度、霍尔木兹航运扰动、能源冲击、大国介入深度、降级谈判前景。weight 一律 0.2。riskScore = round(avg(scores) × 20)
 - riskFactors 的 prev 字段必须等于前一天对应因子的 score
 - events 1–5 条。verification 只能是 confirmed/partial/single。highlight/critical 不需要时设 false
-- warPhase 所有字段非空；points 1–3 条
+- warPhase 所有字段非空；level 和 targetLevel 必须是描述性短语（如中文"脆弱停火"/"代理延续"，英文"Fragile Ceasefire"/"Proxy War"），绝不能是纯数字；points 1–3 条
 - situations 恰好 4 张卡，顺序：军事行动、航运/霍尔木兹、能源市场、领导层信号。每张 points 1–3 条非空
 - coreContradiction.political 和 .military 各 1–2 条非空
 - scoreTrend 恰好 5 个点：前 4 个点取自前一天趋势的后 4 个（${JSON.stringify(prevTrendLast4)}），第 5 个是今天 date="${todayMmDd}" active=true score=今日riskScore
@@ -258,33 +305,7 @@ async function callOpenAI(payload) {
   return JSON.parse(body);
 }
 
-// ── Main ───────────────────────────────────────────────────────────
-console.log(`Generating AION daily report for ${todayNy} ...`);
-
-const apiPayload = {
-  model: OPENAI_MODEL,
-  input: [{ role: "system", content: systemPrompt }, { role: "user", content: `请生成 ${todayNy} 的 AION 日报。` }],
-  tools: [{ type: "web_search_preview" }],
-  text: {
-    format: {
-      type: "json_schema",
-      name: "aion_daily_report",
-      strict: true,
-      schema: outputSchema,
-    },
-  },
-};
-
-let data;
-try {
-  data = await callOpenAI(apiPayload);
-} catch (err) {
-  console.warn(`Primary call failed (${err.message}), retrying without web_search ...`);
-  delete apiPayload.tools;
-  data = await callOpenAI(apiPayload);
-}
-
-// Extract text from Responses API (output_text or dig into output[].content[].text)
+// ── Helpers ─────────────────────────────────────────────────────────
 function extractText(resp) {
   if (typeof resp?.output_text === "string" && resp.output_text.trim()) {
     return resp.output_text.trim();
@@ -299,23 +320,125 @@ function extractText(resp) {
   return "";
 }
 
-const outputText = extractText(data);
-if (!outputText) {
-  const debugDir = path.join(process.cwd(), "reports", "daily");
-  await mkdir(debugDir, { recursive: true });
-  await writeFile(path.join(debugDir, `${todayNy}.response.json`), JSON.stringify(data, null, 2), "utf8");
-  throw new Error("OpenAI returned no text content (see reports/daily/ for debug)");
+function parsePayload(raw) {
+  const text = extractText(raw);
+  if (!text) return null;
+  try { return JSON.parse(text); } catch {}
+  const cleaned = text.replace(/^```(?:json)?\s*\n?/i, "").replace(/\n?```\s*$/, "").trim();
+  try { return JSON.parse(cleaned); } catch { return null; }
 }
 
-let payload;
-try {
-  payload = JSON.parse(outputText);
-} catch {
-  // Structured output should always be valid JSON, but strip markdown fences just in case
-  const cleaned = outputText.replace(/^```(?:json)?\s*\n?/i, "").replace(/\n?```\s*$/, "").trim();
-  payload = JSON.parse(cleaned);
+function median(arr) {
+  const sorted = [...arr].sort((a, b) => a - b);
+  return sorted[Math.floor(sorted.length / 2)];
 }
-console.log("Parsed structured output successfully.");
+
+function extractFactorScores(p) {
+  return (p?.dataZh?.riskFactors || []).map(f => Number(f.score) || 3);
+}
+
+// ── Main ───────────────────────────────────────────────────────────
+const ENSEMBLE_N = 3;
+console.log(`Generating AION daily report for ${todayNy} (${ENSEMBLE_N}x ensemble) ...`);
+
+function makePayload() {
+  return {
+    model: OPENAI_MODEL,
+    input: [{ role: "system", content: systemPrompt }, { role: "user", content: `请生成 ${todayNy} 的 AION 日报。` }],
+    tools: [{ type: "web_search_preview" }],
+    text: {
+      format: {
+        type: "json_schema",
+        name: "aion_daily_report",
+        strict: true,
+        schema: outputSchema,
+      },
+    },
+  };
+}
+
+async function singleCall(idx) {
+  try {
+    const raw = await callOpenAI(makePayload());
+    const p = parsePayload(raw);
+    if (p) { console.log(`  Call ${idx + 1}: OK, factors = [${extractFactorScores(p).join(", ")}]`); return p; }
+  } catch (err) {
+    console.warn(`  Call ${idx + 1} failed: ${err.message}`);
+  }
+  try {
+    const fallbackPayload = makePayload();
+    delete fallbackPayload.tools;
+    const raw = await callOpenAI(fallbackPayload);
+    const p = parsePayload(raw);
+    if (p) { console.log(`  Call ${idx + 1} (no-web fallback): OK, factors = [${extractFactorScores(p).join(", ")}]`); return p; }
+  } catch (err2) {
+    console.warn(`  Call ${idx + 1} fallback also failed: ${err2.message}`);
+  }
+  return null;
+}
+
+const results = await Promise.all(Array.from({ length: ENSEMBLE_N }, (_, i) => singleCall(i)));
+const validResults = results.filter(Boolean);
+
+if (validResults.length === 0) {
+  const debugDir = path.join(process.cwd(), "reports", "daily");
+  await mkdir(debugDir, { recursive: true });
+  await writeFile(path.join(debugDir, `${todayNy}.ensemble-fail.json`), JSON.stringify(results, null, 2), "utf8");
+  throw new Error("All ensemble calls failed (see reports/daily/ for debug)");
+}
+
+// Compute median factor scores across all valid results
+const allFactorSets = validResults.map(extractFactorScores);
+const medianFactors = Array.from({ length: 5 }, (_, fi) => median(allFactorSets.map(set => set[fi] ?? 3)));
+const medianTotal = medianFactors.reduce((a, b) => a + b, 0);
+console.log(`Ensemble median factors: [${medianFactors.join(", ")}], total=${medianTotal}`);
+
+// Pick the result whose factor total is closest to the median total as the content source
+let payload = validResults[0];
+let bestDist = Infinity;
+for (const r of validResults) {
+  const total = extractFactorScores(r).reduce((a, b) => a + b, 0);
+  const dist = Math.abs(total - medianTotal);
+  if (dist < bestDist) { bestDist = dist; payload = r; }
+}
+
+// Guardrails: detect high variance and clamp to previous day if needed
+const prevScores = prev.factorScores
+  ? prev.factorScores.split(", ").map(s => Number(s.split(": ")[1]) || 3)
+  : [3, 3, 3, 3, 3];
+const factorNames = ["军事升级烈度", "霍尔木兹航运扰动", "能源冲击", "大国介入深度", "降级/谈判前景"];
+
+const finalFactors = medianFactors.map((med, i) => {
+  const col = allFactorSets.map(set => set[i] ?? 3);
+  const range = Math.max(...col) - Math.min(...col);
+  const delta = Math.abs(med - prevScores[i]);
+
+  if (range > 2) {
+    console.warn(`  ⚠ Factor ${i} "${factorNames[i]}": high variance (range=${range}, values=[${col.join(",")}]) → clamping to prev=${prevScores[i]}`);
+    return prevScores[i];
+  }
+  if (delta > 1 && validResults.length < 3) {
+    console.warn(`  ⚠ Factor ${i} "${factorNames[i]}": large change (Δ=${delta}) with only ${validResults.length} samples → clamping to prev=${prevScores[i]}`);
+    return prevScores[i];
+  }
+  return med;
+});
+
+const finalRiskScore = Math.round(finalFactors.reduce((a, b) => a + b, 0) / 5 * 20);
+const totalDelta = Math.abs(finalRiskScore - prev.riskScore);
+if (totalDelta > 20) {
+  console.warn(`  ⚠ Large riskScore swing: ${prev.riskScore} → ${finalRiskScore} (Δ=${totalDelta})`);
+}
+
+console.log(`Final factors: [${finalFactors.join(", ")}], riskScore=${finalRiskScore} (prev=${prev.riskScore}, Δ=${finalRiskScore - prev.riskScore})`);
+
+// Override factor scores with final (guardrailed) values
+for (const lang of ["dataZh", "dataEn"]) {
+  if (payload[lang]?.riskFactors) {
+    payload[lang].riskFactors.forEach((f, i) => { f.score = finalFactors[i]; });
+  }
+}
+console.log("Ensemble scoring complete.");
 
 // ── Post-process: enforce v2.9 canonical layout ────────────────────
 function s(v, fb = "") { return typeof v === "string" ? v : fb; }
@@ -335,7 +458,7 @@ function enforceLayout(d, lang) {
     const src = rf[i] || {};
     const validStatus = ["NORMAL", "AT CEILING", "FAST", "SLOW"];
     const validChange = ["up", "down", "structural"];
-    return {
+    const out = {
       name,
       score: n(src.score, 3),
       prev: prevFactorScores[i] ?? 3,
@@ -344,6 +467,8 @@ function enforceLayout(d, lang) {
       status: validStatus.includes(src.status) ? src.status : "FAST",
       ...(validChange.includes(src.change) ? { change: src.change } : {}),
     };
+    if (src.evidence) out._evidence = s(src.evidence);
+    return out;
   });
 
   // riskScore from factors; prevRiskScore from previous day
@@ -406,11 +531,12 @@ function enforceLayout(d, lang) {
     return obj;
   });
 
-  // warPhase: ensure non-empty
+  // warPhase: ensure non-empty; reject pure-numeric level/targetLevel
   const wp = d.warPhase || {};
+  const validPhaseStr = (v) => { const t = s(v).trim(); return t && !/^\d+$/.test(t) ? t : ""; };
   d.warPhase = {
-    level: s(wp.level) || (lang === "zh" ? "阶段评估" : "Phase assessment"),
-    targetLevel: s(wp.targetLevel) || (lang === "zh" ? "动态跟踪" : "Tracking"),
+    level: validPhaseStr(wp.level) || (lang === "zh" ? "阶段评估" : "Phase assessment"),
+    targetLevel: validPhaseStr(wp.targetLevel) || (lang === "zh" ? "动态跟踪" : "Tracking"),
     title: s(wp.title) || (lang === "zh" ? "美伊地缘风险监测" : "US–Iran geo-risk snapshot"),
     subTitle: s(wp.subTitle) || (lang === "zh" ? "基于公开报道综合研判" : "Synthesized from public sources"),
     points: (Array.isArray(wp.points) ? wp.points : []).filter(Boolean).slice(0, 3),
@@ -499,6 +625,12 @@ function validate(d, label) {
 validate(payload.dataZh, "dataZh");
 validate(payload.dataEn, "dataEn");
 console.log("Validation passed.");
+
+// Log evidence then strip from output (evidence is for audit only, not for data.ts)
+for (const f of payload.dataZh.riskFactors) {
+  if (f._evidence) { console.log(`  [evidence] ${f.name}: ${f._evidence}`); delete f._evidence; }
+}
+for (const f of payload.dataEn.riskFactors) { delete f._evidence; }
 
 // ── Write report markdown ──────────────────────────────────────────
 const outDir = path.join(process.cwd(), "reports", "daily");
