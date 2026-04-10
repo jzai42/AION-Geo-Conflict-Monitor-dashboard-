@@ -227,8 +227,22 @@ try {
   data = await callOpenAI(apiPayload);
 }
 
-// Extract text from Responses API
-const outputText = (data.output_text || "").trim();
+// Extract text from Responses API (output_text or dig into output[].content[].text)
+function extractText(resp) {
+  if (typeof resp?.output_text === "string" && resp.output_text.trim()) {
+    return resp.output_text.trim();
+  }
+  const items = Array.isArray(resp?.output) ? resp.output : [];
+  for (const item of items) {
+    const contents = Array.isArray(item?.content) ? item.content : [];
+    for (const c of contents) {
+      if (typeof c?.text === "string" && c.text.trim()) return c.text.trim();
+    }
+  }
+  return "";
+}
+
+const outputText = extractText(data);
 if (!outputText) {
   const debugDir = path.join(process.cwd(), "reports", "daily");
   await mkdir(debugDir, { recursive: true });
@@ -236,7 +250,15 @@ if (!outputText) {
   throw new Error("OpenAI returned no text content (see reports/daily/ for debug)");
 }
 
-const payload = JSON.parse(outputText);
+let payload;
+try {
+  payload = JSON.parse(outputText);
+} catch {
+  // Structured output should always be valid JSON, but strip markdown fences just in case
+  const cleaned = outputText.replace(/^```(?:json)?\s*\n?/i, "").replace(/\n?```\s*$/, "").trim();
+  payload = JSON.parse(cleaned);
+}
+console.log("Parsed structured output successfully.");
 console.log("Parsed structured output successfully.");
 
 // ── Post-process: enforce v2.9 canonical layout ────────────────────
