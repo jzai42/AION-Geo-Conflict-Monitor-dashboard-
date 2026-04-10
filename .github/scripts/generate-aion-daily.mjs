@@ -2,7 +2,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4.1";
+const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-5.4-mini";
 if (!OPENAI_API_KEY) throw new Error("Missing OPENAI_API_KEY");
 
 const todayNy = new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" });

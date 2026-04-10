@@ -48,7 +48,7 @@ jobs:
         if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_MODEL: gpt-4.1
+          OPENAI_MODEL: gpt-5.4-mini
         run: node .github/scripts/generate-aion-daily.mjs
 
       - name: Commit and push (rebase onto latest main to avoid non-fast-forward)
