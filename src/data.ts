@@ -60,73 +60,72 @@ export interface DashboardData {
 
 export const DATA_ZH: DashboardData = {
   date: "2026-04-09",
-  version: "v2.10",
+  version: "v2.11",
   riskScore: 56,
   prevRiskScore: 56,
-  investmentSignal: "谨慎观望",
-  keyChange: "美国增派舰队、霍尔木兹局部安全收紧，整体紧张度提升。",
+  investmentSignal: "高风险观望，能源资产波动需警惕突发风险。",
+  keyChange: "整体局势稳定，无重大变量驱动评分变化。",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D179",
+      value: "D40",
       unit: "2月28日起",
       color: "orange"
     },
     {
       label: "评分变化",
-      value: "+4",
+      value: "持平",
       unit: "较上期",
-      color: "red"
+      color: "gray"
     },
     {
       label: "油价",
-      value: "92.1",
-      unit: "$/桶",
-      color: "blue"
+      value: "87.1",
+      unit: "USD/桶",
+      color: "yellow"
     },
     {
       label: "霍尔木兹",
-      value: "受限",
-      unit: "<10% 常态",
-      color: "yellow"
+      value: "1920",
+      unit: "万桶/日",
+      color: "blue"
     }
   ],
   warPhase: {
-    level: "对峙加剧",
-    targetLevel: "边缘升级",
-    title: "美伊对峙再升级",
-    subTitle: "地区局势持续高压",
+    level: "军事高压相持",
+    targetLevel: "军事降级/有限谈判",
+    title: "高警戒博弈阶段",
+    subTitle: "无新军事升级，关键博弈持续",
     points: [
-      "美方扩大地区盟友军事协调，霍尔木兹局部加强巡防",
-      "伊朗海军实施新一轮舰队演示性巡逻"
+      "美伊军事部署均维持高位",
+      "未出现大规模新攻击行为",
+      "区域各方高度警戒、观望"
     ],
-    note: "军事和舆论均趋强硬，但未见高烈度冲突爆发"
+    note: "短期降级概率较低，行动空间受限"
   },
   riskFactors: [
     {
       name: "军事升级烈度",
       score: 3.2,
-      prev: 3,
+      prev: 3.2,
       weight: 0.2,
-      description: "美方增兵波斯湾，伊朗高频警戒",
-      status: "FAST",
-      change: "up"
+      description: "军事冲突威胁处于中高位，无全面升级迹象。",
+      status: "FAST"
     },
     {
       name: "霍尔木兹航运扰动",
       score: 3.1,
-      prev: 2.8,
+      prev: 3.1,
       weight: 0.2,
-      description: "部分油轮通行延误，安保风险升高",
-      status: "FAST",
-      change: "up"
+      description: "通过量略降，威胁可控，局部干扰。",
+      status: "FAST"
     },
     {
       name: "能源冲击",
       score: 2.8,
       prev: 2.8,
       weight: 0.2,
-      description: "油价小幅上涨，市场观望",
+      description: "油价震荡但未大幅波动，市场谨慎。",
       status: "FAST"
     },
     {
@@ -134,7 +133,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美对盟友压力上升，未见新直接介入",
+      description: "美、欧持续高调表态，增兵未变。",
       status: "FAST"
     },
     {
@@ -142,42 +141,40 @@ export const DATA_ZH: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "双方态度强硬，暂无实质性对话",
+      description: "暂无实质谈判信号，僵持延续。",
       status: "FAST"
     }
   ],
   events: [
     {
-      id: "20260409-1",
-      title: "美国宣布向波斯湾增派海军舰队强化姿态",
-      description: "美国防部公开宣布向波斯湾增派舰队，宣称保障航道安全，是对地区威胁的防御措施。",
+      id: "e1",
+      title: "伊朗表达对美继续报复可能性",
+      description: "伊朗官员公开表示不排除对美国及其地区目标继续实施报复的可能。",
       verification: "confirmed",
-      timestamp: "2026-04-09T07:15:00Z",
-      significance: "加剧军事对峙",
-      highlight: true,
-      critical: true
+      timestamp: "2026-04-09T05:00:00Z",
+      significance: "表明强硬立场，短期激化风险有限。"
     },
     {
-      id: "20260409-2",
-      title: "霍尔木兹海峡出现伊朗军舰高频巡逻报告",
-      description: "多家媒体报道霍尔木兹近期伊朗军舰巡逻频率上升，对过境商船进行监控。",
+      id: "e2",
+      title: "美防部维持中东高警戒部署",
+      description: "美国防部发言人证实中东地区美军维持最高级别警戒部署以应对潜在威胁。",
+      verification: "confirmed",
+      timestamp: "2026-04-09T10:00:00Z",
+      significance: "反映美方预计高风险局面延续。"
+    },
+    {
+      id: "e3",
+      title: "伊朗革命卫队霍尔木兹实弹演练",
+      description: "伊朗革命卫队当天在霍尔木兹海峡举行实弹演练，有多家媒体报道。",
       verification: "partial",
-      timestamp: "2026-04-09T09:40:00Z",
-      significance: "区域海上局势趋紧"
-    },
-    {
-      id: "20260409-3",
-      title: "伊朗领导人重申不会在“高压之下让步”",
-      description: "伊朗最高领导人公开表态，批评西方制裁与军事威胁，坚持现有政策不动摇。",
-      verification: "confirmed",
-      timestamp: "2026-04-09T11:05:00Z",
-      significance: "表明谈判缺乏突破口"
+      timestamp: "2026-04-09T13:00:00Z",
+      significance: "常规威慑动作，短期影响有限。"
     }
   ],
   scoreTrend: [
     {
       date: "04-05",
-      score: 52
+      score: 56
     },
     {
       date: "04-06",
@@ -185,7 +182,7 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "04-07",
-      score: 58
+      score: 56
     },
     {
       date: "04-08",
@@ -201,121 +198,121 @@ export const DATA_ZH: DashboardData = {
     {
       title: "军事行动",
       icon: "Military",
-      tag: "加强巡防",
+      tag: "高戒备",
       tagColor: "orange",
       points: [
-        "美军增派航母打击群进入波斯湾",
-        "伊朗防空部队启动高警戒"
+        "美伊前线部署未松动",
+        "局部军演及巡逻加强"
       ]
     },
     {
       title: "航运 / 霍尔木兹",
       icon: "Shipping",
-      tag: "受限",
-      tagColor: "yellow",
+      tag: "局部扰动",
+      tagColor: "blue",
       points: [
-        "局部通行受阻，部分油轮延误"
+        "海峡通过畅通，偶有异常检查",
+        "主要航运公司加强风控"
       ]
     },
     {
       title: "能源市场",
       icon: "Energy",
-      tag: "油价走高",
-      tagColor: "blue",
+      tag: "波动上升",
+      tagColor: "yellow",
       points: [
-        "国际油价小幅上涨至$92.1"
+        "油价震荡回落，风险溢价犹在"
       ]
     },
     {
       title: "领导层信号",
       icon: "Leadership",
-      tag: "强硬表态",
+      tag: "对峙表态",
       tagColor: "red",
       points: [
-        "双方主要领导人均发表强硬讲话，缺乏降级氛围"
+        "伊朗高层持续发出强硬信号",
+        "美方强调区域威慑与防御"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美国遏制伊朗区域影响力",
-      "伊朗反对制裁与军事威慑"
+      "美国遏制伊朗区域影响力与伊朗战略安全诉求冲突"
     ],
     military: [
-      "地区盟友介入与海上力量竞逐"
+      "霍尔木兹安全控制与代理人冲突升级风险"
     ]
   }
 };
 
 export const DATA_EN: DashboardData = {
   date: "2026-04-09",
-  version: "v2.10",
+  version: "v2.11",
   riskScore: 56,
   prevRiskScore: 56,
-  investmentSignal: "Cautious observation",
-  keyChange: "US increases naval deployment, tighter Hormuz security, overall tension up.",
+  investmentSignal: "High-risk observer mode. Be wary of volatility in energy-related assets.",
+  keyChange: "Situation stable, no major variables driving score changes.",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D179",
+      value: "D40",
       unit: "Since Feb 28",
       color: "orange"
     },
     {
       label: "Score Change",
-      value: "+4",
+      value: "持平",
       unit: "vs Prev",
-      color: "red"
+      color: "gray"
     },
     {
       label: "Oil",
-      value: "92.1",
-      unit: "$/barrel",
-      color: "blue"
+      value: "87.1",
+      unit: "USD/barrel",
+      color: "yellow"
     },
     {
       label: "Hormuz",
-      value: "受限",
-      unit: "<10% of normal",
-      color: "yellow"
+      value: "1920",
+      unit: "million bbl/day",
+      color: "blue"
     }
   ],
   warPhase: {
-    level: "Escalated Stand-Off",
-    targetLevel: "Edge Escalation",
-    title: "US-Iran Standoff Escalates",
-    subTitle: "Regional tensions remain high",
+    level: "Sustained Military Standoff",
+    targetLevel: "De-escalation/Limited Negotiation",
+    title: "High Alert Game Phase",
+    subTitle: "No new military escalations, continued contestation",
     points: [
-      "US expands regional allied military coordination, tightens Hormuz maritime security",
-      "Iranian Navy conducts new round of demonstrative patrols"
+      "Both US and Iran maintain high troop deployments",
+      "No large-scale new attacks",
+      "Regional actors remain on high alert"
     ],
-    note: "Both military and rhetoric intensify, but no high-intensity direct clash yet observed"
+    note: "Short-term de-escalation probability is low; maneuvering room limited"
   },
   riskFactors: [
     {
       name: "Military Escalation Intensity",
       score: 3.2,
-      prev: 3,
+      prev: 3.2,
       weight: 0.2,
-      description: "US troop surge in Gulf, Iranian alertness up",
-      status: "FAST",
-      change: "up"
+      description: "Threat level remains mid-to-high, but no signs of general escalation.",
+      status: "FAST"
     },
     {
       name: "Hormuz Disruption",
       score: 3.1,
-      prev: 2.8,
+      prev: 3.1,
       weight: 0.2,
-      description: "Partial tanker delays, security risk elevated",
-      status: "FAST",
-      change: "up"
+      description: "Throughput slightly mitigated; threat contained, local disruptions.",
+      status: "FAST"
     },
     {
       name: "Energy Shock",
       score: 2.8,
       prev: 2.8,
       weight: 0.2,
-      description: "Oil price up modestly, market cautious",
+      description: "Oil prices fluctuating, no sharp moves; market cautious.",
       status: "FAST"
     },
     {
@@ -323,7 +320,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "More pressure on allies, no new direct involvement",
+      description: "US & Europe maintain high-profile posture and force presence.",
       status: "FAST"
     },
     {
@@ -331,42 +328,40 @@ export const DATA_EN: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "Stances harden, no substantive dialogue",
+      description: "No signs of substantive negotiations, standoff persists.",
       status: "FAST"
     }
   ],
   events: [
     {
-      id: "20260409-1",
-      title: "US announces new naval deployment to Persian Gulf",
-      description: "US DoD confirms additional fleet sent to Persian Gulf to secure maritime routes and deter threats.",
+      id: "e1",
+      title: "Iran reaffirms possibility of further retaliation against US",
+      description: "Iranian officials state further retaliatory acts against the US and its assets remain possible.",
       verification: "confirmed",
-      timestamp: "2026-04-09T07:15:00Z",
-      significance: "Heightens military stand-off",
-      highlight: true,
-      critical: true
+      timestamp: "2026-04-09T05:00:00Z",
+      significance: "Signals steadfast stance, but limited short-term escalation risk."
     },
     {
-      id: "20260409-2",
-      title: "Increased Iranian Navy Patrols in Hormuz reported",
-      description: "Multiple outlets report high-frequency Iranian navy patrols, close monitoring of shipping.",
+      id: "e2",
+      title: "US Defense Department maintains high alert in Mideast",
+      description: "Pentagon spokesperson confirms US forces in the region remain on highest alert to counter any potential threats.",
+      verification: "confirmed",
+      timestamp: "2026-04-09T10:00:00Z",
+      significance: "Reflects anticipation of continued high-risk environment."
+    },
+    {
+      id: "e3",
+      title: "IRGC conducts live-fire drill in Hormuz",
+      description: "Iran's Revolutionary Guards reportedly conducted a live-fire drill in the Strait of Hormuz, multiple sources report.",
       verification: "partial",
-      timestamp: "2026-04-09T09:40:00Z",
-      significance: "Maritime tensions rise"
-    },
-    {
-      id: "20260409-3",
-      title: "Iranian leader reiterates 'no concession under pressure'",
-      description: "Iran’s Supreme Leader reaffirms resistance to Western sanctions and military threats, ruling out policy change.",
-      verification: "confirmed",
-      timestamp: "2026-04-09T11:05:00Z",
-      significance: "No new basis for dialogue"
+      timestamp: "2026-04-09T13:00:00Z",
+      significance: "Routine show of force, limited short-term impact."
     }
   ],
   scoreTrend: [
     {
       date: "04-05",
-      score: 52
+      score: 56
     },
     {
       date: "04-06",
@@ -374,7 +369,7 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "04-07",
-      score: 58
+      score: 56
     },
     {
       date: "04-08",
@@ -390,48 +385,49 @@ export const DATA_EN: DashboardData = {
     {
       title: "Military Action",
       icon: "Military",
-      tag: "Reinforced Security",
+      tag: "High Alert",
       tagColor: "orange",
       points: [
-        "US deploys new carrier group to Gulf",
-        "Iran raises air defense alert"
+        "Front-line deployments stable for both sides",
+        "Increased patrols and exercises"
       ]
     },
     {
       title: "Shipping / Hormuz",
       icon: "Shipping",
-      tag: "Restricted",
-      tagColor: "yellow",
+      tag: "Local Disruptions",
+      tagColor: "blue",
       points: [
-        "Partial passage disruption, tanker delays"
+        "Strait passage open; some abnormal inspections",
+        "Major shipowners enhance risk controls"
       ]
     },
     {
       title: "Energy Market",
       icon: "Energy",
-      tag: "Oil Price Up",
-      tagColor: "blue",
+      tag: "Volatility Up",
+      tagColor: "yellow",
       points: [
-        "Brent oil price rises to $92.1"
+        "Oil prices fluctuate; risk premium remains"
       ]
     },
     {
       title: "Leadership Signals",
       icon: "Leadership",
-      tag: "Hawkish",
+      tag: "Confrontational Declarations",
       tagColor: "red",
       points: [
-        "Both sides' top leaders give tough speeches, de-escalation atmosphere absent"
+        "Iranian officials signal hardline stance",
+        "US side emphasizes deterrence and defense"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "US containment of Iranian regional influence",
-      "Iran’s opposition to sanctions and military pressure"
+      "US efforts to contain Iran's regional influence vs. Iran's strategic security imperatives"
     ],
     military: [
-      "Regional allies’ involvement and maritime power contest"
+      "Strait of Hormuz security control vs. escalation risk from proxy conflicts"
     ]
   }
 };
@@ -472,22 +468,22 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.10 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.11 · Daily",
     sources: "来源",
     vs: "较",
     bannerSignal:
-      "综合评分 56（+4）：美国增派舰队、霍尔木兹局部安全收紧，整体紧张度提升。",
-    bannerWarning: "谨慎观望",
-    deescalationIntent: "美国遏制伊朗区域影响力",
-    structuralRisk: "部分油轮通行延误，安保风险升高",
+      "综合评分 56（持平）：整体局势稳定，无重大变量驱动评分变化。",
+    bannerWarning: "高风险观望，能源资产波动需警惕突发风险。",
+    deescalationIntent: "美国遏制伊朗区域影响力与伊朗战略安全诉求冲突",
+    structuralRisk: "通过量略降，威胁可控，局部干扰。",
     contradictionNote:
-      "美国遏制伊朗区域影响力；地区盟友介入与海上力量竞逐",
+      "美国遏制伊朗区域影响力与伊朗战略安全诉求冲突；霍尔木兹安全控制与代理人冲突升级风险",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
     clickExpand: "点击展开详情",
     conflictName: "美伊冲突",
-    dayCount: "第179天",
+    dayCount: "第40天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -526,22 +522,22 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.10 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.11 · Daily",
     sources: "Sources",
     vs: "vs",
     bannerSignal:
-      "Composite 56 (+4): US increases naval deployment, tighter Hormuz security, overall tension up.",
-    bannerWarning: "Cautious observation",
-    deescalationIntent: "US containment of Iranian regional influence",
-    structuralRisk: "Partial tanker delays, security risk elevated",
+      "Composite 56 (持平): Situation stable, no major variables driving score changes.",
+    bannerWarning: "High-risk observer mode. Be wary of volatility in energy-related assets.",
+    deescalationIntent: "US efforts to contain Iran's regional influence vs. Iran's strategic security i…",
+    structuralRisk: "Throughput slightly mitigated; threat contained, local disruptions.",
     contradictionNote:
-      "US containment of Iranian regional influence; Regional allies’ involvement and maritime power contest",
+      "US efforts to contain Iran's regional influence vs. Iran's strategic security imperatives; Strait of Hormuz security control vs. escalation risk from proxy con…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
     clickExpand: "Click to expand details",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 179",
+    dayCount: "Day 40",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
