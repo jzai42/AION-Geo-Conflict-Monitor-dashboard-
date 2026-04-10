@@ -326,24 +326,7 @@ function enforceLayout(d, lang) {
   const c = CANONICAL[lang];
   d.date = todayNy;
 
-  // keyStats — force correct conflict day
-  const ks = Array.isArray(d.keyStats) ? d.keyStats : [];
-  d.keyStats = c.keyStatLabels.map((label, i) => {
-    let value = s(ks[i]?.value, "-");
-    if (i === 0) value = `D${correctConflictDay}`;
-    if (i === 1) {
-      const delta = d.riskScore - prev.riskScore;
-      value = delta > 0 ? `↑${delta}` : delta < 0 ? `↓${Math.abs(delta)}` : "持平";
-    }
-    return {
-      label,
-      value,
-      unit: i < 2 ? c.keyStatUnitsFixed[i] : (s(ks[i]?.unit).trim() || c.keyStatDefaultUnits34[i - 2]),
-      color: s(ks[i]?.color, c.keyStatColors[i]),
-    };
-  });
-
-  // riskFactors — force prev from previous day's actual scores
+  // riskFactors — force prev from previous day's actual scores (must come before keyStats)
   const rf = Array.isArray(d.riskFactors) ? d.riskFactors : [];
   const prevFactorScores = prev.factorScores
     ? prev.factorScores.split(", ").map(s => Number(s.split(": ")[1]) || 3)
@@ -367,6 +350,21 @@ function enforceLayout(d, lang) {
   const avg = d.riskFactors.reduce((sum, f) => sum + f.score, 0) / 5;
   d.riskScore = Math.round(avg * 20);
   d.prevRiskScore = prev.riskScore;
+
+  // keyStats — must come AFTER riskScore is finalized
+  const ks = Array.isArray(d.keyStats) ? d.keyStats : [];
+  const scoreDelta = d.riskScore - prev.riskScore;
+  d.keyStats = c.keyStatLabels.map((label, i) => {
+    let value = s(ks[i]?.value, "-");
+    if (i === 0) value = `D${correctConflictDay}`;
+    if (i === 1) value = scoreDelta > 0 ? `↑${scoreDelta}` : scoreDelta < 0 ? `↓${Math.abs(scoreDelta)}` : "持平";
+    return {
+      label,
+      value,
+      unit: i < 2 ? c.keyStatUnitsFixed[i] : (s(ks[i]?.unit).trim() || c.keyStatDefaultUnits34[i - 2]),
+      color: s(ks[i]?.color, c.keyStatColors[i]),
+    };
+  });
 
   // situations
   const sit = Array.isArray(d.situations) ? d.situations : [];
@@ -455,11 +453,16 @@ function syncEnFromZh(zh, en) {
   en.riskScore = zh.riskScore;
   en.prevRiskScore = zh.prevRiskScore;
   en.scoreTrend = JSON.parse(JSON.stringify(zh.scoreTrend));
-  en.keyStats = en.keyStats.map((row, i) => ({ ...row, value: zh.keyStats[i]?.value ?? row.value }));
-  en.riskFactors = en.riskFactors.map((f, i) => ({
-    ...f, score: zh.riskFactors[i].score, prev: zh.riskFactors[i].prev, weight: zh.riskFactors[i].weight,
-    ...(zh.riskFactors[i].change ? { change: zh.riskFactors[i].change } : {}),
-  }));
+  en.keyStats = en.keyStats.map((row, i) => {
+    if (i < 2) return { ...row, value: zh.keyStats[i]?.value ?? row.value };
+    return row;
+  });
+  en.riskFactors = en.riskFactors.map((f, i) => {
+    const { change: _, ...rest } = f;
+    const out = { ...rest, score: zh.riskFactors[i].score, prev: zh.riskFactors[i].prev, weight: zh.riskFactors[i].weight };
+    if (zh.riskFactors[i].change) out.change = zh.riskFactors[i].change;
+    return out;
+  });
 }
 
 // Version: bump from previous
