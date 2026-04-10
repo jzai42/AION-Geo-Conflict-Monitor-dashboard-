@@ -12,52 +12,87 @@ const todayNy = new Date().toLocaleDateString("en-CA", {
   timeZone: "America/New_York",
 });
 
-const prompt = `你是AION地缘冲突数据引擎。请搜索过去24小时美伊冲突动态，输出“仅JSON对象”，禁止markdown与解释。
+/** 与前端 v2.9 版式对齐：标签/因子名/态势卡标题写死，模型只填 value、描述、分数等可变内容。 */
+const CANONICAL = {
+  zh: {
+    keyStatLabels: ["冲突天数", "评分变化", "油价", "霍尔木兹"],
+    keyStatUnitsFixed: ["2月28日起", "较上期"],
+    keyStatColors: ["#ff851b", "#ff4136", "#ff4136", "#ffdc00"],
+    riskFactorNames: [
+      "军事升级烈度",
+      "霍尔木兹航运扰动",
+      "能源冲击",
+      "大国介入深度",
+      "降级/谈判前景",
+    ],
+    situations: [
+      { title: "军事行动", icon: "Military" },
+      { title: "航运 / 霍尔木兹", icon: "Shipping" },
+      { title: "能源市场", icon: "Energy" },
+      { title: "领导层信号", icon: "Leadership" },
+    ],
+  },
+  en: {
+    keyStatLabels: ["Conflict Days", "Score Change", "Oil", "Hormuz"],
+    keyStatUnitsFixed: ["Since Feb 28", "vs Prev"],
+    keyStatColors: ["#ff851b", "#ff4136", "#ff4136", "#ffdc00"],
+    riskFactorNames: [
+      "Military Escalation Intensity",
+      "Hormuz Disruption",
+      "Energy Shock",
+      "Great Power Involvement",
+      "De-escalation Probability",
+    ],
+    situations: [
+      { title: "Military Action", icon: "Military" },
+      { title: "Shipping / Hormuz", icon: "Shipping" },
+      { title: "Energy Market", icon: "Energy" },
+      { title: "Leadership Signals", icon: "Leadership" },
+    ],
+  },
+};
 
-核心规则：
-1) 重大事件必须 >=2独立来源，或1个一级官方声明。
-2) 单一来源必须标记为未验证，并不得用于评分依据。
-3) 中文与英文都要给，结构固定，字段齐全。
-4) 输出必须可直接映射到前端数据结构（DashboardData）。
-5) 日期请用纽约时区今天：${todayNy}。
+const prompt = `你是 AION Geo-Conflict Monitor 的结构化数据引擎。必须用网络搜索（近24h美伊相关）后，只输出「一个合法 JSON 对象」，禁止 markdown、禁止代码围栏外文字、禁止解释。
 
-请严格按以下JSON结构返回（key名不能改）：
+## 输出根对象（key 名不得改）
 {
-  "reportMarkdownZh": "一个中文日报，必须是单个代码块字符串",
-  "dataZh": DashboardData对象,
-  "dataEn": DashboardData对象,
+  "reportMarkdownZh": "中文日报全文，放在一个 markdown 代码块字符串内，供归档",
+  "dataZh": { ... DashboardData 中文版 ... },
+  "dataEn": { ... DashboardData 英文版 ... },
   "translationsDynamic": {
-    "zh": {
-      "node406": "如 4月9日节点",
-      "systemInfo": "如 AION 智能分析系统 · 地缘冲突模块 vX.X · Daily",
-      "bannerSignal": "...",
-      "bannerWarning": "...",
-      "deescalationIntent": "...",
-      "structuralRisk": "...",
-      "contradictionNote": "...",
-      "dayCount": "如 第40天"
-    },
-    "en": {
-      "node406": "如 Apr 9 Node",
-      "systemInfo": "如 AION Intelligence System · Geo-Conflict Module vX.X · Daily",
-      "bannerSignal": "...",
-      "bannerWarning": "...",
-      "deescalationIntent": "...",
-      "structuralRisk": "...",
-      "contradictionNote": "...",
-      "dayCount": "如 Day 40"
-    }
+    "zh": { "node406","systemInfo","bannerSignal","bannerWarning","deescalationIntent","structuralRisk","contradictionNote","dayCount" },
+    "en": { 同上 }
   }
 }
 
-DashboardData要求：
-- 必含字段：date/version/keyStats/warPhase/riskScore/prevRiskScore/investmentSignal/riskFactors/events/keyChange/scoreTrend/situations/coreContradiction
-- events.verification 仅可为 confirmed/partial/single
-- riskFactors.change 仅可为 up/down/structural，或省略
-- 分数必须和公式一致：Score = 平均值 * 20
-- scoreTrend 最后一个点 active=true，日期与data.date一致
-- 只写过去24h变化，最多5个事件。
-`;
+## DashboardData（dataZh / dataEn 结构必须一致；仅文案语言不同）
+- date: 必须是 "${todayNy}"（纽约日历当日，YYYY-MM-DD）
+- version: 语义化版本字符串，如 "v2.10"（须与当日内容一起更新）
+- keyStats: 长度 4。第1、2 项的 label/unit 在服务端会强制为固定版式，但你仍应按顺序给出 value/color（第1维冲突天数 Dxx，第2维综合评分变化如 ±N 或 持平）
+- riskFactors: 恰好 5 条，顺序与含义固定（模型填 score/prev/description/status/change；name 会由服务端覆盖为规范名）
+  1) 军事升级烈度 / Military Escalation Intensity
+  2) 霍尔木兹航运扰动 / Hormuz Disruption
+  3) 能源冲击 / Energy Shock
+  4) 大国介入深度 / Great Power Involvement
+  5) 降级谈判前景 / De-escalation Probability
+- riskFactors.weight 一律 0.2；五项 score 平均值的 20 倍须等于 riskScore（允许 0.01 舍入误差）
+- events: 至多 5 条；verification 只能是 confirmed | partial | single
+- coreContradiction: 只能是对象 { "political": [ "≤2条" ], "military": [ "≤2条" ] }，禁止把整段话放在根上、禁止字符串代替对象
+- warPhase: 必须是对象，含 level, targetLevel, title, subTitle, points[≤3], note — 全部为非空字符串（points 每项为一句）
+- situations: 恰好 4 张卡片，顺序固定（模型填 tag/tagColor/points；title/icon 由服务端覆盖）
+  1) 军事行动 / Military Action
+  2) 航运/霍尔木兹 / Shipping / Hormuz
+  3) 能源市场 / Energy Market
+  4) 领导层信号 / Leadership Signals
+  每张 points 必须 1–3 条非空短句
+- scoreTrend: 恰好 5 个点，date 为 MM-DD；最后一项 date 等于 ${todayNy.slice(5)}、active=true、score=riskScore；前 4 天分数单调演化须合理
+- keyChange、investmentSignal：非空；键名与 TypeScript 接口一致
+
+## 信源规则
+重大事件须 ≥2 独立报道或 1 份一级官方声明；单源须 single 且不得驱动评分。
+
+## 硬约束
+禁止把 political/military/warPhase/coreContradiction 写成单个字符串；禁止用数字键对象代替数组。输出必须为可被 JSON.parse 严格解析的单个对象。`;
 
 async function callOpenAI(payload) {
   const response = await fetch("https://api.openai.com/v1/responses", {
@@ -77,6 +112,14 @@ async function callOpenAI(payload) {
   } catch (err) {
     throw new Error(`OpenAI response JSON parse failed: ${err.message}; body=${bodyText}`);
   }
+}
+
+const dataFilePath = path.join(process.cwd(), "src", "data.ts");
+let dataTsSnapshot = "";
+try {
+  dataTsSnapshot = await readFile(dataFilePath, "utf8");
+} catch {
+  dataTsSnapshot = "";
 }
 
 let data;
@@ -305,12 +348,32 @@ function normalizeEvents(arr) {
   }));
 }
 
+function trendDateToMmDd(d, isoFallback) {
+  const s = asString(d).trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s.slice(5);
+  if (/^\d{2}-\d{2}$/.test(s)) return s;
+  if (isoFallback && /^\d{4}-\d{2}-\d{2}$/.test(isoFallback)) return isoFallback.slice(5);
+  return "";
+}
+
+function subtractOneDayMmdd(mmdd, yearIso) {
+  const [Y] = yearIso.split("-").map(Number);
+  const [m, d] = mmdd.split("-").map(Number);
+  const dt = new Date(Date.UTC(Y, m - 1, d));
+  dt.setUTCDate(dt.getUTCDate() - 1);
+  const M = String(dt.getUTCMonth() + 1).padStart(2, "0");
+  const D = String(dt.getUTCDate()).padStart(2, "0");
+  return `${M}-${D}`;
+}
+
 function normalizeScoreTrend(arr, dateFallback, riskScoreFallback) {
-  const trend = toArray(arr).map((item) => ({
-    date: asString(item?.date, ""),
-    score: asNumber(item?.score, riskScoreFallback),
-    ...(item?.active ? { active: true } : {}),
-  })).filter((x) => x.date);
+  const trend = toArray(arr)
+    .map((item) => ({
+      date: trendDateToMmDd(item?.date, dateFallback),
+      score: asNumber(item?.score, riskScoreFallback),
+      ...(item?.active ? { active: true } : {}),
+    }))
+    .filter((x) => /^\d{2}-\d{2}$/.test(x.date));
   if (!trend.length) {
     trend.push({ date: dateFallback.slice(5), score: riskScoreFallback, active: true });
     return trend;
@@ -370,13 +433,25 @@ function normalizeDashboardData(data) {
 
 function assertValidDashboard(data, label) {
   const errs = [];
+  if (!/^v\d+\.\d+$/.test(asString(data.version))) errs.push(`${label}: version must look like v2.10`);
+  if (asIsoDate(data) !== todayNy) errs.push(`${label}: date must be NY today ${todayNy}`);
   if (!asString(data.warPhase?.title).trim()) errs.push(`${label}: warPhase.title empty`);
   if (!asString(data.investmentSignal).trim()) errs.push(`${label}: investmentSignal empty`);
   if (!asString(data.keyChange).trim()) errs.push(`${label}: keyChange empty`);
   if (data.riskFactors?.length !== 5) errs.push(`${label}: riskFactors must have 5 items`);
   if (data.events?.length < 1) errs.push(`${label}: events empty`);
-  if (data.keyStats?.some((s) => /^Stat \d+$/.test(asString(s?.label)))) {
-    errs.push(`${label}: keyStats look like placeholders`);
+  if (data.keyStats?.length !== 4) errs.push(`${label}: keyStats must have 4 items`);
+  if (data.situations?.length !== 4) errs.push(`${label}: situations must have 4 cards`);
+  if (data.situations?.some((s) => !toArray(s?.points).length)) {
+    errs.push(`${label}: each situation must have ≥1 point`);
+  }
+  if (data.scoreTrend?.length !== 5) errs.push(`${label}: scoreTrend must have 5 points`);
+  const lastTrend = data.scoreTrend?.[data.scoreTrend.length - 1];
+  if (lastTrend?.date !== todayNy.slice(5)) {
+    errs.push(`${label}: scoreTrend last date must be ${todayNy.slice(5)}`);
+  }
+  if (!Number.isFinite(data.riskScore) || Math.abs(data.riskScore - averageFactorScore(data) * 20) > 0.51) {
+    errs.push(`${label}: riskScore must ≈ avg(factor scores)×20`);
   }
   if (!data.coreContradiction?.political?.length || !data.coreContradiction?.military?.length) {
     errs.push(`${label}: coreContradiction political/military empty`);
@@ -384,6 +459,114 @@ function assertValidDashboard(data, label) {
   if (errs.length) {
     throw new Error(`Dashboard validation failed:\n${errs.join("\n")}`);
   }
+}
+
+function asIsoDate(data) {
+  return asString(data?.date);
+}
+
+function averageFactorScore(data) {
+  const factors = toArray(data?.riskFactors);
+  if (factors.length !== 5) return NaN;
+  return factors.reduce((sum, f) => sum + asNumber(f?.score, NaN), 0) / 5;
+}
+
+function bumpVersionFromSnapshot(snapshot) {
+  const m = snapshot.match(/export const DATA_ZH:\s*DashboardData\s*=\s*\{[\s\S]*?version:\s*"([^"]+)"/);
+  if (!m) return "v2.10";
+  const cur = m[1].match(/^v(\d+)\.(\d+)$/);
+  if (!cur) return "v2.10";
+  return `v${cur[1]}.${Number(cur[2]) + 1}`;
+}
+
+function coerceVersion(ver, snapshot) {
+  const s = asString(ver).trim();
+  if (/^v\d+\.\d+$/.test(s)) return s;
+  return bumpVersionFromSnapshot(snapshot);
+}
+
+function finalizeScoreTrendFive(trend, dateIso, riskScore, prevRiskScore) {
+  const target = dateIso.slice(5);
+  let pts = toArray(trend)
+    .map((p) => ({
+      date: trendDateToMmDd(p?.date, dateIso),
+      score: asNumber(p?.score, riskScore),
+    }))
+    .filter((p) => /^\d{2}-\d{2}$/.test(p.date));
+  if (!pts.length) {
+    pts.push({ date: target, score: riskScore });
+  }
+  while (pts.length < 5) {
+    const head = pts[0];
+    const prevDay = subtractOneDayMmdd(head.date, dateIso);
+    pts.unshift({ date: prevDay, score: asNumber(prevRiskScore, head.score) });
+  }
+  pts = pts.slice(-5);
+  for (const p of pts) delete p.active;
+  pts[4] = { date: target, score: riskScore, active: true };
+  return pts;
+}
+
+function syncEnMetricsFromZh(zh, en) {
+  en.riskScore = zh.riskScore;
+  en.prevRiskScore = zh.prevRiskScore;
+  en.scoreTrend = JSON.parse(JSON.stringify(zh.scoreTrend));
+  en.keyStats = en.keyStats.map((row, i) => ({
+    ...row,
+    value: zh.keyStats[i]?.value ?? row.value,
+  }));
+  en.riskFactors = en.riskFactors.map((f, i) => {
+    const z = zh.riskFactors[i];
+    const out = {
+      ...f,
+      score: z.score,
+      prev: z.prev,
+      weight: z.weight,
+    };
+    const ch = pickChange(z?.change);
+    if (ch) out.change = ch;
+    else delete out.change;
+    return out;
+  });
+}
+
+function enforceV29Layout(data, lang) {
+  const c = CANONICAL[lang];
+  data.date = todayNy;
+  const ks = toArray(data.keyStats);
+  data.keyStats = c.keyStatLabels.map((label, i) => ({
+    label,
+    value: asString(ks[i]?.value, "-"),
+    unit: i < 2 ? c.keyStatUnitsFixed[i] : asString(ks[i]?.unit, ""),
+    color: asString(ks[i]?.color, c.keyStatColors[i]),
+  }));
+  const rf = toArray(data.riskFactors);
+  data.riskFactors = c.riskFactorNames.map((name, i) => {
+    const src = rf[i] || {};
+    const st = asString(src.status, "FAST");
+    const status = ["NORMAL", "AT CEILING", "FAST", "SLOW"].includes(st) ? st : "FAST";
+    return {
+      name,
+      score: asNumber(src.score, 3),
+      prev: asNumber(src.prev, 3),
+      weight: 0.2,
+      description: asString(src.description, ""),
+      status,
+      ...(pickChange(src.change) ? { change: pickChange(src.change) } : {}),
+    };
+  });
+  const sit = toArray(data.situations);
+  data.situations = c.situations.map((meta, i) => ({
+    title: meta.title,
+    icon: meta.icon,
+    tag: asString(sit[i]?.tag, ""),
+    tagColor: asString(sit[i]?.tagColor, "orange"),
+    points: normalizeLineArray(sit[i]?.points).slice(0, 3),
+  }));
+  const avg = data.riskFactors.reduce((s, f) => s + f.score, 0) / 5;
+  data.riskScore = Math.round(avg * 20);
+  data.scoreTrend = finalizeScoreTrendFive(data.scoreTrend, data.date, data.riskScore, data.prevRiskScore);
+  return data;
 }
 
 const jsonText = extractJsonObject(output);
@@ -419,6 +602,11 @@ for (const key of requiredTopKeys) {
 
 payload.dataZh = normalizeDashboardData(payload.dataZh || {});
 payload.dataEn = normalizeDashboardData(payload.dataEn || {});
+payload.dataZh.version = coerceVersion(payload.dataZh.version, dataTsSnapshot);
+payload.dataEn.version = payload.dataZh.version;
+payload.dataZh = enforceV29Layout(payload.dataZh, "zh");
+payload.dataEn = enforceV29Layout(payload.dataEn, "en");
+syncEnMetricsFromZh(payload.dataZh, payload.dataEn);
 assertValidDashboard(payload.dataZh, "dataZh");
 assertValidDashboard(payload.dataEn, "dataEn");
 
@@ -428,8 +616,7 @@ await mkdir(outDir, { recursive: true });
 const outPath = path.join(outDir, `${todayNy}.md`);
 await writeFile(outPath, `${payload.reportMarkdownZh}\n`, "utf8");
 
-const dataPath = path.join(process.cwd(), "src", "data.ts");
-let dataTs = await readFile(dataPath, "utf8");
+let dataTs = await readFile(dataFilePath, "utf8");
 
 const dataZhLiteral = toTsObjectLiteral(payload.dataZh);
 const dataEnLiteral = toTsObjectLiteral(payload.dataEn);
@@ -504,7 +691,7 @@ for (const key of translationKeys) {
   dataTs = replaceTranslationField(dataTs, "en", key, enValue);
 }
 
-await writeFile(dataPath, dataTs, "utf8");
+await writeFile(dataFilePath, dataTs, "utf8");
 
 console.log(`Saved report: ${path.relative(process.cwd(), outPath)}`);
 console.log("Updated src/data.ts from generated payload");
