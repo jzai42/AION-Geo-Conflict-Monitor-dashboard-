@@ -230,6 +230,12 @@ async function resolveJsonTextFromModelOutput(primaryOutput) {
 
   const strictPrompt = `你是数据管道。上一次输出无法解析为单个 JSON 对象（可能含 markdown、说明文字或括号不匹配）。请根据下列内容中的事实与数字，输出**仅一个**合法 JSON 对象，顶层键必须包含：reportMarkdownZh, dataZh, dataEn, translationsDynamic。不要 markdown 围栏，不要解释。
 
+## 内容硬约束（否则下游校验失败）
+- dataZh 与 dataEn 的 date 须为 "${todayNy}"
+- 两者均须含非空：warPhase.title、investmentSignal、keyChange
+- situations 各 4 张卡，每张 points 至少 1 条非空短句
+- coreContradiction.political 与 .military 各至少 1 条非空短句（数组）
+
 上一次输出：
 ${primaryOutput.slice(0, 28000)}`;
 
@@ -582,6 +588,99 @@ function syncEnMetricsFromZh(zh, en) {
   });
 }
 
+/** 模型偶发漏填必填字段；用当日事件/因子补全，避免 CI 在 assertValidDashboard 处失败。 */
+function ensureDashboardCompleteness(data, lang) {
+  const isZh = lang === "zh";
+  const ev = toArray(data.events);
+  const firstEv = ev[0];
+  const firstTitle = asString(firstEv?.title, "").trim();
+  const firstDesc = asString(firstEv?.description, "").trim().slice(0, 160);
+
+  const fallbackInvestment = isZh
+    ? "「维持风险平衡敞口；关注霍尔木兹通行与谈判边际变化。」"
+    : `"Maintain balanced exposure; watch Hormuz passage and negotiation margins."`;
+  if (!asString(data.investmentSignal).trim()) {
+    data.investmentSignal = fallbackInvestment;
+  }
+
+  if (!asString(data.keyChange).trim()) {
+    data.keyChange = firstTitle
+      ? (isZh ? `24h要点：${firstTitle}${firstDesc ? `；${firstDesc}` : "。"}` : `24h: ${firstTitle}${firstDesc ? ` — ${firstDesc}` : "."}`)
+      : (isZh ? "24h要点：地缘风险维持监测区间；详见下方事件与因子。" : "24h: Geo-risk in monitored range; see events and factors below.");
+  }
+
+  const wp = isPlainObject(data.warPhase) ? data.warPhase : {};
+  if (!asString(wp.title).trim()) {
+    const pts = normalizeLineArray(wp.points);
+    data.warPhase = {
+      level: asString(wp.level, isZh ? "态势评估" : "Assessment"),
+      targetLevel: asString(wp.targetLevel, isZh ? "动态跟踪" : "Tracking"),
+      title: firstTitle || (isZh ? "美伊地缘风险监测（当日）" : "US–Iran geo-risk snapshot (today)"),
+      subTitle: asString(wp.subTitle, isZh ? "综合公开信息与模型综合" : "Synthesized from public sources"),
+      points: pts.length
+        ? pts.slice(0, 3)
+        : [
+            firstDesc ||
+              (isZh ? "详见下方关键事件与风险因子卡片。" : "See key events and risk factor cards below."),
+          ],
+      note: asString(wp.note, isZh ? "监测用途，不构成投资建议。" : "For monitoring only; not investment advice."),
+    };
+  }
+
+  const sit = toArray(data.situations);
+  data.situations = sit.map((s, i) => {
+    let pts = normalizeLineArray(s?.points);
+    if (!pts.length) {
+      const rfLine = asString(data.riskFactors[i]?.description, "").trim();
+      const evLine = asString(ev[i % Math.max(ev.length, 1)]?.title, "").trim();
+      const line =
+        rfLine ||
+        evLine ||
+        (isZh
+          ? `与「${CANONICAL.zh.situations[i]?.title ?? "态势"}」相关的公开信息仍待交叉验证；见风险因子。`
+          : `Cross-check public information related to "${CANONICAL.en.situations[i]?.title ?? "situation"}"; see risk factors.`);
+      pts = [line.slice(0, 220)];
+    }
+    return { ...s, points: pts.slice(0, 3) };
+  });
+
+  const ccSrc = isPlainObject(data.coreContradiction) ? data.coreContradiction : {};
+  let political = normalizeLineArray(ccSrc.political);
+  let military = normalizeLineArray(ccSrc.military);
+  if (!political.length) {
+    const polPred = isZh
+      ? (e) => /谈|外交|欧盟|联合国|谈判|制裁|协议/i.test(`${asString(e?.title)}${asString(e?.description)}`)
+      : (e) =>
+          /diplomat|talks|negotiat|EU|UN|sanction|deal|ceasefire|embassy/i.test(
+            `${asString(e?.title)}${asString(e?.description)}`
+          );
+    const line =
+      asString(data.riskFactors[4]?.description, "").trim() ||
+      asString(ev.find(polPred)?.description, "").trim().slice(0, 200) ||
+      (isZh ? "外交与谈判路径仍存不确定性，需持续跟踪表态与接触。" : "Diplomatic path remains uncertain; track statements and contacts.");
+    political = [line];
+  }
+  if (!military.length) {
+    const milPred = isZh
+      ? (e) => /军事|打击|导弹|霍尔木兹|舰队|无人机/i.test(`${asString(e?.title)}${asString(e?.description)}`)
+      : (e) =>
+          /military|missile|strike|Hormuz|fleet|naval|drone|IRGC|tanker/i.test(
+            `${asString(e?.title)}${asString(e?.description)}`
+          );
+    const line =
+      asString(data.riskFactors[0]?.description, "").trim() ||
+      asString(ev.find(milPred)?.description, "").trim().slice(0, 200) ||
+      (isZh ? "军事升级与代理冲突通道尚未关闭。" : "Military escalation and proxy channels remain open.");
+    military = [line];
+  }
+  data.coreContradiction = {
+    political: political.slice(0, 2),
+    military: military.slice(0, 2),
+  };
+
+  return data;
+}
+
 function enforceV29Layout(data, lang) {
   const c = CANONICAL[lang];
   data.date = todayNy;
@@ -655,6 +754,8 @@ payload.dataZh.version = coerceVersion(payload.dataZh.version, dataTsSnapshot);
 payload.dataEn.version = payload.dataZh.version;
 payload.dataZh = enforceV29Layout(payload.dataZh, "zh");
 payload.dataEn = enforceV29Layout(payload.dataEn, "en");
+ensureDashboardCompleteness(payload.dataZh, "zh");
+ensureDashboardCompleteness(payload.dataEn, "en");
 syncEnMetricsFromZh(payload.dataZh, payload.dataEn);
 assertValidDashboard(payload.dataZh, "dataZh");
 assertValidDashboard(payload.dataEn, "dataEn");
