@@ -482,7 +482,7 @@ function enforceLayout(d, lang) {
   d.keyStats = c.keyStatLabels.map((label, i) => {
     let value = s(ks[i]?.value, "-");
     if (i === 0) value = `D${correctConflictDay}`;
-    if (i === 1) value = scoreDelta > 0 ? `↑${scoreDelta}` : scoreDelta < 0 ? `↓${Math.abs(scoreDelta)}` : "持平";
+    if (i === 1) value = scoreDelta > 0 ? `↑${scoreDelta}` : scoreDelta < 0 ? `↓${Math.abs(scoreDelta)}` : (lang === "zh" ? "持平" : "Flat");
     return {
       label,
       value,
@@ -580,7 +580,7 @@ function syncEnFromZh(zh, en) {
   en.prevRiskScore = zh.prevRiskScore;
   en.scoreTrend = JSON.parse(JSON.stringify(zh.scoreTrend));
   en.keyStats = en.keyStats.map((row, i) => {
-    if (i < 2) return { ...row, value: zh.keyStats[i]?.value ?? row.value };
+    if (i === 0) return { ...row, value: zh.keyStats[i]?.value ?? row.value };
     return row;
   });
   en.riskFactors = en.riskFactors.map((f, i) => {

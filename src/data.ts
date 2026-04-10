@@ -285,7 +285,7 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Score Change",
-      value: "持平",
+      value: "Flat",
       unit: "vs Prev",
       color: "gray"
     },
@@ -574,7 +574,7 @@ export const TRANSLATIONS = {
     sources: "Sources",
     vs: "vs",
     bannerSignal:
-      "Composite 64 (持平): Ceasefire rhetoric remains, but Hormuz and oil-market risks have not materially eased; the composite score is unchanged.",
+      "Composite 64 (Flat): Ceasefire rhetoric remains, but Hormuz and oil-market risks have not materially eased; the composite score is unchanged.",
     bannerWarning: "Neutral-to-cautious: keep defensive positioning and watch Hormuz transit plus a second wave in oil volatility.",
     deescalationIntent: "Ceasefire language and hardline conditions coexist, leaving the negotiation fra…",
     structuralRisk: "Shipping remains severely constrained, with reporting describing the waterway as effectively still …",
