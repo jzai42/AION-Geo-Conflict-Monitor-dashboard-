@@ -4,19 +4,34 @@ on:
   push:
     branches:
       - main
+  # GitHub does NOT fire new workflows from commits pushed with GITHUB_TOKEN inside Actions.
+  # The daily report job commits to main with the default token, so we must redeploy via workflow_run.
+  workflow_run:
+    workflows:
+      - Generate Daily AION Report
+    types:
+      - completed
 
 permissions:
   contents: write
 
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
+
 jobs:
   deploy:
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 20
           cache: npm
