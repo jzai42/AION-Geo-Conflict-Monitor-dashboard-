@@ -199,8 +199,9 @@ async function repairJsonWithModel(badJsonText) {
 要求：
 1) 只输出JSON对象本身
 2) 不添加解释
-3) 不改key名
-4) 保留原语义
+3) 保留原语义；key 名必须与 AION 日报载荷一致，不得随意改名
+4) **顶层必须保留（若原文已有或可从片段推断）**：reportMarkdownZh、dataZh、dataEn 三个键。若待修复文本是截断的日报载荷，请补全这三个键；dataZh/dataEn 为对象，reportMarkdownZh 为字符串（可为简短占位）。
+5) 可选顶层键：translationsDynamic
 
 待修复文本：
 ${badJsonText}`;
@@ -254,6 +255,56 @@ ${primaryOutput.slice(0, 28000)}`;
     console.warn("Recovered JSON via strict follow-up call.");
   }
   return jsonText;
+}
+
+const REQUIRED_PAYLOAD_KEYS = ["reportMarkdownZh", "dataZh", "dataEn"];
+
+function missingPayloadKeys(payload) {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    return [...REQUIRED_PAYLOAD_KEYS];
+  }
+  return REQUIRED_PAYLOAD_KEYS.filter((k) => !(k in payload));
+}
+
+/** 修复/补全后 JSON 可解析但缺少顶层键时，再调一次模型合并补全。 */
+async function completePayloadWithModel(partialPayload, originalOutput) {
+  const prompt = `你是数据管道。下列 JSON 已能解析，但缺少 AION 日报要求的顶层键：reportMarkdownZh、dataZh、dataEn（必须三者齐全）。
+
+请输出**仅一个**合法 JSON 对象，要求：
+- 顶层必须包含：reportMarkdownZh（字符串）、dataZh（对象）、dataEn（对象）；可有 translationsDynamic
+- 尽量合并「已有 JSON」中的字段，不要丢弃已有 dataZh/dataEn 内容；若某键完全缺失，则根据「参考原文」与当日日期 ${todayNy} 补全最小可用 DashboardData（须含 date="${todayNy}"、version 形如 v2.x、五因子、事件、warPhase 等，与主 prompt 一致）
+- 不要 markdown 围栏，不要解释
+
+已有 JSON（可能缺键）：
+${JSON.stringify(partialPayload).slice(0, 28000)}
+
+参考原文（截断）：
+${originalOutput.slice(0, 14000)}`;
+
+  const resp = await callOpenAI({
+    model: OPENAI_MODEL,
+    input: prompt,
+  });
+  const text = collectTextFromResponse(resp);
+  const jt = extractJsonObject(text);
+  if (!jt) return null;
+  try {
+    return JSON.parse(jt);
+  } catch {
+    return null;
+  }
+}
+
+function mergePayloadKeys(base, richer) {
+  if (!richer || typeof richer !== "object") return base;
+  const out = { ...base };
+  for (const k of REQUIRED_PAYLOAD_KEYS) {
+    if (!(k in out) && k in richer) out[k] = richer[k];
+  }
+  if (!out.translationsDynamic && richer.translationsDynamic) {
+    out.translationsDynamic = richer.translationsDynamic;
+  }
+  return out;
 }
 
 function toTsObjectLiteral(obj) {
@@ -789,11 +840,31 @@ try {
   }
 }
 
-const requiredTopKeys = ["reportMarkdownZh", "dataZh", "dataEn"];
-for (const key of requiredTopKeys) {
-  if (!(key in payload)) {
-    throw new Error(`Missing key in payload: ${key}`);
+let missingKeys = missingPayloadKeys(payload);
+if (missingKeys.length) {
+  console.warn(`Payload missing top-level keys: ${missingKeys.join(", ")} — calling completePayloadWithModel.`);
+  let completed = await completePayloadWithModel(payload, output);
+  if (completed) {
+    payload = mergePayloadKeys(payload, completed);
+    missingKeys = missingPayloadKeys(payload);
   }
+  if (missingKeys.length) {
+    console.warn("Still missing keys — retrying completePayloadWithModel from empty base.");
+    completed = await completePayloadWithModel({}, output);
+    if (completed) {
+      payload = mergePayloadKeys(payload, completed);
+      missingKeys = missingPayloadKeys(payload);
+    }
+  }
+  if (missingKeys.length) {
+    const debugDir = path.join(process.cwd(), "reports", "daily");
+    await mkdir(debugDir, { recursive: true });
+    await writeFile(path.join(debugDir, `${todayNy}.incomplete-payload.json`), `${JSON.stringify(payload, null, 2)}\n`, "utf8");
+    throw new Error(
+      `Missing key in payload after completion: ${missingKeys.join(", ")} (see reports/daily/${todayNy}.incomplete-payload.json)`
+    );
+  }
+  console.warn("Recovered missing top-level keys via completePayloadWithModel.");
 }
 
 payload.dataZh = normalizeDashboardData(payload.dataZh || {});
