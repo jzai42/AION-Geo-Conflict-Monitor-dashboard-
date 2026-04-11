@@ -59,16 +59,16 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-04-10",
-  version: "v2.10",
+  date: "2026-04-11",
+  version: "v2.11",
   riskScore: 64,
   prevRiskScore: 64,
-  investmentSignal: "中性偏谨慎：维持防御性仓位，关注霍尔木兹通行与油价二次波动。",
-  keyChange: "停火叙事仍在，但霍尔木兹与油市风险尚未实质缓解；综合评分持平。",
+  investmentSignal: "高波动、偏防御；适合降低方向性押注，关注油价与航运头条驱动的短线反复。",
+  keyChange: "美伊进入巴基斯坦会谈阶段，说明冲突继续降温，但霍尔木兹与油价风险仍未解除。",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D41",
+      value: "D42",
       unit: "2月28日起",
       color: "red"
     },
@@ -80,28 +80,28 @@ export const DATA_ZH: DashboardData = {
     },
     {
       label: "油价",
-      value: "约95-100",
-      unit: "USD/bbl",
-      color: "orange"
+      value: "约95",
+      unit: "美元/桶",
+      color: "amber"
     },
     {
       label: "霍尔木兹",
       value: "受限",
-      unit: "status",
+      unit: "状态",
       color: "red"
     }
   ],
   warPhase: {
     level: "脆弱停火",
-    targetLevel: "有限对峙",
-    title: "停火尚在，但风险外溢未消",
-    subTitle: "军事烈度暂稳，航运与能源仍是主要压力源",
+    targetLevel: "有限降级",
+    title: "脆弱停火下的谈判窗口",
+    subTitle: "冲突进入第 42 天，外交渠道打开，但海峡与油市风险仍高",
     points: [
-      "公开报道未见24小时内明确的大规模新增打击。",
-      "霍尔木兹通行仍显著受扰，市场对恢复正常持怀疑态度。",
-      "停火与强硬表态并存，降级路径仍不稳固。"
+      "美伊在巴基斯坦开启会谈，说明停火仍在延续。",
+      "霍尔木兹开放条件尚未彻底落定。",
+      "油价较冲突高点回落，但风险溢价仍未消失。"
     ],
-    note: "本日判断以停火脆弱性与航运受限为主轴，综合风险暂不变化。"
+    note: "当前更像是“边谈边控风险”的阶段，而非稳固和平。"
   },
   riskFactors: [
     {
@@ -109,7 +109,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "未见明确升级到多战线大规模交火，但局部摩擦和报复性风险仍在。",
+      description: "有限军事对抗已被会谈阶段所替代，但停火仍脆弱。",
       status: "FAST"
     },
     {
@@ -117,7 +117,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "航运仍严重受限，公开报道称水道基本仍处于关闭/受限状态。",
+      description: "海峡通行受条件约束，航运风险明显高于常态。",
       status: "FAST"
     },
     {
@@ -125,7 +125,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "油价在停火后回落，但4月9日再度反弹，说明风险溢价未消。",
+      description: "油价从战时高点回落，但仍处高敏感区间。",
       status: "FAST"
     },
     {
@@ -133,7 +133,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美国仍主导军事与谈判节奏，欧洲公开呼吁政治解决，但未见新增直接作战介入。",
+      description: "地区斡旋与联合国博弈仍在，但未升级为直接军事介入。",
       status: "FAST"
     },
     {
@@ -141,70 +141,62 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "仍有谈判渠道，但条件对冲明显，停火前景脆弱。",
+      description: "谈判渠道存在，但推进有限，结果仍不确定。",
       status: "FAST"
     }
   ],
   events: [
     {
-      id: "e1",
-      title: "欧洲领导人呼吁重启谈判",
-      description: "欧洲方面公开敦促通过政治方式稳住停火并推动霍尔木兹重新开放。",
+      id: "evt-20260411-1",
+      title: "美伊在巴基斯坦开启会谈",
+      description: "双方在脆弱停火背景下开始直接谈判。",
       verification: "confirmed",
-      timestamp: "2026-04-09",
-      significance: "medium",
-      highlight: true
-    },
-    {
-      id: "e2",
-      title: "霍尔木兹通行仍受限",
-      description: "媒体称霍尔木兹仍基本处于关闭或显著受限状态，少量船只可通过。",
-      verification: "confirmed",
-      timestamp: "2026-04-09",
-      significance: "high",
-      highlight: true,
-      critical: true
-    },
-    {
-      id: "e3",
-      title: "油价在停火后反弹",
-      description: "在前一交易日大跌后，4月9日油价因供应疑虑再度上行。",
-      verification: "confirmed",
-      timestamp: "2026-04-09",
+      timestamp: "2026-04-11",
       significance: "high",
       highlight: true
     },
     {
-      id: "e4",
-      title: "停火框架仍存但脆弱",
-      description: "AP持续援引美伊两周停火框架，但指出局势并不稳定。",
+      id: "evt-20260411-2",
+      title: "停火仍被描述为脆弱",
+      description: "媒体称谈判推进前仍存在条件与障碍。",
       verification: "confirmed",
-      timestamp: "2026-04-09",
-      significance: "high",
-      highlight: true,
-      critical: true
+      timestamp: "2026-04-11",
+      significance: "medium"
     },
     {
-      id: "e5",
-      title: "领导层继续释放强硬与降级并存信号",
-      description: "美方一方面强调停火，另一方面仍保留强硬条件与威慑表态。",
-      verification: "partial",
-      timestamp: "2026-04-09",
+      id: "evt-20260411-3",
+      title: "油价维持回落态势",
+      description: "市场对停火与会谈给出缓和反应，但价格仍高于战前。",
+      verification: "confirmed",
+      timestamp: "2026-04-11",
+      significance: "medium"
+    },
+    {
+      id: "evt-20260411-4",
+      title: "霍尔木兹通行争议未消",
+      description: "公开报道继续聚焦海峡开放条件和通行摩擦。",
+      verification: "confirmed",
+      timestamp: "2026-04-11",
+      significance: "high",
+      highlight: true
+    },
+    {
+      id: "evt-20260411-5",
+      title: "第三方斡旋持续",
+      description: "巴基斯坦继续充当关键中介与会谈地点。",
+      verification: "confirmed",
+      timestamp: "2026-04-11",
       significance: "medium"
     }
   ],
   scoreTrend: [
     {
-      date: "04-06",
-      score: 68
-    },
-    {
       date: "04-07",
-      score: 68
+      score: 64
     },
     {
       date: "04-08",
-      score: 56
+      score: 64
     },
     {
       date: "04-09",
@@ -212,6 +204,10 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "04-10",
+      score: 64
+    },
+    {
+      date: "04-11",
       score: 64,
       active: true
     }
@@ -220,66 +216,67 @@ export const DATA_ZH: DashboardData = {
     {
       title: "军事行动",
       icon: "Military",
-      tag: "低烈度维持",
-      tagColor: "green",
+      tag: "降温但未终结",
+      tagColor: "yellow",
       points: [
-        "未见24小时内明确的大战升级。",
-        "局部摩擦和报复风险仍存在。"
+        "无新一轮大规模交火确认。",
+        "会谈取代了立即升级。"
       ]
     },
     {
       title: "航运 / 霍尔木兹",
       icon: "Shipping",
-      tag: "持续受限",
+      tag: "仍受限",
       tagColor: "red",
       points: [
-        "霍尔木兹仍未恢复常态通行。",
-        "少量船只可过，但整体流量受扰严重。"
+        "海峡开放条件仍是争议焦点。",
+        "航运恢复并未完全正常化。"
       ]
     },
     {
       title: "能源市场",
       icon: "Energy",
-      tag: "高波动",
-      tagColor: "orange",
+      tag: "高位回落",
+      tagColor: "amber",
       points: [
-        "油价对停火与通行消息高度敏感。",
-        "供应链风险溢价尚未完全消失。"
+        "油价从战时高点回落。",
+        "市场仍对突发消息高度敏感。"
       ]
     },
     {
       title: "领导层信号",
       icon: "Leadership",
-      tag: "谈判未断",
+      tag: "谨慎接触",
       tagColor: "blue",
       points: [
-        "美伊均保留谈判叙事。",
-        "但双方条件差距仍大，停火脆弱。"
+        "谈判本身释放降级信号。",
+        "但双方仍保留强硬表述与条件。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "停火表态与强硬条件并行，谈判框架缺乏稳固互信。",
-      "欧洲呼吁降级，但美伊主导议程仍偏向条件交换。"
+      "停火需要尽快制度化，但双方互信仍不足。",
+      "第三方斡旋有效，却无法替代双边实质妥协。"
     ],
     military: [
-      "前线未全面升级，但局部袭击与威慑行动仍可能随时打断停火。"
+      "直接交火暂缓，但威慑与再升级风险未消。",
+      "霍尔木兹仍是最敏感的军事—航运联动点。"
     ]
   }
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-04-10",
-  version: "v2.10",
+  date: "2026-04-11",
+  version: "v2.11",
   riskScore: 64,
   prevRiskScore: 64,
-  investmentSignal: "Neutral-to-cautious: keep defensive positioning and watch Hormuz transit plus a second wave in oil volatility.",
-  keyChange: "Ceasefire rhetoric remains, but Hormuz and oil-market risks have not materially eased; the composite score is unchanged.",
+  investmentSignal: "High volatility, defensive bias; reduce directional bets and watch oil and shipping headlines for short-term swings.",
+  keyChange: "The US and Iran have entered talks in Pakistan, extending de-escalation, but Hormuz and oil risks remain unresolved.",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D41",
+      value: "D42",
       unit: "Since Feb 28",
       color: "red"
     },
@@ -291,28 +288,28 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Oil",
-      value: "~95-100",
+      value: "~95",
       unit: "USD/bbl",
-      color: "orange"
+      color: "amber"
     },
     {
       label: "Hormuz",
-      value: "Restricted",
+      value: "Constrained",
       unit: "status",
       color: "red"
     }
   ],
   warPhase: {
-    level: "Fragile ceasefire",
-    targetLevel: "Limited standoff",
-    title: "A ceasefire exists, but spillover risk has not faded",
-    subTitle: "Military intensity is temporarily stable, while shipping and energy remain the main pressure points",
+    level: "Fragile Ceasefire",
+    targetLevel: "Limited De-escalation",
+    title: "A Negotiation Window Under a Fragile Ceasefire",
+    subTitle: "Day 42 of the conflict: diplomacy is open, but shipping and energy risks remain elevated",
     points: [
-      "No clearly reported major new strikes in the past 24 hours.",
-      "Hormuz transit remains materially disrupted and market skepticism is high.",
-      "Ceasefire language and hardline signaling coexist, keeping de-escalation fragile."
+      "The US and Iran began talks in Pakistan, showing the ceasefire is still holding.",
+      "Hormuz reopening conditions remain unsettled.",
+      "Oil has retreated from war highs, but the risk premium has not fully vanished."
     ],
-    note: "Today’s assessment is driven primarily by ceasefire fragility and continued shipping constraints, leaving the composite risk unchanged."
+    note: "The situation is best described as managing risk while negotiating, not as durable peace."
   },
   riskFactors: [
     {
@@ -320,7 +317,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "No clear shift to multi-front large-scale combat, but localized friction and retaliation risk remain.",
+      description: "Limited combat has given way to talks, but the ceasefire remains fragile.",
       status: "FAST"
     },
     {
@@ -328,7 +325,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Shipping remains severely constrained, with reporting describing the waterway as effectively still closed or heavily restricted.",
+      description: "Transit remains condition-bound and shipping risk is still materially elevated.",
       status: "FAST"
     },
     {
@@ -336,7 +333,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Oil prices fell after the ceasefire, then rebounded on Apr. 9, showing the risk premium has not disappeared.",
+      description: "Oil has fallen from wartime highs but is still in a sensitive range.",
       status: "FAST"
     },
     {
@@ -344,7 +341,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "The U.S. continues to drive both military and diplomatic sequencing; Europe is publicly urging a political settlement, with no new direct combat role.",
+      description: "Regional mediation and UN maneuvering continue, but not direct military involvement.",
       status: "FAST"
     },
     {
@@ -352,70 +349,62 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "A negotiation channel still exists, but conditions are heavily offsetting, leaving the ceasefire fragile.",
+      description: "A negotiation channel exists, but progress remains limited and uncertain.",
       status: "FAST"
     }
   ],
   events: [
     {
-      id: "e1",
-      title: "European leaders push to restart talks",
-      description: "Europe publicly urged a political path to stabilize the ceasefire and reopen Hormuz.",
+      id: "evt-20260411-1",
+      title: "US-Iran talks begin in Pakistan",
+      description: "The two sides opened direct negotiations under a fragile ceasefire.",
       verification: "confirmed",
-      timestamp: "2026-04-09",
-      significance: "medium",
-      highlight: true
-    },
-    {
-      id: "e2",
-      title: "Hormuz transit remains restricted",
-      description: "Reporting says the Strait of Hormuz is still effectively closed or significantly restricted, with only limited passage.",
-      verification: "confirmed",
-      timestamp: "2026-04-09",
-      significance: "high",
-      highlight: true,
-      critical: true
-    },
-    {
-      id: "e3",
-      title: "Oil rebounds after ceasefire shock",
-      description: "After the prior session’s sharp drop, oil rose again on Apr. 9 amid renewed supply concerns.",
-      verification: "confirmed",
-      timestamp: "2026-04-09",
+      timestamp: "2026-04-11",
       significance: "high",
       highlight: true
     },
     {
-      id: "e4",
-      title: "Ceasefire framework still in place but fragile",
-      description: "AP continues to reference the U.S.-Iran two-week ceasefire framework while stressing instability.",
+      id: "evt-20260411-2",
+      title: "Ceasefire still described as fragile",
+      description: "Reporting said the talks still face preconditions and obstacles.",
       verification: "confirmed",
-      timestamp: "2026-04-09",
-      significance: "high",
-      highlight: true,
-      critical: true
+      timestamp: "2026-04-11",
+      significance: "medium"
     },
     {
-      id: "e5",
-      title: "Leadership messaging mixes restraint with coercion",
-      description: "Washington continues to signal both restraint and coercive leverage conditions.",
-      verification: "partial",
-      timestamp: "2026-04-09",
+      id: "evt-20260411-3",
+      title: "Oil prices remain on a downtrend from war highs",
+      description: "Markets reacted to the ceasefire, but prices remain above pre-war levels.",
+      verification: "confirmed",
+      timestamp: "2026-04-11",
+      significance: "medium"
+    },
+    {
+      id: "evt-20260411-4",
+      title: "Hormuz transit dispute persists",
+      description: "Public reporting continued to focus on reopening conditions and transit friction.",
+      verification: "confirmed",
+      timestamp: "2026-04-11",
+      significance: "high",
+      highlight: true
+    },
+    {
+      id: "evt-20260411-5",
+      title: "Third-party mediation continues",
+      description: "Pakistan remains a key host and intermediary.",
+      verification: "confirmed",
+      timestamp: "2026-04-11",
       significance: "medium"
     }
   ],
   scoreTrend: [
     {
-      date: "04-06",
-      score: 68
-    },
-    {
       date: "04-07",
-      score: 68
+      score: 64
     },
     {
       date: "04-08",
-      score: 56
+      score: 64
     },
     {
       date: "04-09",
@@ -423,6 +412,10 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "04-10",
+      score: 64
+    },
+    {
+      date: "04-11",
       score: 64,
       active: true
     }
@@ -431,11 +424,11 @@ export const DATA_EN: DashboardData = {
     {
       title: "Military Action",
       icon: "Military",
-      tag: "Low-intensity hold",
-      tagColor: "green",
+      tag: "Cooling but unresolved",
+      tagColor: "yellow",
       points: [
-        "No clearly reported major escalation in the past 24 hours.",
-        "Localized friction and retaliation risks remain."
+        "No new large-scale exchange was confirmed.",
+        "Talks have replaced immediate escalation."
       ]
     },
     {
@@ -444,38 +437,39 @@ export const DATA_EN: DashboardData = {
       tag: "Still constrained",
       tagColor: "red",
       points: [
-        "Hormuz has not returned to normal transit conditions.",
-        "A small number of vessels may pass, but the overall flow remains badly disrupted."
+        "Reopening conditions remain disputed.",
+        "Transit has not fully normalized."
       ]
     },
     {
       title: "Energy Market",
       icon: "Energy",
-      tag: "Highly volatile",
-      tagColor: "orange",
+      tag: "Off highs",
+      tagColor: "amber",
       points: [
-        "Oil remains highly sensitive to ceasefire and transit headlines.",
-        "The supply-risk premium has not fully cleared."
+        "Oil has pulled back from wartime peaks.",
+        "Prices remain highly sensitive to headlines."
       ]
     },
     {
       title: "Leadership Signals",
       icon: "Leadership",
-      tag: "Talks still alive",
+      tag: "Cautious contact",
       tagColor: "blue",
       points: [
-        "Both sides still keep the negotiation narrative open.",
-        "But the gap between conditions remains large, making the ceasefire fragile."
+        "The talks themselves are a de-escalatory signal.",
+        "Yet both sides still preserve hard lines and conditions."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Ceasefire language and hardline conditions coexist, leaving the negotiation framework short on trust.",
-      "Europe is urging de-escalation, but U.S.-Iran agenda-setting remains centered on leverage and conditions."
+      "The ceasefire needs to become institutionalized, but mutual trust is still weak.",
+      "Third-party mediation helps, but cannot replace real bilateral compromise."
     ],
     military: [
-      "The front has not escalated into full-scale combat, but localized attacks and deterrence moves could still break the ceasefire."
+      "Direct fire has paused, but deterrence and re-escalation risk remain.",
+      "Hormuz remains the most sensitive military-shipping linkage point."
     ]
   }
 };
@@ -485,7 +479,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "4月10日节点",
+    node406: "4月11日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -516,22 +510,22 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.10 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.11 · Daily",
     sources: "来源",
     vs: "较",
     bannerSignal:
-      "综合评分 64（持平）：停火叙事仍在，但霍尔木兹与油市风险尚未实质缓解；综合评分持平。",
-    bannerWarning: "中性偏谨慎：维持防御性仓位，关注霍尔木兹通行与油价二次波动。",
-    deescalationIntent: "停火表态与强硬条件并行，谈判框架缺乏稳固互信。",
-    structuralRisk: "航运仍严重受限，公开报道称水道基本仍处于关闭/受限状态。",
+      "综合评分 64（持平）：美伊进入巴基斯坦会谈阶段，说明冲突继续降温，但霍尔木兹与油价风险仍未解除。",
+    bannerWarning: "高波动、偏防御；适合降低方向性押注，关注油价与航运头条驱动的短线反复。",
+    deescalationIntent: "停火需要尽快制度化，但双方互信仍不足。",
+    structuralRisk: "海峡通行受条件约束，航运风险明显高于常态。",
     contradictionNote:
-      "停火表态与强硬条件并行，谈判框架缺乏稳固互信。；前线未全面升级，但局部袭击与威慑行动仍可能随时打断停火。",
+      "停火需要尽快制度化，但双方互信仍不足。；直接交火暂缓，但威慑与再升级风险未消。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
     clickExpand: "点击展开详情",
     conflictName: "美伊冲突",
-    dayCount: "第41天",
+    dayCount: "第42天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -539,7 +533,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Apr 10 Node",
+    node406: "Apr 11 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -570,22 +564,22 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.10 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.11 · Daily",
     sources: "Sources",
     vs: "vs",
     bannerSignal:
-      "Composite 64 (Flat): Ceasefire rhetoric remains, but Hormuz and oil-market risks have not materially eased; the composite score is unchanged.",
-    bannerWarning: "Neutral-to-cautious: keep defensive positioning and watch Hormuz transit plus a second wave in oil volatility.",
-    deescalationIntent: "Ceasefire language and hardline conditions coexist, leaving the negotiation fra…",
-    structuralRisk: "Shipping remains severely constrained, with reporting describing the waterway as effectively still …",
+      "Composite 64 (Flat): The US and Iran have entered talks in Pakistan, extending de-escalation, but Hormuz and oil risks remain unresolved.",
+    bannerWarning: "High volatility, defensive bias; reduce directional bets and watch oil and shipping headlines for short-term swings.",
+    deescalationIntent: "The ceasefire needs to become institutionalized, but mutual trust is still weak.",
+    structuralRisk: "Transit remains condition-bound and shipping risk is still materially elevated.",
     contradictionNote:
-      "Ceasefire language and hardline conditions coexist, leaving the negotiation framework short on trust.; The front has not escalated into full-scale combat, but …",
+      "The ceasefire needs to become institutionalized, but mutual trust is still weak.; Direct fire has paused, but deterrence and re-escalation risk remain.",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
     clickExpand: "Click to expand details",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 41",
+    dayCount: "Day 42",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
