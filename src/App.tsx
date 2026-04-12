@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Activity, 
@@ -27,18 +27,29 @@ import {
   Ship,
   Sword,
   Users,
-  Sun,
-  Moon
 } from 'lucide-react';
 import { DATA_ZH, DATA_EN, TRANSLATIONS, type DashboardData, type KeyEvent, type RiskFactor, type SituationCard } from './data';
 import { cn } from './lib/utils';
+import {
+  buildShareUrl,
+  isLocationSyncedWithState,
+  parseShareUrlState,
+  shareViewToTab,
+  tabToShareView,
+  type ShareUrlState,
+} from './lib/share-url';
+import { ShareMenu } from './components/ShareMenu';
+import PdfGeoMonitor from './pages/PdfGeoMonitor';
 
 // --- Components (AION v2.4 Force Sync) ---
 
-const TopBanner = ({ t }: { t: any }) => (
-  <div className="bg-green-500/10 border-b border-green-500/20 px-6 py-1.5 flex items-center justify-between text-[10px] font-mono">
-    <div className="flex items-center gap-2 text-green-500">
-      <ChevronDown className="w-3 h-3" />
+const TopBanner = ({ t, delta }: { t: any; delta: number }) => (
+  <div className={cn(
+    "border-b px-6 py-1.5 flex items-center justify-between text-[10px] font-mono",
+    delta > 0 ? "bg-aion-red/10 border-aion-red/20" : delta < 0 ? "bg-green-500/10 border-green-500/20" : "bg-aion-gray/10 border-aion-gray/20"
+  )}>
+    <div className={cn("flex items-center gap-2", delta > 0 ? "text-aion-red" : delta < 0 ? "text-green-500" : "text-aion-text-dim")}>
+      {delta > 0 ? <ChevronUp className="w-3 h-3" /> : delta < 0 ? <ChevronDown className="w-3 h-3" /> : null}
       <span>{t.bannerSignal}</span>
     </div>
     <div className="flex items-center gap-2 text-aion-red">
@@ -48,15 +59,14 @@ const TopBanner = ({ t }: { t: any }) => (
   </div>
 );
 
-const Header = ({ date, version, warPhase, language, setLanguage, theme, setTheme, t }: { 
+const Header = ({ date, version, warPhase, language, setLanguage, t, share }: { 
   date: string, 
   version: string, 
   warPhase: DashboardData['warPhase'],
   language: 'zh' | 'en',
   setLanguage: (l: 'zh' | 'en') => void,
-  theme: 'dark' | 'light',
-  setTheme: (t: 'dark' | 'light') => void,
-  t: any
+  t: any,
+  share: React.ReactNode,
 }) => {
   const [time, setTime] = useState(new Date().toISOString().replace('T', ' ').split('.')[0] + ' UTC');
 
@@ -88,14 +98,6 @@ const Header = ({ date, version, warPhase, language, setLanguage, theme, setThem
       
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-4">
-          <button 
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-2 rounded-sm border border-aion-gray hover:bg-aion-text/5 transition-colors text-aion-text-dim hover:text-aion-text"
-            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-          >
-            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          </button>
-
           <div className="flex items-center gap-1 bg-aion-text/5 p-1 rounded-sm border border-aion-gray/50">
             <button 
               onClick={() => setLanguage('zh')}
@@ -120,6 +122,7 @@ const Header = ({ date, version, warPhase, language, setLanguage, theme, setThem
               EN
             </button>
           </div>
+          {share}
         </div>
         <div className="flex flex-col items-end gap-1">
           <div className="flex items-center gap-2 font-mono text-[11px]">
@@ -138,27 +141,121 @@ const Header = ({ date, version, warPhase, language, setLanguage, theme, setThem
   );
 };
 
-const StatCard = ({ label, value, unit, color }: { label: string, value: string, unit: string, color: string, key?: React.Key }) => {
+/** 单行显示：过长时缩小字号而非换行（用于顶部指标卡） */
+const StatCardFitLine = ({
+  text,
+  className,
+  style,
+  maxPx,
+  minPx,
+}: {
+  text: string;
+  className?: string;
+  style?: React.CSSProperties;
+  maxPx: number;
+  minPx: number;
+}) => {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const wrap = wrapRef.current;
+    const el = textRef.current;
+    if (!wrap || !el) return;
+
+    const fit = () => {
+      const w = wrap.clientWidth;
+      if (w <= 0) return;
+      let size = maxPx;
+      el.style.fontSize = `${size}px`;
+      while (size > minPx && el.scrollWidth > w) {
+        size -= 0.25;
+        el.style.fontSize = `${size}px`;
+      }
+    };
+
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(wrap);
+    return () => ro.disconnect();
+  }, [text, maxPx, minPx]);
+
   return (
-    <div 
-      className="aion-card flex flex-col items-center justify-center text-center min-h-[120px] group transition-all"
-      style={{ borderColor: `${color}40`, backgroundColor: `${color}08` }}
-    >
-      <div className="text-4xl font-mono font-bold mb-1" style={{ color, textShadow: `0 0 15px ${color}40` }}>{value}</div>
-      <div className="aion-label mb-1" style={{ color: `${color}cc` }}>{unit}</div>
-      <div className="text-[10px] text-aion-text-dim font-mono uppercase tracking-tighter">{label}</div>
+    <div ref={wrapRef} className="w-full min-w-0 max-w-full px-0.5">
+      <div
+        ref={textRef}
+        className={cn("font-mono whitespace-nowrap text-center leading-tight", className)}
+        style={{ ...style, fontSize: maxPx }}
+      >
+        {text}
+      </div>
     </div>
   );
 };
 
-const TrendChart = ({ trend }: { trend: DashboardData['scoreTrend'] }) => {
+/** 风险档指示条：与右侧观察卡同列等高，单行文案（区间 · 标签）自动缩小字号 */
+const RiskLegendCell = ({
+  line,
+  barClass,
+  textClass,
+}: {
+  line: string;
+  barClass: string;
+  textClass: string;
+}) => (
+  <div
+    className={cn(
+      "flex min-h-0 min-w-0 flex-1 flex-col items-stretch justify-center rounded-md border px-1 py-2 sm:px-1.5",
+      barClass,
+    )}
+  >
+    <StatCardFitLine
+      text={line}
+      maxPx={11}
+      minPx={6.5}
+      className={cn("font-mono", textClass)}
+    />
+  </div>
+);
+
+const StatCard = ({ label, value, unit, color }: { label: string, value: string, unit: string, color: string, key?: React.Key }) => {
+  return (
+    <div 
+      className="aion-card flex min-h-[120px] min-w-0 flex-col items-center justify-center text-center group transition-all"
+      style={{ borderColor: `${color}40`, backgroundColor: `${color}08` }}
+    >
+      <StatCardFitLine
+        text={value}
+        maxPx={36}
+        minPx={8}
+        className="mb-1 font-bold"
+        style={{ color, textShadow: `0 0 15px ${color}40` }}
+      />
+      <StatCardFitLine
+        text={unit}
+        maxPx={12}
+        minPx={7}
+        className="aion-label mb-1"
+        style={{ color: `${color}cc` }}
+      />
+      <StatCardFitLine
+        text={label}
+        maxPx={10}
+        minPx={6}
+        className="font-mono text-aion-text-dim uppercase tracking-tighter"
+      />
+    </div>
+  );
+};
+
+const TrendChart = ({ trend, compact }: { trend: DashboardData['scoreTrend']; compact?: boolean }) => {
   // Use a baseline to make differences more obvious
   const minScore = Math.min(...trend.map(t => t.score)) - 5;
   const maxScore = Math.max(...trend.map(t => t.score)) + 5;
   const range = maxScore - minScore;
 
   return (
-    <div className="flex items-end justify-between gap-1 h-28 w-full mt-4 px-1">
+    <div className={cn("flex items-end justify-between gap-1 w-full px-1", compact ? "mt-2 h-24" : "mt-4 h-28")}>
       {trend.map((t, i) => (
         <div key={i} className="flex flex-col items-center flex-1 h-full justify-end group">
           <span className={cn(
@@ -214,10 +311,13 @@ const RiskGauge = ({ score, prev, trend, t }: { score: number, prev: number, tre
       </div>
 
       <div className="mt-6 flex flex-col items-center gap-4 w-full">
-        <div className="bg-green-500/10 border border-green-500/30 px-6 py-1 rounded-sm flex items-center gap-2">
-          <ChevronDown className="w-3 h-3 text-green-500" />
-          <span className="font-mono text-xs text-green-500">
-            {Math.abs(delta)} {t.vsPrev}
+        <div className={cn(
+          "px-6 py-1 rounded-sm flex items-center gap-2 border",
+          delta > 0 ? "bg-aion-red/10 border-aion-red/30" : delta < 0 ? "bg-green-500/10 border-green-500/30" : "bg-aion-gray/20 border-aion-gray/40"
+        )}>
+          {delta > 0 ? <ChevronUp className="w-3 h-3 text-aion-red" /> : delta < 0 ? <ChevronDown className="w-3 h-3 text-green-500" /> : null}
+          <span className={cn("font-mono text-xs", delta > 0 ? "text-aion-red" : delta < 0 ? "text-green-500" : "text-aion-text-dim")}>
+            {delta === 0 ? "—" : Math.abs(delta)} {t.vsPrev}
           </span>
         </div>
 
@@ -231,10 +331,11 @@ const RiskGauge = ({ score, prev, trend, t }: { score: number, prev: number, tre
 };
 
 const WarPhase = ({ phase, keyChange, t }: { phase: DashboardData['warPhase'], keyChange: string, t: any }) => {
+  // level → targetLevel 表示「当前阶段评估 → 目标/走向」，箭头仅为阶段关系，不是涨跌；勿用 targetLevel.includes('5')（中文阶段名不含数字）
   return (
     <div className={cn(
       "aion-card flex-1 flex flex-col p-6 border-t-4 transition-all",
-      phase.targetLevel.includes('5') ? "border-t-green-500 border-x-green-500/10 border-b-green-500/10 bg-green-500/5" : "border-t-aion-red border-x-aion-red/10 border-b-aion-red/10 bg-aion-red/5"
+      "border-t-aion-orange border-x-aion-gray/20 border-b-aion-gray/20 bg-aion-text/5"
     )}>
       <div className="flex items-center justify-between mb-6">
         <div className="aion-label">{t.conflictPhase}</div>
@@ -355,10 +456,10 @@ const RiskFactorRow = ({ factor, t }: { factor: RiskFactor, t: any, key?: React.
   const delta = factor.score - factor.prev;
   
   return (
-    <div className="py-4 border-b border-aion-gray last:border-0">
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-3">
-          <h4 className="text-sm font-mono tracking-widest text-aion-text">{factor.name}</h4>
+    <div className="py-3 border-b border-aion-gray last:border-0">
+      <div className="flex items-end justify-between gap-4 mb-2">
+        <div className="flex min-h-[2.25rem] flex-wrap items-end gap-x-3 gap-y-1.5">
+          <h4 className="text-sm font-mono leading-none tracking-widest text-aion-text">{factor.name}</h4>
           {factor.status === 'AT CEILING' && (
             <div className="px-2 py-0.5 rounded-sm text-[8px] font-mono bg-aion-red/10 border border-aion-red/30 text-aion-red flex items-center gap-1">
               <AlertTriangle className="w-2.5 h-2.5" />
@@ -381,17 +482,35 @@ const RiskFactorRow = ({ factor, t }: { factor: RiskFactor, t: any, key?: React.
               {t.slowVar}
             </div>
           )}
+          {factor.sourceVerification === 'confirmed' && (
+            <div className="px-2 py-0.5 rounded-sm text-[8px] font-mono bg-green-500/10 border border-green-500/30 text-green-500 flex items-center gap-1">
+              <CheckCircle2 className="w-2.5 h-2.5" />
+              {t.factorVerified}
+            </div>
+          )}
+          {factor.sourceVerification === 'partial' && (
+            <div className="px-2 py-0.5 rounded-sm text-[8px] font-mono bg-aion-orange/10 border border-aion-orange/30 text-aion-orange flex items-center gap-1">
+              <AlertCircle className="w-2.5 h-2.5" />
+              {t.factorPartial}
+            </div>
+          )}
+          {factor.sourceVerification === 'unverified' && (
+            <div className="px-2 py-0.5 rounded-sm text-[8px] font-mono bg-aion-red/10 border border-aion-red/30 text-aion-red flex items-center gap-1">
+              <AlertCircle className="w-2.5 h-2.5" />
+              {t.factorUnverified}
+            </div>
+          )}
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex shrink-0 items-end justify-end">
           <div className="text-right">
-            <div className="flex items-center gap-2">
-              <span className="text-[9px] font-mono text-aion-text-dim">{t.weight}:{Math.round(factor.weight * 100)}%</span>
+            <div className="flex items-end gap-2">
+              <span className="pb-0.5 text-[9px] font-mono leading-none text-aion-text-dim">{t.weight}:{Math.round(factor.weight * 100)}%</span>
               {delta !== 0 && (
-                <span className={cn("text-[10px] font-mono", delta > 0 ? "text-aion-red" : "text-green-500")}>
+                <span className={cn("pb-0.5 text-[10px] font-mono leading-none", delta > 0 ? "text-aion-red" : "text-green-500")}>
                   {delta > 0 ? '▲' : '▼'}{Math.abs(delta).toFixed(1)}
                 </span>
               )}
-              <span className="text-2xl font-mono font-bold text-aion-red">{factor.score.toFixed(1)}</span>
+              <span className="text-2xl font-mono font-bold leading-none text-aion-red">{factor.score.toFixed(1)}</span>
             </div>
           </div>
         </div>
@@ -511,28 +630,58 @@ const SituationTab = ({ situations, coreContradiction, t }: { situations: Situat
 // --- Main App ---
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'events' | 'factors' | 'situations'>('events');
-  const [language, setLanguage] = useState<'zh' | 'en'>('zh');
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [pdfMode] = useState(() =>
+    typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('pdf') === 'geo-monitor'
+  );
+
+  const [activeTab, setActiveTab] = useState<'events' | 'factors' | 'situations'>(() => {
+    if (typeof window === 'undefined') return 'events';
+    const p = parseShareUrlState(window.location.search);
+    if (p.view) return shareViewToTab(p.view);
+    return 'events';
+  });
+
+  const [language, setLanguage] = useState<'zh' | 'en'>(() => {
+    if (typeof window === 'undefined') return 'zh';
+    const p = parseShareUrlState(window.location.search);
+    if (p.lang) return p.lang;
+    return navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en';
+  });
 
   useEffect(() => {
-    const systemLang = navigator.language.toLowerCase();
-    if (systemLang.startsWith('zh')) {
-      setLanguage('zh');
-    } else {
-      setLanguage('en');
-    }
+    document.documentElement.classList.remove('light');
   }, []);
 
-  useEffect(() => {
-    if (theme === 'light') {
-      document.documentElement.classList.add('light');
-    } else {
-      document.documentElement.classList.remove('light');
-    }
-  }, [theme]);
-
   const data = language === 'zh' ? DATA_ZH : DATA_EN;
+
+  /** 仅当地址栏与当前 lang / 数据 / Tab 不一致时再 replace，避免与带参链接「抢写」导致体感未更新 */
+  useEffect(() => {
+    if (pdfMode) return;
+    const desired: ShareUrlState = {
+      lang: language,
+      date: data.date,
+      version: data.version,
+      view: tabToShareView(activeTab),
+    };
+    if (isLocationSyncedWithState(desired)) return;
+    window.history.replaceState(null, '', buildShareUrl(desired));
+  }, [pdfMode, language, activeTab, data.date, data.version]);
+
+  /** 浏览器前进/后退时从 URL 恢复语言与 Tab */
+  useEffect(() => {
+    if (pdfMode) return;
+    const apply = () => {
+      const p = parseShareUrlState(window.location.search);
+      if (p.lang === 'zh' || p.lang === 'en') setLanguage(p.lang);
+      if (p.view) setActiveTab(shareViewToTab(p.view));
+    };
+    window.addEventListener('popstate', apply);
+    return () => window.removeEventListener('popstate', apply);
+  }, [pdfMode]);
+
+  if (pdfMode) {
+    return <PdfGeoMonitor />;
+  }
   const t = TRANSLATIONS[language];
   const prevTrendDate = data.scoreTrend.length > 1 ? data.scoreTrend[data.scoreTrend.length - 2].date : '--';
   const weightedAvg = data.riskFactors.reduce((sum, factor) => sum + factor.score * factor.weight, 0).toFixed(3);
@@ -543,21 +692,20 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-aion-red selection:text-white bg-aion-bg text-aion-text">
-      <TopBanner t={t} />
+      <TopBanner t={t} delta={data.riskScore - data.prevRiskScore} />
       <Header 
         date={data.date} 
         version={data.version} 
         warPhase={data.warPhase} 
         language={language} 
         setLanguage={setLanguage} 
-        theme={theme}
-        setTheme={setTheme}
         t={t}
+        share={<ShareMenu data={data} language={language} activeTab={activeTab} />}
       />
       
       <main className="flex-1 max-w-[1600px] mx-auto w-full p-6 space-y-6">
         {/* Top Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 [&>*]:min-w-0">
           {data.keyStats.map((stat, i) => (
             <StatCard key={i} label={stat.label} value={stat.value} unit={stat.unit} color={stat.color} />
           ))}
@@ -634,6 +782,7 @@ export default function App() {
                     <span>•</span>
                     <span>{t.clickExpand}</span>
                   </div>
+                  {/* webSearchQueries / webSources 仍写入 data.ts 供内部核对，不在此展示 */}
                   {data.events.map((event, i) => (
                     <EventItem key={event.id} event={event} index={i} t={t} />
                   ))}
@@ -646,54 +795,64 @@ export default function App() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="grid grid-cols-1 lg:grid-cols-12 gap-8"
+                  className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-5"
                 >
-                  <div className="lg:col-span-7 space-y-2">
-                    <div className="aion-label mb-4 text-[9px]">{language === 'zh' ? `加权因子评分 · ▲▼ 较${prevTrendDate} · 权重占比` : `Weighted Factor Score · ▲▼ vs ${prevTrendDate} · Weight`}</div>
+                  <div className="lg:col-span-7 space-y-1.5">
+                    <div className="aion-label mb-3 text-[9px]">{language === 'zh' ? `加权因子评分 · ▲▼ 较${prevTrendDate} · 权重占比` : `Weighted Factor Score · ▲▼ vs ${prevTrendDate} · Weight`}</div>
                     {data.riskFactors.map((factor) => (
                       <RiskFactorRow key={factor.name} factor={factor} t={t} />
                     ))}
                   </div>
 
                   <div className="lg:col-span-5 flex flex-col border-l border-aion-gray pl-8">
-                    <div className="aion-card border-aion-gray/50 bg-aion-text/5 mb-6 flex flex-col items-center justify-center py-8">
-                      <div className="aion-label mb-4">{language === 'zh' ? '加 权 综 合 评 分' : 'WEIGHTED COMPOSITE SCORE'}</div>
-                      <div className="text-[10px] font-mono text-aion-text-dim mb-4">{t.weightedFormula} = {weightedAvg}</div>
-                      <div className="text-8xl font-mono font-bold text-aion-orange mb-2">{data.riskScore}</div>
+                    <div className="aion-card border-aion-gray/50 bg-aion-text/5 mb-4 flex flex-col items-center justify-center px-4 py-5">
+                      <div className="aion-label mb-2">{language === 'zh' ? '加 权 综 合 评 分' : 'WEIGHTED COMPOSITE SCORE'}</div>
+                      <div className="text-[10px] font-mono text-aion-text-dim mb-2">{t.weightedFormula} = {weightedAvg}</div>
+                      <div className="text-7xl font-mono font-bold text-aion-orange mb-1">{data.riskScore}</div>
                       <div className="aion-label text-aion-orange">{t.riskScoreTitle.replace('\n', ' ')}</div>
                     </div>
 
-                    <div className="aion-card border-aion-gray/50 bg-aion-text/5 mb-6">
-                      <div className="aion-label mb-4">{t.trendTitle}</div>
-                      <TrendChart trend={data.scoreTrend} />
-                    </div>
-                    
-                    <div className="grid grid-cols-3 gap-2 mb-6">
-                      <div className="border border-green-500/30 bg-green-500/5 p-3 text-center rounded-sm">
-                        <div className="text-green-500 text-[10px] font-mono mb-1">&lt;40</div>
-                        <div className="text-green-500/50 text-[8px] font-mono">{t.lowRisk}</div>
-                      </div>
-                      <div className="border border-aion-yellow/30 bg-aion-yellow/5 p-3 text-center rounded-sm">
-                        <div className="text-aion-yellow text-[10px] font-mono mb-1">40-70</div>
-                        <div className="text-aion-yellow/50 text-[8px] font-mono">{t.highRisk}</div>
-                      </div>
-                      <div className="border border-aion-red/50 bg-aion-red/10 p-3 text-center rounded-sm">
-                        <div className="text-aion-red text-[10px] font-mono mb-1">&gt;70</div>
-                        <div className="text-aion-red/50 text-[8px] font-mono">{t.extremeRisk}</div>
-                      </div>
+                    <div className="aion-card border-aion-gray/50 bg-aion-text/5 mb-4 p-4">
+                      <div className="aion-label mb-2">{t.trendTitle}</div>
+                      <TrendChart trend={data.scoreTrend} compact />
                     </div>
 
-                    <div className="aion-card border-aion-yellow/20 bg-aion-yellow/5">
-                      <div className="flex items-center gap-2 mb-4">
-                        <Clock className="w-4 h-4 text-aion-yellow" />
-                        <span className="aion-label text-aion-yellow">{t.observationNodes}</span>
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:items-stretch lg:gap-4">
+                      {/* 与右侧观察卡同高：左列拉满行高，三格竖向撑满 */}
+                      <div className="flex min-h-[168px] w-full flex-col lg:min-h-0 lg:h-full">
+                        <div className="flex h-full min-h-[168px] w-full gap-2 lg:min-h-0">
+                          <RiskLegendCell
+                            line={`<40 · ${t.lowRisk}`}
+                            barClass="border-green-500/30 bg-green-500/5"
+                            textClass="text-green-400"
+                          />
+                          <RiskLegendCell
+                            line={`40-70 · ${t.highRisk}`}
+                            barClass="border-aion-yellow/35 bg-aion-yellow/5"
+                            textClass="text-aion-yellow"
+                          />
+                          <RiskLegendCell
+                            line={`>70 · ${t.extremeRisk}`}
+                            barClass="border-aion-red/45 bg-aion-red/10"
+                            textClass="text-aion-red"
+                          />
+                        </div>
                       </div>
-                      <div className="text-4xl font-mono font-bold text-aion-yellow mb-2">{observationDate}</div>
-                      <ul className="space-y-1">
-                        <li className="text-[10px] font-mono text-aion-text-dim">{t.energyDeadline}</li>
-                        <li className="text-[10px] font-mono text-aion-text-dim">{t.negotiationValidity}</li>
-                        <li className="text-[10px] font-mono text-aion-text-dim">{t.signalConfirmation}</li>
-                      </ul>
+
+                      <div className="aion-card flex h-full min-h-0 flex-col border-aion-yellow/25 bg-aion-yellow/5 !p-0 !px-4 !py-4">
+                        <div className="mb-2.5 flex items-center gap-2">
+                          <Clock className="h-3.5 w-3.5 shrink-0 text-aion-yellow" />
+                          <span className="aion-label leading-snug text-aion-yellow">{t.observationNodes}</span>
+                        </div>
+                        <div className="mb-3 text-2xl font-mono font-bold leading-tight tracking-tight text-aion-yellow">
+                          {observationDate}
+                        </div>
+                        <ul className="mt-auto space-y-1.5 text-[9px] leading-relaxed">
+                          <li className="break-words font-mono text-aion-text-dim">{t.energyDeadline}</li>
+                          <li className="break-words font-mono text-aion-text-dim">{t.negotiationValidity}</li>
+                          <li className="break-words font-mono text-aion-text-dim">{t.signalConfirmation}</li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </motion.div>

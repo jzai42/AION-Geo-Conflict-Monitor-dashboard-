@@ -1,0 +1,15 @@
+# 本地或服务器：只起 PDF API，供静态前端通过 VITE_API_BASE 调用
+services:
+  pdf-api:
+    build: .
+    ports:
+      - "8787:8787"
+    environment:
+      PDF_API_PORT: "8787"
+      PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium
+    volumes:
+      # 持久化已生成的 PDF，避免重复生成时丢缓存
+      - pdf-cache:/app/server/generated-pdfs
+
+volumes:
+  pdf-cache:

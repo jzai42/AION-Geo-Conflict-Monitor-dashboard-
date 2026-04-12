@@ -1,14 +1,32 @@
+import "dotenv/config";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { GoogleGenAI } from "@google/genai";
 
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-5.4-mini";
-if (!OPENAI_API_KEY) throw new Error("Missing OPENAI_API_KEY");
+// ── CONFIG ─────────────────────────────────────────────────────────
+const CONFIG = {
+  conflictStartDate: "2026-02-28",
+  ensembleN: 3,
+  oilDemoUrl: "https://api.oilpriceapi.com/v1/demo/prices",
+};
+
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+if (!GEMINI_API_KEY) throw new Error("Missing GEMINI_API_KEY (or GOOGLE_API_KEY)");
+
+const genai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
 const todayNy = new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" });
 const todayMmDd = todayNy.slice(5);
+const correctConflictDay = Math.round((new Date(todayNy) - new Date(CONFIG.conflictStartDate)) / 86400000);
 
-// ── v2.9 canonical layout ──────────────────────────────────────────
+const PATHS = {
+  history: path.join(process.cwd(), "src", "score-history.json"),
+  dataTs:  path.join(process.cwd(), "src", "data.ts"),
+  reports: path.join(process.cwd(), "reports", "daily"),
+};
+
+// ── CANONICAL layout ───────────────────────────────────────────────
 const CANONICAL = {
   zh: {
     keyStatLabels: ["冲突天数", "评分变化", "油价", "霍尔木兹"],
@@ -38,6 +56,158 @@ const CANONICAL = {
   },
 };
 
+// ── Utility functions ──────────────────────────────────────────────
+function s(v, fb = "") { return typeof v === "string" ? v : fb; }
+function n(v, fb = 0) { const x = Number(v); return Number.isFinite(x) ? x : fb; }
+function clip(v, max) { const t = s(v).trim(); return t.length <= max ? t : t.slice(0, max - 1) + "…"; }
+
+function addDaysIso(iso, delta) {
+  const [y, m, d] = iso.split("-").map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  dt.setUTCDate(dt.getUTCDate() + delta);
+  return dt.toISOString().slice(0, 10);
+}
+
+function median(arr) {
+  const sorted = [...arr].sort((a, b) => a - b);
+  return sorted[Math.floor(sorted.length / 2)];
+}
+
+/** WTI + Brent spot from OilPriceAPI demo (no key; ~20 req/h per IP). */
+async function fetchOilPrices() {
+  try {
+    const resp = await fetch(CONFIG.oilDemoUrl);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const body = await resp.json();
+    const arr = body?.data?.prices;
+    if (!Array.isArray(arr)) return { ok: false, wti: null, brent: null, updatedAt: null };
+    const byCode = Object.fromEntries(arr.map(p => [p.code, p]));
+    const wti = byCode.WTI_USD?.price;
+    const brent = byCode.BRENT_CRUDE_USD?.price;
+    const wtiNum = Number(wti);
+    const brentNum = Number(brent);
+    const wtiOk = Number.isFinite(wtiNum) && wtiNum > 0;
+    const brentOk = Number.isFinite(brentNum) && brentNum > 0;
+    if (!wtiOk && !brentOk) return { ok: false, wti: null, brent: null, updatedAt: null };
+    const updatedAt = byCode.WTI_USD?.updated_at || byCode.BRENT_CRUDE_USD?.updated_at || null;
+    return {
+      ok: true,
+      wti: wtiOk ? wtiNum : null,
+      brent: brentOk ? brentNum : null,
+      updatedAt,
+    };
+  } catch (err) {
+    console.warn(`Oil price fetch failed: ${err.message}`);
+    return { ok: false, wti: null, brent: null, updatedAt: null };
+  }
+}
+
+// ── Score history (single source of truth) ─────────────────────────
+async function loadHistory() {
+  try {
+    return JSON.parse(await readFile(PATHS.history, "utf8"));
+  } catch {
+    return { version: 2, latest: null, history: [] };
+  }
+}
+
+async function saveHistory(data) {
+  await writeFile(PATHS.history, JSON.stringify(data, null, 2) + "\n", "utf8");
+}
+
+function lookupScore(historyMap, iso, fallback) {
+  if (historyMap.has(iso)) return historyMap.get(iso);
+  for (let j = 1; j <= 30; j++) {
+    const p = addDaysIso(iso, -j);
+    if (historyMap.has(p)) return historyMap.get(p);
+  }
+  return fallback;
+}
+
+function buildFiveDayTrend(historyArr, todayIso, fallback) {
+  const map = new Map(historyArr.map(p => [p.date, p.score]));
+  return Array.from({ length: 5 }, (_, i) => {
+    const iso = addDaysIso(todayIso, i - 4);
+    return { date: iso.slice(5), score: lookupScore(map, iso, fallback) };
+  });
+}
+
+/** Exact calendar-day composite in history, or null */
+function scoreForDate(historyArr, iso) {
+  const row = (historyArr || []).find(p => p && p.date === iso);
+  return row != null && Number.isFinite(Number(row.score)) ? Math.round(Number(row.score)) : null;
+}
+
+// ── Load prev from score-history.json ──────────────────────────────
+const store = await loadHistory();
+
+// Migrate v1 → v2 if needed
+if (store.version === 1 && Array.isArray(store.points)) {
+  const pts = store.points.filter(p => p?.date && Number.isFinite(p.score));
+  store.history = pts;
+  store.latest = null;
+  store.version = 2;
+  delete store.points;
+}
+
+const prev = store.latest || {
+  date: "",
+  appVersion: "v2.9",
+  riskScore: 64,
+  prevRiskScore: 56,
+  conflictDay: 40,
+  factorScores: [3, 3, 3, 3, 3],
+};
+
+const prevVersion = prev.appVersion || "v2.9";
+const vMajor = Number(prevVersion.match(/(\d+)\./)?.[1]) || 2;
+const vMinor = Number(prevVersion.match(/\.(\d+)/)?.[1]) || 9;
+const version = `v${vMajor}.${vMinor + 1}`;
+
+const prevFactorScores = Array.isArray(prev.factorScores) ? prev.factorScores : [3, 3, 3, 3, 3];
+
+/** 昨日（日历）收盘综合分 — 用于「较上期」与 prevRiskScore；勿用 latest.riskScore（同日重跑会与今日相同 → 误显示持平） */
+const yesterdayIso = addDaysIso(todayNy, -1);
+const histMapPrior = new Map((store.history || []).map(p => [p.date, p.score]));
+const priorDayComposite = scoreForDate(store.history, yesterdayIso)
+  ?? lookupScore(histMapPrior, yesterdayIso, prev.riskScore);
+
+const prevTrendLast4 = buildFiveDayTrend(store.history, addDaysIso(todayNy, -1), priorDayComposite).slice(-4);
+
+console.log(`Previous: ${prev.date} ${prevVersion}, latest.riskScore=${prev.riskScore}, D${prev.conflictDay}`);
+console.log(`Prior calendar day ${yesterdayIso} composite (for 较上期): ${priorDayComposite}`);
+console.log(`Today: ${todayNy}, D${correctConflictDay}, version=${version}`);
+console.log(`History: ${store.history.length} points; prevTrendLast4: ${JSON.stringify(prevTrendLast4)}`);
+
+const oilSnapshot = await fetchOilPrices();
+if (oilSnapshot.ok) {
+  console.log(`Oil (live demo): WTI=${oilSnapshot.wti} Brent=${oilSnapshot.brent} @ ${oilSnapshot.updatedAt ?? "?"}`);
+} else {
+  console.warn("Oil: demo API unavailable or invalid; energy factor relies on web search + rubric only.");
+}
+
+const prevOil = prev.oilPrice;
+let oilPromptBlock = "";
+if (oilSnapshot.ok) {
+  const lines = [];
+  if (oilSnapshot.wti != null) lines.push(`- WTI 原油现价: $${oilSnapshot.wti.toFixed(2)}/桶`);
+  if (oilSnapshot.brent != null) lines.push(`- Brent 原油现价: $${oilSnapshot.brent.toFixed(2)}/桶`);
+  lines.push(`- 数据时间 (API): ${oilSnapshot.updatedAt ?? "unknown"}`);
+  oilPromptBlock = `
+
+## 实时市场数据（脚本自动获取，权威参考）
+${lines.join("\n")}
+- **「能源冲击」因子评分必须严格按上述 WTI/Brent 现货价格对照下方 rubric 美元区间；不得用搜索结果中可能过时或冲突的油价数字替代本段。**
+- evidence 中须写明本段 WTI/Brent 数值作为油价依据。
+- keyStats[2]「油价」展示值由脚本在生成后覆盖为实时报价，模型可填占位。`;
+} else if (prevOil && (prevOil.wti > 0 || prevOil.brent > 0)) {
+  oilPromptBlock = `
+
+## 油价参考（实时接口不可用）
+- 上一期存档: ${JSON.stringify({ wti: prevOil.wti, brent: prevOil.brent, updatedAt: prevOil.updatedAt })}
+- 仍须按 rubric 结合当日新闻评估「能源冲击」；evidence 注明信息来源。`;
+}
+
 // ── JSON Schema for structured output ──────────────────────────────
 const dashboardSchema = {
   type: "object",
@@ -48,503 +218,392 @@ const dashboardSchema = {
     prevRiskScore:     { type: "number" },
     investmentSignal:  { type: "string" },
     keyChange:         { type: "string" },
-    keyStats: {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          label: { type: "string" }, value: { type: "string" },
-          unit:  { type: "string" }, color: { type: "string" },
-        },
-        required: ["label", "value", "unit", "color"],
-        additionalProperties: false,
-      },
-    },
-    warPhase: {
-      type: "object",
-      properties: {
-        level:       { type: "string" },
-        targetLevel: { type: "string" },
-        title:       { type: "string" },
-        subTitle:    { type: "string" },
-        points:      { type: "array", items: { type: "string" } },
-        note:        { type: "string" },
-      },
-      required: ["level", "targetLevel", "title", "subTitle", "points", "note"],
-      additionalProperties: false,
-    },
-    riskFactors: {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          name:        { type: "string" },
-          score:       { type: "number" },
-          prev:        { type: "number" },
-          weight:      { type: "number" },
-          description: { type: "string" },
-          status:      { type: "string" },
-          change:      { type: "string" },
-          evidence:    { type: "string" },
-        },
-        required: ["name", "score", "prev", "weight", "description", "status", "change", "evidence"],
-        additionalProperties: false,
-      },
-    },
-    events: {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          id:           { type: "string" },
-          title:        { type: "string" },
-          description:  { type: "string" },
-          verification: { type: "string" },
-          timestamp:    { type: "string" },
-          significance: { type: "string" },
-          highlight:    { type: "boolean" },
-          critical:     { type: "boolean" },
-        },
-        required: ["id", "title", "description", "verification", "timestamp", "significance", "highlight", "critical"],
-        additionalProperties: false,
-      },
-    },
-    scoreTrend: {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          date:   { type: "string" },
-          score:  { type: "number" },
-          active: { type: "boolean" },
-        },
-        required: ["date", "score", "active"],
-        additionalProperties: false,
-      },
-    },
-    situations: {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          title:    { type: "string" },
-          icon:     { type: "string" },
-          tag:      { type: "string" },
-          tagColor: { type: "string" },
-          points:   { type: "array", items: { type: "string" } },
-        },
-        required: ["title", "icon", "tag", "tagColor", "points"],
-        additionalProperties: false,
-      },
-    },
-    coreContradiction: {
-      type: "object",
-      properties: {
-        political: { type: "array", items: { type: "string" } },
-        military:  { type: "array", items: { type: "string" } },
-      },
-      required: ["political", "military"],
-      additionalProperties: false,
-    },
+    keyStats:          { type: "array", items: { type: "object", properties: { label: { type: "string" }, value: { type: "string" }, unit: { type: "string" }, color: { type: "string" } }, required: ["label", "value", "unit", "color"], additionalProperties: false } },
+    warPhase:          { type: "object", properties: { level: { type: "string" }, targetLevel: { type: "string" }, title: { type: "string" }, subTitle: { type: "string" }, points: { type: "array", items: { type: "string" } }, note: { type: "string" } }, required: ["level", "targetLevel", "title", "subTitle", "points", "note"], additionalProperties: false },
+    riskFactors:       { type: "array", items: { type: "object", properties: { name: { type: "string" }, score: { type: "number" }, prev: { type: "number" }, weight: { type: "number" }, description: { type: "string" }, status: { type: "string" }, change: { type: "string" }, evidence: { type: "string" }, sourceVerification: { type: "string", enum: ["confirmed", "partial", "unverified"] } }, required: ["name", "score", "prev", "weight", "description", "status", "change", "evidence", "sourceVerification"], additionalProperties: false } },
+    events:            { type: "array", items: { type: "object", properties: { id: { type: "string" }, title: { type: "string" }, description: { type: "string" }, verification: { type: "string" }, timestamp: { type: "string" }, significance: { type: "string" }, highlight: { type: "boolean" }, critical: { type: "boolean" } }, required: ["id", "title", "description", "verification", "timestamp", "significance", "highlight", "critical"], additionalProperties: false } },
+    scoreTrend:        { type: "array", items: { type: "object", properties: { date: { type: "string" }, score: { type: "number" }, active: { type: "boolean" } }, required: ["date", "score", "active"], additionalProperties: false } },
+    situations:        { type: "array", items: { type: "object", properties: { title: { type: "string" }, icon: { type: "string" }, tag: { type: "string" }, tagColor: { type: "string" }, points: { type: "array", items: { type: "string" } } }, required: ["title", "icon", "tag", "tagColor", "points"], additionalProperties: false } },
+    coreContradiction: { type: "object", properties: { political: { type: "array", items: { type: "string" } }, military: { type: "array", items: { type: "string" } } }, required: ["political", "military"], additionalProperties: false },
   },
-  required: [
-    "date", "version", "riskScore", "prevRiskScore", "investmentSignal",
-    "keyChange", "keyStats", "warPhase", "riskFactors", "events",
-    "scoreTrend", "situations", "coreContradiction",
-  ],
+  required: ["date", "version", "riskScore", "prevRiskScore", "investmentSignal", "keyChange", "keyStats", "warPhase", "riskFactors", "events", "scoreTrend", "situations", "coreContradiction"],
   additionalProperties: false,
 };
 
 const outputSchema = {
   type: "object",
-  properties: {
-    reportMarkdownZh: { type: "string" },
-    dataZh: dashboardSchema,
-    dataEn: dashboardSchema,
-  },
+  properties: { reportMarkdownZh: { type: "string" }, dataZh: dashboardSchema, dataEn: dashboardSchema },
   required: ["reportMarkdownZh", "dataZh", "dataEn"],
   additionalProperties: false,
 };
 
-// ── Read previous day data from data.ts ────────────────────────────
-const dataFilePath = path.join(process.cwd(), "src", "data.ts");
-let dataTsSnapshot = "";
-try { dataTsSnapshot = await readFile(dataFilePath, "utf8"); } catch { /* ok */ }
-
-function extractPrevData(snapshot) {
-  const dateM = snapshot.match(/date:\s*"(\d{4}-\d{2}-\d{2})"/);
-  const versionM = snapshot.match(/version:\s*"(v\d+\.\d+)"/);
-  const scoreM = snapshot.match(/riskScore:\s*(\d+)/);
-  const prevScoreM = snapshot.match(/prevRiskScore:\s*(\d+)/);
-  const trendM = snapshot.match(/scoreTrend:\s*\[([\s\S]*?)\]/);
-  const dayM = snapshot.match(/value:\s*"D(\d+)"/);
-  const factorsM = snapshot.match(/riskFactors:\s*\[([\s\S]*?)\],\s*events/);
-
-  let trendStr = "[]";
-  if (trendM) {
-    const points = [...trendM[1].matchAll(/date:\s*"([^"]+)".*?score:\s*(\d+)/g)];
-    trendStr = JSON.stringify(points.map(p => ({ date: p[1], score: Number(p[2]) })));
-  }
-
-  let factorScores = "";
-  if (factorsM) {
-    const names = [...factorsM[1].matchAll(/name:\s*"([^"]+)"/g)].map(m => m[1]);
-    const scores = [...factorsM[1].matchAll(/\bscore:\s*([\d.]+)/g)].map(m => Number(m[1]));
-    factorScores = names.map((n, i) => `${n}: ${scores[i] ?? "?"}`).join(", ");
-  }
-
-  return {
-    date: dateM?.[1] || "",
-    version: versionM?.[1] || "v2.9",
-    riskScore: Number(scoreM?.[1]) || 64,
-    prevRiskScore: Number(prevScoreM?.[1]) || 56,
-    conflictDay: Number(dayM?.[1]) || 40,
-    scoreTrend: trendStr,
-    factorScores,
-  };
-}
-
-const prev = extractPrevData(dataTsSnapshot);
-const conflictStartDate = "2026-02-28";
-const msPerDay = 86400000;
-const correctConflictDay = Math.round((new Date(todayNy) - new Date(conflictStartDate)) / msPerDay);
-const prevTrendLast4 = JSON.parse(prev.scoreTrend).slice(-4);
-
-console.log(`Previous: ${prev.date} ${prev.version}, riskScore=${prev.riskScore}, D${prev.conflictDay}`);
-console.log(`Today conflict day: D${correctConflictDay}`);
-
 // ── Prompt ──────────────────────────────────────────────────────────
-const systemPrompt = `你是 AION Geo-Conflict Monitor 的结构化数据引擎。用网络搜索获取近 24h 美伊相关公开信息后，按 JSON Schema 输出结构化日报。
+const factorNamesZh = CANONICAL.zh.riskFactorNames;
+const prevFactorStr = factorNamesZh.map((name, i) => `${name}: ${prevFactorScores[i]}`).join(", ");
+
+const systemPrompt = `你是 AION Geo-Conflict Monitor 的结构化数据引擎。用 Google 搜索接地获取近 24h 美伊相关公开信息后，按 JSON Schema 输出结构化日报。
 
 ## 前一天数据（必须作为基准，不可忽略）
-- 日期: ${prev.date}，版本: ${prev.version}
-- 冲突天数: D${prev.conflictDay}（冲突起始日 ${conflictStartDate}，**今天是 D${correctConflictDay}**）
-- 综合评分: ${prev.riskScore}（上期: ${prev.prevRiskScore}）
-- 五维因子分: ${prev.factorScores}
-- 近5日趋势: ${prev.scoreTrend}
+- 日期: ${prev.date}，版本: ${prevVersion}
+- 冲突天数: D${prev.conflictDay}（冲突起始日 ${CONFIG.conflictStartDate}，**今天是 D${correctConflictDay}**）
+- **昨日(${yesterdayIso})收盘综合分**（用于「较上期」）: ${priorDayComposite}（来自 score-history history；勿用与今日同日的 latest.riskScore 当作上期）
+- 五维因子分: ${prevFactorStr}
+- 近日综合评分历史: ${JSON.stringify(store.history.slice(-10))}
 
 ## 评分标准（Scoring Rubric）——必须严格对照打分
 
 每个因子 1–5 分（整数），必须根据下列条件对号入座，不可凭感觉。
 若 24h 内无充分多源证据支持变化，**默认沿用前一天分数**。
 
-### 1. 军事升级烈度
+### 1. ${factorNamesZh[0]}
 - 1 = 无任何军事活动或威胁言论
 - 2 = 口头威胁/小规模兵力调动/防御部署，无实际交火
 - 3 = 有限打击或代理冲突（如无人机事件、零星交火），未扩大
 - 4 = 直接交火/多战线活跃/重大军事行动（如导弹互射、大规模空袭）
 - 5 = 全面战争状态/大规模地面入侵/核威胁
 
-### 2. 霍尔木兹航运扰动
+### 2. ${factorNamesZh[1]}
 - 1 = 完全正常通行，无任何限制
 - 2 = 偶发骚扰或警告，流量基本正常（>90%）
 - 3 = 许可制或部分限制，流量降至 50–90%
 - 4 = 严重受限/扣押事件，流量降至 <50%，主要班轮暂停
 - 5 = 完全封锁，商业航运停止
 
-### 3. 能源冲击
+### 3. ${factorNamesZh[2]}
 - 1 = 油价在正常区间波动（<$75），供应链正常
 - 2 = 油价温和上涨（$75–85），市场紧张但可控
 - 3 = 油价显著上涨（$85–100），供应担忧明显
 - 4 = 油价危机水平（$100–120），供应中断或恐慌性买入
 - 5 = 油价极端飙升（>$120），全球能源危机
 
-### 4. 大国介入深度
+### 4. ${factorNamesZh[3]}
 - 1 = 大国未介入，仅外交关注
 - 2 = 大国发表声明/制裁调整，无实质军事介入
 - 3 = 大国提供军事援助/情报共享/联合军演
 - 4 = 大国直接军事部署/参与作战行动
 - 5 = 多个大国直接军事对抗/全球联盟对峙
 
-### 5. 降级/谈判前景
+### 5. ${factorNamesZh[4]}
 - 1 = 正式和平协议签署或全面停火生效
 - 2 = 实质性谈判进展，双方释放善意信号
 - 3 = 谈判渠道存在但进展有限，停火脆弱
 - 4 = 谈判停滞或破裂风险高，双方立场强硬
 - 5 = 完全无谈判渠道，双方拒绝对话
 
-### 评分纪律
-- 每个因子的 evidence 字段必须写出具体依据（引用的事件/报道来源）
-- 同一事件须 ≥2 个独立来源才能驱动评分变化
-- 仅有单源报道时：维持前一天分数，verification 标记为 "single"
-- 评分变化幅度限制：单日单因子变化不超过 ±1 分（除非有重大突发且多源确认）
+### 评分纪律与交叉验证（必须遵守）
+- 每个因子的 **evidence** 必须写清：依据的事实、以及**媒体/机构名称**（至少列出 Google 搜索接地用到的来源）。
+- **sourceVerification** 字段只能是 \`confirmed\`、\`partial\`、\`unverified\`（含义与界面中文一致：**已证实 / 部分证实 / 未证实**）：
+  - \`confirmed\`（已证实）：对「同一条实质性信息」已通过 Google 搜索接地找到 **至少两家相互独立的一级权威来源**，且事实表述一致（时间、主体、核心结论不矛盾）。**两家须为不同媒体机构**（例如 AP + Reuters；同一通讯社两篇不同稿件不算，除非另一条为白宫/UN/外交部等**官方一手声明**）。一级权威来源示例：AP、Reuters、AFP、BBC、NYT、WSJ、Financial Times、Al Jazeera English、Washington Post、政府/军方/外交部官网、联合国官方发布。社交媒体、论坛、匿名爆料、内容农场不得作为权威来源。
+  - \`partial\`（部分证实）：仅有一家一级权威 + 一家次要来源互证不足，或两家一级但表述**部分**一致、关键细节未对齐；**脚本会将该因子分数强制与昨日持平**（不因部分互证上调/下调），evidence 首句须点明「部分证实：」及缺口。
+  - \`unverified\`（未证实）：**仅一条**权威来源，或第二来源与第一条明显矛盾，或无法互证；**脚本强制该因子分数与昨日持平**，evidence 首句须写「未证实：」说明。能源冲击见下条例外。
+- **能源冲击（第 3 项）**：若上方「实时市场数据」脚本已提供 WTI/Brent，油价档位以 **API 现货价 + rubric** 为准，可标 \`confirmed\`（evidence 写明 API 数值 + 可选一条权威新闻互证市场背景）；若**无** API 油价，则与普通因子相同，须 \`confirmed\` 才能相对昨日改分。
+- 评分变化幅度限制：单日单因子变化不超过 ±1 分（除非有重大突发且 **sourceVerification=confirmed**）
+
+### 事件卡片 verification（events）
+- \`confirmed\`：≥2 家一级权威媒体报道同一事实，或 **1 份** 一级官方声明（白宫/UN/外交部官网等）且与事实直接对应。
+- **油价 / 原油现货**：若本脚本已提供上方「实时市场数据」WTI/Brent，且事件主题涉及油价或现价，则 **实时 API 即视为已证实依据**，verification 填 **confirmed**（不要求双媒体；脚本也会自动将此类事件标为 confirmed）。
+- \`partial\`：仅一家权威 + 一家次要来源，或两家表述部分一致（非油价现价类、且无 API 锚定）。
+- \`single\`：仅单源且**非**「有 API 锚定的油价现价」类事件。
 
 ## 规则
 - date 必须是 "${todayNy}"
-- version: "${prev.version}" 的下一个版本（小版本号 +1）
+- version: "${prevVersion}" 的下一个版本（小版本号 +1）
 - keyStats[0] 冲突天数: 必须是 "D${correctConflictDay}"（不要自己算，用这个值）
-- keyStats[1] 评分变化: 今日 riskScore 与前一天 ${prev.riskScore} 的差值（如 ↑3 或 ↓2 或 持平）
+- keyStats[1] 评分变化: 今日 riskScore 与 **昨日收盘综合分 ${priorDayComposite}** 的差值（如 ↑3 或 ↓2 或 持平）；脚本以此为准
 - keyStats 恰好 4 项，顺序：冲突天数、评分变化、油价、霍尔木兹。每项 unit 非空
-- riskFactors 恰好 5 项，顺序：军事升级烈度、霍尔木兹航运扰动、能源冲击、大国介入深度、降级谈判前景。weight 一律 0.2。riskScore = round(avg(scores) × 20)
+- riskFactors 恰好 5 项，顺序：${factorNamesZh.join("、")}。weight 一律 0.2。riskScore = round(avg(scores) × 20)
+- 每个 riskFactor 必须包含 **sourceVerification**（confirmed / partial / unverified），规则见上文「交叉验证」
 - riskFactors 的 prev 字段必须等于前一天对应因子的 score
 - events 1–5 条。verification 只能是 confirmed/partial/single。highlight/critical 不需要时设 false
 - warPhase 所有字段非空；level 和 targetLevel 必须是描述性短语（如中文"脆弱停火"/"代理延续"，英文"Fragile Ceasefire"/"Proxy War"），绝不能是纯数字；points 1–3 条
 - situations 恰好 4 张卡，顺序：军事行动、航运/霍尔木兹、能源市场、领导层信号。每张 points 1–3 条非空
 - coreContradiction.political 和 .military 各 1–2 条非空
-- scoreTrend 恰好 5 个点：前 4 个点取自前一天趋势的后 4 个（${JSON.stringify(prevTrendLast4)}），第 5 个是今天 date="${todayMmDd}" active=true score=今日riskScore
+- scoreTrend 恰好 5 个点：脚本会按存档写入；模型可填占位，最终以脚本为准
 - keyChange、investmentSignal 非空
 - change 字段：有变化填 up/down/structural，无变化填 "none"
 - dataZh 中文、dataEn 英文，结构完全一致，仅文案语言不同，数值相同
 - reportMarkdownZh 为中文日报全文 markdown 字符串
 
-## 信源
-重大事件须 ≥2 独立报道或 1 份一级官方声明；单源须 verification="single" 且不驱动评分。`;
+## 信源与互证
+重大事件须满足「双权威互证」或「一级官方声明」；单源事件须 verification="single"（**油价现价且已引用脚本实时 WTI/Brent 的除外**，见上文）。${oilPromptBlock}`;
 
-// ── OpenAI call ────────────────────────────────────────────────────
-async function callOpenAI(payload) {
-  const resp = await fetch("https://api.openai.com/v1/responses", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${OPENAI_API_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
-  const body = await resp.text();
-  if (!resp.ok) throw new Error(`OpenAI ${resp.status}: ${body}`);
-  return JSON.parse(body);
-}
-
-// ── Helpers ─────────────────────────────────────────────────────────
+// ── Gemini (2.5 Flash + Google Search 接地) ─────────────────────────
 function extractText(resp) {
-  if (typeof resp?.output_text === "string" && resp.output_text.trim()) {
-    return resp.output_text.trim();
-  }
-  const items = Array.isArray(resp?.output) ? resp.output : [];
-  for (const item of items) {
-    const contents = Array.isArray(item?.content) ? item.content : [];
-    for (const c of contents) {
-      if (typeof c?.text === "string" && c.text.trim()) return c.text.trim();
-    }
+  if (resp == null) return "";
+  if (typeof resp.text === "string" && resp.text.trim()) return resp.text.trim();
+  const parts = resp?.candidates?.[0]?.content?.parts;
+  if (Array.isArray(parts)) {
+    const t = parts.map(p => (typeof p?.text === "string" ? p.text : "")).join("");
+    if (t.trim()) return t.trim();
   }
   return "";
+}
+
+/** 从 Gemini 接地响应提取搜索词与网页 chunk（uri/title）；无接地时为空 */
+function extractGroundingMeta(raw) {
+  const cand = raw?.candidates?.[0];
+  const meta = cand?.groundingMetadata || cand?.grounding_metadata;
+  if (!meta) return { webSources: [], webSearchQueries: [] };
+  const queries = meta.webSearchQueries || meta.web_search_queries;
+  const chunks = meta.groundingChunks || meta.grounding_chunks;
+  const webSearchQueries = Array.isArray(queries) ? queries.filter(q => typeof q === "string" && q.trim()) : [];
+  const webSources = [];
+  const seen = new Set();
+  if (Array.isArray(chunks)) {
+    for (const ch of chunks) {
+      const web = ch?.web || ch?.Web;
+      const uri = web?.uri || web?.url;
+      if (!uri || seen.has(uri)) continue;
+      seen.add(uri);
+      const title = typeof web?.title === "string" ? web.title.trim() : "";
+      webSources.push({ title: title || uri, uri: String(uri) });
+    }
+  }
+  return { webSources: webSources.slice(0, 32), webSearchQueries };
+}
+
+/** Gemini：Google 搜索接地与 responseMimeType: application/json 不能同时使用，接地时改为纯文本 JSON + 解析。 */
+async function callGemini(withWeb) {
+  const config = { systemInstruction: systemPrompt };
+  if (withWeb) {
+    config.tools = [{ googleSearch: {} }];
+  } else {
+    config.responseMimeType = "application/json";
+    config.responseJsonSchema = outputSchema;
+  }
+  const userText = withWeb
+    ? `请生成 ${todayNy} 的 AION 日报。\n\n**输出**：只输出一个 JSON 对象（不要 markdown 围栏、不要前后说明），顶层键为 reportMarkdownZh、dataZh、dataEn，结构与系统提示中的 Schema 完全一致。`
+    : `请生成 ${todayNy} 的 AION 日报。`;
+  return genai.models.generateContent({
+    model: GEMINI_MODEL,
+    contents: userText,
+    config,
+  });
 }
 
 function parsePayload(raw) {
   const text = extractText(raw);
   if (!text) return null;
   try { return JSON.parse(text); } catch {}
-  const cleaned = text.replace(/^```(?:json)?\s*\n?/i, "").replace(/\n?```\s*$/, "").trim();
-  try { return JSON.parse(cleaned); } catch { return null; }
-}
-
-function median(arr) {
-  const sorted = [...arr].sort((a, b) => a - b);
-  return sorted[Math.floor(sorted.length / 2)];
+  try { return JSON.parse(text.replace(/^```(?:json)?\s*\n?/i, "").replace(/\n?```\s*$/, "").trim()); } catch { return null; }
 }
 
 function extractFactorScores(p) {
   return (p?.dataZh?.riskFactors || []).map(f => Number(f.score) || 3);
 }
 
-// ── Main ───────────────────────────────────────────────────────────
-const ENSEMBLE_N = 3;
-console.log(`Generating AION daily report for ${todayNy} (${ENSEMBLE_N}x ensemble) ...`);
-
-function makePayload() {
-  return {
-    model: OPENAI_MODEL,
-    input: [{ role: "system", content: systemPrompt }, { role: "user", content: `请生成 ${todayNy} 的 AION 日报。` }],
-    tools: [{ type: "web_search_preview" }],
-    text: {
-      format: {
-        type: "json_schema",
-        name: "aion_daily_report",
-        strict: true,
-        schema: outputSchema,
-      },
-    },
-  };
-}
+// ── Ensemble call ──────────────────────────────────────────────────
+console.log(`Generating AION daily report for ${todayNy} (${CONFIG.ensembleN}x ensemble) ...`);
 
 async function singleCall(idx) {
-  try {
-    const raw = await callOpenAI(makePayload());
-    const p = parsePayload(raw);
-    if (p) { console.log(`  Call ${idx + 1}: OK, factors = [${extractFactorScores(p).join(", ")}]`); return p; }
-  } catch (err) {
-    console.warn(`  Call ${idx + 1} failed: ${err.message}`);
-  }
-  try {
-    const fallbackPayload = makePayload();
-    delete fallbackPayload.tools;
-    const raw = await callOpenAI(fallbackPayload);
-    const p = parsePayload(raw);
-    if (p) { console.log(`  Call ${idx + 1} (no-web fallback): OK, factors = [${extractFactorScores(p).join(", ")}]`); return p; }
-  } catch (err2) {
-    console.warn(`  Call ${idx + 1} fallback also failed: ${err2.message}`);
+  for (const withWeb of [true, false]) {
+    try {
+      const raw = await callGemini(withWeb);
+      const p = parsePayload(raw);
+      if (p) {
+        const { webSources, webSearchQueries } = extractGroundingMeta(raw);
+        const srcHint = webSources.length ? `, grounding=${webSources.length} urls` : "";
+        console.log(`  Call ${idx + 1}${withWeb ? "" : " (no-grounding)"}: factors=[${extractFactorScores(p).join(",")}]${srcHint}`);
+        return { parsed: p, grounding: { webSources, webSearchQueries } };
+      }
+    } catch (err) {
+      console.warn(`  Call ${idx + 1}${withWeb ? "" : " (no-grounding)"} failed: ${err.message}`);
+    }
   }
   return null;
 }
 
-const results = await Promise.all(Array.from({ length: ENSEMBLE_N }, (_, i) => singleCall(i)));
+const results = await Promise.all(Array.from({ length: CONFIG.ensembleN }, (_, i) => singleCall(i)));
 const validResults = results.filter(Boolean);
 
-if (validResults.length === 0) {
-  const debugDir = path.join(process.cwd(), "reports", "daily");
-  await mkdir(debugDir, { recursive: true });
-  await writeFile(path.join(debugDir, `${todayNy}.ensemble-fail.json`), JSON.stringify(results, null, 2), "utf8");
-  throw new Error("All ensemble calls failed (see reports/daily/ for debug)");
+if (!validResults.length) {
+  await mkdir(PATHS.reports, { recursive: true });
+  await writeFile(path.join(PATHS.reports, `${todayNy}.ensemble-fail.json`), JSON.stringify(results, null, 2), "utf8");
+  throw new Error("All ensemble calls failed");
 }
 
-// Compute median factor scores across all valid results
-const allFactorSets = validResults.map(extractFactorScores);
+// ── Ensemble scoring with guardrails ───────────────────────────────
+const allFactorSets = validResults.map(r => extractFactorScores(r.parsed));
 const medianFactors = Array.from({ length: 5 }, (_, fi) => median(allFactorSets.map(set => set[fi] ?? 3)));
-const medianTotal = medianFactors.reduce((a, b) => a + b, 0);
-console.log(`Ensemble median factors: [${medianFactors.join(", ")}], total=${medianTotal}`);
+console.log(`Ensemble median: [${medianFactors.join(",")}]`);
 
-// Pick the result whose factor total is closest to the median total as the content source
-let payload = validResults[0];
-let bestDist = Infinity;
-for (const r of validResults) {
-  const total = extractFactorScores(r).reduce((a, b) => a + b, 0);
-  const dist = Math.abs(total - medianTotal);
-  if (dist < bestDist) { bestDist = dist; payload = r; }
-}
-
-// Guardrails: detect high variance and clamp to previous day if needed
-const prevScores = prev.factorScores
-  ? prev.factorScores.split(", ").map(s => Number(s.split(": ")[1]) || 3)
-  : [3, 3, 3, 3, 3];
-const factorNames = ["军事升级烈度", "霍尔木兹航运扰动", "能源冲击", "大国介入深度", "降级/谈判前景"];
-
-const finalFactors = medianFactors.map((med, i) => {
+let finalFactors = medianFactors.map((med, i) => {
   const col = allFactorSets.map(set => set[i] ?? 3);
   const range = Math.max(...col) - Math.min(...col);
-  const delta = Math.abs(med - prevScores[i]);
-
   if (range > 2) {
-    console.warn(`  ⚠ Factor ${i} "${factorNames[i]}": high variance (range=${range}, values=[${col.join(",")}]) → clamping to prev=${prevScores[i]}`);
-    return prevScores[i];
+    console.warn(`  ⚠ ${factorNamesZh[i]}: range=${range} → clamp to prev=${prevFactorScores[i]}`);
+    return prevFactorScores[i];
   }
-  if (delta > 1 && validResults.length < 3) {
-    console.warn(`  ⚠ Factor ${i} "${factorNames[i]}": large change (Δ=${delta}) with only ${validResults.length} samples → clamping to prev=${prevScores[i]}`);
-    return prevScores[i];
+  if (Math.abs(med - prevFactorScores[i]) > 1 && validResults.length < 3) {
+    console.warn(`  ⚠ ${factorNamesZh[i]}: large Δ with few samples → clamp to prev=${prevFactorScores[i]}`);
+    return prevFactorScores[i];
   }
   return med;
 });
 
-const finalRiskScore = Math.round(finalFactors.reduce((a, b) => a + b, 0) / 5 * 20);
-const totalDelta = Math.abs(finalRiskScore - prev.riskScore);
-if (totalDelta > 20) {
-  console.warn(`  ⚠ Large riskScore swing: ${prev.riskScore} → ${finalRiskScore} (Δ=${totalDelta})`);
-}
-
-console.log(`Final factors: [${finalFactors.join(", ")}], riskScore=${finalRiskScore} (prev=${prev.riskScore}, Δ=${finalRiskScore - prev.riskScore})`);
-
-// Override factor scores with final (guardrailed) values
-for (const lang of ["dataZh", "dataEn"]) {
-  if (payload[lang]?.riskFactors) {
-    payload[lang].riskFactors.forEach((f, i) => { f.score = finalFactors[i]; });
+// Pick content source closest to median total (before dual-source policy clamp)
+const medianTotal = finalFactors.reduce((a, b) => a + b, 0);
+let payload = validResults[0].parsed;
+let winningGrounding = validResults[0].grounding || { webSources: [], webSearchQueries: [] };
+let bestDist = Infinity;
+for (const r of validResults) {
+  const dist = Math.abs(extractFactorScores(r.parsed).reduce((a, b) => a + b, 0) - medianTotal);
+  if (dist < bestDist) {
+    bestDist = dist;
+    payload = r.parsed;
+    winningGrounding = r.grounding || { webSources: [], webSearchQueries: [] };
   }
 }
-console.log("Ensemble scoring complete.");
 
-// ── Post-process: enforce v2.9 canonical layout ────────────────────
-function s(v, fb = "") { return typeof v === "string" ? v : fb; }
-function n(v, fb = 0) { const x = Number(v); return Number.isFinite(x) ? x : fb; }
-function clip(v, max) { const t = s(v).trim(); return t.length <= max ? t : t.slice(0, max - 1) + "…"; }
+// 仅「已证实」(confirmed) 或能源+实时油价 API 允许相对昨日保留 ensemble 分数；部分证实/未证实 → 与昨日持平
+const rfSv = payload?.dataZh?.riskFactors || [];
+finalFactors = finalFactors.map((sc, i) => {
+  const sv = rfSv[i]?.sourceVerification;
+  const legacy = sv === "dual" ? "confirmed" : sv === "single" ? "unverified" : sv;
+  const isConfirmed = legacy === "confirmed";
+  const energyExempt = i === 2 && oilSnapshot.ok;
+  if (isConfirmed || energyExempt) return sc;
+  if (sc !== prevFactorScores[i]) {
+    console.warn(`  ⚠ ${factorNamesZh[i]}: sourceVerification=${legacy ?? "missing"} → clamp to prev=${prevFactorScores[i]} (需要已证实或能源API)`);
+  }
+  return prevFactorScores[i];
+});
+
+const finalRiskScore = Math.round(finalFactors.reduce((a, b) => a + b, 0) / 5 * 20);
+if (Math.abs(finalRiskScore - priorDayComposite) > 20) {
+  console.warn(`  ⚠ Large swing vs prior day: ${priorDayComposite} → ${finalRiskScore}`);
+}
+console.log(`Final: factors=[${finalFactors.join(",")}] riskScore=${finalRiskScore} (priorDay=${priorDayComposite}, Δ=${finalRiskScore - priorDayComposite})`);
+
+// Override factor scores in payload
+for (const lang of ["dataZh", "dataEn"]) {
+  (payload[lang]?.riskFactors || []).forEach((f, i) => { f.score = finalFactors[i]; });
+}
+
+// ── Update history ─────────────────────────────────────────────────
+const histMap = new Map(store.history.map(p => [p.date, p.score]));
+histMap.set(todayNy, finalRiskScore);
+store.history = [...histMap.entries()].map(([date, score]) => ({ date, score })).sort((a, b) => a.date.localeCompare(b.date)).slice(-120);
+const oilForStore = oilSnapshot.ok
+  ? { wti: oilSnapshot.wti, brent: oilSnapshot.brent, updatedAt: oilSnapshot.updatedAt }
+  : prev.oilPrice;
+store.latest = {
+  date: todayNy,
+  appVersion: version,
+  riskScore: finalRiskScore,
+  prevRiskScore: priorDayComposite,
+  conflictDay: correctConflictDay,
+  factorScores: [...finalFactors],
+  ...(oilForStore ? { oilPrice: oilForStore } : {}),
+};
+store.version = 2;
+await saveHistory(store);
+
+const scoreTrend = buildFiveDayTrend(store.history, todayNy, priorDayComposite);
+console.log(`History saved; trend: ${scoreTrend.map(p => `${p.date}:${p.score}`).join(", ")}`);
+
+// ── Post-process: enforce canonical layout ──────────────────────────
+const scoreDelta = finalRiskScore - priorDayComposite;
+
+/** 事件主题含油价/现货原油且脚本有实时 API → 视为已证实（不要求双媒体） */
+function eventIsOilPriceWithLiveApi(ev, oil) {
+  if (!oil?.ok) return false;
+  const t = `${s(ev.title)} ${s(ev.description)}`;
+  return /油价|WTI|Brent|原油|油市|oil price|crude|barrel|\/bbl|美元\/桶|spot/i.test(t);
+}
 
 function enforceLayout(d, lang) {
   const c = CANONICAL[lang];
   d.date = todayNy;
+  d.version = version;
+  d.riskScore = finalRiskScore;
+  d.prevRiskScore = priorDayComposite;
 
-  // riskFactors — force prev from previous day's actual scores (must come before keyStats)
+  // riskFactors
   const rf = Array.isArray(d.riskFactors) ? d.riskFactors : [];
-  const prevFactorScores = prev.factorScores
-    ? prev.factorScores.split(", ").map(s => Number(s.split(": ")[1]) || 3)
-    : [3, 3, 3, 3, 3];
+  const validStatus = ["NORMAL", "AT CEILING", "FAST", "SLOW"];
+  const validChange = ["up", "down", "structural"];
   d.riskFactors = c.riskFactorNames.map((name, i) => {
     const src = rf[i] || {};
-    const validStatus = ["NORMAL", "AT CEILING", "FAST", "SLOW"];
-    const validChange = ["up", "down", "structural"];
+    const svRaw = src.sourceVerification;
+    let sourceVerification = svRaw === "confirmed" || svRaw === "partial" || svRaw === "unverified" ? svRaw : "unverified";
+    if (svRaw === "dual") sourceVerification = "confirmed";
+    if (svRaw === "single") sourceVerification = "unverified";
     const out = {
       name,
-      score: n(src.score, 3),
-      prev: prevFactorScores[i] ?? 3,
+      score: finalFactors[i],
+      prev: prevFactorScores[i],
       weight: 0.2,
       description: s(src.description),
       status: validStatus.includes(src.status) ? src.status : "FAST",
+      sourceVerification,
       ...(validChange.includes(src.change) ? { change: src.change } : {}),
     };
     if (src.evidence) out._evidence = s(src.evidence);
     return out;
   });
 
-  // riskScore from factors; prevRiskScore from previous day
-  const avg = d.riskFactors.reduce((sum, f) => sum + f.score, 0) / 5;
-  d.riskScore = Math.round(avg * 20);
-  d.prevRiskScore = prev.riskScore;
-
-  // keyStats — must come AFTER riskScore is finalized
+  // keyStats
   const ks = Array.isArray(d.keyStats) ? d.keyStats : [];
-  const scoreDelta = d.riskScore - prev.riskScore;
   d.keyStats = c.keyStatLabels.map((label, i) => {
     let value = s(ks[i]?.value, "-");
+    let unitExtra = s(ks[i]?.unit).trim();
     if (i === 0) value = `D${correctConflictDay}`;
     if (i === 1) value = scoreDelta > 0 ? `↑${scoreDelta}` : scoreDelta < 0 ? `↓${Math.abs(scoreDelta)}` : (lang === "zh" ? "持平" : "Flat");
+    if (i === 2 && oilSnapshot.ok) {
+      const parts = [];
+      if (oilSnapshot.wti != null) parts.push(`WTI $${Math.round(oilSnapshot.wti)}`);
+      if (oilSnapshot.brent != null) parts.push(`Brent $${Math.round(oilSnapshot.brent)}`);
+      if (parts.length) {
+        value = parts.join(" / ");
+        unitExtra = "USD/bbl";
+      }
+    }
     return {
-      label,
-      value,
-      unit: i < 2 ? c.keyStatUnitsFixed[i] : (s(ks[i]?.unit).trim() || c.keyStatDefaultUnits34[i - 2]),
+      label, value,
+      unit: i < 2 ? c.keyStatUnitsFixed[i] : (unitExtra || c.keyStatDefaultUnits34[i - 2]),
       color: s(ks[i]?.color, c.keyStatColors[i]),
     };
   });
 
+  // scoreTrend from authoritative history
+  d.scoreTrend = scoreTrend.map((p, idx) => ({ date: p.date, score: idx === 4 ? finalRiskScore : p.score, ...(idx === 4 ? { active: true } : {}) }));
+
   // situations
   const sit = Array.isArray(d.situations) ? d.situations : [];
   d.situations = c.situations.map((meta, i) => ({
-    title: meta.title,
-    icon: meta.icon,
-    tag: s(sit[i]?.tag),
-    tagColor: s(sit[i]?.tagColor, "orange"),
+    title: meta.title, icon: meta.icon,
+    tag: s(sit[i]?.tag), tagColor: s(sit[i]?.tagColor, "orange"),
     points: (Array.isArray(sit[i]?.points) ? sit[i].points : []).filter(Boolean).slice(0, 3),
   }));
 
-  // scoreTrend: use previous day's last 4 points + today (never trust model for history)
-  const historyPoints = prevTrendLast4.map(p => ({ date: p.date, score: p.score }));
-  while (historyPoints.length < 4) {
-    const h = historyPoints[0] || { date: todayMmDd, score: prev.riskScore };
-    const [mm, dd] = h.date.split("-").map(Number);
-    const dt = new Date(Date.UTC(2026, mm - 1, dd));
-    dt.setUTCDate(dt.getUTCDate() - 1);
-    const pd = `${String(dt.getUTCMonth() + 1).padStart(2, "0")}-${String(dt.getUTCDate()).padStart(2, "0")}`;
-    historyPoints.unshift({ date: pd, score: prev.riskScore });
-  }
-  d.scoreTrend = [
-    ...historyPoints.slice(-4),
-    { date: todayMmDd, score: d.riskScore, active: true },
-  ];
-
-  // events: clean up booleans
+  // events
   d.events = (Array.isArray(d.events) ? d.events : []).slice(0, 5).map((e, i) => {
+    let verification = ["confirmed", "partial", "single"].includes(e.verification) ? e.verification : "single";
+    if (eventIsOilPriceWithLiveApi(e, oilSnapshot)) verification = "confirmed";
     const obj = {
       id: s(e.id, `EVT-${String(i + 1).padStart(2, "0")}`),
-      title: s(e.title),
-      description: s(e.description),
-      verification: ["confirmed", "partial", "single"].includes(e.verification) ? e.verification : "single",
-      timestamp: s(e.timestamp),
-      significance: s(e.significance),
+      title: s(e.title), description: s(e.description),
+      verification,
+      timestamp: s(e.timestamp), significance: s(e.significance),
     };
     if (e.highlight === true) obj.highlight = true;
     if (e.critical === true) obj.critical = true;
     return obj;
   });
 
-  // warPhase: ensure non-empty; reject pure-numeric level/targetLevel
+  // warPhase
   const wp = d.warPhase || {};
-  const validPhaseStr = (v) => { const t = s(v).trim(); return t && !/^\d+$/.test(t) ? t : ""; };
+  const validPhase = (v) => { const t = s(v).trim(); return t && !/^\d+$/.test(t) ? t : ""; };
   d.warPhase = {
-    level: validPhaseStr(wp.level) || (lang === "zh" ? "阶段评估" : "Phase assessment"),
-    targetLevel: validPhaseStr(wp.targetLevel) || (lang === "zh" ? "动态跟踪" : "Tracking"),
+    level: validPhase(wp.level) || (lang === "zh" ? "阶段评估" : "Phase assessment"),
+    targetLevel: validPhase(wp.targetLevel) || (lang === "zh" ? "动态跟踪" : "Tracking"),
     title: s(wp.title) || (lang === "zh" ? "美伊地缘风险监测" : "US–Iran geo-risk snapshot"),
     subTitle: s(wp.subTitle) || (lang === "zh" ? "基于公开报道综合研判" : "Synthesized from public sources"),
     points: (Array.isArray(wp.points) ? wp.points : []).filter(Boolean).slice(0, 3),
     note: s(wp.note) || (lang === "zh" ? "监测用途，不构成投资建议。" : "For monitoring only; not investment advice."),
   };
-  if (!d.warPhase.points.length) {
-    d.warPhase.points = [s(d.riskFactors[0]?.description) || (lang === "zh" ? "详见下方事件卡片。" : "See event cards below.")];
-  }
+  if (!d.warPhase.points.length) d.warPhase.points = [s(d.riskFactors[0]?.description) || (lang === "zh" ? "详见下方事件卡片。" : "See event cards below.")];
 
   // coreContradiction
   const cc = d.coreContradiction || {};
@@ -552,54 +611,47 @@ function enforceLayout(d, lang) {
     political: (Array.isArray(cc.political) ? cc.political : []).filter(Boolean).slice(0, 2),
     military: (Array.isArray(cc.military) ? cc.military : []).filter(Boolean).slice(0, 2),
   };
-  if (!d.coreContradiction.political.length) {
-    d.coreContradiction.political = [s(d.riskFactors[4]?.description) || (lang === "zh" ? "外交路径仍存变数。" : "Diplomatic path uncertain.")];
-  }
-  if (!d.coreContradiction.military.length) {
-    d.coreContradiction.military = [s(d.riskFactors[0]?.description) || (lang === "zh" ? "军事通道未关闭。" : "Military channels remain open.")];
-  }
+  if (!d.coreContradiction.political.length) d.coreContradiction.political = [s(d.riskFactors[4]?.description) || (lang === "zh" ? "外交路径仍存变数。" : "Diplomatic path uncertain.")];
+  if (!d.coreContradiction.military.length) d.coreContradiction.military = [s(d.riskFactors[0]?.description) || (lang === "zh" ? "军事通道未关闭。" : "Military channels remain open.")];
 
-  // investmentSignal / keyChange
+  // fallbacks
   if (!s(d.investmentSignal).trim()) d.investmentSignal = lang === "zh" ? "维持风险平衡敞口。" : "Maintain balanced exposure.";
   if (!s(d.keyChange).trim()) d.keyChange = lang === "zh" ? "24h要点：详见事件与因子。" : "24h: See events and factors.";
-
-  // situations points fallback
   d.situations = d.situations.map((sit, i) => {
-    if (!sit.points.length) {
-      sit.points = [s(d.riskFactors[i]?.description) || (lang === "zh" ? "详见风险因子。" : "See risk factors.")];
-    }
+    if (!sit.points.length) sit.points = [s(d.riskFactors[i]?.description) || (lang === "zh" ? "详见风险因子。" : "See risk factors.")];
     return sit;
   });
 
   return d;
 }
 
-// Sync EN numeric fields from ZH
-function syncEnFromZh(zh, en) {
-  en.riskScore = zh.riskScore;
-  en.prevRiskScore = zh.prevRiskScore;
-  en.scoreTrend = JSON.parse(JSON.stringify(zh.scoreTrend));
-  en.keyStats = en.keyStats.map((row, i) => {
-    if (i === 0) return { ...row, value: zh.keyStats[i]?.value ?? row.value };
-    return row;
-  });
-  en.riskFactors = en.riskFactors.map((f, i) => {
-    const { change: _, ...rest } = f;
-    const out = { ...rest, score: zh.riskFactors[i].score, prev: zh.riskFactors[i].prev, weight: zh.riskFactors[i].weight };
-    if (zh.riskFactors[i].change) out.change = zh.riskFactors[i].change;
-    return out;
-  });
-}
-
-// Version: bump from previous
-const version = `v${prev.version.match(/(\d+)\.(\d+)/)?.[1] || 2}.${(Number(prev.version.match(/\d+\.(\d+)/)?.[1]) || 9) + 1}`;
-
-payload.dataZh.version = version;
-payload.dataEn.version = version;
-
+// Apply layout to ZH (primary), then sync numerics to EN
 enforceLayout(payload.dataZh, "zh");
 enforceLayout(payload.dataEn, "en");
-syncEnFromZh(payload.dataZh, payload.dataEn);
+
+// Sync: EN gets all numeric fields from ZH
+const zh = payload.dataZh;
+const en = payload.dataEn;
+en.riskScore = zh.riskScore;
+en.prevRiskScore = zh.prevRiskScore;
+en.scoreTrend = JSON.parse(JSON.stringify(zh.scoreTrend));
+en.keyStats[0].value = zh.keyStats[0].value;
+en.keyStats[2].value = zh.keyStats[2].value;
+en.keyStats[2].unit = zh.keyStats[2].unit;
+en.riskFactors.forEach((f, i) => {
+  f.score = zh.riskFactors[i].score;
+  f.prev = zh.riskFactors[i].prev;
+  f.weight = zh.riskFactors[i].weight;
+  f.sourceVerification = zh.riskFactors[i].sourceVerification;
+  if (zh.riskFactors[i].change) f.change = zh.riskFactors[i].change;
+  else delete f.change;
+});
+
+// 与当日选中 ensemble 候选同一次 Gemini 响应中的 Google 搜索接地引用
+zh.webSources = winningGrounding.webSources;
+zh.webSearchQueries = winningGrounding.webSearchQueries;
+en.webSources = winningGrounding.webSources;
+en.webSearchQueries = winningGrounding.webSearchQueries;
 
 // ── Validate ───────────────────────────────────────────────────────
 function validate(d, label) {
@@ -622,101 +674,224 @@ function validate(d, label) {
   if (e.length) throw new Error(`${label} validation failed: ${e.join(", ")}`);
 }
 
-validate(payload.dataZh, "dataZh");
-validate(payload.dataEn, "dataEn");
+validate(zh, "dataZh");
+validate(en, "dataEn");
 console.log("Validation passed.");
 
-// Log evidence then strip from output (evidence is for audit only, not for data.ts)
-for (const f of payload.dataZh.riskFactors) {
-  if (f._evidence) { console.log(`  [evidence] ${f.name}: ${f._evidence}`); delete f._evidence; }
-}
-for (const f of payload.dataEn.riskFactors) { delete f._evidence; }
+// Log & strip evidence
+for (const f of zh.riskFactors) { if (f._evidence) { console.log(`  [evidence] ${f.name}: ${f._evidence}`); delete f._evidence; } }
+for (const f of en.riskFactors) { delete f._evidence; }
 
-// ── Write report markdown ──────────────────────────────────────────
-const outDir = path.join(process.cwd(), "reports", "daily");
-await mkdir(outDir, { recursive: true });
-await writeFile(path.join(outDir, `${todayNy}.md`), payload.reportMarkdownZh + "\n", "utf8");
+// ── Write report ───────────────────────────────────────────────────
+await mkdir(PATHS.reports, { recursive: true });
+await writeFile(path.join(PATHS.reports, `${todayNy}.md`), payload.reportMarkdownZh + "\n", "utf8");
 
-// ── Write data.ts ──────────────────────────────────────────────────
-function findObjectEnd(text, start) {
-  let depth = 0, inStr = false, esc = false;
-  for (let i = start; i < text.length; i++) {
-    const ch = text[i];
-    if (inStr) { if (esc) esc = false; else if (ch === "\\") esc = true; else if (ch === '"') inStr = false; continue; }
-    if (ch === '"') { inStr = true; continue; }
-    if (ch === "{") depth++;
-    if (ch === "}") depth--;
-    if (depth === 0) return i;
-  }
-  return -1;
-}
-
+// ── Generate data.ts (template, not text surgery) ──────────────────
 function toTsLiteral(obj) {
   return JSON.stringify(obj, null, 2).replace(/"([^"]+)":/g, "$1:");
 }
 
-function replaceExport(src, prefix, nextPrefix, literal) {
-  const start = src.indexOf(prefix);
-  if (start === -1) throw new Error(`Cannot find: ${prefix}`);
-  const braceStart = src.indexOf("{", start);
-  const braceEnd = findObjectEnd(src, braceStart);
-  if (braceEnd === -1) throw new Error(`Cannot parse object for: ${prefix}`);
-  const next = src.indexOf(nextPrefix, braceEnd);
-  if (next === -1) throw new Error(`Cannot find boundary: ${nextPrefix}`);
-  return src.slice(0, start) + `${prefix}${literal};\n\n` + src.slice(next);
-}
-
-function replaceTranslation(src, locale, key, value) {
-  const locStart = src.indexOf(`${locale}: {`);
-  if (locStart === -1) throw new Error(`Cannot find locale: ${locale}`);
-  const bStart = src.indexOf("{", locStart);
-  const bEnd = findObjectEnd(src, bStart);
-  if (bEnd === -1) throw new Error(`Cannot parse locale: ${locale}`);
-  const block = src.slice(bStart, bEnd + 1);
-  const escaped = JSON.stringify(value);
-  const re = new RegExp(`(^\\s*${key}:\\s*)(?:"(?:\\\\.|[^"\\\\])*"|\\n\\s*"(?:\\\\.|[^"\\\\])*")(,?)`, "m");
-  if (!re.test(block)) throw new Error(`Cannot find key: ${locale}.${key}`);
-  return src.slice(0, bStart) + block.replace(re, `$1${escaped}$2`) + src.slice(bEnd + 1);
-}
-
-let dataTs = await readFile(dataFilePath, "utf8");
-dataTs = replaceExport(dataTs, "export const DATA_ZH: DashboardData = ", "export const DATA_EN: DashboardData = ", toTsLiteral(payload.dataZh));
-dataTs = replaceExport(dataTs, "export const DATA_EN: DashboardData = ", "export const TRANSLATIONS = ", toTsLiteral(payload.dataEn));
-
-// ── Synthesize TRANSLATIONS from dashboard data ────────────────────
-const zh = payload.dataZh;
-const en = payload.dataEn;
 const [, mo, da] = todayNy.split("-").map(Number);
-const monthShort = new Date(Date.UTC(2026, mo - 1, da)).toLocaleString("en-US", { month: "short", timeZone: "UTC" });
+const monthShort = new Date(Date.UTC(Number(todayNy.slice(0, 4)), mo - 1, da)).toLocaleString("en-US", { month: "short", timeZone: "UTC" });
+const deltaLabel = { zh: s(zh.keyStats[1]?.value, "—"), en: s(en.keyStats[1]?.value, "—") };
 
-const translations = {
+const TRANSLATIONS_OBJ = {
   zh: {
+    title: "AION 地缘冲突监测系统",
+    realtime: "实时",
+    phaseTransition: "阶段过渡",
     node406: `${mo}月${da}日节点`,
+    riskScoreTitle: "地 缘 冲 突\\n风 险 评 分",
+    weightedScore: "加 权 评 分",
+    vsPrev: "较上期",
+    trendTitle: "评分趋势",
+    investmentSignal: "投资风险信号",
+    conflictPhase: "冲 突 阶 段 评 估",
+    importantChange: "关键结构性变化",
+    observationNodes: "关键观察节点",
+    event: "事件",
+    verified: "已证实",
+    singleSource: "单一来源",
+    partialVerify: "部分互证",
+    factorVerified: "已证实",
+    factorPartial: "部分证实",
+    factorUnverified: "未证实",
+    keyChange: "关键变化",
+    judgementSignificance: "研判意义",
+    source: "来源",
+    time: "时间",
+    weight: "权重",
+    atCeiling: "已触顶",
+    structuralChange: "结构变化",
+    fastVar: "快变量",
+    slowVar: "慢变量",
+    coreContradiction: "本期核心矛盾",
+    politicalLevel: "政治层面",
+    militaryLevel: "军事 / 结构层面",
+    lowRisk: "低风险",
+    highRisk: "高风险",
+    extremeRisk: "极端风险",
+    keyEvents: "关键事件",
+    riskFactors: "风险因子",
+    situationAnalysis: "态势分析",
     systemInfo: `AION 智能分析系统 · 地缘冲突模块 ${version} · Daily`,
-    bannerSignal: `综合评分 ${zh.riskScore}（${s(zh.keyStats[1]?.value, "—")}）：${clip(zh.keyChange, 140)}`,
+    sources: "来源",
+    searchCitations: "当日搜索引用（Google 接地）",
+    searchQueriesUsed: "检索词",
+    vs: "较",
+    bannerSignal: `综合评分 ${zh.riskScore}（${deltaLabel.zh}）：${clip(zh.keyChange, 140)}`,
     bannerWarning: clip(s(zh.investmentSignal).replace(/^[「"]|[」"]$/g, ""), 120) || "保留风险对冲。",
     deescalationIntent: clip(zh.coreContradiction.political[0] || zh.riskFactors[4]?.description, 80),
     structuralRisk: clip(zh.riskFactors[1]?.description || "", 100) || "咽喉与航运条件仍影响流量。",
     contradictionNote: clip([zh.coreContradiction.political[0], zh.coreContradiction.military[0]].filter(Boolean).join("；"), 160),
+    energyDeadline: "能源基础设施打击截止日",
+    negotiationValidity: "谈判框架有效期",
+    signalConfirmation: "此后信号方向才能确认",
+    clickExpand: "点击展开详情",
+    conflictName: "美伊冲突",
     dayCount: `${s(zh.keyStats[0]?.value, "D?").replace("D", "第")}天`,
+    weightedFormula: "Σ (评分 × 权重)",
+    compositeScore: "加 权 综 合 评 分",
   },
   en: {
+    title: "AION Geo-Conflict Monitor",
+    realtime: "LIVE",
+    phaseTransition: "Phase Transition",
     node406: `${monthShort} ${da} Node`,
+    riskScoreTitle: "GEO-CONFLICT\\nRISK SCORE",
+    weightedScore: "WEIGHTED SCORE",
+    vsPrev: "vs Prev",
+    trendTitle: "Score Trend",
+    investmentSignal: "Investment Risk Signal",
+    conflictPhase: "CONFLICT PHASE ASSESSMENT",
+    importantChange: "Key Structural Change",
+    observationNodes: "Key Observation Nodes",
+    event: "Event",
+    verified: "VERIFIED",
+    singleSource: "SINGLE SOURCE",
+    partialVerify: "PARTIAL",
+    factorVerified: "Verified",
+    factorPartial: "Partially verified",
+    factorUnverified: "Unverified",
+    keyChange: "KEY CHANGE",
+    judgementSignificance: "Significance",
+    source: "Source",
+    time: "Time",
+    weight: "Weight",
+    atCeiling: "AT CEILING",
+    structuralChange: "STRUCTURAL",
+    fastVar: "FAST VAR",
+    slowVar: "SLOW VAR",
+    coreContradiction: "CORE CONTRADICTION",
+    politicalLevel: "POLITICAL",
+    militaryLevel: "MILITARY / STRUCTURAL",
+    lowRisk: "Low Risk",
+    highRisk: "High Risk",
+    extremeRisk: "Extreme Risk",
+    keyEvents: "Key Events",
+    riskFactors: "Risk Factors",
+    situationAnalysis: "Situation Analysis",
     systemInfo: `AION Intelligence System · Geo-Conflict Module ${version} · Daily`,
-    bannerSignal: `Composite ${en.riskScore} (${s(en.keyStats[1]?.value, "—")}): ${clip(en.keyChange, 140)}`,
+    sources: "Sources",
+    searchCitations: "Grounding sources (Google Search)",
+    searchQueriesUsed: "Queries used",
+    vs: "vs",
+    bannerSignal: `Composite ${en.riskScore} (${deltaLabel.en}): ${clip(en.keyChange, 140)}`,
     bannerWarning: clip(en.investmentSignal, 120) || "Keep hedges.",
     deescalationIntent: clip(en.coreContradiction.political[0] || en.riskFactors[4]?.description, 80),
     structuralRisk: clip(en.riskFactors[1]?.description || "", 100) || "Chokepoint conditions still matter.",
     contradictionNote: clip([en.coreContradiction.political[0], en.coreContradiction.military[0]].filter(Boolean).join("; "), 160),
+    energyDeadline: "Energy infrastructure strike deadline",
+    negotiationValidity: "Negotiation framework validity",
+    signalConfirmation: "Signal direction confirmed thereafter",
+    clickExpand: "Click to expand details",
+    conflictName: "US-Iran Conflict",
     dayCount: s(en.keyStats[0]?.value, "D?").replace("D", "Day "),
+    weightedFormula: "Σ (Score × Weight)",
+    compositeScore: "WEIGHTED COMPOSITE SCORE",
   },
 };
 
-const trKeys = ["node406", "systemInfo", "bannerSignal", "bannerWarning", "deescalationIntent", "structuralRisk", "contradictionNote", "dayCount"];
-for (const key of trKeys) {
-  dataTs = replaceTranslation(dataTs, "zh", key, translations.zh[key]);
-  dataTs = replaceTranslation(dataTs, "en", key, translations.en[key]);
+// Fix escaped newlines in riskScoreTitle
+TRANSLATIONS_OBJ.zh.riskScoreTitle = "地 缘 冲 突\n风 险 评 分";
+TRANSLATIONS_OBJ.en.riskScoreTitle = "GEO-CONFLICT\nRISK SCORE";
+
+const interfaceBlock = `export interface RiskFactor {
+  name: string;
+  score: number;
+  prev: number;
+  weight: number;
+  description: string;
+  /** UI: 已证实 / 部分证实 / 未证实 */
+  sourceVerification?: "confirmed" | "partial" | "unverified";
+  status?: "NORMAL" | "AT CEILING" | "FAST" | "SLOW";
+  change?: "up" | "down" | "structural";
 }
 
-await writeFile(dataFilePath, dataTs, "utf8");
+export interface KeyEvent {
+  id: string;
+  title: string;
+  description: string;
+  verification: "confirmed" | "partial" | "single";
+  critical?: boolean;
+  timestamp?: string;
+  significance?: string;
+  highlight?: boolean;
+}
+
+export interface SituationCard {
+  title: string;
+  icon: string;
+  tag?: string;
+  tagColor?: string;
+  points: string[];
+}
+
+export interface DashboardData {
+  date: string;
+  version: string;
+  /** Gemini 接地返回的网页标题与链接（与 ensemble 所选候选同一次调用） */
+  webSources?: { title: string; uri: string }[];
+  /** 模型实际发起的搜索词（便于核对时效与检索范围） */
+  webSearchQueries?: string[];
+  keyStats: {
+    label: string;
+    value: string;
+    unit: string;
+    color: string;
+  }[];
+  warPhase: {
+    level: string;
+    targetLevel: string;
+    title: string;
+    subTitle: string;
+    points: string[];
+    note: string;
+  };
+  riskScore: number;
+  prevRiskScore: number;
+  investmentSignal: string;
+  riskFactors: RiskFactor[];
+  events: KeyEvent[];
+  keyChange: string;
+  scoreTrend: { date: string; score: number; active?: boolean }[];
+  situations: SituationCard[];
+  coreContradiction: {
+    political: string[];
+    military: string[];
+  };
+}`;
+
+const dataTs = `${interfaceBlock}
+
+export const DATA_ZH: DashboardData = ${toTsLiteral(zh)};
+
+export const DATA_EN: DashboardData = ${toTsLiteral(en)};
+
+export const TRANSLATIONS = ${toTsLiteral(TRANSLATIONS_OBJ)};
+
+export const INITIAL_DATA = DATA_ZH;
+`;
+
+await writeFile(PATHS.dataTs, dataTs, "utf8");
 console.log("Done. Updated src/data.ts and wrote report.");

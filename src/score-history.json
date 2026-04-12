@@ -1,0 +1,52 @@
+{
+  "version": 2,
+  "latest": {
+    "date": "2026-04-12",
+    "appVersion": "v2.19",
+    "riskScore": 72,
+    "prevRiskScore": 60,
+    "conflictDay": 43,
+    "factorScores": [
+      4,
+      4,
+      3,
+      4,
+      3
+    ],
+    "oilPrice": {
+      "wti": 96.57,
+      "brent": 95.2,
+      "updatedAt": "2026-04-12T06:16:29Z"
+    }
+  },
+  "history": [
+    {
+      "date": "2026-04-06",
+      "score": 68
+    },
+    {
+      "date": "2026-04-07",
+      "score": 68
+    },
+    {
+      "date": "2026-04-08",
+      "score": 56
+    },
+    {
+      "date": "2026-04-09",
+      "score": 64
+    },
+    {
+      "date": "2026-04-10",
+      "score": 64
+    },
+    {
+      "date": "2026-04-11",
+      "score": 60
+    },
+    {
+      "date": "2026-04-12",
+      "score": 72
+    }
+  ]
+}

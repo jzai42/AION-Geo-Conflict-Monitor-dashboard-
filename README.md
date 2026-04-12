@@ -8,10 +8,40 @@ Geo-conflict risk dashboard for tracking geopolitical conflict risks, energy sho
 
 ## Run Locally
 
-**Prerequisites:** Node.js
+**Prerequisites:** Node.js, and **Google Chrome** (or Chromium) on your machine for PDF export — or set `PUPPETEER_EXECUTABLE_PATH` to your browser binary (see `.env.example`).
 
 1. Install dependencies:
    `npm ci`
-2. (Optional) Copy `.env.example` to `.env.local` and set `GEMINI_API_KEY` if you later enable Gemini API calls.
-3. Run the app:
-   `npm run dev`
+2. To run the daily report generator locally, copy `.env.example` to `.env` (or export env vars) and set `GEMINI_API_KEY` from [Google AI Studio](https://aistudio.google.com/apikey). The GitHub Action uses the `GEMINI_API_KEY` repository secret.
+3. Run the dashboard **and** the PDF API together:
+   `npm run dev`  
+   This starts Vite (default port **3000**) and the Express PDF service on **8787**. Frontend calls to `/api` are proxied to the PDF API.
+   - Frontend only: `npm run dev:client`
+   - PDF API only: `npm run dev:api`
+4. Production build of the static site (`npm run build`) does **not** include the PDF server. To use “Generate PDF” on a deployed site, host the PDF API separately and set **`VITE_API_BASE`** to that API origin (no trailing slash) when running `npm run build`. For local preview with the API: `npm run dev:api` in one terminal, then `npm run preview` in another (preview also proxies `/api` to `8787`).
+
+## Verify PDF API (CLI)
+
+With the PDF API running (`npm run dev:api` or `npm run dev`):
+
+- Quick health check only:
+  `npm run verify:pdf`
+- Full flow (generate + poll + download PDF bytes — slower):
+  `npm run verify:pdf:full`
+
+Point to another host:
+`PDF_API_URL=https://your-api.example.com npm run verify:pdf`
+
+## Docker (PDF API only)
+
+Build and run the PDF service on port **8787** (bundled Chromium inside the image):
+
+```bash
+docker compose up --build -d
+# or: npm run docker:up
+```
+
+Build image only: `npm run docker:build`
+
+After deploy, set `VITE_API_BASE` to `http://<host>:8787` (or your HTTPS URL) when building the static frontend.
+

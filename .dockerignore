@@ -1,0 +1,12 @@
+node_modules
+dist
+build
+.git
+.github
+server/generated-pdfs
+*.log
+.env
+.env.*
+reports
+coverage
+**/.DS_Store
