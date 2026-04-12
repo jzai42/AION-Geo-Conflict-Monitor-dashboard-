@@ -1,3 +1,5 @@
+# Needs secret GEMINI_API_KEY: Repo → Settings → Secrets and variables → Actions.
+# If using Environment "production" below, also add GEMINI_API_KEY under that environment.
 name: Generate Daily AION Report
 
 on:
@@ -48,6 +50,16 @@ jobs:
       - name: Install dependencies
         if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
         run: npm ci
+
+      - name: Verify GEMINI_API_KEY
+        if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::error::Missing GEMINI_API_KEY. Add it: Repository Settings → Secrets and variables → Actions → New repository secret (name: GEMINI_API_KEY). If this workflow uses Environment \"production\", add the same secret under Settings → Environments → production."
+            exit 1
+          fi
 
       - name: Generate report via Gemini
         if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
