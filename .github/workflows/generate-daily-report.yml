@@ -43,6 +43,11 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
+        run: npm ci
 
       - name: Generate report via Gemini
         if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
