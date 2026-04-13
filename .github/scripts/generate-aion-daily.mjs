@@ -14,7 +14,7 @@ const CONFIG = {
 };
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
-const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-pro";
 if (!GEMINI_API_KEY) throw new Error("Missing GEMINI_API_KEY (or GOOGLE_API_KEY)");
 
 const genai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
@@ -429,6 +429,93 @@ function extractFactorScores(p) {
   return (p?.dataZh?.riskFactors || []).map(f => Number(f.score) || 3);
 }
 
+function buildFallbackPayload(todayIso) {
+  const fallbackFactors = CANONICAL.zh.riskFactorNames.map((name, i) => ({
+    name,
+    score: prevFactorScores[i] ?? 3,
+    prev: prevFactorScores[i] ?? 3,
+    weight: 0.2,
+    description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
+    status: "SLOW",
+    change: "none",
+    evidence: "Fallback: Gemini API unavailable (503/UNAVAILABLE).",
+    sourceVerification: "unverified",
+  }));
+
+  const fallbackEventsZh = [{
+    id: "EVT-FALLBACK-01",
+    title: "模型服务高负载，已启用自动兜底",
+    description: "本次自动生成遇到上游模型服务不可用（503/UNAVAILABLE），系统已沿用上一期结构并保持评分稳定，等待下一轮任务自动刷新。",
+    verification: "single",
+    timestamp: "AUTO",
+    significance: "保障日报流水线可用性，避免因上游拥堵导致中断。",
+    highlight: false,
+    critical: false,
+  }];
+  const fallbackEventsEn = [{
+    id: "EVT-FALLBACK-01",
+    title: "Model overload fallback activated",
+    description: "Upstream model returned 503/UNAVAILABLE. The pipeline falls back to prior-day structure and stable scores until the next run.",
+    verification: "single",
+    timestamp: "AUTO",
+    significance: "Keeps the daily pipeline available during transient upstream outages.",
+    highlight: false,
+    critical: false,
+  }];
+
+  const fallbackSituationsZh = CANONICAL.zh.situations.map(sit => ({
+    title: sit.title,
+    icon: sit.icon,
+    tag: "Service Fallback",
+    tagColor: "orange",
+    points: ["模型暂不可用，当前卡片内容沿用上一期结构。"],
+  }));
+  const fallbackSituationsEn = CANONICAL.en.situations.map(sit => ({
+    title: sit.title,
+    icon: sit.icon,
+    tag: "Service Fallback",
+    tagColor: "orange",
+    points: ["Model temporarily unavailable; cards keep prior-day structure."],
+  }));
+
+  const make = (lang) => ({
+    date: todayIso,
+    version,
+    riskScore: priorDayComposite,
+    prevRiskScore: priorDayComposite,
+    investmentSignal: lang === "zh" ? "模型服务拥堵，维持风险中性敞口。" : "Model congested; keep neutral risk exposure.",
+    keyChange: lang === "zh" ? "上游模型暂不可用，本期沿用上一期基线。" : "Upstream model unavailable; baseline carried over.",
+    keyStats: [
+      { label: CANONICAL[lang].keyStatLabels[0], value: `D${correctConflictDay}`, unit: CANONICAL[lang].keyStatUnitsFixed[0], color: CANONICAL[lang].keyStatColors[0] },
+      { label: CANONICAL[lang].keyStatLabels[1], value: lang === "zh" ? "持平" : "Flat", unit: CANONICAL[lang].keyStatUnitsFixed[1], color: CANONICAL[lang].keyStatColors[1] },
+      { label: CANONICAL[lang].keyStatLabels[2], value: "-", unit: CANONICAL[lang].keyStatDefaultUnits34[0], color: CANONICAL[lang].keyStatColors[2] },
+      { label: CANONICAL[lang].keyStatLabels[3], value: "-", unit: CANONICAL[lang].keyStatDefaultUnits34[1], color: CANONICAL[lang].keyStatColors[3] },
+    ],
+    warPhase: {
+      level: lang === "zh" ? "服务兜底阶段" : "Fallback mode",
+      targetLevel: lang === "zh" ? "等待自动刷新" : "Await next run",
+      title: lang === "zh" ? "模型服务高负载，已切换兜底输出" : "Model overloaded; fallback output enabled",
+      subTitle: lang === "zh" ? "本期保留结构与分数连续性" : "Structure and score continuity preserved",
+      points: [lang === "zh" ? "下一次定时任务将自动重试并恢复正常生成。" : "Next scheduled run will retry automatically."],
+      note: lang === "zh" ? "兜底内容仅用于连续性展示，不构成投资建议。" : "Fallback output is for continuity only, not investment advice.",
+    },
+    riskFactors: fallbackFactors,
+    events: lang === "zh" ? fallbackEventsZh : fallbackEventsEn,
+    scoreTrend: [],
+    situations: lang === "zh" ? fallbackSituationsZh : fallbackSituationsEn,
+    coreContradiction: {
+      political: [lang === "zh" ? "上游模型服务可用性波动导致当期生成降级。" : "Upstream model availability fluctuation forced degraded generation."],
+      military: [lang === "zh" ? "风险分数暂沿用上一期，等待下一次自动刷新。" : "Risk scores are carried over until the next refresh."],
+    },
+  });
+
+  return {
+    reportMarkdownZh: `# AION 日报（自动兜底）\n\n- 日期：${todayIso}\n- 说明：上游模型服务暂不可用（503/UNAVAILABLE），本期沿用上一期基线并保持结构完整。\n- 处理：系统将于下一次定时任务自动重试。\n`,
+    dataZh: make("zh"),
+    dataEn: make("en"),
+  };
+}
+
 // ── Ensemble call ──────────────────────────────────────────────────
 console.log(`Generating AION daily report for ${todayNy} (${CONFIG.ensembleN}x ensemble) ...`);
 
@@ -460,7 +547,11 @@ const validResults = results.filter(Boolean);
 if (!validResults.length) {
   await mkdir(PATHS.reports, { recursive: true });
   await writeFile(path.join(PATHS.reports, `${todayNy}.ensemble-fail.json`), JSON.stringify(results, null, 2), "utf8");
-  throw new Error("All ensemble calls failed");
+  console.warn("All ensemble calls failed; using fallback payload from previous baseline.");
+  validResults.push({
+    parsed: buildFallbackPayload(todayNy),
+    grounding: { webSources: [], webSearchQueries: [] },
+  });
 }
 
 // ── Ensemble scoring with guardrails ───────────────────────────────
