@@ -8,10 +8,10 @@
   --color-aion-bg: var(--aion-bg);
   --color-aion-card: var(--aion-card);
   --color-aion-red: #ff3333;
-  --color-aion-orange: #ff8800;
-  --color-aion-amber: #ffcc00;
-  --color-aion-green: #39ff14;
-  --color-aion-yellow: #ffdc00;
+  --color-aion-orange: var(--aion-orange);
+  --color-aion-amber: var(--aion-amber);
+  --color-aion-green: var(--aion-green);
+  --color-aion-yellow: var(--aion-yellow);
   --color-aion-gray: var(--aion-gray);
   --color-aion-text: var(--aion-text);
   --color-aion-text-dim: var(--aion-text-dim);
@@ -24,15 +24,25 @@
   --aion-text: #ffffff;
   --aion-text-dim: #888888;
   --aion-stripe: rgba(255, 255, 255, 0.05);
+  /* 霓虹色：深色背景用 */
+  --aion-orange: #ff8800;
+  --aion-amber: #ffcc00;
+  --aion-yellow: #ffdc00;
+  --aion-green: #39ff14;
 }
 
 .light {
-  --aion-bg: #f9fafb;
+  --aion-bg: #eef0f3;
   --aion-card: #ffffff;
-  --aion-gray: #eaecf0;
-  --aion-text: #0a0a0a;
-  --aion-text-dim: #475467;
-  --aion-stripe: rgba(0, 0, 0, 0.03);
+  --aion-gray: #c1c7d0;
+  --aion-text: #030712;
+  --aion-text-dim: #182230;
+  --aion-stripe: rgba(0, 0, 0, 0.05);
+  /* 浅色底上提高琥珀/黄/绿/橙 的对比度（避免淡黄字看不清） */
+  --aion-orange: #c2410c;
+  --aion-amber: #b45309;
+  --aion-yellow: #a16207;
+  --aion-green: #15803d;
 }
 
 @layer base {
