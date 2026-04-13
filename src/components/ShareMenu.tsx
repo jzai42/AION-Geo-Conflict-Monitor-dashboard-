@@ -3,15 +3,8 @@ import { Share2, Link2, FileDown, Loader2, Smartphone } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { buildShareUrl, tabToShareView, type ShareUrlState } from '../lib/share-url';
 import type { DashboardData } from '../data';
-import { getApiBase } from '../lib/api-base';
 import { readFetchErrorMessage } from '../lib/api-error';
-
-function absolutePdfUrl(pdfUrl: string): string {
-  if (pdfUrl.startsWith('http')) return pdfUrl;
-  const base = getApiBase();
-  if (base) return `${base}${pdfUrl}`;
-  return new URL(pdfUrl, window.location.origin).toString();
-}
+import { apiAbsoluteUrl, canGeneratePdf } from '../lib/api-url';
 import { getPdfCacheKey } from '../pdf/buildSnapshot';
 import { loadPdfRef, savePdfRef } from '../lib/pdf-storage';
 import { Toast, type ToastTone } from './Toast';
@@ -65,9 +58,10 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
 
   const pollStatus = useCallback(
     async (jobId: string): Promise<string> => {
-      const base = getApiBase();
       for (let i = 0; i < 120; i++) {
-        const r = await fetch(`${base}/api/reports/pdf-status?jobId=${encodeURIComponent(jobId)}`);
+        const r = await fetch(
+          apiAbsoluteUrl(`/api/reports/pdf-status?jobId=${encodeURIComponent(jobId)}`)
+        );
         if (!r.ok) throw new Error(await readFetchErrorMessage(r));
         const j = (await r.json()) as PdfStatusResponse;
         if (j.status === 'ready' && j.pdfUrl) return j.pdfUrl;
@@ -81,17 +75,17 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
 
   const triggerDownload = (pdfUrl: string) => {
     const a = document.createElement('a');
-    a.href = absolutePdfUrl(pdfUrl);
+    a.href = apiAbsoluteUrl(pdfUrl);
     a.download = `aion-geo-monitor-${data.date}.pdf`;
     a.rel = 'noopener';
     a.click();
   };
 
   const generatePdf = useCallback(async () => {
-    const base = getApiBase();
+    if (!canGeneratePdf()) return;
     setPdfLoading(true);
     try {
-      const res = await fetch(`${base}/api/reports/generate-pdf`, {
+      const res = await fetch(apiAbsoluteUrl('/api/reports/generate-pdf'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -135,6 +129,7 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
   }, [cacheKey, data.date, data.version, language, pollStatus, shareState.view]);
 
   const downloadLatest = useCallback(() => {
+    if (!canGeneratePdf()) return;
     const stored = loadPdfRef();
     const url = stored?.cacheKey === cacheKey ? stored.pdfUrl : undefined;
     if (!url) {
@@ -165,7 +160,12 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
   }, [language, shareState]);
 
   const canShare = typeof navigator !== 'undefined' && !!navigator.share;
-  const hasCachedPdf = useMemo(() => loadPdfRef()?.cacheKey === cacheKey, [cacheKey, cacheTick]);
+  /** MVP：线上静态站以复制链接为主；PDF 需自建 API（VITE_API_BASE）或本地 dev，此时才展示入口 */
+  const showPdfActions = canGeneratePdf();
+  const hasCachedPdf = useMemo(
+    () => (showPdfActions ? loadPdfRef()?.cacheKey === cacheKey : false),
+    [cacheKey, cacheTick, showPdfActions]
+  );
 
   return (
     <div className="relative" ref={wrapRef}>
@@ -189,26 +189,30 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
           role="menu"
         >
           <MenuRow icon={<Link2 className="h-3.5 w-3.5" />} label={language === 'zh' ? '复制链接' : 'Copy link'} onClick={copyLink} />
-          <MenuRow
-            icon={pdfLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <FileDown className="h-3.5 w-3.5" />}
-            label={
-              pdfLoading
-                ? language === 'zh'
-                  ? '正在生成最新 PDF...'
-                  : 'Generating PDF...'
-                : language === 'zh'
-                  ? '生成 PDF'
-                  : 'Generate PDF'
-            }
-            onClick={() => !pdfLoading && void generatePdf()}
-            disabled={pdfLoading}
-          />
-          <MenuRow
-            icon={<FileDown className="h-3.5 w-3.5" />}
-            label={language === 'zh' ? '下载最新 PDF' : 'Download latest PDF'}
-            onClick={downloadLatest}
-            disabled={!hasCachedPdf}
-          />
+          {showPdfActions && (
+            <>
+              <MenuRow
+                icon={pdfLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <FileDown className="h-3.5 w-3.5" />}
+                label={
+                  pdfLoading
+                    ? language === 'zh'
+                      ? '正在生成最新 PDF...'
+                      : 'Generating PDF...'
+                    : language === 'zh'
+                      ? '生成 PDF'
+                      : 'Generate PDF'
+                }
+                onClick={() => !pdfLoading && void generatePdf()}
+                disabled={pdfLoading}
+              />
+              <MenuRow
+                icon={<FileDown className="h-3.5 w-3.5" />}
+                label={language === 'zh' ? '下载最新 PDF' : 'Download latest PDF'}
+                onClick={downloadLatest}
+                disabled={!hasCachedPdf}
+              />
+            </>
+          )}
           {canShare && (
             <MenuRow
               icon={<Smartphone className="h-3.5 w-3.5" />}
