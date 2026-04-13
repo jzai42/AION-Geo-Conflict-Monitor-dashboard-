@@ -16,6 +16,8 @@ const CONFIG = {
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-pro";
 if (!GEMINI_API_KEY) throw new Error("Missing GEMINI_API_KEY (or GOOGLE_API_KEY)");
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
+const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4.1-mini";
 
 const genai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
@@ -88,6 +90,10 @@ function errorMessage(err) {
 
 function isRetriableGeminiError(msg) {
   return /503|UNAVAILABLE|RESOURCE_EXHAUSTED|429|rate limit|overloaded|timeout|ETIMEDOUT|ECONNRESET/i.test(msg);
+}
+
+function isRetriableOpenAIError(msg) {
+  return /429|500|502|503|504|rate limit|overloaded|timeout|ETIMEDOUT|ECONNRESET/i.test(msg);
 }
 
 /** WTI + Brent spot from OilPriceAPI demo (no key; ~20 req/h per IP). */
@@ -418,6 +424,61 @@ async function callGeminiWithRetry(withWeb, idx) {
   throw new Error("Retry loop exited unexpectedly");
 }
 
+async function callOpenAI() {
+  if (!OPENAI_API_KEY) throw new Error("Missing OPENAI_API_KEY");
+  const resp = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: OPENAI_MODEL,
+      temperature: 0.2,
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: `请生成 ${todayNy} 的 AION 日报。\n\n输出仅为 JSON 对象，键为 reportMarkdownZh、dataZh、dataEn。` },
+      ],
+      response_format: {
+        type: "json_schema",
+        json_schema: {
+          name: "aion_daily_report",
+          strict: true,
+          schema: outputSchema,
+        },
+      },
+    }),
+  });
+
+  const raw = await resp.json().catch(() => ({}));
+  if (!resp.ok) {
+    throw new Error(JSON.stringify(raw?.error || { code: resp.status, message: `HTTP ${resp.status}` }));
+  }
+
+  return {
+    text: raw?.choices?.[0]?.message?.content ?? "",
+    provider: "openai",
+  };
+}
+
+async function callOpenAIWithRetry() {
+  for (let attempt = 1; attempt <= CONFIG.geminiMaxAttempts; attempt++) {
+    try {
+      return await callOpenAI();
+    } catch (err) {
+      const msg = errorMessage(err);
+      const retriable = isRetriableOpenAIError(msg);
+      const exhausted = attempt >= CONFIG.geminiMaxAttempts;
+      if (!retriable || exhausted) throw new Error(msg);
+      const exp = CONFIG.geminiRetryBaseMs * (2 ** (attempt - 1));
+      const backoffMs = Math.min(CONFIG.geminiRetryMaxMs, exp) + Math.floor(Math.random() * 500);
+      console.warn(`  OpenAI fallback retry ${attempt}/${CONFIG.geminiMaxAttempts - 1} after ${backoffMs}ms: ${msg}`);
+      await sleep(backoffMs);
+    }
+  }
+  throw new Error("OpenAI retry loop exited unexpectedly");
+}
+
 function parsePayload(raw) {
   const text = extractText(raw);
   if (!text) return null;
@@ -547,11 +608,24 @@ const validResults = results.filter(Boolean);
 if (!validResults.length) {
   await mkdir(PATHS.reports, { recursive: true });
   await writeFile(path.join(PATHS.reports, `${todayNy}.ensemble-fail.json`), JSON.stringify(results, null, 2), "utf8");
-  console.warn("All ensemble calls failed; using fallback payload from previous baseline.");
-  validResults.push({
-    parsed: buildFallbackPayload(todayNy),
-    grounding: { webSources: [], webSearchQueries: [] },
-  });
+  console.warn("All Gemini calls failed; trying OpenAI fallback...");
+  try {
+    const oaRaw = await callOpenAIWithRetry();
+    const oaParsed = parsePayload(oaRaw);
+    if (!oaParsed) throw new Error("OpenAI returned non-JSON or schema-mismatched output");
+    console.log(`  OpenAI fallback succeeded: model=${OPENAI_MODEL}`);
+    validResults.push({
+      parsed: oaParsed,
+      grounding: { webSources: [], webSearchQueries: [] },
+    });
+  } catch (err) {
+    console.warn(`  OpenAI fallback failed: ${errorMessage(err)}`);
+    console.warn("  Using static baseline fallback payload.");
+    validResults.push({
+      parsed: buildFallbackPayload(todayNy),
+      grounding: { webSources: [], webSearchQueries: [] },
+    });
+  }
 }
 
 // ── Ensemble scoring with guardrails ───────────────────────────────

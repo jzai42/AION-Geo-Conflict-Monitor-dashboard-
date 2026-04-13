@@ -11,7 +11,11 @@ on:
   workflow_dispatch:
 
 env:
-  GEMINI_MODEL: gemini-2.5-flash
+  GEMINI_MODEL: gemini-2.5-pro
+
+concurrency:
+  group: generate-daily-report
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -65,6 +69,8 @@ jobs:
         if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-4.1-mini
         run: node .github/scripts/generate-aion-daily.mjs
 
       - name: Commit and push
