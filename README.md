@@ -8,7 +8,7 @@ Geo-conflict risk dashboard for tracking geopolitical conflict risks, energy sho
 
 ## Product scope (MVP)
 
-The shipped static dashboard prioritizes **shareable URLs** (copy link / system share) and the core monitoring UI. **Server-side PDF export is an enhancement:** the Share menu shows “Generate PDF” / “Download latest PDF” only when a PDF API is available — locally via `npm run dev`, or in production when the frontend is built with **`VITE_API_BASE`** pointing at a deployed PDF service (see below).
+The shipped static dashboard prioritizes **shareable URLs** (copy link / system share) and the core monitoring UI. **Server-side PDF export is an enhancement:** the Share menu shows “Generate PDF” only when a PDF API is available — locally via `npm run dev`, or in production when the frontend is built with **`VITE_API_BASE`** pointing at a deployed PDF service (see below).
 
 ## Run Locally
 

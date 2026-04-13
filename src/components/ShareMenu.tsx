@@ -1,12 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Share2, Link2, FileDown, Loader2, Smartphone } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { buildShareUrl, tabToShareView, type ShareUrlState } from '../lib/share-url';
 import type { DashboardData } from '../data';
 import { readFetchErrorMessage } from '../lib/api-error';
 import { apiAbsoluteUrl, canGeneratePdf } from '../lib/api-url';
-import { getPdfCacheKey } from '../pdf/buildSnapshot';
-import { loadPdfRef, savePdfRef } from '../lib/pdf-storage';
 import { Toast, type ToastTone } from './Toast';
 
 type PdfStatusResponse =
@@ -24,11 +22,7 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
   const [open, setOpen] = useState(false);
   const [toast, setToast] = useState<{ message: string; tone: ToastTone } | null>(null);
   const [pdfLoading, setPdfLoading] = useState(false);
-  /** 生成成功后递增，触发「下载最新」可用态刷新 */
-  const [cacheTick, setCacheTick] = useState(0);
   const wrapRef = useRef<HTMLDivElement>(null);
-
-  const cacheKey = getPdfCacheKey(data, language);
 
   useEffect(() => {
     const onDoc = (e: MouseEvent) => {
@@ -109,8 +103,6 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
         pdfUrl = await pollStatus(body.jobId);
       }
       if (!pdfUrl) throw new Error('no pdf url');
-      savePdfRef({ cacheKey, pdfUrl, updatedAt: Date.now() });
-      setCacheTick((c) => c + 1);
       triggerDownload(pdfUrl);
       setToast({
         message: language === 'zh' ? 'PDF 已生成并开始下载' : 'PDF ready — downloading',
@@ -126,22 +118,7 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
       setPdfLoading(false);
       setOpen(false);
     }
-  }, [cacheKey, data.date, data.version, language, pollStatus, shareState.view]);
-
-  const downloadLatest = useCallback(() => {
-    if (!canGeneratePdf()) return;
-    const stored = loadPdfRef();
-    const url = stored?.cacheKey === cacheKey ? stored.pdfUrl : undefined;
-    if (!url) {
-      setToast({
-        message: language === 'zh' ? '暂无已生成的 PDF，请先生成' : 'No PDF yet — generate first',
-        tone: 'info',
-      });
-      return;
-    }
-    triggerDownload(url);
-    setOpen(false);
-  }, [cacheKey, language]);
+  }, [data.date, data.version, language, pollStatus, shareState.view]);
 
   const systemShare = useCallback(async () => {
     const url = buildShareUrl(shareState);
@@ -162,10 +139,6 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
   const canShare = typeof navigator !== 'undefined' && !!navigator.share;
   /** MVP：线上静态站以复制链接为主；PDF 需自建 API（VITE_API_BASE）或本地 dev，此时才展示入口 */
   const showPdfActions = canGeneratePdf();
-  const hasCachedPdf = useMemo(
-    () => (showPdfActions ? loadPdfRef()?.cacheKey === cacheKey : false),
-    [cacheKey, cacheTick, showPdfActions]
-  );
 
   return (
     <div className="relative" ref={wrapRef}>
@@ -190,28 +163,20 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
         >
           <MenuRow icon={<Link2 className="h-3.5 w-3.5" />} label={language === 'zh' ? '复制链接' : 'Copy link'} onClick={copyLink} />
           {showPdfActions && (
-            <>
-              <MenuRow
-                icon={pdfLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <FileDown className="h-3.5 w-3.5" />}
-                label={
-                  pdfLoading
-                    ? language === 'zh'
-                      ? '正在生成最新 PDF...'
-                      : 'Generating PDF...'
-                    : language === 'zh'
-                      ? '生成 PDF'
-                      : 'Generate PDF'
-                }
-                onClick={() => !pdfLoading && void generatePdf()}
-                disabled={pdfLoading}
-              />
-              <MenuRow
-                icon={<FileDown className="h-3.5 w-3.5" />}
-                label={language === 'zh' ? '下载最新 PDF' : 'Download latest PDF'}
-                onClick={downloadLatest}
-                disabled={!hasCachedPdf}
-              />
-            </>
+            <MenuRow
+              icon={pdfLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <FileDown className="h-3.5 w-3.5" />}
+              label={
+                pdfLoading
+                  ? language === 'zh'
+                    ? '正在生成 PDF...'
+                    : 'Generating PDF...'
+                  : language === 'zh'
+                    ? '生成 PDF'
+                    : 'Generate PDF'
+              }
+              onClick={() => !pdfLoading && void generatePdf()}
+              disabled={pdfLoading}
+            />
           )}
           {canShare && (
             <MenuRow
