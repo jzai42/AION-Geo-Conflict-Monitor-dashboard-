@@ -60,6 +60,8 @@ async function writePdfToFile(html: string, outPath: string): Promise<void> {
   try {
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: 'load' });
+    /** 与屏幕一致，避免 print 媒体下背景色被压成黑/透明（浅色版式依赖背景） */
+    await page.emulateMediaType('screen');
     await page.pdf({
       path: outPath,
       format: 'A4',
