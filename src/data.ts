@@ -65,49 +65,47 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-04-12",
-  version: "v2.20",
+  date: "2026-04-13",
+  version: "v2.21",
   riskScore: 72,
-  prevRiskScore: 60,
-  investmentSignal: "地缘政治风险上升，能源相关资产波动加剧，需密切关注霍尔木兹海峡动态。",
-  keyChange: "地区军事紧张升级，能源市场受冲击油价显著上涨，航运风险提示增加。",
+  prevRiskScore: 72,
+  investmentSignal: "模型服务拥堵，维持风险中性敞口。",
+  keyChange: "上游模型暂不可用，本期沿用上一期基线。",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D43",
+      value: "D44",
       unit: "2月28日起",
-      color: "grey"
+      color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↑12",
+      value: "持平",
       unit: "较上期",
-      color: "red"
+      color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $105 / Brent $102",
+      value: "WTI $101 / Brent $100",
       unit: "USD/bbl",
-      color: "red"
+      color: "#ff4136"
     },
     {
       label: "霍尔木兹",
-      value: "中等风险",
+      value: "-",
       unit: "<10% 常态",
-      color: "orange"
+      color: "#ffdc00"
     }
   ],
   warPhase: {
-    level: "地区紧张升级",
-    targetLevel: "持续对抗",
-    title: "地区紧张升级，冲突烈度维持高位。",
-    subTitle: "伊朗军事演习加剧霍尔木兹海峡紧张，国际油价受影响上升。",
+    level: "服务兜底阶段",
+    targetLevel: "等待自动刷新",
+    title: "模型服务高负载，已切换兜底输出",
+    subTitle: "本期保留结构与分数连续性",
     points: [
-      "伊朗在霍尔木兹海峡举行导弹演习，展示军事实力。",
-      "美国谴责伊朗行为，但未升级直接军事行动。",
-      "油价因地缘政治风险上升，航运受一定影响。"
+      "下一次定时任务将自动重试并恢复正常生成。"
     ],
-    note: "双方军事活动频繁，但冲突尚未失控，风险在于误判升级。"
+    note: "兜底内容仅用于连续性展示，不构成投资建议。"
   },
   riskFactors: [
     {
@@ -115,100 +113,58 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "评估直接军事冲突和威胁的强度与范围。",
-      status: "FAST",
-      sourceVerification: "confirmed"
+      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
+      status: "SLOW",
+      sourceVerification: "unverified"
     },
     {
       name: "霍尔木兹航运扰动",
       score: 3,
-      prev: 4,
+      prev: 3,
       weight: 0.2,
-      description: "评估霍尔木兹海峡航运受阻或受威胁的程度。",
-      status: "FAST",
-      sourceVerification: "confirmed",
-      change: "down"
+      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
+      status: "SLOW",
+      sourceVerification: "unverified"
     },
     {
       name: "能源冲击",
       score: 4,
-      prev: 3,
+      prev: 4,
       weight: 0.2,
-      description: "评估冲突对全球能源供应和价格的影响。",
-      status: "FAST",
-      sourceVerification: "confirmed",
-      change: "up"
+      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
+      status: "SLOW",
+      sourceVerification: "unverified"
     },
     {
       name: "大国介入深度",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "评估外部大国（如中美俄）军事或政治介入的程度。",
-      status: "FAST",
-      sourceVerification: "confirmed"
+      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
+      status: "SLOW",
+      sourceVerification: "unverified"
     },
     {
       name: "降级/谈判前景",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "评估冲突各方寻求外交解决或降级姿态的可能性。",
-      status: "FAST",
-      sourceVerification: "confirmed"
+      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
+      status: "SLOW",
+      sourceVerification: "unverified"
     }
   ],
   events: [
     {
-      id: "e001",
-      title: "伊朗革命卫队在霍尔木兹海峡举行导弹演习",
-      description: "伊朗伊斯兰革命卫队宣布在霍尔木兹海峡进行大规模导弹和海军演习，旨在展示其区域防御能力。",
-      verification: "confirmed",
-      timestamp: "2026-04-12T10:00:00Z",
-      significance: "军事行动，地区紧张加剧",
-      highlight: true,
-      critical: true
-    },
-    {
-      id: "e002",
-      title: "美国谴责伊朗在霍尔木兹海峡的“挑衅行为”",
-      description: "美国中央司令部发表声明，谴责伊朗革命卫队在霍尔木兹海峡的军事演习是“挑衅性”和“破坏地区稳定”的行为。",
-      verification: "confirmed",
-      timestamp: "2026-04-12T14:30:00Z",
-      significance: "外交表态，加剧对峙",
-      highlight: true
-    },
-    {
-      id: "e003",
-      title: "油价因中东紧张局势而上涨",
-      description: "WTI原油价格上涨至104.91美元/桶，布伦特原油价格达到102.20美元/桶，市场担忧供应中断。",
-      verification: "confirmed",
-      timestamp: "2026-04-13T03:18:43Z",
-      significance: "能源市场影响",
-      highlight: true
-    },
-    {
-      id: "e004",
-      title: "部分航运公司针对霍尔木兹海峡发布安全警告",
-      description: "鉴于伊朗军事演习，部分国际航运公司建议船只通过霍尔木兹海峡时提高警惕，但未有大规模改道或停运。",
-      verification: "confirmed",
-      timestamp: "2026-04-12T16:00:00Z",
-      significance: "航运安全"
-    },
-    {
-      id: "e005",
-      title: "联合国呼吁美伊双方保持克制",
-      description: "联合国特使就中东局势发表声明，呼吁美国和伊朗双方保持最大程度的克制，避免采取任何可能加剧地区紧张的行动。",
-      verification: "confirmed",
-      timestamp: "2026-04-12T18:00:00Z",
-      significance: "国际呼吁，降级努力"
+      id: "EVT-FALLBACK-01",
+      title: "模型服务高负载，已启用自动兜底",
+      description: "本次自动生成遇到上游模型服务不可用（503/UNAVAILABLE），系统已沿用上一期结构并保持评分稳定，等待下一轮任务自动刷新。",
+      verification: "single",
+      timestamp: "AUTO",
+      significance: "保障日报流水线可用性，避免因上游拥堵导致中断。"
     }
   ],
   scoreTrend: [
-    {
-      date: "04-08",
-      score: 56
-    },
     {
       date: "04-09",
       score: 64
@@ -223,6 +179,10 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "04-12",
+      score: 72
+    },
+    {
+      date: "04-13",
       score: 72,
       active: true
     }
@@ -231,47 +191,46 @@ export const DATA_ZH: DashboardData = {
     {
       title: "军事行动",
       icon: "Military",
-      tag: "紧张升级",
-      tagColor: "red",
+      tag: "Service Fallback",
+      tagColor: "orange",
       points: [
-        "伊朗在霍尔木兹海峡举行大规模演习，展示导弹能力，但未与美方直接交火。",
-        "美方谴责，并重申区域安全承诺。"
+        "模型暂不可用，当前卡片内容沿用上一期结构。"
       ]
     },
     {
       title: "航运 / 霍尔木兹",
       icon: "Shipping",
-      tag: "风险升高",
+      tag: "Service Fallback",
       tagColor: "orange",
       points: [
-        "演习导致航运公司发布警告，但霍尔木兹海峡商业航运未报告大规模中断，流量略受影响但基本维持。"
+        "模型暂不可用，当前卡片内容沿用上一期结构。"
       ]
     },
     {
       title: "能源市场",
       icon: "Energy",
-      tag: "油价飙升",
-      tagColor: "red",
+      tag: "Service Fallback",
+      tagColor: "orange",
       points: [
-        "受地区紧张局势影响，国际油价显著上涨，WTI原油突破100美元/桶，市场担忧情绪加剧。"
+        "模型暂不可用，当前卡片内容沿用上一期结构。"
       ]
     },
     {
       title: "领导层信号",
       icon: "Leadership",
-      tag: "立场强硬",
-      tagColor: "red",
+      tag: "Service Fallback",
+      tagColor: "orange",
       points: [
-        "美伊双方均无降级谈判迹象，伊朗强硬展示军事实力，美国重申立场，联合国呼吁克制。"
+        "模型暂不可用，当前卡片内容沿用上一期结构。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "伊朗寻求巩固地区影响力与美国维持地区霸权及盟友安全之间的根本矛盾。"
+      "上游模型服务可用性波动导致当期生成降级。"
     ],
     military: [
-      "伊朗军事行动日益频繁与美国及其盟友在波斯湾的军事存在之间的潜在冲突风险。"
+      "风险分数暂沿用上一期，等待下一次自动刷新。"
     ]
   },
   webSources: [],
@@ -279,49 +238,47 @@ export const DATA_ZH: DashboardData = {
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-04-12",
-  version: "v2.20",
+  date: "2026-04-13",
+  version: "v2.21",
   riskScore: 72,
-  prevRiskScore: 60,
-  investmentSignal: "Geopolitical risks are rising, leading to increased volatility in energy-related assets. Close monitoring of developments in the Strait of Hormuz is advised.",
-  keyChange: "Regional military tensions have escalated, the energy market is impacted by a significant rise in oil prices, and shipping risk advisories have increased.",
+  prevRiskScore: 72,
+  investmentSignal: "Model congested; keep neutral risk exposure.",
+  keyChange: "Upstream model unavailable; baseline carried over.",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D43",
+      value: "D44",
       unit: "Since Feb 28",
-      color: "grey"
+      color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "↑12",
+      value: "Flat",
       unit: "vs Prev",
-      color: "red"
+      color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $105 / Brent $102",
+      value: "WTI $101 / Brent $100",
       unit: "USD/bbl",
-      color: "red"
+      color: "#ff4136"
     },
     {
       label: "Hormuz",
-      value: "Medium Risk",
+      value: "-",
       unit: "<10% of normal",
-      color: "orange"
+      color: "#ffdc00"
     }
   ],
   warPhase: {
-    level: "Regional Tension Escalating",
-    targetLevel: "Sustained Confrontation",
-    title: "Regional tensions escalating, conflict intensity remains high.",
-    subTitle: "Iranian military drills heighten Strait of Hormuz tensions, international oil prices rise.",
+    level: "Fallback mode",
+    targetLevel: "Await next run",
+    title: "Model overloaded; fallback output enabled",
+    subTitle: "Structure and score continuity preserved",
     points: [
-      "Iran conducts missile drills in the Strait of Hormuz, demonstrating military capabilities.",
-      "The US condemns Iran's actions but does not escalate direct military operations.",
-      "Oil prices rise due to geopolitical risks, shipping faces some impact."
+      "Next scheduled run will retry automatically."
     ],
-    note: "Frequent military activities by both sides, but the conflict has not spiraled out of control. The risk lies in miscalculation leading to escalation."
+    note: "Fallback output is for continuity only, not investment advice."
   },
   riskFactors: [
     {
@@ -329,100 +286,58 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Assesses the intensity and scope of direct military conflict and threats.",
-      status: "FAST",
-      sourceVerification: "confirmed"
+      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
+      status: "SLOW",
+      sourceVerification: "unverified"
     },
     {
       name: "Hormuz Disruption",
       score: 3,
-      prev: 4,
+      prev: 3,
       weight: 0.2,
-      description: "Assesses the degree of disruption or threat to shipping in the Strait of Hormuz.",
-      status: "FAST",
-      sourceVerification: "confirmed",
-      change: "down"
+      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
+      status: "SLOW",
+      sourceVerification: "unverified"
     },
     {
       name: "Energy Shock",
       score: 4,
-      prev: 3,
+      prev: 4,
       weight: 0.2,
-      description: "Assesses the impact of the conflict on global energy supply and prices.",
-      status: "FAST",
-      sourceVerification: "confirmed",
-      change: "up"
+      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
+      status: "SLOW",
+      sourceVerification: "unverified"
     },
     {
       name: "Great Power Involvement",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Assesses the extent of military or political intervention by external major powers (e.g., US, China, Russia).",
-      status: "FAST",
-      sourceVerification: "confirmed"
+      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
+      status: "SLOW",
+      sourceVerification: "unverified"
     },
     {
       name: "De-escalation Probability",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Assesses the likelihood of parties seeking diplomatic solutions or de-escalatory gestures.",
-      status: "FAST",
-      sourceVerification: "confirmed"
+      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
+      status: "SLOW",
+      sourceVerification: "unverified"
     }
   ],
   events: [
     {
-      id: "e001",
-      title: "Iranian Revolutionary Guard Conducts Missile Drills in Strait of Hormuz",
-      description: "Iran's Islamic Revolutionary Guard Corps announced large-scale missile and naval exercises in the Strait of Hormuz, aimed at showcasing its regional defense capabilities.",
-      verification: "confirmed",
-      timestamp: "2026-04-12T10:00:00Z",
-      significance: "Military Action, Increased Regional Tension",
-      highlight: true,
-      critical: true
-    },
-    {
-      id: "e002",
-      title: "US Condemns Iran's 'Provocative Actions' in Strait of Hormuz",
-      description: "The US Central Command issued a statement condemning the Iranian Revolutionary Guard's military exercises in the Strait of Hormuz as 'provocative' and 'destabilizing to the region'.",
-      verification: "confirmed",
-      timestamp: "2026-04-12T14:30:00Z",
-      significance: "Diplomatic Stance, Increased Standoff",
-      highlight: true
-    },
-    {
-      id: "e003",
-      title: "Oil Prices Rise Due to Middle East Tensions",
-      description: "WTI crude oil prices rose to $104.91/barrel, and Brent crude reached $102.20/barrel, as markets worried about supply disruptions.",
-      verification: "confirmed",
-      timestamp: "2026-04-13T03:18:43Z",
-      significance: "Energy Market Impact",
-      highlight: true
-    },
-    {
-      id: "e004",
-      title: "Some Shipping Companies Issue Safety Warnings for Strait of Hormuz",
-      description: "In light of Iranian military exercises, some international shipping companies advised vessels to exercise increased vigilance when transiting the Strait of Hormuz, but no widespread diversions or halts were reported.",
-      verification: "confirmed",
-      timestamp: "2026-04-12T16:00:00Z",
-      significance: "Shipping Safety"
-    },
-    {
-      id: "e005",
-      title: "UN Calls for Restraint from US and Iran",
-      description: "A UN envoy issued a statement on the Middle East situation, urging both the United States and Iran to exercise maximum restraint and avoid any actions that could escalate regional tensions.",
-      verification: "confirmed",
-      timestamp: "2026-04-12T18:00:00Z",
-      significance: "International Appeal, De-escalation Efforts"
+      id: "EVT-FALLBACK-01",
+      title: "Model overload fallback activated",
+      description: "Upstream model returned 503/UNAVAILABLE. The pipeline falls back to prior-day structure and stable scores until the next run.",
+      verification: "single",
+      timestamp: "AUTO",
+      significance: "Keeps the daily pipeline available during transient upstream outages."
     }
   ],
   scoreTrend: [
-    {
-      date: "04-08",
-      score: 56
-    },
     {
       date: "04-09",
       score: 64
@@ -437,6 +352,10 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "04-12",
+      score: 72
+    },
+    {
+      date: "04-13",
       score: 72,
       active: true
     }
@@ -445,47 +364,46 @@ export const DATA_EN: DashboardData = {
     {
       title: "Military Action",
       icon: "Military",
-      tag: "Escalating Tension",
-      tagColor: "red",
+      tag: "Service Fallback",
+      tagColor: "orange",
       points: [
-        "Iran conducted large-scale exercises in the Strait of Hormuz, demonstrating missile capabilities, but without direct engagement with US forces.",
-        "The US condemned the actions and reaffirmed its regional security commitments."
+        "Model temporarily unavailable; cards keep prior-day structure."
       ]
     },
     {
       title: "Shipping / Hormuz",
       icon: "Shipping",
-      tag: "Elevated Risk",
+      tag: "Service Fallback",
       tagColor: "orange",
       points: [
-        "The drills led to warnings from shipping companies, but commercial shipping in the Strait of Hormuz did not report widespread interruptions, with traffic slightly affected but largely maintained."
+        "Model temporarily unavailable; cards keep prior-day structure."
       ]
     },
     {
       title: "Energy Market",
       icon: "Energy",
-      tag: "Oil Price Surge",
-      tagColor: "red",
+      tag: "Service Fallback",
+      tagColor: "orange",
       points: [
-        "International oil prices significantly increased due to regional tensions, with WTI crude breaking above $100/barrel, exacerbating market concerns."
+        "Model temporarily unavailable; cards keep prior-day structure."
       ]
     },
     {
       title: "Leadership Signals",
       icon: "Leadership",
-      tag: "Firm Stance",
-      tagColor: "red",
+      tag: "Service Fallback",
+      tagColor: "orange",
       points: [
-        "Neither the US nor Iran showed signs of de-escalation or negotiation. Iran forcefully displayed military capabilities, the US reiterated its stance, and the UN called for restraint."
+        "Model temporarily unavailable; cards keep prior-day structure."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "The fundamental contradiction between Iran's pursuit of consolidating regional influence and the US's objective to maintain regional hegemony and allied security."
+      "Upstream model availability fluctuation forced degraded generation."
     ],
     military: [
-      "The potential for conflict stemming from Iran's increasingly frequent military actions and the persistent military presence of the US and its allies in the Persian Gulf."
+      "Risk scores are carried over until the next refresh."
     ]
   },
   webSources: [],
@@ -497,7 +415,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "4月12日节点",
+    node406: "4月13日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -531,22 +449,22 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.20 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.21 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 72（↑12）：地区军事紧张升级，能源市场受冲击油价显著上涨，航运风险提示增加。",
-    bannerWarning: "地缘政治风险上升，能源相关资产波动加剧，需密切关注霍尔木兹海峡动态。",
-    deescalationIntent: "伊朗寻求巩固地区影响力与美国维持地区霸权及盟友安全之间的根本矛盾。",
-    structuralRisk: "评估霍尔木兹海峡航运受阻或受威胁的程度。",
-    contradictionNote: "伊朗寻求巩固地区影响力与美国维持地区霸权及盟友安全之间的根本矛盾。；伊朗军事行动日益频繁与美国及其盟友在波斯湾的军事存在之间的潜在冲突风险。",
+    bannerSignal: "综合评分 72（持平）：上游模型暂不可用，本期沿用上一期基线。",
+    bannerWarning: "模型服务拥堵，维持风险中性敞口。",
+    deescalationIntent: "上游模型服务可用性波动导致当期生成降级。",
+    structuralRisk: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
+    contradictionNote: "上游模型服务可用性波动导致当期生成降级。；风险分数暂沿用上一期，等待下一次自动刷新。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
     clickExpand: "点击展开详情",
     conflictName: "美伊冲突",
-    dayCount: "第43天",
+    dayCount: "第44天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -554,7 +472,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Apr 12 Node",
+    node406: "Apr 13 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -588,22 +506,22 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.20 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.21 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 72 (↑12): Regional military tensions have escalated, the energy market is impacted by a significant rise in oil prices, and shipping risk advisories …",
-    bannerWarning: "Geopolitical risks are rising, leading to increased volatility in energy-related assets. Close monitoring of developmen…",
-    deescalationIntent: "The fundamental contradiction between Iran's pursuit of consolidating regional …",
-    structuralRisk: "Assesses the degree of disruption or threat to shipping in the Strait of Hormuz.",
-    contradictionNote: "The fundamental contradiction between Iran's pursuit of consolidating regional influence and the US's objective to maintain regional hegemony and allied securi…",
+    bannerSignal: "Composite 72 (Flat): Upstream model unavailable; baseline carried over.",
+    bannerWarning: "Model congested; keep neutral risk exposure.",
+    deescalationIntent: "Upstream model availability fluctuation forced degraded generation.",
+    structuralRisk: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
+    contradictionNote: "Upstream model availability fluctuation forced degraded generation.; Risk scores are carried over until the next refresh.",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
     clickExpand: "Click to expand details",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 43",
+    dayCount: "Day 44",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
