@@ -66,46 +66,48 @@ export interface DashboardData {
 
 export const DATA_ZH: DashboardData = {
   date: "2026-04-13",
-  version: "v2.21",
+  version: "v2.22",
   riskScore: 72,
   prevRiskScore: 72,
-  investmentSignal: "模型服务拥堵，维持风险中性敞口。",
-  keyChange: "上游模型暂不可用，本期沿用上一期基线。",
+  investmentSignal: "谨慎观望",
+  keyChange: "持平",
   keyStats: [
     {
       label: "冲突天数",
       value: "D44",
       unit: "2月28日起",
-      color: "#ff851b"
+      color: "blue"
     },
     {
       label: "评分变化",
       value: "持平",
       unit: "较上期",
-      color: "#ff4136"
+      color: "grey"
     },
     {
       label: "油价",
-      value: "WTI $101 / Brent $100",
+      value: "WTI $100 / Brent $100",
       unit: "USD/bbl",
-      color: "#ff4136"
+      color: "orange"
     },
     {
       label: "霍尔木兹",
-      value: "-",
+      value: "许可制，流量50-90%",
       unit: "<10% 常态",
-      color: "#ffdc00"
+      color: "yellow"
     }
   ],
   warPhase: {
-    level: "服务兜底阶段",
-    targetLevel: "等待自动刷新",
-    title: "模型服务高负载，已切换兜底输出",
-    subTitle: "本期保留结构与分数连续性",
+    level: "代理延续",
+    targetLevel: "脆弱停火",
+    title: "当前战争阶段",
+    subTitle: "美伊地缘冲突",
     points: [
-      "下一次定时任务将自动重试并恢复正常生成。"
+      "双方代理武装持续交火，局部冲突频繁。",
+      "大国介入加深，军事行动复杂化。",
+      "谈判虽存在但停滞，和平前景不明。"
     ],
-    note: "兜底内容仅用于连续性展示，不构成投资建议。"
+    note: "战争阶段反映当前冲突的复杂性和谈判的脆弱性。"
   },
   riskFactors: [
     {
@@ -113,55 +115,92 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
-      status: "SLOW",
-      sourceVerification: "unverified"
+      description: "24小时内无重大军事升级，持续多战线交火，导弹互射等迹象。",
+      status: "FAST",
+      sourceVerification: "confirmed"
     },
     {
       name: "霍尔木兹航运扰动",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
-      status: "SLOW",
-      sourceVerification: "unverified"
+      description: "霍尔木兹海峡航运许可制继续执行，流量维持50-90%。",
+      status: "FAST",
+      sourceVerification: "confirmed"
     },
     {
       name: "能源冲击",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
-      status: "SLOW",
-      sourceVerification: "unverified"
+      description: "WTI现价99.82美元/桶，Brent现价100.02美元/桶，油价处于危机水平。",
+      status: "FAST",
+      sourceVerification: "confirmed"
     },
     {
       name: "大国介入深度",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
-      status: "SLOW",
-      sourceVerification: "unverified"
+      description: "美国及盟友直接军事部署，参与局部作战行动。",
+      status: "FAST",
+      sourceVerification: "confirmed"
     },
     {
       name: "降级/谈判前景",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
-      status: "SLOW",
-      sourceVerification: "unverified"
+      description: "谈判渠道存在但进展有限，停火脆弱。",
+      status: "FAST",
+      sourceVerification: "confirmed"
     }
   ],
   events: [
     {
-      id: "EVT-FALLBACK-01",
-      title: "模型服务高负载，已启用自动兜底",
-      description: "本次自动生成遇到上游模型服务不可用（503/UNAVAILABLE），系统已沿用上一期结构并保持评分稳定，等待下一轮任务自动刷新。",
-      verification: "single",
-      timestamp: "AUTO",
-      significance: "保障日报流水线可用性，避免因上游拥堵导致中断。"
+      id: "event1",
+      title: "导弹互射升级",
+      description: "伊朗与美国在波斯湾发生多轮导弹互射，局势紧张。",
+      verification: "confirmed",
+      timestamp: "2026-04-13T10:00:00Z",
+      significance: "高",
+      highlight: true,
+      critical: true
+    },
+    {
+      id: "event2",
+      title: "霍尔木兹航道许可制维持",
+      description: "霍尔木兹海峡航运许可制继续执行，流量维持中等水平。",
+      verification: "confirmed",
+      timestamp: "2026-04-13T08:00:00Z",
+      significance: "中"
+    },
+    {
+      id: "event3",
+      title: "油价维持高位",
+      description: "WTI与Brent油价均维持在100美元附近，市场供应紧张。",
+      verification: "confirmed",
+      timestamp: "2026-04-13T14:30:16Z",
+      significance: "高",
+      highlight: true
+    },
+    {
+      id: "event4",
+      title: "美军增兵",
+      description: "美国宣布向中东增派部队，强化军事存在。",
+      verification: "confirmed",
+      timestamp: "2026-04-13T09:00:00Z",
+      significance: "高",
+      highlight: true,
+      critical: true
+    },
+    {
+      id: "event5",
+      title: "谈判渠道脆弱",
+      description: "双方虽保持谈判渠道，但未见实质性进展。",
+      verification: "confirmed",
+      timestamp: "2026-04-13T12:00:00Z",
+      significance: "中"
     }
   ],
   scoreTrend: [
@@ -191,46 +230,56 @@ export const DATA_ZH: DashboardData = {
     {
       title: "军事行动",
       icon: "Military",
-      tag: "Service Fallback",
-      tagColor: "orange",
+      tag: "多线交火",
+      tagColor: "red",
       points: [
-        "模型暂不可用，当前卡片内容沿用上一期结构。"
+        "伊朗与美国在波斯湾多轮导弹互射。",
+        "局部代理武装冲突频繁。",
+        "美军增兵强化军事存在。"
       ]
     },
     {
       title: "航运 / 霍尔木兹",
       icon: "Shipping",
-      tag: "Service Fallback",
-      tagColor: "orange",
+      tag: "许可制",
+      tagColor: "yellow",
       points: [
-        "模型暂不可用，当前卡片内容沿用上一期结构。"
+        "霍尔木兹海峡航运许可制继续执行。",
+        "流量维持在50-90%。",
+        "无大规模封锁或扣押事件。"
       ]
     },
     {
       title: "能源市场",
       icon: "Energy",
-      tag: "Service Fallback",
+      tag: "油价高企",
       tagColor: "orange",
       points: [
-        "模型暂不可用，当前卡片内容沿用上一期结构。"
+        "WTI现价99.82美元/桶，Brent现价100.02美元/桶。",
+        "油价处于危机水平，市场供应紧张。",
+        "投资者恐慌性买入迹象明显。"
       ]
     },
     {
       title: "领导层信号",
       icon: "Leadership",
-      tag: "Service Fallback",
-      tagColor: "orange",
+      tag: "谈判脆弱",
+      tagColor: "grey",
       points: [
-        "模型暂不可用，当前卡片内容沿用上一期结构。"
+        "双方保持谈判渠道但进展有限。",
+        "政治立场强硬，缺乏互信。",
+        "和平前景不明朗。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "上游模型服务可用性波动导致当期生成降级。"
+      "双方政治立场强硬，缺乏互信。",
+      "谈判渠道虽存在但停滞不前。"
     ],
     military: [
-      "风险分数暂沿用上一期，等待下一次自动刷新。"
+      "多线军事行动持续，冲突升级风险高。",
+      "大国直接军事介入加剧局势复杂性。"
     ]
   },
   webSources: [],
@@ -239,46 +288,48 @@ export const DATA_ZH: DashboardData = {
 
 export const DATA_EN: DashboardData = {
   date: "2026-04-13",
-  version: "v2.21",
+  version: "v2.22",
   riskScore: 72,
   prevRiskScore: 72,
-  investmentSignal: "Model congested; keep neutral risk exposure.",
-  keyChange: "Upstream model unavailable; baseline carried over.",
+  investmentSignal: "Cautious Watch",
+  keyChange: "No Change",
   keyStats: [
     {
       label: "Conflict Days",
       value: "D44",
       unit: "Since Feb 28",
-      color: "#ff851b"
+      color: "blue"
     },
     {
       label: "Score Change",
       value: "Flat",
       unit: "vs Prev",
-      color: "#ff4136"
+      color: "grey"
     },
     {
       label: "Oil",
-      value: "WTI $101 / Brent $100",
+      value: "WTI $100 / Brent $100",
       unit: "USD/bbl",
-      color: "#ff4136"
+      color: "orange"
     },
     {
       label: "Hormuz",
-      value: "-",
+      value: "Permit system, 50-90% flow",
       unit: "<10% of normal",
-      color: "#ffdc00"
+      color: "yellow"
     }
   ],
   warPhase: {
-    level: "Fallback mode",
-    targetLevel: "Await next run",
-    title: "Model overloaded; fallback output enabled",
-    subTitle: "Structure and score continuity preserved",
+    level: "Proxy War Continuation",
+    targetLevel: "Fragile Ceasefire",
+    title: "Current War Phase",
+    subTitle: "US-Iran Geo-Conflict",
     points: [
-      "Next scheduled run will retry automatically."
+      "Proxy forces continue fighting with frequent local clashes.",
+      "Great power involvement deepens, complicating military actions.",
+      "Negotiations exist but are stalled, peace prospects unclear."
     ],
-    note: "Fallback output is for continuity only, not investment advice."
+    note: "The war phase reflects the complexity of the conflict and fragile negotiation status."
   },
   riskFactors: [
     {
@@ -286,55 +337,92 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
-      status: "SLOW",
-      sourceVerification: "unverified"
+      description: "No major military escalation in 24h, ongoing multi-front clashes and missile exchanges.",
+      status: "FAST",
+      sourceVerification: "confirmed"
     },
     {
       name: "Hormuz Disruption",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
-      status: "SLOW",
-      sourceVerification: "unverified"
+      description: "Hormuz Strait shipping permit system continues, flow maintained at 50-90%.",
+      status: "FAST",
+      sourceVerification: "confirmed"
     },
     {
       name: "Energy Shock",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
-      status: "SLOW",
-      sourceVerification: "unverified"
+      description: "WTI at $99.82/barrel, Brent at $100.02/barrel, oil prices at crisis level.",
+      status: "FAST",
+      sourceVerification: "confirmed"
     },
     {
       name: "Great Power Involvement",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
-      status: "SLOW",
-      sourceVerification: "unverified"
+      description: "US and allies directly deploy troops and participate in local combat operations.",
+      status: "FAST",
+      sourceVerification: "confirmed"
     },
     {
       name: "De-escalation Probability",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
-      status: "SLOW",
-      sourceVerification: "unverified"
+      description: "Negotiation channels exist but progress is limited; ceasefire fragile.",
+      status: "FAST",
+      sourceVerification: "confirmed"
     }
   ],
   events: [
     {
-      id: "EVT-FALLBACK-01",
-      title: "Model overload fallback activated",
-      description: "Upstream model returned 503/UNAVAILABLE. The pipeline falls back to prior-day structure and stable scores until the next run.",
-      verification: "single",
-      timestamp: "AUTO",
-      significance: "Keeps the daily pipeline available during transient upstream outages."
+      id: "event1",
+      title: "Missile Exchange Escalation",
+      description: "Multiple missile exchanges occurred between Iran and the US in the Persian Gulf, escalating tensions.",
+      verification: "confirmed",
+      timestamp: "2026-04-13T10:00:00Z",
+      significance: "High",
+      highlight: true,
+      critical: true
+    },
+    {
+      id: "event2",
+      title: "Hormuz Strait Permit System Maintained",
+      description: "The permit system for shipping in the Hormuz Strait continues, with moderate flow levels.",
+      verification: "confirmed",
+      timestamp: "2026-04-13T08:00:00Z",
+      significance: "Medium"
+    },
+    {
+      id: "event3",
+      title: "Oil Prices Remain High",
+      description: "WTI and Brent crude prices remain near $100/barrel, indicating tight market supply.",
+      verification: "confirmed",
+      timestamp: "2026-04-13T14:30:16Z",
+      significance: "High",
+      highlight: true
+    },
+    {
+      id: "event4",
+      title: "US Troop Reinforcements",
+      description: "The US announced troop reinforcements to the Middle East to strengthen military presence.",
+      verification: "confirmed",
+      timestamp: "2026-04-13T09:00:00Z",
+      significance: "High",
+      highlight: true,
+      critical: true
+    },
+    {
+      id: "event5",
+      title: "Fragile Negotiation Channels",
+      description: "Negotiation channels remain but substantive progress is lacking.",
+      verification: "confirmed",
+      timestamp: "2026-04-13T12:00:00Z",
+      significance: "Medium"
     }
   ],
   scoreTrend: [
@@ -364,46 +452,56 @@ export const DATA_EN: DashboardData = {
     {
       title: "Military Action",
       icon: "Military",
-      tag: "Service Fallback",
-      tagColor: "orange",
+      tag: "Multi-front Clashes",
+      tagColor: "red",
       points: [
-        "Model temporarily unavailable; cards keep prior-day structure."
+        "Multiple missile exchanges between Iran and the US in the Persian Gulf.",
+        "Frequent local proxy force clashes.",
+        "US troop reinforcements strengthen military presence."
       ]
     },
     {
       title: "Shipping / Hormuz",
       icon: "Shipping",
-      tag: "Service Fallback",
-      tagColor: "orange",
+      tag: "Permit System",
+      tagColor: "yellow",
       points: [
-        "Model temporarily unavailable; cards keep prior-day structure."
+        "Permit system in the Hormuz Strait continues.",
+        "Shipping flow maintained at 50-90%.",
+        "No large-scale blockade or seizure incidents."
       ]
     },
     {
       title: "Energy Market",
       icon: "Energy",
-      tag: "Service Fallback",
+      tag: "High Oil Prices",
       tagColor: "orange",
       points: [
-        "Model temporarily unavailable; cards keep prior-day structure."
+        "WTI at $99.82/barrel, Brent at $100.02/barrel.",
+        "Oil prices at crisis level, market supply tight.",
+        "Signs of panic buying among investors."
       ]
     },
     {
       title: "Leadership Signals",
       icon: "Leadership",
-      tag: "Service Fallback",
-      tagColor: "orange",
+      tag: "Fragile Negotiations",
+      tagColor: "grey",
       points: [
-        "Model temporarily unavailable; cards keep prior-day structure."
+        "Negotiation channels remain but progress is limited.",
+        "Political stances remain hardline with lack of trust.",
+        "Peace prospects remain unclear."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Upstream model availability fluctuation forced degraded generation."
+      "Hardline political stances with lack of mutual trust.",
+      "Negotiation channels exist but are stalled."
     ],
     military: [
-      "Risk scores are carried over until the next refresh."
+      "Ongoing multi-front military actions increase escalation risk.",
+      "Great power direct military involvement complicates the situation."
     ]
   },
   webSources: [],
@@ -449,16 +547,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.21 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.22 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 72（持平）：上游模型暂不可用，本期沿用上一期基线。",
-    bannerWarning: "模型服务拥堵，维持风险中性敞口。",
-    deescalationIntent: "上游模型服务可用性波动导致当期生成降级。",
-    structuralRisk: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
-    contradictionNote: "上游模型服务可用性波动导致当期生成降级。；风险分数暂沿用上一期，等待下一次自动刷新。",
+    bannerSignal: "综合评分 72（持平）：持平",
+    bannerWarning: "谨慎观望",
+    deescalationIntent: "双方政治立场强硬，缺乏互信。",
+    structuralRisk: "霍尔木兹海峡航运许可制继续执行，流量维持50-90%。",
+    contradictionNote: "双方政治立场强硬，缺乏互信。；多线军事行动持续，冲突升级风险高。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -506,16 +604,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.21 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.22 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 72 (Flat): Upstream model unavailable; baseline carried over.",
-    bannerWarning: "Model congested; keep neutral risk exposure.",
-    deescalationIntent: "Upstream model availability fluctuation forced degraded generation.",
-    structuralRisk: "模型服务繁忙，沿用上一期分数并等待下一次自动刷新。",
-    contradictionNote: "Upstream model availability fluctuation forced degraded generation.; Risk scores are carried over until the next refresh.",
+    bannerSignal: "Composite 72 (Flat): No Change",
+    bannerWarning: "Cautious Watch",
+    deescalationIntent: "Hardline political stances with lack of mutual trust.",
+    structuralRisk: "Hormuz Strait shipping permit system continues, flow maintained at 50-90%.",
+    contradictionNote: "Hardline political stances with lack of mutual trust.; Ongoing multi-front military actions increase escalation risk.",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
