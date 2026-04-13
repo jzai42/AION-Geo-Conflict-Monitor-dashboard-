@@ -2,15 +2,15 @@
   "version": 2,
   "latest": {
     "date": "2026-04-13",
-    "appVersion": "v2.22",
-    "riskScore": 72,
+    "appVersion": "v2.23",
+    "riskScore": 80,
     "prevRiskScore": 72,
     "conflictDay": 44,
     "factorScores": [
-      4,
+      5,
       3,
       4,
-      4,
+      5,
       3
     ],
     "oilPrice": {
@@ -50,7 +50,7 @@
     },
     {
       "date": "2026-04-13",
-      "score": 72
+      "score": 80
     }
   ]
 }

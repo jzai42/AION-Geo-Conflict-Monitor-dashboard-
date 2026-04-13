@@ -65,144 +65,191 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
+  version: "v2.23",
   date: "2026-04-13",
-  version: "v2.22",
-  riskScore: 72,
-  prevRiskScore: 72,
-  investmentSignal: "谨慎观望",
-  keyChange: "持平",
+  riskScore: 80,
   keyStats: [
     {
       label: "冲突天数",
       value: "D44",
       unit: "2月28日起",
-      color: "blue"
+      color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "持平",
+      value: "↑8",
       unit: "较上期",
-      color: "grey"
+      color: "#ff4136"
     },
     {
       label: "油价",
       value: "WTI $100 / Brent $100",
       unit: "USD/bbl",
-      color: "orange"
+      color: "#ff4136"
     },
     {
       label: "霍尔木兹",
-      value: "许可制，流量50-90%",
+      value: "航运中断",
       unit: "<10% 常态",
-      color: "yellow"
+      color: "#ffdc00"
     }
   ],
-  warPhase: {
-    level: "代理延续",
-    targetLevel: "脆弱停火",
-    title: "当前战争阶段",
-    subTitle: "美伊地缘冲突",
-    points: [
-      "双方代理武装持续交火，局部冲突频繁。",
-      "大国介入加深，军事行动复杂化。",
-      "谈判虽存在但停滞，和平前景不明。"
-    ],
-    note: "战争阶段反映当前冲突的复杂性和谈判的脆弱性。"
-  },
   riskFactors: [
     {
       name: "军事升级烈度",
-      score: 4,
+      score: 5,
       prev: 4,
       weight: 0.2,
-      description: "24小时内无重大军事升级，持续多战线交火，导弹互射等迹象。",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "up"
     },
     {
       name: "霍尔木兹航运扰动",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "霍尔木兹海峡航运许可制继续执行，流量维持50-90%。",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "up"
     },
     {
       name: "能源冲击",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "WTI现价99.82美元/桶，Brent现价100.02美元/桶，油价处于危机水平。",
+      description: "",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "大国介入深度",
-      score: 4,
+      score: 5,
       prev: 4,
       weight: 0.2,
-      description: "美国及盟友直接军事部署，参与局部作战行动。",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "up"
     },
     {
       name: "降级/谈判前景",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "谈判渠道存在但进展有限，停火脆弱。",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "up"
     }
   ],
   events: [
     {
-      id: "event1",
-      title: "导弹互射升级",
-      description: "伊朗与美国在波斯湾发生多轮导弹互射，局势紧张。",
+      id: "e67e5a7b",
+      title: "",
+      description: "美国中央司令部宣布，于美国东部时间13日10时起，正式开始对所有进出伊朗港口的海上交通实施封锁。",
       verification: "confirmed",
       timestamp: "2026-04-13T10:00:00Z",
-      significance: "高",
+      significance: "",
       highlight: true,
       critical: true
     },
     {
-      id: "event2",
-      title: "霍尔木兹航道许可制维持",
-      description: "霍尔木兹海峡航运许可制继续执行，流量维持中等水平。",
+      id: "f2d89c0a",
+      title: "",
+      description: "据多家航运媒体报道，在美国宣布封锁令后，霍尔木兹海峡的商业航运交通完全停滞。",
       verification: "confirmed",
-      timestamp: "2026-04-13T08:00:00Z",
-      significance: "中"
+      timestamp: "2026-04-13T08:30:00Z",
+      significance: ""
     },
     {
-      id: "event3",
-      title: "油价维持高位",
-      description: "WTI与Brent油价均维持在100美元附近，市场供应紧张。",
+      id: "b3c1a4e8",
+      title: "",
+      description: "由于美伊谈判破裂及美国宣布将进行海上封锁，国际油价大幅上涨，布伦特原油和WTI原油价格均突破每桶100美元。",
       verification: "confirmed",
-      timestamp: "2026-04-13T14:30:16Z",
-      significance: "高",
+      timestamp: "2026-04-13T02:00:00Z",
+      significance: "",
       highlight: true
     },
     {
-      id: "event4",
-      title: "美军增兵",
-      description: "美国宣布向中东增派部队，强化军事存在。",
+      id: "a9d0f1b3",
+      title: "",
+      description: "经过21小时的谈判，美伊在巴基斯坦伊斯兰堡的和平谈判未能达成协议，双方代表团均已离开。",
       verification: "confirmed",
-      timestamp: "2026-04-13T09:00:00Z",
-      significance: "高",
-      highlight: true,
-      critical: true
+      timestamp: "2026-04-12T21:00:00Z",
+      significance: ""
     },
     {
-      id: "event5",
-      title: "谈判渠道脆弱",
-      description: "双方虽保持谈判渠道，但未见实质性进展。",
+      id: "c5e4a8f9",
+      title: "",
+      description: "英国首相表示，英国不支持美国对伊朗港口实施的封锁，并强调将致力于通过外交手段确保霍尔木兹海峡的航行自由。",
       verification: "confirmed",
       timestamp: "2026-04-13T12:00:00Z",
-      significance: "中"
+      significance: ""
     }
   ],
+  warPhase: {
+    level: "直接对抗/海上封锁",
+    targetLevel: "全面战争",
+    title: "美伊地缘风险监测",
+    subTitle: "基于公开报道综合研判",
+    points: [
+      "美伊谈判彻底破裂，外交努力失败。",
+      "美国启动对伊朗港口的全面海军封锁，标志着冲突进入直接军事对抗阶段。",
+      "伊朗威胁反制，区域战争风险飙升至顶点。"
+    ],
+    note: "监测用途，不构成投资建议。"
+  },
+  situations: [
+    {
+      title: "军事行动",
+      icon: "Military",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "详见风险因子。"
+      ]
+    },
+    {
+      title: "航运 / 霍尔木兹",
+      icon: "Shipping",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "详见风险因子。"
+      ]
+    },
+    {
+      title: "能源市场",
+      icon: "Energy",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "详见风险因子。"
+      ]
+    },
+    {
+      title: "领导层信号",
+      icon: "Leadership",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "详见风险因子。"
+      ]
+    }
+  ],
+  coreContradiction: {
+    political: [
+      "美国坚持伊朗必须彻底放弃核计划并停止支持地区代理人，以此作为解除制裁和结束冲突的前提。",
+      "伊朗视其核能力和地区影响力为国家安全与主权的基石，拒绝在美国的军事胁迫下做出根本性让步。"
+    ],
+    military: [
+      "美国寻求通过“极限压力”，包括军事封锁，迫使伊朗屈服，同时试图避免陷入大规模地面战争。",
+      "伊朗则利用其在霍尔木兹海峡的地理优势，通过威胁中断全球能源供应来反制美国，形成非对称威慑。"
+    ]
+  },
   scoreTrend: [
     {
       date: "04-09",
@@ -222,209 +269,214 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "04-13",
-      score: 72,
+      score: 80,
       active: true
     }
   ],
-  situations: [
-    {
-      title: "军事行动",
-      icon: "Military",
-      tag: "多线交火",
-      tagColor: "red",
-      points: [
-        "伊朗与美国在波斯湾多轮导弹互射。",
-        "局部代理武装冲突频繁。",
-        "美军增兵强化军事存在。"
-      ]
-    },
-    {
-      title: "航运 / 霍尔木兹",
-      icon: "Shipping",
-      tag: "许可制",
-      tagColor: "yellow",
-      points: [
-        "霍尔木兹海峡航运许可制继续执行。",
-        "流量维持在50-90%。",
-        "无大规模封锁或扣押事件。"
-      ]
-    },
-    {
-      title: "能源市场",
-      icon: "Energy",
-      tag: "油价高企",
-      tagColor: "orange",
-      points: [
-        "WTI现价99.82美元/桶，Brent现价100.02美元/桶。",
-        "油价处于危机水平，市场供应紧张。",
-        "投资者恐慌性买入迹象明显。"
-      ]
-    },
-    {
-      title: "领导层信号",
-      icon: "Leadership",
-      tag: "谈判脆弱",
-      tagColor: "grey",
-      points: [
-        "双方保持谈判渠道但进展有限。",
-        "政治立场强硬，缺乏互信。",
-        "和平前景不明朗。"
-      ]
-    }
-  ],
-  coreContradiction: {
-    political: [
-      "双方政治立场强硬，缺乏互信。",
-      "谈判渠道虽存在但停滞不前。"
-    ],
-    military: [
-      "多线军事行动持续，冲突升级风险高。",
-      "大国直接军事介入加剧局势复杂性。"
-    ]
-  },
+  keyChange: "冲突性质发生根本性转变：随着高级别谈判的戏剧性破裂，冲突已从有限交火和脆弱停火彻底转向直接的军事对抗。美国实施的海军封锁是一项战争行为，导致霍尔木兹海峡航运完全中断，将地区危机推向全面战争的边缘。",
+  investmentSignal: "市场进入极度避险（Extreme Risk-Off）模式。能源股短期或因油价飙升而受益，但全球经济衰退风险加剧将抑制长期需求。航空、海运及依赖进口能源的行业面临巨大成本压力。地缘政治风险溢价将主导所有资产类别，预计市场将出现剧烈波动。",
+  prevRiskScore: 72,
   webSources: [],
-  webSearchQueries: []
+  webSearchQueries: [
+    "US Iran conflict news April 13 2026",
+    "Iran military activity April 13 2026",
+    "Strait of Hormuz shipping status April 13 2026",
+    "oil price news US Iran tensions April 13 2026",
+    "US military deployment Middle East April 2026",
+    "Iran nuclear talks progress April 2026",
+    "美伊冲突最新消息 2026年4月13日",
+    "霍尔木兹海峡航运 2026年4月13日",
+    "国际油价新闻 2026年4月13日",
+    "美国伊朗外交谈判进展 2026年4月"
+  ]
 };
 
 export const DATA_EN: DashboardData = {
+  version: "v2.23",
   date: "2026-04-13",
-  version: "v2.22",
-  riskScore: 72,
-  prevRiskScore: 72,
-  investmentSignal: "Cautious Watch",
-  keyChange: "No Change",
+  riskScore: 80,
   keyStats: [
     {
       label: "Conflict Days",
       value: "D44",
       unit: "Since Feb 28",
-      color: "blue"
+      color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "Flat",
+      value: "↑8",
       unit: "vs Prev",
-      color: "grey"
+      color: "#ff4136"
     },
     {
       label: "Oil",
       value: "WTI $100 / Brent $100",
       unit: "USD/bbl",
-      color: "orange"
+      color: "#ff4136"
     },
     {
       label: "Hormuz",
-      value: "Permit system, 50-90% flow",
+      value: "Shipping Halted",
       unit: "<10% of normal",
-      color: "yellow"
+      color: "#ffdc00"
     }
   ],
-  warPhase: {
-    level: "Proxy War Continuation",
-    targetLevel: "Fragile Ceasefire",
-    title: "Current War Phase",
-    subTitle: "US-Iran Geo-Conflict",
-    points: [
-      "Proxy forces continue fighting with frequent local clashes.",
-      "Great power involvement deepens, complicating military actions.",
-      "Negotiations exist but are stalled, peace prospects unclear."
-    ],
-    note: "The war phase reflects the complexity of the conflict and fragile negotiation status."
-  },
   riskFactors: [
     {
       name: "Military Escalation Intensity",
-      score: 4,
+      score: 5,
       prev: 4,
       weight: 0.2,
-      description: "No major military escalation in 24h, ongoing multi-front clashes and missile exchanges.",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "up"
     },
     {
       name: "Hormuz Disruption",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Hormuz Strait shipping permit system continues, flow maintained at 50-90%.",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "up"
     },
     {
       name: "Energy Shock",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "WTI at $99.82/barrel, Brent at $100.02/barrel, oil prices at crisis level.",
+      description: "",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "Great Power Involvement",
-      score: 4,
+      score: 5,
       prev: 4,
       weight: 0.2,
-      description: "US and allies directly deploy troops and participate in local combat operations.",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "up"
     },
     {
       name: "De-escalation Probability",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Negotiation channels exist but progress is limited; ceasefire fragile.",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "up"
     }
   ],
   events: [
     {
-      id: "event1",
-      title: "Missile Exchange Escalation",
-      description: "Multiple missile exchanges occurred between Iran and the US in the Persian Gulf, escalating tensions.",
+      id: "e67e5a7b",
+      title: "",
+      description: "U.S. Central Command announced that the blockade of all maritime traffic to and from Iranian ports officially began at 10:00 AM ET.",
       verification: "confirmed",
       timestamp: "2026-04-13T10:00:00Z",
-      significance: "High",
+      significance: "",
       highlight: true,
       critical: true
     },
     {
-      id: "event2",
-      title: "Hormuz Strait Permit System Maintained",
-      description: "The permit system for shipping in the Hormuz Strait continues, with moderate flow levels.",
+      id: "f2d89c0a",
+      title: "",
+      description: "Following the US blockade announcement, multiple shipping news outlets reported a complete halt in commercial traffic through the Strait of Hormuz.",
       verification: "confirmed",
-      timestamp: "2026-04-13T08:00:00Z",
-      significance: "Medium"
+      timestamp: "2026-04-13T08:30:00Z",
+      significance: ""
     },
     {
-      id: "event3",
-      title: "Oil Prices Remain High",
-      description: "WTI and Brent crude prices remain near $100/barrel, indicating tight market supply.",
+      id: "b3c1a4e8",
+      title: "",
+      description: "International oil prices surged, with both Brent and WTI crude crossing the $100 per barrel mark, following the collapse of US-Iran talks and the US blockade announcement.",
       verification: "confirmed",
-      timestamp: "2026-04-13T14:30:16Z",
-      significance: "High",
+      timestamp: "2026-04-13T02:00:00Z",
+      significance: "",
       highlight: true
     },
     {
-      id: "event4",
-      title: "US Troop Reinforcements",
-      description: "The US announced troop reinforcements to the Middle East to strengthen military presence.",
+      id: "a9d0f1b3",
+      title: "",
+      description: "After 21 hours, peace talks between the US and Iran in Islamabad, Pakistan, ended without an agreement, with both delegations departing.",
       verification: "confirmed",
-      timestamp: "2026-04-13T09:00:00Z",
-      significance: "High",
-      highlight: true,
-      critical: true
+      timestamp: "2026-04-12T21:00:00Z",
+      significance: ""
     },
     {
-      id: "event5",
-      title: "Fragile Negotiation Channels",
-      description: "Negotiation channels remain but substantive progress is lacking.",
+      id: "c5e4a8f9",
+      title: "",
+      description: "The UK Prime Minister stated that Britain does not support the US blockade on Iranian ports, emphasizing a commitment to diplomatic means to ensure freedom of navigation in Hormuz.",
       verification: "confirmed",
       timestamp: "2026-04-13T12:00:00Z",
-      significance: "Medium"
+      significance: ""
     }
   ],
+  warPhase: {
+    level: "Direct Confrontation / Naval Blockade",
+    targetLevel: "Full-Scale War",
+    title: "US–Iran geo-risk snapshot",
+    subTitle: "Synthesized from public sources",
+    points: [
+      "US-Iran negotiations have collapsed, marking a failure of diplomatic efforts.",
+      "The US has initiated a full naval blockade of Iranian ports, shifting the conflict into a phase of direct military confrontation.",
+      "Iran threatens countermeasures, pushing the risk of a regional war to its peak."
+    ],
+    note: "For monitoring only; not investment advice."
+  },
+  situations: [
+    {
+      title: "Military Action",
+      icon: "Military",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "See risk factors."
+      ]
+    },
+    {
+      title: "Shipping / Hormuz",
+      icon: "Shipping",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "See risk factors."
+      ]
+    },
+    {
+      title: "Energy Market",
+      icon: "Energy",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "See risk factors."
+      ]
+    },
+    {
+      title: "Leadership Signals",
+      icon: "Leadership",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "See risk factors."
+      ]
+    }
+  ],
+  coreContradiction: {
+    political: [
+      "The U.S. insists that Iran must completely abandon its nuclear program and cease support for regional proxies as a precondition for lifting sanctions and ending the conflict.",
+      "Iran views its nuclear capabilities and regional influence as cornerstones of its national security and sovereignty, refusing to make fundamental concessions under U.S. military coercion."
+    ],
+    military: [
+      "The U.S. aims to use 'maximum pressure,' including a military blockade, to force Iran to capitulate, while trying to avoid a large-scale ground war.",
+      "Iran leverages its geographic advantage at the Strait of Hormuz to counter the U.S. by threatening to disrupt global energy supplies, creating an asymmetric deterrent."
+    ]
+  },
   scoreTrend: [
     {
       date: "04-09",
@@ -444,68 +496,26 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "04-13",
-      score: 72,
+      score: 80,
       active: true
     }
   ],
-  situations: [
-    {
-      title: "Military Action",
-      icon: "Military",
-      tag: "Multi-front Clashes",
-      tagColor: "red",
-      points: [
-        "Multiple missile exchanges between Iran and the US in the Persian Gulf.",
-        "Frequent local proxy force clashes.",
-        "US troop reinforcements strengthen military presence."
-      ]
-    },
-    {
-      title: "Shipping / Hormuz",
-      icon: "Shipping",
-      tag: "Permit System",
-      tagColor: "yellow",
-      points: [
-        "Permit system in the Hormuz Strait continues.",
-        "Shipping flow maintained at 50-90%.",
-        "No large-scale blockade or seizure incidents."
-      ]
-    },
-    {
-      title: "Energy Market",
-      icon: "Energy",
-      tag: "High Oil Prices",
-      tagColor: "orange",
-      points: [
-        "WTI at $99.82/barrel, Brent at $100.02/barrel.",
-        "Oil prices at crisis level, market supply tight.",
-        "Signs of panic buying among investors."
-      ]
-    },
-    {
-      title: "Leadership Signals",
-      icon: "Leadership",
-      tag: "Fragile Negotiations",
-      tagColor: "grey",
-      points: [
-        "Negotiation channels remain but progress is limited.",
-        "Political stances remain hardline with lack of trust.",
-        "Peace prospects remain unclear."
-      ]
-    }
-  ],
-  coreContradiction: {
-    political: [
-      "Hardline political stances with lack of mutual trust.",
-      "Negotiation channels exist but are stalled."
-    ],
-    military: [
-      "Ongoing multi-front military actions increase escalation risk.",
-      "Great power direct military involvement complicates the situation."
-    ]
-  },
+  keyChange: "A fundamental shift in the nature of the conflict: with the dramatic collapse of high-level negotiations, the conflict has moved decisively from limited exchanges and a fragile ceasefire to direct military confrontation. The U.S. naval blockade is an act of war that has halted shipping in the Strait of Hormuz, pushing the regional crisis to the brink of a full-scale war.",
+  investmentSignal: "The market has entered an Extreme Risk-Off mode. Energy stocks may benefit in the short term from soaring oil prices, but the heightened risk of a global recession will curb long-term demand. Aviation, shipping, and industries reliant on imported energy face immense cost pressures. The geopolitical risk premium will dominate all asset classes, and extreme market volatility is expected.",
+  prevRiskScore: 72,
   webSources: [],
-  webSearchQueries: []
+  webSearchQueries: [
+    "US Iran conflict news April 13 2026",
+    "Iran military activity April 13 2026",
+    "Strait of Hormuz shipping status April 13 2026",
+    "oil price news US Iran tensions April 13 2026",
+    "US military deployment Middle East April 2026",
+    "Iran nuclear talks progress April 2026",
+    "美伊冲突最新消息 2026年4月13日",
+    "霍尔木兹海峡航运 2026年4月13日",
+    "国际油价新闻 2026年4月13日",
+    "美国伊朗外交谈判进展 2026年4月"
+  ]
 };
 
 export const TRANSLATIONS = {
@@ -547,16 +557,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.22 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.23 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 72（持平）：持平",
-    bannerWarning: "谨慎观望",
-    deescalationIntent: "双方政治立场强硬，缺乏互信。",
-    structuralRisk: "霍尔木兹海峡航运许可制继续执行，流量维持50-90%。",
-    contradictionNote: "双方政治立场强硬，缺乏互信。；多线军事行动持续，冲突升级风险高。",
+    bannerSignal: "综合评分 80（↑8）：冲突性质发生根本性转变：随着高级别谈判的戏剧性破裂，冲突已从有限交火和脆弱停火彻底转向直接的军事对抗。美国实施的海军封锁是一项战争行为，导致霍尔木兹海峡航运完全中断，将地区危机推向全面战争的边缘。",
+    bannerWarning: "市场进入极度避险（Extreme Risk-Off）模式。能源股短期或因油价飙升而受益，但全球经济衰退风险加剧将抑制长期需求。航空、海运及依赖进口能源的行业面临巨大成本压力。地缘政治风险溢价将主导所有资产类别，预计市场将出现剧烈波动。",
+    deescalationIntent: "美国坚持伊朗必须彻底放弃核计划并停止支持地区代理人，以此作为解除制裁和结束冲突的前提。",
+    structuralRisk: "咽喉与航运条件仍影响流量。",
+    contradictionNote: "美国坚持伊朗必须彻底放弃核计划并停止支持地区代理人，以此作为解除制裁和结束冲突的前提。；美国寻求通过“极限压力”，包括军事封锁，迫使伊朗屈服，同时试图避免陷入大规模地面战争。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -604,16 +614,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.22 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.23 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 72 (Flat): No Change",
-    bannerWarning: "Cautious Watch",
-    deescalationIntent: "Hardline political stances with lack of mutual trust.",
-    structuralRisk: "Hormuz Strait shipping permit system continues, flow maintained at 50-90%.",
-    contradictionNote: "Hardline political stances with lack of mutual trust.; Ongoing multi-front military actions increase escalation risk.",
+    bannerSignal: "Composite 80 (↑8): A fundamental shift in the nature of the conflict: with the dramatic collapse of high-level negotiations, the conflict has moved decisively…",
+    bannerWarning: "The market has entered an Extreme Risk-Off mode. Energy stocks may benefit in the short term from soaring oil prices, b…",
+    deescalationIntent: "The U.S. insists that Iran must completely abandon its nuclear program and ceas…",
+    structuralRisk: "Chokepoint conditions still matter.",
+    contradictionNote: "The U.S. insists that Iran must completely abandon its nuclear program and cease support for regional proxies as a precondition for lifting sanctions and endin…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
