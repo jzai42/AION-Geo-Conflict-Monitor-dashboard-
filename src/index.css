@@ -7,7 +7,7 @@
 
   --color-aion-bg: var(--aion-bg);
   --color-aion-card: var(--aion-card);
-  --color-aion-red: #ff3333;
+  --color-aion-red: var(--aion-red);
   --color-aion-orange: var(--aion-orange);
   --color-aion-amber: var(--aion-amber);
   --color-aion-green: var(--aion-green);
@@ -24,6 +24,7 @@
   --aion-text: #ffffff;
   --aion-text-dim: #888888;
   --aion-stripe: rgba(255, 255, 255, 0.05);
+  --aion-red: #ff3333;
   /* 霓虹色：深色背景用 */
   --aion-orange: #ff8800;
   --aion-amber: #ffcc00;
@@ -32,13 +33,16 @@
 }
 
 .light {
-  --aion-bg: #eef0f3;
+  /* 大背景纯白，模块卡片用边框/阴影与淡色阶区分层次 */
+  --aion-bg: #ffffff;
   --aion-card: #ffffff;
-  --aion-gray: #c1c7d0;
+  --aion-gray: #e4e7ec;
   --aion-text: #030712;
   --aion-text-dim: #182230;
-  --aion-stripe: rgba(0, 0, 0, 0.05);
-  /* 浅色底上提高琥珀/黄/绿/橙 的对比度（避免淡黄字看不清） */
+  --aion-stripe: rgba(0, 0, 0, 0.04);
+  /* 主红略收一点，白底上更稳 */
+  --aion-red: #dc2626;
+  /* 类比暖色带（橙↔琥珀↔黄）与互补绿：白底可读、卡片 tint 仍和谐 */
   --aion-orange: #c2410c;
   --aion-amber: #b45309;
   --aion-yellow: #a16207;
@@ -54,6 +58,13 @@
 @layer components {
   .aion-card {
     @apply bg-aion-card border border-aion-gray rounded-[20px] p-8 transition-all duration-300;
+  }
+
+  /* 浅色模式：白底上的卡片轻微浮起，便于与页面底色区分 */
+  .light .aion-card {
+    box-shadow:
+      0 1px 2px rgba(16, 24, 40, 0.05),
+      0 1px 3px rgba(16, 24, 40, 0.08);
   }
 
   .aion-label {
