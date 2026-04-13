@@ -6,8 +6,11 @@ import { GoogleGenAI } from "@google/genai";
 // ── CONFIG ─────────────────────────────────────────────────────────
 const CONFIG = {
   conflictStartDate: "2026-02-28",
-  ensembleN: 3,
+  ensembleN: 1,
   oilDemoUrl: "https://api.oilpriceapi.com/v1/demo/prices",
+  geminiMaxAttempts: 4,
+  geminiRetryBaseMs: 1500,
+  geminiRetryMaxMs: 12000,
 };
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
@@ -71,6 +74,20 @@ function addDaysIso(iso, delta) {
 function median(arr) {
   const sorted = [...arr].sort((a, b) => a - b);
   return sorted[Math.floor(sorted.length / 2)];
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function errorMessage(err) {
+  if (!err) return "Unknown error";
+  if (typeof err.message === "string" && err.message.trim()) return err.message;
+  try { return JSON.stringify(err); } catch { return String(err); }
+}
+
+function isRetriableGeminiError(msg) {
+  return /503|UNAVAILABLE|RESOURCE_EXHAUSTED|429|rate limit|overloaded|timeout|ETIMEDOUT|ECONNRESET/i.test(msg);
 }
 
 /** WTI + Brent spot from OilPriceAPI demo (no key; ~20 req/h per IP). */
@@ -381,6 +398,26 @@ async function callGemini(withWeb) {
   });
 }
 
+async function callGeminiWithRetry(withWeb, idx) {
+  for (let attempt = 1; attempt <= CONFIG.geminiMaxAttempts; attempt++) {
+    try {
+      return await callGemini(withWeb);
+    } catch (err) {
+      const msg = errorMessage(err);
+      const retriable = isRetriableGeminiError(msg);
+      const exhausted = attempt >= CONFIG.geminiMaxAttempts;
+      if (!retriable || exhausted) {
+        throw new Error(msg);
+      }
+      const exp = CONFIG.geminiRetryBaseMs * (2 ** (attempt - 1));
+      const backoffMs = Math.min(CONFIG.geminiRetryMaxMs, exp) + Math.floor(Math.random() * 500);
+      console.warn(`  Call ${idx + 1}${withWeb ? "" : " (no-grounding)"} retry ${attempt}/${CONFIG.geminiMaxAttempts - 1} after ${backoffMs}ms: ${msg}`);
+      await sleep(backoffMs);
+    }
+  }
+  throw new Error("Retry loop exited unexpectedly");
+}
+
 function parsePayload(raw) {
   const text = extractText(raw);
   if (!text) return null;
@@ -398,7 +435,7 @@ console.log(`Generating AION daily report for ${todayNy} (${CONFIG.ensembleN}x e
 async function singleCall(idx) {
   for (const withWeb of [true, false]) {
     try {
-      const raw = await callGemini(withWeb);
+      const raw = await callGeminiWithRetry(withWeb, idx);
       const p = parsePayload(raw);
       if (p) {
         const { webSources, webSearchQueries } = extractGroundingMeta(raw);
@@ -407,13 +444,17 @@ async function singleCall(idx) {
         return { parsed: p, grounding: { webSources, webSearchQueries } };
       }
     } catch (err) {
-      console.warn(`  Call ${idx + 1}${withWeb ? "" : " (no-grounding)"} failed: ${err.message}`);
+      console.warn(`  Call ${idx + 1}${withWeb ? "" : " (no-grounding)"} failed: ${errorMessage(err)}`);
     }
   }
   return null;
 }
 
-const results = await Promise.all(Array.from({ length: CONFIG.ensembleN }, (_, i) => singleCall(i)));
+const results = [];
+for (let i = 0; i < CONFIG.ensembleN; i++) {
+  // 串行执行可降低并发尖峰导致的 503 / UNAVAILABLE 概率
+  results.push(await singleCall(i));
+}
 const validResults = results.filter(Boolean);
 
 if (!validResults.length) {
