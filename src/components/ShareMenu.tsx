@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Share2, Link2, FileDown, Loader2, Smartphone } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { buildShareUrl, tabToShareView, type ShareUrlState } from '../lib/share-url';
+import { buildCopyLinkUrl, tabToShareView, type ShareUrlState } from '../lib/share-url';
 import type { DashboardData } from '../data';
 import { readFetchErrorMessage } from '../lib/api-error';
 import { apiAbsoluteUrl, canGeneratePdf } from '../lib/api-url';
@@ -40,7 +40,7 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
   };
 
   const copyLink = useCallback(async () => {
-    const url = buildShareUrl(shareState);
+    const url = buildCopyLinkUrl();
     try {
       await navigator.clipboard.writeText(url);
       setToast({ message: language === 'zh' ? '已复制当前页面链接' : 'Link copied', tone: 'success' });
@@ -121,7 +121,7 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
   }, [data.date, data.version, language, pollStatus, shareState.view]);
 
   const systemShare = useCallback(async () => {
-    const url = buildShareUrl(shareState);
+    const url = buildCopyLinkUrl();
     if (navigator.share) {
       try {
         await navigator.share({

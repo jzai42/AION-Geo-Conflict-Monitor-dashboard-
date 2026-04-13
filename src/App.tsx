@@ -193,27 +193,35 @@ const StatCardFitLine = ({
   );
 };
 
-/** 风险档指示条：与右侧观察卡同列等高，单行文案（区间 · 标签）自动缩小字号 */
+/** 风险档指示条：区间在上、标签在下，字号略大并在格内自适应缩小 */
 const RiskLegendCell = ({
-  line,
+  range,
+  label,
   barClass,
   textClass,
 }: {
-  line: string;
+  range: string;
+  label: string;
   barClass: string;
   textClass: string;
 }) => (
   <div
     className={cn(
-      "flex min-h-0 min-w-0 flex-1 flex-col items-stretch justify-center rounded-md border px-1 py-2 sm:px-1.5",
+      "flex min-h-0 min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-md border px-1 py-2 sm:px-1.5",
       barClass,
     )}
   >
     <StatCardFitLine
-      text={line}
-      maxPx={11}
-      minPx={6.5}
-      className={cn("font-mono", textClass)}
+      text={range}
+      maxPx={15}
+      minPx={8}
+      className={cn("font-mono font-semibold tabular-nums", textClass)}
+    />
+    <StatCardFitLine
+      text={label}
+      maxPx={12}
+      minPx={7}
+      className={cn("font-mono leading-tight", textClass)}
     />
   </div>
 );
@@ -822,17 +830,20 @@ export default function App() {
                       <div className="flex min-h-[168px] w-full flex-col lg:min-h-0 lg:h-full">
                         <div className="flex h-full min-h-[168px] w-full gap-2 lg:min-h-0">
                           <RiskLegendCell
-                            line={`<40 · ${t.lowRisk}`}
+                            range="<40"
+                            label={t.lowRisk}
                             barClass="border-green-500/30 bg-green-500/5"
                             textClass="text-green-400"
                           />
                           <RiskLegendCell
-                            line={`40-70 · ${t.highRisk}`}
+                            range="40-70"
+                            label={t.highRisk}
                             barClass="border-aion-yellow/35 bg-aion-yellow/5"
                             textClass="text-aion-yellow"
                           />
                           <RiskLegendCell
-                            line={`>70 · ${t.extremeRisk}`}
+                            range=">70"
+                            label={t.extremeRisk}
                             barClass="border-aion-red/45 bg-aion-red/10"
                             textClass="text-aion-red"
                           />
@@ -847,10 +858,10 @@ export default function App() {
                         <div className="mb-3 text-2xl font-mono font-bold leading-tight tracking-tight text-aion-yellow">
                           {observationDate}
                         </div>
-                        <ul className="mt-auto space-y-1.5 text-[9px] leading-relaxed">
-                          <li className="break-words font-mono text-aion-text-dim">{t.energyDeadline}</li>
-                          <li className="break-words font-mono text-aion-text-dim">{t.negotiationValidity}</li>
-                          <li className="break-words font-mono text-aion-text-dim">{t.signalConfirmation}</li>
+                        <ul className="mt-auto space-y-2 text-[11px] leading-relaxed">
+                          <li className="break-words font-mono text-white">{t.energyDeadline}</li>
+                          <li className="break-words font-mono text-white">{t.negotiationValidity}</li>
+                          <li className="break-words font-mono text-white">{t.signalConfirmation}</li>
                         </ul>
                       </div>
                     </div>

@@ -65,15 +65,34 @@ export function parseShareUrlState(search: string): Partial<ShareUrlState> & { p
   return out;
 }
 
-/** 构建可分享完整 URL（保留 pathname，替换 query） */
-export function buildShareUrl(state: ShareUrlState): string {
-  const u = new URL(typeof window !== 'undefined' ? window.location.href : 'http://localhost/');
+function shareQueryString(state: ShareUrlState): string {
   const sp = new URLSearchParams();
   sp.set('lang', state.lang);
   sp.set('date', state.date);
   sp.set('version', state.version);
   sp.set('view', state.view);
-  u.search = sp.toString();
+  return sp.toString();
+}
+
+/** 构建可分享完整 URL（保留 pathname，替换 query）— 用于地址栏与当前站点一致 */
+export function buildShareUrl(state: ShareUrlState): string {
+  const u = new URL(typeof window !== 'undefined' ? window.location.href : 'http://localhost/');
+  u.search = shareQueryString(state);
+  return u.toString();
+}
+
+/**
+ * 复制链接 / 系统分享用的固定短链（无 query）。可复现状态仍以地址栏 / 完整 GitHub URL 为准。
+ * 构建时可设 VITE_SHARE_COPY_URL 覆盖（无尾斜杠），默认 https://qz-l.com/Q54ahm
+ */
+export function buildCopyLinkUrl(): string {
+  const raw = import.meta.env.VITE_SHARE_COPY_URL;
+  const base =
+    typeof raw === 'string' && raw.trim() !== ''
+      ? raw.trim().replace(/\/$/, '')
+      : 'https://qz-l.com/Q54ahm';
+  const u = new URL(base.startsWith('http') ? base : `https://${base}`);
+  u.search = '';
   return u.toString();
 }
 

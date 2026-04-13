@@ -1,4 +1,4 @@
-import type { PdfSnapshot } from './types';
+import type { PdfLang, PdfSnapshot } from './types';
 
 /** 页脚展示站点（与模板内容无关，不参与 contentHash） */
 const PDF_SITE_URL = 'https://qz-l.com/Q54ahm';
@@ -11,7 +11,16 @@ function esc(s: string): string {
     .replace(/"/g, '&quot;');
 }
 
-/** A4 竖版报告 HTML — 与仪表盘截图布局对齐：元信息两列、综合评分条、2×2 指标、阶段评估、菱形要点 */
+function formatObsDate(isoDate: string, lang: PdfLang): string {
+  const parts = isoDate.split('-').map((x) => parseInt(x, 10));
+  if (parts.length !== 3 || parts.some((n) => Number.isNaN(n))) return isoDate;
+  const [, m, d] = parts;
+  if (lang === 'zh') return `${m}月${d}日`;
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `${months[m - 1]} ${d}, ${parts[0]}`;
+}
+
+/** A4 竖版报告 — 浅色卡片式（白底块 + 浅灰底 + 分区色条），便于打印阅读 */
 export function renderReportHtml(s: PdfSnapshot): string {
   const titleZh = '地缘冲突监测系统';
   const titleEn = 'Geopolitical Conflict Monitoring';
@@ -22,7 +31,6 @@ export function renderReportHtml(s: PdfSnapshot): string {
     phaseTitle: s.lang === 'zh' ? '冲突阶段评估' : 'Conflict phase assessment',
   };
 
-  /** 截图顺序：大数值 → 单位行 → 底部标签；与 data.keyStats 四项一一对应 */
   const cards = s.keyStats
     .map(
       (k) => `
@@ -34,15 +42,13 @@ export function renderReportHtml(s: PdfSnapshot): string {
     )
     .join('');
 
-  const points = s.warPhase.points
-    .map(
-      (p) => `
-    <div class="bullet-box">
-      <span class="diamond" aria-hidden="true">◆</span>
-      <p class="bullet-txt">${esc(p)}</p>
-    </div>`
-    )
+  const pointsList = s.warPhase.points.map((p) => `<li class="phase-b-li">${esc(p)}</li>`).join('');
+
+  const obsLines = s.observationLines
+    .map((line) => `<li class="obs-li">${esc(line)}</li>`)
     .join('');
+
+  const obsTitle = s.lang === 'zh' ? '关键观察节点' : 'Key observation nodes';
 
   return `<!DOCTYPE html>
 <html lang="${s.lang === 'zh' ? 'zh-CN' : 'en'}">
@@ -56,18 +62,18 @@ export function renderReportHtml(s: PdfSnapshot): string {
     html {
       margin: 0;
       padding: 0;
-      background: #000000;
+      background: #e8e8ec;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
     body {
       margin: 0;
       padding: 0;
-      background: #000000;
-      color: #e8e8e8;
+      background: #e8e8ec;
+      color: #1a1a1a;
       font-family: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", ui-sans-serif, system-ui, sans-serif;
-      font-size: 10px;
-      line-height: 1.45;
+      font-size: 11px;
+      line-height: 1.5;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
@@ -76,7 +82,7 @@ export function renderReportHtml(s: PdfSnapshot): string {
       min-height: 297mm;
       margin: 0;
       padding: 0;
-      background: #000000;
+      background: #e8e8ec;
       display: flex;
       flex-direction: column;
     }
@@ -85,260 +91,340 @@ export function renderReportHtml(s: PdfSnapshot): string {
       display: flex;
       flex-direction: column;
       min-height: 0;
-      padding: 0 14mm;
+      padding: 0 12mm;
     }
     .sheet-spacer {
       flex: 1 1 auto;
       min-height: 0;
-      background: #000000;
+      background: #e8e8ec;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08), 0 2px 12px rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(0, 0, 0, 0.06);
     }
 
     .head {
-      padding: 18px 0 14px;
-      border-bottom: 1px solid rgba(255, 140, 0, 0.35);
+      padding: 16px 0 12px;
     }
     .head-title-row {
       display: flex;
       flex-wrap: wrap;
-      align-items: baseline;
+      align-items: center;
+      justify-content: space-between;
       gap: 10px 14px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
     .head-title {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 800;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: #ffffff;
+      color: #111111;
       margin: 0;
-      line-height: 1.15;
+      line-height: 1.2;
     }
     .head-link {
       font-size: 10px;
-      font-weight: 700;
-      color: #ffcc55;
+      font-weight: 600;
+      color: #e65100;
       text-decoration: none;
       padding: 4px 10px;
       border-radius: 4px;
-      background: rgba(255, 136, 0, 0.22);
-      border: 1px solid rgba(255, 170, 80, 0.55);
+      background: #fff8f0;
+      border: 1px solid rgba(230, 81, 0, 0.35);
       word-break: break-all;
       line-height: 1.35;
       max-width: 100%;
     }
-    .head-sub {
-      font-size: 11px;
-      color: #f0f0f0;
+    .head-sub-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       margin: 0;
-      font-weight: 400;
+    }
+    .head-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #c8c8c8 15%, #c8c8c8 85%, transparent);
+      min-width: 24px;
+    }
+    .head-sub {
+      font-size: 12px;
+      color: #333333;
+      margin: 0;
+      font-weight: 500;
+      white-space: nowrap;
     }
 
+    .meta-card {
+      padding: 12px 14px;
+      margin-bottom: 12px;
+    }
     .meta-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px 24px;
-      padding: 12px 0 14px;
-      font-size: 9px;
-      color: rgba(180, 180, 180, 0.95);
-      border-bottom: 1px solid rgba(60, 60, 60, 0.5);
+      gap: 8px 20px;
+      font-size: 10px;
+      color: #444444;
     }
     .meta-col { display: flex; flex-direction: column; gap: 6px; }
     .meta-line { font-family: ui-monospace, Menlo, monospace; }
-    .meta-line strong { color: #ff9933; font-weight: 600; }
+    .meta-line strong { color: #e65100; font-weight: 700; }
 
-    .metrics-wrap { padding: 12px 0 10px; }
+    .metrics-wrap { padding: 0 0 10px; }
 
-    /* 整行橙框：左大分、右文案（与截图一致） */
-    .score-box {
+    .hero-card {
       display: flex;
       flex-direction: row;
-      align-items: center;
+      flex-wrap: wrap;
+      align-items: stretch;
       gap: 16px;
-      padding: 14px 16px;
-      border: 1px solid rgba(255, 140, 0, 0.55);
-      background: rgba(10, 10, 10, 0.95);
+      padding: 16px 16px;
       margin-bottom: 12px;
     }
-    .score-num {
-      font-size: 48px;
+    .score-circle-wrap {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .score-circle {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #ff9800 0%, #f57c00 55%, #ef6c00 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 8px;
+      box-shadow: 0 4px 14px rgba(245, 124, 0, 0.45);
+    }
+    .score-circle-num {
+      font-size: 30px;
       font-weight: 800;
       line-height: 1;
-      color: #ff8800;
+      color: #ffffff;
       font-variant-numeric: tabular-nums;
-      flex-shrink: 0;
     }
-    .score-lbl {
-      font-size: 11px;
-      color: rgba(180, 180, 180, 0.9);
-      letter-spacing: 0.02em;
+    .score-circle-lbl {
+      font-size: 8px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.95);
+      text-align: center;
+      line-height: 1.25;
+      max-width: 84px;
     }
-
-    /* 2×2 指标格 */
+    .hero-kpis {
+      flex: 1 1 200px;
+      min-width: 0;
+    }
     .kpi-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px 10px;
+      gap: 8px;
+      height: 100%;
     }
     .kpi-cell {
-      border: 1px solid rgba(100, 100, 100, 0.55);
-      padding: 12px 10px;
+      border: 1px solid #e8e8e8;
+      border-radius: 6px;
+      padding: 10px 8px;
       text-align: center;
-      background: rgba(8, 8, 8, 0.9);
+      background: #fafafa;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 5px;
-      min-height: 92px;
+      gap: 4px;
+      min-height: 88px;
     }
     .kpi-value {
       font-size: 13px;
-      font-weight: 700;
-      color: #ff8800;
+      font-weight: 800;
+      color: #e65100;
       line-height: 1.25;
       word-break: break-word;
     }
     .kpi-unit {
-      font-size: 9px;
-      color: rgba(255, 160, 80, 0.85);
+      font-size: 9.5px;
+      color: #bf360c;
+      font-weight: 600;
     }
     .kpi-label {
-      font-size: 8px;
-      color: rgba(150, 150, 150, 0.9);
-      letter-spacing: 0.04em;
+      font-size: 9px;
+      color: #616161;
+      letter-spacing: 0.03em;
     }
 
-    .block { padding: 10px 0 8px; break-inside: avoid; page-break-inside: avoid; }
+    .block { padding: 8px 0; break-inside: avoid; page-break-inside: avoid; }
 
-    .phase-head {
+    .phase-card { overflow: hidden; margin-bottom: 10px; }
+
+    .sec-head-oran {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
-    }
-    .phase-sec-title {
-      font-size: 10px;
-      color: rgba(180, 180, 180, 0.95);
-      font-weight: 600;
-      letter-spacing: 0.12em;
-    }
-    .node-tag {
-      border: 1px solid rgba(255, 140, 0, 0.55);
-      color: #ffaa33;
-      font-size: 9px;
-      padding: 4px 10px;
-      font-family: ui-monospace, monospace;
-    }
-
-    .phase-headline {
-      margin-bottom: 8px;
-      line-height: 1.5;
-    }
-    .phase-a {
-      font-size: 13px;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px 14px;
+      background: linear-gradient(90deg, #ff9800 0%, #fb8c00 100%);
+      color: #ffffff;
+      font-size: 11px;
       font-weight: 800;
-      color: #ff7733;
-    }
-    .phase-arrow {
-      color: #ff8800;
-      margin: 0 4px;
-      font-weight: 700;
-    }
-    .phase-b {
-      font-size: 13px;
-      font-weight: 800;
-      color: #33dd66;
-    }
-    .phase-title-line {
-      font-size: 10px;
-      color: rgba(210, 210, 210, 0.9);
-      margin-bottom: 4px;
-    }
-    .phase-sub {
-      font-size: 9.5px;
-      color: #e6a020;
       letter-spacing: 0.06em;
     }
-
-    .key-box {
-      border: 1px solid rgba(50, 200, 100, 0.55);
-      background: rgba(0, 40, 20, 0.25);
-      padding: 10px 12px;
-      margin: 10px 0 12px;
-    }
-    .key-box .k {
+    .node-pill {
       font-size: 9px;
-      color: #55ee88;
       font-weight: 700;
+      font-family: ui-monospace, monospace;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+    }
+
+    .phase-status-bar {
+      padding: 9px 14px;
+      background: #ffa726;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .phase-status-bar .ph-a { color: #fffde7; }
+    .phase-status-bar .ph-ar { margin: 0 6px; opacity: 0.95; }
+    .phase-status-bar .ph-b { color: #e8f5e9; }
+
+    .phase-body {
+      padding: 12px 14px;
+      background: #f5f5f5;
+      border-bottom: 1px solid #eeeeee;
+    }
+    .phase-title-line {
+      font-size: 11px;
+      color: #212121;
+      margin: 0 0 8px;
+      line-height: 1.55;
+    }
+    .phase-sub {
+      font-size: 10.5px;
+      color: #e65100;
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: 0.04em;
+      line-height: 1.5;
+    }
+
+    .sec-head-green {
+      padding: 8px 14px;
+      background: #43a047;
+      color: #ffffff;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+    }
+    .key-body {
+      padding: 12px 14px;
+      background: #ffffff;
+      font-size: 11px;
+      color: #212121;
+      line-height: 1.6;
+      border-bottom: 1px solid #eeeeee;
+    }
+
+    .phase-bullets {
+      margin: 0;
+      padding: 12px 14px 12px 28px;
+      background: #ffffff;
+      list-style: disc;
+    }
+    .phase-b-li {
+      margin-bottom: 8px;
+      font-size: 10.5px;
+      line-height: 1.55;
+      color: #212121;
+    }
+    .phase-b-li::marker {
+      color: #43a047;
+    }
+
+    .obs-card { margin-bottom: 10px; overflow: hidden; }
+    .obs-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: #fff8e1;
+      border-bottom: 1px solid #ffe082;
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #f57c00;
+      letter-spacing: 0.04em;
+    }
+    .obs-head::before {
+      content: "◷";
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    .obs-date {
+      padding: 10px 14px 6px;
+      font-size: 22px;
+      font-weight: 800;
+      color: #e65100;
+      font-variant-numeric: tabular-nums;
+    }
+    .obs-list {
+      margin: 0;
+      padding: 4px 14px 14px 28px;
+      list-style: disc;
+      background: #ffffff;
+    }
+    .obs-li {
       margin-bottom: 6px;
+      font-size: 10.5px;
+      line-height: 1.5;
+      color: #212121;
+    }
+    .obs-li::marker {
+      color: #ffb300;
+    }
+
+    .risk-card { overflow: hidden; margin-bottom: 8px; }
+    .sec-head-risk {
+      padding: 10px 14px;
+      background: linear-gradient(90deg, #e64a19 0%, #d84315 100%);
+      color: #ffffff;
+      font-size: 10.5px;
+      font-weight: 800;
       letter-spacing: 0.08em;
     }
-    .key-box .v {
-      font-size: 10.5px;
-      color: #f2f2f2;
-      line-height: 1.55;
-    }
-
-    .bullet-box {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      padding: 10px 12px;
-      margin-bottom: 8px;
-      border: 1px solid rgba(80, 80, 80, 0.6);
-      background: rgba(12, 12, 12, 0.95);
-    }
-    .diamond {
-      color: rgba(200, 200, 200, 0.75);
-      font-size: 8px;
+    .risk-body {
+      padding: 12px 14px;
+      background: #ffffff;
+      font-size: 11px;
+      color: #212121;
       line-height: 1.6;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .bullet-txt {
-      margin: 0;
-      flex: 1;
-      font-size: 10px;
-      line-height: 1.55;
-      color: rgba(220, 220, 220, 0.95);
-    }
-
-    .risk {
-      border: 1px solid rgba(255, 160, 60, 0.5);
-      background: rgba(35, 25, 0, 0.35);
-      padding: 10px 12px;
-      margin-top: 6px;
-    }
-    .risk .h {
-      font-size: 9px;
-      color: #ffaa33;
-      font-weight: 700;
-      margin-bottom: 6px;
-      letter-spacing: 0.1em;
-    }
-    .risk .p {
-      margin: 0;
-      font-size: 10.5px;
-      color: #f0f0f0;
-      line-height: 1.55;
     }
 
     .footer {
       flex-shrink: 0;
-      padding: 12px 14mm 14px;
-      border-top: 1px solid rgba(60, 60, 60, 0.55);
-      font-size: 8px;
-      color: rgba(120, 120, 120, 0.95);
+      padding: 10px 12mm 12px;
+      border-top: 1px solid #d0d0d4;
+      font-size: 8.5px;
+      color: #757575;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
       gap: 10px;
-      background: #000000;
+      background: #e0e0e4;
     }
-    .footer-disclaimer { max-width: 42%; }
-    .footer-right { text-align: right; max-width: 58%; }
-    .footer-snap { color: rgba(130, 130, 130, 0.95); font-weight: 400; }
+    .footer-disclaimer { max-width: 48%; }
+    .footer-right { text-align: right; max-width: 52%; }
+    .footer-snap { color: #9e9e9e; font-weight: 400; }
     @media print {
-      html, body { background: #000000 !important; }
+      html, body { background: #e8e8ec !important; }
     }
   </style>
 </head>
@@ -351,55 +437,68 @@ export function renderReportHtml(s: PdfSnapshot): string {
         <h1 class="head-title">AION Geo-Conflict Monitor</h1>
         <a class="head-link" href="${PDF_SITE_URL}">${esc(PDF_SITE_URL)}</a>
       </div>
-      <p class="head-sub">${esc(headerSub)}</p>
+      <div class="head-sub-wrap">
+        <span class="head-line" aria-hidden="true"></span>
+        <p class="head-sub">${esc(headerSub)}</p>
+        <span class="head-line" aria-hidden="true"></span>
+      </div>
     </header>
 
-    <div class="meta-grid">
-      <div class="meta-col">
-        <div class="meta-line"><strong>${s.lang === 'zh' ? '日期' : 'Date'}</strong> · ${esc(s.date)}</div>
-        <div class="meta-line"><strong>UTC</strong> · ${esc(s.utcTime)}</div>
-      </div>
-      <div class="meta-col">
-        <div class="meta-line"><strong>${s.lang === 'zh' ? '版本' : 'Version'}</strong> · ${esc(s.version)}</div>
-        <div class="meta-line"><strong>${s.lang === 'zh' ? '语言' : 'Language'}</strong> · ${s.lang === 'zh' ? '中文' : 'English'}</div>
+    <div class="meta-card card">
+      <div class="meta-grid">
+        <div class="meta-col">
+          <div class="meta-line"><strong>${s.lang === 'zh' ? '日期' : 'Date'}</strong> · ${esc(s.date)}</div>
+          <div class="meta-line"><strong>UTC</strong> · ${esc(s.utcTime)}</div>
+        </div>
+        <div class="meta-col">
+          <div class="meta-line"><strong>${s.lang === 'zh' ? '版本' : 'Version'}</strong> · ${esc(s.version)}</div>
+          <div class="meta-line"><strong>${s.lang === 'zh' ? '语言' : 'Language'}</strong> · ${s.lang === 'zh' ? '中文' : 'English'}</div>
+        </div>
       </div>
     </div>
 
     <section class="metrics-wrap">
-      <div class="score-box">
-        <div class="score-num">${esc(String(s.riskScore))}</div>
-        <div class="score-lbl">${esc(lbl.composite)}</div>
+      <div class="hero-card card">
+        <div class="score-circle-wrap">
+          <div class="score-circle">
+            <span class="score-circle-num">${esc(String(s.riskScore))}</span>
+            <span class="score-circle-lbl">${esc(lbl.composite)}</span>
+          </div>
+        </div>
+        <div class="hero-kpis">
+          <div class="kpi-grid">${cards}</div>
+        </div>
       </div>
-      <div class="kpi-grid">${cards}</div>
     </section>
 
-    <section class="block">
-      <div class="phase-head">
-        <span class="phase-sec-title">${esc(lbl.phaseTitle)}</span>
-        <div class="node-tag">${esc(s.warPhase.nodeLabel)}</div>
+    <section class="block phase-card card">
+      <div class="sec-head-oran">
+        <span>${esc(lbl.phaseTitle)}</span>
+        <span class="node-pill">${esc(s.warPhase.nodeLabel)}</span>
       </div>
-
-      <div class="phase-headline">
-        <span class="phase-a">${esc(s.warPhase.level)}</span>
-        <span class="phase-arrow">→</span>
-        <span class="phase-b">${esc(s.warPhase.targetLevel)}</span>
+      <div class="phase-status-bar">
+        <span class="ph-a">${esc(s.warPhase.level)}</span>
+        <span class="ph-ar">→</span>
+        <span class="ph-b">${esc(s.warPhase.targetLevel)}</span>
       </div>
-      <div class="phase-title-line">${esc(s.warPhase.title)}</div>
-      <div class="phase-sub">${esc(s.warPhase.subTitle)}</div>
-
-      <div class="key-box">
-        <div class="k">${s.lang === 'zh' ? '关键结构性变化' : 'Key structural change'}</div>
-        <div class="v">${esc(s.keyChange)}</div>
+      <div class="phase-body">
+        <p class="phase-title-line">${esc(s.warPhase.title)}</p>
+        <p class="phase-sub">${esc(s.warPhase.subTitle)}</p>
       </div>
-
-      ${points}
+      <div class="sec-head-green">${s.lang === 'zh' ? '关键结构性变化' : 'Key structural change'}</div>
+      <div class="key-body">${esc(s.keyChange)}</div>
+      <ul class="phase-bullets">${pointsList}</ul>
     </section>
 
-    <section class="block">
-      <div class="risk">
-        <div class="h">${s.lang === 'zh' ? '投资风险信号' : 'Investment risk signals'}</div>
-        <p class="p">${esc(s.investmentSignal)}</p>
-      </div>
+    <section class="block obs-card card">
+      <div class="obs-head">${esc(obsTitle)}</div>
+      <div class="obs-date">${esc(formatObsDate(s.date, s.lang))}</div>
+      <ul class="obs-list">${obsLines}</ul>
+    </section>
+
+    <section class="block risk-card card">
+      <div class="sec-head-risk">${s.lang === 'zh' ? '投资风险信号' : 'Investment risk signals'}</div>
+      <div class="risk-body">${esc(s.investmentSignal)}</div>
     </section>
 
     <div class="sheet-spacer" aria-hidden="true"></div>

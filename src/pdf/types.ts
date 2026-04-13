@@ -21,6 +21,8 @@ export interface PdfSnapshot {
   };
   keyChange: string;
   investmentSignal: string;
+  /** 关键观察节点下三条说明（与仪表盘文案一致） */
+  observationLines: [string, string, string];
   /** 用于缓存：内容指纹 */
   contentHash: string;
 }
