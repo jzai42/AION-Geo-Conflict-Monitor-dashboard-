@@ -43,6 +43,10 @@ import {
 import { ShareMenu } from './components/ShareMenu';
 import PdfGeoMonitor from './pages/PdfGeoMonitor';
 
+function s(v: unknown, fb = ""): string {
+  return typeof v === "string" ? v : fb;
+}
+
 // --- Components (AION v2.4 Force Sync) ---
 
 const TopBanner = ({ t, delta }: { t: any; delta: number }) => (
@@ -277,24 +281,35 @@ const StatCard = ({ label, value, unit, color }: { label: string, value: string,
 };
 
 const TrendChart = ({ trend, compact }: { trend: DashboardData['scoreTrend']; compact?: boolean }) => {
+  const scores = (trend ?? []).map((x) => Number(x.score)).filter((n) => Number.isFinite(n));
+  if (scores.length === 0) {
+    return (
+      <div className={cn("flex w-full items-center justify-center px-1 text-[10px] text-aion-text-dim", compact ? "mt-2 h-24" : "mt-4 h-28")}>
+        —
+      </div>
+    );
+  }
   // Use a baseline to make differences more obvious
-  const minScore = Math.min(...trend.map(t => t.score)) - 5;
-  const maxScore = Math.max(...trend.map(t => t.score)) + 5;
-  const range = maxScore - minScore;
+  const minScore = Math.min(...scores) - 5;
+  const maxScore = Math.max(...scores) + 5;
+  const range = Math.max(maxScore - minScore, 1e-6);
 
   return (
     <div className={cn("flex items-end justify-between gap-1 w-full px-1", compact ? "mt-2 h-24" : "mt-4 h-28")}>
-      {trend.map((t, i) => (
+      {trend.map((t, i) => {
+        const sc = Number(t.score);
+        const safe = Number.isFinite(sc) ? sc : minScore;
+        return (
         <div key={i} className="flex flex-col items-center flex-1 h-full justify-end group">
           <span className={cn(
             "text-[10px] font-mono mb-1 font-bold transition-colors", 
             t.active ? "text-aion-green drop-shadow-[0_0_5px_rgba(57,255,20,0.5)]" : "text-aion-text-dim group-hover:text-aion-text/70"
           )}>
-            {t.score}
+            {Number.isFinite(sc) ? t.score : '—'}
           </span>
           <motion.div 
             initial={{ height: 0 }}
-            animate={{ height: `${((t.score - minScore) / range) * 60 + 20}%` }}
+            animate={{ height: `${((safe - minScore) / range) * 60 + 20}%` }}
             transition={{ duration: 1, delay: i * 0.1, ease: "easeOut" }}
             className={cn(
               "w-full max-w-[36px] rounded-t-[4px] transition-all duration-500",
@@ -305,7 +320,8 @@ const TrendChart = ({ trend, compact }: { trend: DashboardData['scoreTrend']; co
           />
           <span className="text-[8px] font-mono text-aion-text-dim mt-2">{t.date}</span>
         </div>
-      ))}
+        );
+      })}
     </div>
   );
 };
@@ -405,8 +421,36 @@ const WarPhase = ({ phase, keyChange, t }: { phase: DashboardData['warPhase'], k
   );
 };
 
-const EventItem = ({ event, index, t }: { event: KeyEvent, index: number, t: any, key?: React.Key }) => {
+function formatEventTimestamp(
+  raw: string | undefined,
+  reportDate: string,
+  language: 'zh' | 'en',
+) {
+  const v = s(raw).trim();
+  if (!v || v === 'AUTO') {
+    return language === 'zh'
+      ? `${reportDate}（当日公开报道）`
+      : `${reportDate} (same-day reporting)`;
+  }
+  return v;
+}
+
+const EventItem = ({
+  event,
+  index,
+  t,
+  reportDate,
+  language,
+}: {
+  event: KeyEvent;
+  index: number;
+  t: any;
+  reportDate: string;
+  language: 'zh' | 'en';
+}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const timeLine = formatEventTimestamp(event.timestamp, reportDate, language);
+  const desc = s(event.description).trim();
 
   return (
     <div className={cn(
@@ -414,40 +458,45 @@ const EventItem = ({ event, index, t }: { event: KeyEvent, index: number, t: any
       event.critical && "bg-aion-red/5"
     )}>
       <button 
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-4 hover:bg-aion-text/5 transition-colors text-left"
+        className="flex w-full items-start justify-between gap-3 p-4 text-left transition-colors hover:bg-aion-text/5"
       >
-        <div className="flex items-center gap-6">
-          <span className="font-mono text-[10px] text-aion-text-dim">{t.event} {String(index + 1).padStart(2, '0')}</span>
-          <div className="flex items-center gap-3">
+        <div className="min-w-0 flex-1">
+          <h3 className="text-sm font-medium leading-snug tracking-tight text-aion-text sm:text-[15px]">
+            {event.title?.trim() ? event.title : `${t.event} ${String(index + 1).padStart(2, '0')}`}
+          </h3>
+          <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            <span className="shrink-0 font-mono text-[10px] text-aion-text-dim">
+              {t.event} {String(index + 1).padStart(2, '0')}
+            </span>
             {event.verification === 'confirmed' && (
-              <div className="flex items-center gap-1 bg-green-500/10 border border-green-500/30 px-2 py-0.5 rounded-sm">
-                <CheckCircle2 className="w-2.5 h-2.5 text-green-500" />
-                <span className="text-[8px] font-mono text-green-500 uppercase">{t.verified}</span>
+              <div className="flex shrink-0 items-center gap-1 rounded-sm border border-green-500/30 bg-green-500/10 px-2 py-0.5">
+                <CheckCircle2 className="h-2.5 w-2.5 text-green-500" />
+                <span className="text-[8px] font-mono uppercase text-green-500">{t.verified}</span>
               </div>
             )}
             {event.verification === 'single' && (
-              <div className="flex items-center gap-1 bg-aion-red/10 border border-aion-red/30 px-2 py-0.5 rounded-sm">
-                <AlertCircle className="w-2.5 h-2.5 text-aion-red" />
-                <span className="text-[8px] font-mono text-aion-red uppercase">{t.singleSource}</span>
+              <div className="flex shrink-0 items-center gap-1 rounded-sm border border-aion-red/30 bg-aion-red/10 px-2 py-0.5">
+                <AlertCircle className="h-2.5 w-2.5 text-aion-red" />
+                <span className="text-[8px] font-mono uppercase text-aion-red">{t.singleSource}</span>
               </div>
             )}
             {event.verification === 'partial' && (
-              <div className="flex items-center gap-1 bg-aion-orange/10 border border-aion-orange/30 px-2 py-0.5 rounded-sm">
-                <AlertCircle className="w-2.5 h-2.5 text-aion-orange" />
-                <span className="text-[8px] font-mono text-aion-orange uppercase">{t.partialVerify}</span>
+              <div className="flex shrink-0 items-center gap-1 rounded-sm border border-aion-orange/30 bg-aion-orange/10 px-2 py-0.5">
+                <AlertCircle className="h-2.5 w-2.5 text-aion-orange" />
+                <span className="text-[8px] font-mono uppercase text-aion-orange">{t.partialVerify}</span>
               </div>
             )}
             {event.highlight && (
-              <div className="flex items-center gap-1 bg-aion-orange/10 border border-aion-orange/30 px-2 py-0.5 rounded-sm">
-                <Zap className="w-2.5 h-2.5 text-aion-orange" />
-                <span className="text-[8px] font-mono text-aion-orange uppercase">{t.keyChange}</span>
+              <div className="flex shrink-0 items-center gap-1 rounded-sm border border-aion-orange/30 bg-aion-orange/10 px-2 py-0.5">
+                <Zap className="h-2.5 w-2.5 text-aion-orange" />
+                <span className="text-[8px] font-mono uppercase text-aion-orange">{t.keyChange}</span>
               </div>
             )}
-            <h3 className="text-sm font-mono tracking-tight text-aion-text">{event.title}</h3>
           </div>
         </div>
-        <ChevronDown className={cn("w-4 h-4 text-aion-text-dim transition-transform", isOpen && "rotate-180")} />
+        <ChevronDown className={cn("mt-0.5 h-4 w-4 shrink-0 text-aion-text-dim transition-transform", isOpen && "rotate-180")} />
       </button>
       
       <AnimatePresence>
@@ -458,9 +507,12 @@ const EventItem = ({ event, index, t }: { event: KeyEvent, index: number, t: any
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <div className="px-16 pb-6 pt-2">
-              <p className="text-xs text-aion-text/70 leading-relaxed max-w-3xl mb-4">
-                {event.description}
+            <div className="border-t border-aion-gray/50 px-4 pb-6 pt-3 sm:pl-4">
+              <div className="text-[8px] font-mono uppercase tracking-widest text-aion-text-dim mb-2">
+                {t.eventDetails}
+              </div>
+              <p className="mb-4 max-w-3xl text-xs leading-relaxed text-aion-text/80">
+                {desc || t.noEventDescription}
               </p>
               {event.significance && (
                 <div className="bg-aion-text/5 p-3 rounded-sm border border-aion-gray mb-4">
@@ -468,9 +520,15 @@ const EventItem = ({ event, index, t }: { event: KeyEvent, index: number, t: any
                   <p className="text-[11px] text-aion-text-dim font-mono italic">{event.significance}</p>
                 </div>
               )}
-              <div className="flex items-center gap-4">
-                <span className="text-[9px] font-mono text-aion-text-dim uppercase">{t.source}: {event.verification === 'confirmed' ? t.verified : event.verification === 'partial' ? t.partialVerify : t.singleSource}</span>
-                <span className="text-[9px] font-mono text-aion-text-dim uppercase">{t.time}: {event.timestamp}</span>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+                <span className="text-[9px] font-mono text-aion-text-dim uppercase">
+                  {t.source}: {event.verification === 'confirmed' ? t.verified : event.verification === 'partial' ? t.partialVerify : t.singleSource}
+                </span>
+                <span className="text-[9px] font-mono text-aion-text-dim">
+                  <span className="uppercase">{t.time}</span>
+                  {': '}
+                  <span className="normal-case text-aion-text/90">{timeLine}</span>
+                </span>
               </div>
             </div>
           </motion.div>
@@ -538,7 +596,9 @@ const RiskFactorRow = ({ factor, t }: { factor: RiskFactor, t: any, key?: React.
                   {delta > 0 ? '▲' : '▼'}{Math.abs(delta).toFixed(1)}
                 </span>
               )}
-              <span className="text-2xl font-mono font-bold leading-none text-aion-red">{factor.score.toFixed(1)}</span>
+              <span className="text-2xl font-mono font-bold leading-none text-aion-red">
+                {(Number.isFinite(Number(factor.score)) ? Number(factor.score) : 0).toFixed(1)}
+              </span>
             </div>
           </div>
         </div>
@@ -820,7 +880,15 @@ export default function App() {
                   </div>
                   {/* webSearchQueries / webSources 仍写入 data.ts 供内部核对，不在此展示 */}
                   {data.events.map((event, i) => (
-                    <EventItem key={event.id} event={event} index={i} t={t} />
+                    <div key={event.id}>
+                      <EventItem
+                        event={event}
+                        index={i}
+                        t={t}
+                        reportDate={data.date}
+                        language={language}
+                      />
+                    </div>
                   ))}
                 </motion.div>
               )}

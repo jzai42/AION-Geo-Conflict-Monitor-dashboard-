@@ -508,7 +508,7 @@ function buildFallbackPayload(todayIso) {
     title: "模型服务高负载，已启用自动兜底",
     description: "本次自动生成遇到上游模型服务不可用（503/UNAVAILABLE），系统已沿用上一期结构并保持评分稳定，等待下一轮任务自动刷新。",
     verification: "single",
-    timestamp: "AUTO",
+    timestamp: `${todayIso}（当日公开报道）`,
     significance: "保障日报流水线可用性，避免因上游拥堵导致中断。",
     highlight: false,
     critical: false,
@@ -518,7 +518,7 @@ function buildFallbackPayload(todayIso) {
     title: "Model overload fallback activated",
     description: "Upstream model returned 503/UNAVAILABLE. The pipeline falls back to prior-day structure and stable scores until the next run.",
     verification: "single",
-    timestamp: "AUTO",
+    timestamp: `${todayIso} (same-day reporting)`,
     significance: "Keeps the daily pipeline available during transient upstream outages.",
     highlight: false,
     critical: false,
@@ -787,11 +787,15 @@ function enforceLayout(d, lang) {
   d.events = (Array.isArray(d.events) ? d.events : []).slice(0, 5).map((e, i) => {
     let verification = ["confirmed", "partial", "single"].includes(e.verification) ? e.verification : "single";
     if (eventIsOilPriceWithLiveApi(e, oilSnapshot)) verification = "confirmed";
+    let ts = s(e.timestamp);
+    if (!ts || ts === "AUTO") {
+      ts = lang === "zh" ? `${todayNy}（当日公开报道）` : `${todayNy} (same-day reporting)`;
+    }
     const obj = {
       id: s(e.id, `EVT-${String(i + 1).padStart(2, "0")}`),
       title: s(e.title), description: s(e.description),
       verification,
-      timestamp: s(e.timestamp), significance: s(e.significance),
+      timestamp: ts, significance: s(e.significance),
     };
     if (e.highlight === true) obj.highlight = true;
     if (e.critical === true) obj.critical = true;
@@ -954,6 +958,8 @@ const TRANSLATIONS_OBJ = {
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
     clickExpand: "点击展开详情",
+    eventDetails: "详情",
+    noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
     dayCount: `${s(zh.keyStats[0]?.value, "D?").replace("D", "第")}天`,
     weightedFormula: "Σ (评分 × 权重)",
@@ -1011,6 +1017,8 @@ const TRANSLATIONS_OBJ = {
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
     clickExpand: "Click to expand details",
+    eventDetails: "Details",
+    noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
     dayCount: s(en.keyStats[0]?.value, "D?").replace("D", "Day "),
     weightedFormula: "Σ (Score × Weight)",
