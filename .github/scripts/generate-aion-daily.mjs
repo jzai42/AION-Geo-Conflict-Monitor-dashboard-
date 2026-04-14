@@ -719,6 +719,33 @@ function eventIsOilPriceWithLiveApi(ev, oil) {
   return /油价|WTI|Brent|原油|油市|oil price|crude|barrel|\/bbl|美元\/桶|spot/i.test(t);
 }
 
+/** 将 evidence/描述拆成 1–3 条，供态势卡 bullet 使用 */
+function splitEvidenceToPoints(text, lang) {
+  const t = s(text).trim();
+  if (!t) return [];
+  if (lang === "zh") {
+    return t
+      .split(/(?<=[。！？])\s*/)
+      .map((x) => x.trim())
+      .filter(Boolean)
+      .slice(0, 3);
+  }
+  return t
+    .split(/(?<=[.!?])\s+/)
+    .map((x) => x.trim())
+    .filter(Boolean)
+    .slice(0, 3);
+}
+
+function isPlaceholderSituationPoints(points, lang) {
+  if (!Array.isArray(points) || !points.length) return true;
+  return points.every((p) => {
+    const x = s(p).trim();
+    if (lang === "zh") return /^(详见风险因子[。]?)$/.test(x);
+    return /^See risk factors\.?$/i.test(x);
+  });
+}
+
 function enforceLayout(d, lang) {
   const c = CANONICAL[lang];
   d.date = todayNy;
@@ -741,7 +768,8 @@ function enforceLayout(d, lang) {
       score: finalFactors[i],
       prev: prevFactorScores[i],
       weight: 0.2,
-      description: s(src.description),
+      /** 模型常把长叙述放在 evidence；description 空时沿用 evidence，供 UI/态势卡兜底使用 */
+      description: s(src.description) || s(src.evidence) || "",
       status: validStatus.includes(src.status) ? src.status : "FAST",
       sourceVerification,
       ...(validChange.includes(src.change) ? { change: src.change } : {}),
@@ -835,7 +863,14 @@ function enforceLayout(d, lang) {
   if (!s(d.investmentSignal).trim()) d.investmentSignal = lang === "zh" ? "维持风险平衡敞口。" : "Maintain balanced exposure.";
   if (!s(d.keyChange).trim()) d.keyChange = lang === "zh" ? "24h要点：详见事件与因子。" : "24h: See events and factors.";
   d.situations = d.situations.map((sit, i) => {
-    if (!sit.points.length) sit.points = [s(d.riskFactors[i]?.description) || (lang === "zh" ? "详见风险因子。" : "See risk factors.")];
+    if (isPlaceholderSituationPoints(sit.points, lang)) {
+      const rf = d.riskFactors[i];
+      const text = s(rf?.description) || s(rf?._evidence);
+      const bullets = splitEvidenceToPoints(text, lang);
+      sit.points = bullets.length
+        ? bullets
+        : [lang === "zh" ? "详见风险因子。" : "See risk factors."];
+    }
     return sit;
   });
 

@@ -125,7 +125,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 5,
       weight: 0.2,
-      description: "",
+      description: "美军继续对伊朗境内 IRGC 指挥中心进行空袭，同时伊朗向阿拉伯海的美国航母战斗群发射弹道导弹；美海军称大部分被拦截，一艘护航舰轻微受损。对抗仍为直接交火与重大军事行动，但未升至全面战争/大规模地面入侵级别。",
       status: "FAST",
       sourceVerification: "confirmed",
       change: "down"
@@ -135,7 +135,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "",
+      description: "主要集装箱与 LNG 船公司已公开确认改道远离波斯湾；海事流量显示商业通过量较冲突前基线下降逾 75%，接近停滞；事实封锁持续。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -144,7 +144,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "",
+      description: "油价在高位波动，市场对冲突风险溢价进行消化；WTI/Brent 处于脚本实时 API 与 rubric 所示区间。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -153,7 +153,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "",
+      description: "美国继续直接参战；G7 谴责伊朗并支持美方行动；中俄呼吁停火；暂无新的第三方国家直接军事介入。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -162,7 +162,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "",
+      description: "瑞士外交部称在美伊间“传递信息”，无正式谈判；双方公开表态仍强硬，谈判前景黯淡。",
       status: "FAST",
       sourceVerification: "confirmed"
     }
@@ -222,7 +222,9 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "详见风险因子。"
+        "伊朗动用多种武器平台对以色列发动饱和攻击，显示其升级意愿和能力。",
+        "美国和盟友的联合防御行动展示了区域防空一体化能力，但也暴露了部署情况。",
+        "各方都在评估此次攻防行动的结果，以决定下一步行动。"
       ]
     },
     {
@@ -231,7 +233,9 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "详见风险因子。"
+        "霍尔木兹海峡的军事风险达到顶点，商业航运面临被直接攻击或扣押的真实威胁。",
+        "主要集装箱和油轮公司正在评估暂停或绕行该航线，将导致全球供应链成本和延迟增加。",
+        "战争风险保费预计将大幅上涨。"
       ]
     },
     {
@@ -240,7 +244,9 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "详见风险因子。"
+        "油价已反映出高度的风险溢价，市场正为潜在的供应中断做准备。",
+        "如果以色列对伊朗石油设施进行报复性打击，油价可能轻松突破 100 美元。",
+        "OPEC+ 可能面临增产压力，但闲置产能有限且决策需要时间。"
       ]
     },
     {
@@ -249,7 +255,9 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "详见风险因子。"
+        "伊朗领导层试图将此次攻击定性为一次“有限且已结束”的报复，意在控制升级节奏，但球已踢给对方。",
+        "美国政府在谴责伊朗的同时，强调其对以色列“铁一般的”安全承诺，暗示支持其自卫权。",
+        "以色列战时内阁正在商议回应措施，内部强硬派要求进行强力报复。"
       ]
     }
   ],
@@ -318,7 +326,7 @@ export const DATA_EN: DashboardData = {
     {
       label: "Hormuz",
       value: "Severely Restricted",
-      unit: "Transit Status",
+      unit: "Passage Status",
       color: "#ffdc00"
     }
   ],
@@ -329,7 +337,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 5,
       weight: 0.2,
-      description: "",
+      description: "The US continues airstrikes on IRGC command nodes in Iran while Iran fires ballistic missiles at a US carrier group in the Arabian Sea; most were intercepted and one escort sustained minor damage. Hostilities remain direct and large-scale but have not escalated to all-out war or major ground invasion.",
       status: "FAST",
       sourceVerification: "confirmed",
       change: "down"
@@ -339,7 +347,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "",
+      description: "Major container and LNG operators have publicly confirmed diversions away from the Persian Gulf; vessel traffic data shows commercial throughput down more than ~75% vs pre-conflict baselines, approaching a standstill; de facto closure persists.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -348,7 +356,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "",
+      description: "Oil trades at elevated levels as markets price conflict risk; WTI/Brent align with the live API snapshot and rubric band.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -357,7 +365,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "",
+      description: "The United States remains a direct combatant; the G7 condemns Iran and backs Washington; China and Russia call for a ceasefire; no new third-country direct military entry is evident.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -366,7 +374,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "",
+      description: "Switzerland confirms message-passing between the US and Iran without formal talks; leadership rhetoric on both sides stays hard-line and prospects for negotiation remain dim.",
       status: "FAST",
       sourceVerification: "confirmed"
     }
@@ -426,7 +434,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "See risk factors."
+        "Iran used multiple platforms to launch saturation-style strikes on Israel, signaling both willingness and capacity to escalate.",
+        "Allied integrated air defenses demonstrated regional capacity but also exposed deployment patterns.",
+        "All sides are assessing the outcome of this exchange before deciding next moves."
       ]
     },
     {
@@ -435,7 +445,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "See risk factors."
+        "Military risk around the Strait of Hormuz is at a peak; commercial shipping faces real threats of attack or seizure.",
+        "Major container and tanker lines are evaluating pauses or reroutes, raising global supply-chain cost and delay.",
+        "War-risk insurance premiums are expected to jump materially."
       ]
     },
     {
@@ -444,7 +456,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "See risk factors."
+        "Oil already embeds a large risk premium as markets prepare for potential supply disruptions.",
+        "If Israel retaliates against Iranian oil infrastructure, prices could break $100/bbl quickly.",
+        "OPEC+ may face pressure to add barrels, but spare capacity is limited and decisions take time."
       ]
     },
     {
@@ -453,7 +467,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "See risk factors."
+        "Iranian leaders frame the strike as “limited and concluded,” trying to pace escalation—while shifting the next move to the other side.",
+        "Washington condemns Iran while stressing an “ironclad” commitment to Israel’s security and the right to self-defense.",
+        "Israel’s war cabinet is weighing responses; hardliners are pushing for forceful retaliation."
       ]
     }
   ],
