@@ -4,10 +4,10 @@ name: Generate Daily AION Report
 
 on:
   schedule:
-    # 9:00 AM New York time — two crons cover EST (UTC-5) and EDT (UTC-4).
-    # The NY time guard below ensures only the correct one actually runs.
-    - cron: "0 13 * * *"
-    - cron: "0 14 * * *"
+    # 5:00 AM New York — two crons cover EDT (UTC 09 → NY 05) and EST (UTC 10 → NY 05).
+    # The NY time guard ensures only the run whose UTC instant is actually 05:00 in America/New_York proceeds.
+    - cron: "0 9 * * *"
+    - cron: "0 10 * * *"
   workflow_dispatch:
 
 env:
@@ -29,9 +29,9 @@ jobs:
         id: ny_guard
         run: |
           ny_hour="$(TZ=America/New_York date +%H)"
-          if [ "$ny_hour" = "09" ]; then
+          if [ "$ny_hour" = "05" ]; then
             echo "run=true" >> "$GITHUB_OUTPUT"
-            echo "NY hour is 09 — proceeding."
+            echo "NY hour is 05 — proceeding."
           else
             echo "run=false" >> "$GITHUB_OUTPUT"
             echo "NY hour is $ny_hour — skipping."
