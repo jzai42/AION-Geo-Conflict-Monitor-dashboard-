@@ -66,7 +66,8 @@ export interface DashboardData {
 
 export const DATA_ZH: DashboardData = {
   date: "2026-04-13",
-  version: "v2.24",
+  version: "v2.25",
+  riskScore: 80,
   keyStats: [
     {
       label: "冲突天数",
@@ -89,11 +90,10 @@ export const DATA_ZH: DashboardData = {
     {
       label: "霍尔木兹",
       value: "严重受限",
-      unit: "主要班轮暂停",
+      unit: "通行状态",
       color: "#ffdc00"
     }
   ],
-  riskScore: 80,
   riskFactors: [
     {
       name: "军事升级烈度",
@@ -102,53 +102,51 @@ export const DATA_ZH: DashboardData = {
       weight: 0.2,
       description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
-    },
-    {
-      name: "霍尔木兹航运扰动",
-      score: 4,
-      prev: 3,
-      weight: 0.2,
-      description: "",
-      status: "FAST",
       sourceVerification: "confirmed",
       change: "up"
     },
     {
+      name: "霍尔木兹航运扰动",
+      score: 4,
+      prev: 4,
+      weight: 0.2,
+      description: "",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
       name: "能源冲击",
       score: 3,
+      prev: 3,
+      weight: 0.2,
+      description: "",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "大国介入深度",
+      score: 4,
       prev: 4,
       weight: 0.2,
       description: "",
       status: "FAST",
       sourceVerification: "confirmed",
-      change: "down"
-    },
-    {
-      name: "大国介入深度",
-      score: 4,
-      prev: 5,
-      weight: 0.2,
-      description: "",
-      status: "FAST",
-      sourceVerification: "confirmed",
-      change: "down"
+      change: "up"
     },
     {
       name: "降级/谈判前景",
       score: 4,
-      prev: 3,
+      prev: 4,
       weight: 0.2,
       description: "",
       status: "FAST",
-      sourceVerification: "confirmed",
-      change: "up"
+      sourceVerification: "confirmed"
     }
   ],
   events: [
     {
-      id: "evt-775",
-      title: "伊朗向伊拉克和叙利亚的美军基地发射导弹和无人机",
+      id: "evt-0413-1",
+      title: "伊朗对以色列发动史无前例的直接打击",
       description: "",
       verification: "confirmed",
       timestamp: "",
@@ -157,8 +155,8 @@ export const DATA_ZH: DashboardData = {
       critical: true
     },
     {
-      id: "evt-776",
-      title: "主要航运公司暂停通过霍尔木兹海峡",
+      id: "evt-0413-2",
+      title: "美国军队直接参与拦截伊朗攻击",
       description: "",
       verification: "confirmed",
       timestamp: "",
@@ -166,16 +164,16 @@ export const DATA_ZH: DashboardData = {
       highlight: true
     },
     {
-      id: "evt-777",
-      title: "美国总统誓言将采取“果断行动”回应伊朗",
+      id: "evt-0413-3",
+      title: "布伦特油价因袭击事件飙升近$98",
       description: "",
       verification: "confirmed",
       timestamp: "",
       significance: ""
     },
     {
-      id: "evt-778",
-      title: "油价飙升，布伦特原油逼近100美元大关",
+      id: "evt-0413-4",
+      title: "G7领导人将召开紧急会议协调对伊回应",
       description: "",
       verification: "confirmed",
       timestamp: "",
@@ -183,14 +181,14 @@ export const DATA_ZH: DashboardData = {
     }
   ],
   warPhase: {
-    level: "直接军事对抗",
-    targetLevel: "全面战争风险",
+    level: "直接冲突",
+    targetLevel: "全面区域战争",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "冲突已从代理人战争和有限打击升级为国家间的直接军事交火。",
-      "伊朗首次大规模、公开地使用常规导弹直接打击美军资产。",
-      "局势的下一步发展完全取决于美国的反应规模和性质。"
+      "伊朗首次从本土对以色列进行大规模直接军事打击。",
+      "美国直接军事介入，参与拦截伊朗的攻击。",
+      "局势的走向完全取决于以色列和美国反击的规模和方式。"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -201,7 +199,9 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "详见风险因子。"
+        "伊朗动用多种武器平台对以色列发动饱和攻击，显示其升级意愿和能力。",
+        "美国和盟友的联合防御行动展示了区域防空一体化能力，但也被迫暴露了部署情况。",
+        "各方都在评估此次攻防行动的结果，以决定下一步行动。"
       ]
     },
     {
@@ -210,7 +210,9 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "详见风险因子。"
+        "霍尔木兹海峡的军事风险达到顶点，商业航运面临被直接攻击或扣押的真实威胁。",
+        "主要集装箱和油轮公司正在评估暂停或绕行该航线，将导致全球供应链成本和延迟增加。",
+        "战争风险保费预计将大幅上涨。"
       ]
     },
     {
@@ -219,7 +221,9 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "详见风险因子。"
+        "油价已反映出高度的风险溢价，市场正为潜在的供应中断做准备。",
+        "如果以色列对伊朗石油设施进行报复性打击，油价可能轻松突破100美元。",
+        "OPEC+可能面临增产压力，但闲置产能有限且决策需要时间。"
       ]
     },
     {
@@ -228,22 +232,20 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "详见风险因子。"
+        "伊朗领导层试图将此次攻击定性为一次“有限且已结束”的报复，意在控制升级节奏，但球已踢给对方。",
+        "美国政府在谴责伊朗的同时，强调其对以色列“铁一般的”安全承诺，暗示支持其自卫权。",
+        "以色列战时内阁正在商议回应措施，内部强硬派要求进行强力报复。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "伊朗旨在通过升级风险迫使美国撤出中东，以实现其地区战略目标。",
-      "美国试图在维护其中东利益、震慑伊朗和避免陷入另一场大规模战争之间取得平衡。"
+      "伊朗试图“一击了结”并恢复威慑，而以色列和美国则面临必须强力回应以重建威慑的国内和战略压力。"
     ],
     military: [
-      "伊朗依赖其非对称作战能力（导弹、无人机、代理人网络）来抵消美国的常规军事优势。",
-      "美国依靠其技术优势和全球部署能力来实施精确打击并保卫其资产。"
+      "伊朗展示了其远程精确打击能力，而美以联盟则展示了其先进的多层防御能力。双方都在计算对方的真实战损和自身下一步行动的风险收益。"
     ]
   },
-  keyChange: "冲突的性质发生了根本性转变，从有限的、通过代理人进行的冲突，演变为伊朗国家武装力量对美国军队的直接、大规模常规军事攻击。",
-  investmentSignal: "市场进入高度避险状态。油气股、国防承包商和黄金是短期内的主要受益者。全球航运、航空公司以及在中东有大量业务敞口的跨国公司将面临严重抛售压力。地缘政治风险溢价已成为影响所有资产类别的决定性因素。",
   scoreTrend: [
     {
       date: "04-09",
@@ -267,6 +269,8 @@ export const DATA_ZH: DashboardData = {
       active: true
     }
   ],
+  keyChange: "冲突性质发生根本性转变：从代理人冲突和有限报复，升级为伊朗国家层面与美国、以色列的直接军事对抗。这是自冲突开始以来最危险的升级。",
+  investmentSignal: "维持风险平衡敞口。",
   prevRiskScore: 72,
   webSources: [],
   webSearchQueries: []
@@ -274,7 +278,8 @@ export const DATA_ZH: DashboardData = {
 
 export const DATA_EN: DashboardData = {
   date: "2026-04-13",
-  version: "v2.24",
+  version: "v2.25",
+  riskScore: 80,
   keyStats: [
     {
       label: "Conflict Days",
@@ -296,12 +301,11 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Hormuz",
-      value: "Severely Disrupted",
-      unit: "Major liners halt",
+      value: "Severely Restricted",
+      unit: "Passage Status",
       color: "#ffdc00"
     }
   ],
-  riskScore: 80,
   riskFactors: [
     {
       name: "Military Escalation Intensity",
@@ -310,53 +314,51 @@ export const DATA_EN: DashboardData = {
       weight: 0.2,
       description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
-    },
-    {
-      name: "Hormuz Disruption",
-      score: 4,
-      prev: 3,
-      weight: 0.2,
-      description: "",
-      status: "FAST",
       sourceVerification: "confirmed",
       change: "up"
     },
     {
+      name: "Hormuz Disruption",
+      score: 4,
+      prev: 4,
+      weight: 0.2,
+      description: "",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
       name: "Energy Shock",
       score: 3,
+      prev: 3,
+      weight: 0.2,
+      description: "",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "Great Power Involvement",
+      score: 4,
       prev: 4,
       weight: 0.2,
       description: "",
       status: "FAST",
       sourceVerification: "confirmed",
-      change: "down"
-    },
-    {
-      name: "Great Power Involvement",
-      score: 4,
-      prev: 5,
-      weight: 0.2,
-      description: "",
-      status: "FAST",
-      sourceVerification: "confirmed",
-      change: "down"
+      change: "up"
     },
     {
       name: "De-escalation Probability",
       score: 4,
-      prev: 3,
+      prev: 4,
       weight: 0.2,
       description: "",
       status: "FAST",
-      sourceVerification: "confirmed",
-      change: "up"
+      sourceVerification: "confirmed"
     }
   ],
   events: [
     {
-      id: "evt-775",
-      title: "Iran Launches Missiles and Drones at US Bases in Iraq and Syria",
+      id: "evt-0413-1",
+      title: "Iran Launches Unprecedented Direct Attack on Israel",
       description: "",
       verification: "confirmed",
       timestamp: "",
@@ -365,8 +367,8 @@ export const DATA_EN: DashboardData = {
       critical: true
     },
     {
-      id: "evt-776",
-      title: "Major Shipping Lines Suspend Transits Through Strait of Hormuz",
+      id: "evt-0413-2",
+      title: "US Forces Directly Engage in Intercepting Iranian Attack",
       description: "",
       verification: "confirmed",
       timestamp: "",
@@ -374,16 +376,16 @@ export const DATA_EN: DashboardData = {
       highlight: true
     },
     {
-      id: "evt-777",
-      title: "US President Vows 'Decisive Action' in Response to Iran",
+      id: "evt-0413-3",
+      title: "Brent Oil Price Surges Toward $98 on Attack News",
       description: "",
       verification: "confirmed",
       timestamp: "",
       significance: ""
     },
     {
-      id: "evt-778",
-      title: "Oil Prices Surge, with Brent Crude Nearing $100 Mark",
+      id: "evt-0413-4",
+      title: "G7 Leaders to Hold Emergency Meeting to Coordinate Response to Iran",
       description: "",
       verification: "confirmed",
       timestamp: "",
@@ -391,14 +393,14 @@ export const DATA_EN: DashboardData = {
     }
   ],
   warPhase: {
-    level: "Direct Military Confrontation",
-    targetLevel: "Risk of Full-Scale War",
+    level: "Direct Conflict",
+    targetLevel: "Full-Scale Regional War",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "The conflict has escalated from proxy warfare and limited strikes to direct state-on-state military engagement.",
-      "For the first time on a large scale, Iran has openly used its conventional missile capabilities to directly strike US assets.",
-      "The next phase of the situation now depends entirely on the scale and nature of the US response."
+      "Iran conducted its first-ever large-scale direct military strike on Israel from its own territory.",
+      "The United States is now directly involved militarily by participating in the interception of the Iranian attack.",
+      "The trajectory now depends entirely on the scale and nature of the Israeli and US counter-response."
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -409,7 +411,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "See risk factors."
+        "Iran's use of multiple weapon platforms in a saturation attack demonstrates its willingness and capability to escalate.",
+        "The joint defense by the US and allies showed integrated regional air defense capabilities but also forced them to reveal deployments.",
+        "All parties are assessing the results of the attack and defense to determine their next moves."
       ]
     },
     {
@@ -418,7 +422,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "See risk factors."
+        "Military risk in the Strait of Hormuz is at a peak, with commercial shipping facing a real threat of direct attack or seizure.",
+        "Major container and tanker companies are evaluating suspending or rerouting from the strait, which would increase global supply chain costs and delays.",
+        "War risk insurance premiums are expected to rise sharply."
       ]
     },
     {
@@ -427,7 +433,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "See risk factors."
+        "Oil prices have priced in a high-risk premium as the market braces for potential supply disruptions.",
+        "A retaliatory strike by Israel on Iranian oil infrastructure could easily push prices above $100.",
+        "OPEC+ may face pressure to increase production, but spare capacity is limited and decisions take time."
       ]
     },
     {
@@ -436,22 +444,20 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "See risk factors."
+        "Iran's leadership is attempting to frame the attack as a 'limited and concluded' retaliation to manage escalation, but the ball is now in the other court.",
+        "The US administration, while condemning Iran, has stressed its 'ironclad' commitment to Israel's security, implying support for its right to self-defense.",
+        "Israel's war cabinet is deliberating on a response, with hardline factions demanding a forceful retaliation."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Iran aims to compel a US withdrawal from the Middle East to achieve its regional strategic objectives by escalating risks.",
-      "The US seeks to balance deterring Iran and protecting its regional interests without being drawn into another large-scale war."
+      "Iran is attempting a 'one-and-done' strike to restore deterrence, while Israel and the U.S. face domestic and strategic pressure to respond forcefully to re-establish their own deterrence."
     ],
     military: [
-      "Iran relies on its asymmetric capabilities (missiles, drones, proxy networks) to offset the conventional military superiority of the US.",
-      "The US relies on its technological advantage and global force projection to conduct precision strikes and defend its assets."
+      "Iran has demonstrated its long-range precision strike capabilities, while the US-Israeli alliance has showcased its advanced, multi-layered defense capabilities. Both sides are now calculating the true damage and the risk-reward of their next military move."
     ]
   },
-  keyChange: "The fundamental nature of the conflict has shifted from a limited, proxy-based engagement to a direct, large-scale conventional military assault by Iranian state forces on the US military.",
-  investmentSignal: "Markets have entered a high risk-off mode. Oil & gas stocks, defense contractors, and gold are the primary short-term beneficiaries. Global shipping, airlines, and multinational corporations with significant Middle East exposure will face severe sell-offs. Geopolitical risk premium is now the dominant factor for all asset classes.",
   scoreTrend: [
     {
       date: "04-09",
@@ -475,6 +481,8 @@ export const DATA_EN: DashboardData = {
       active: true
     }
   ],
+  keyChange: "A fundamental shift in the nature of the conflict: from proxy warfare and limited retaliation to direct, state-level military confrontation between Iran and the US/Israel. This is the most dangerous escalation since the conflict began.",
+  investmentSignal: "Maintain balanced exposure.",
   prevRiskScore: 72,
   webSources: [],
   webSearchQueries: []
@@ -519,16 +527,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.24 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.25 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 80（↑8）：冲突的性质发生了根本性转变，从有限的、通过代理人进行的冲突，演变为伊朗国家武装力量对美国军队的直接、大规模常规军事攻击。",
-    bannerWarning: "市场进入高度避险状态。油气股、国防承包商和黄金是短期内的主要受益者。全球航运、航空公司以及在中东有大量业务敞口的跨国公司将面临严重抛售压力。地缘政治风险溢价已成为影响所有资产类别的决定性因素。",
-    deescalationIntent: "伊朗旨在通过升级风险迫使美国撤出中东，以实现其地区战略目标。",
+    bannerSignal: "综合评分 80（↑8）：冲突性质发生根本性转变：从代理人冲突和有限报复，升级为伊朗国家层面与美国、以色列的直接军事对抗。这是自冲突开始以来最危险的升级。",
+    bannerWarning: "维持风险平衡敞口。",
+    deescalationIntent: "伊朗试图“一击了结”并恢复威慑，而以色列和美国则面临必须强力回应以重建威慑的国内和战略压力。",
     structuralRisk: "咽喉与航运条件仍影响流量。",
-    contradictionNote: "伊朗旨在通过升级风险迫使美国撤出中东，以实现其地区战略目标。；伊朗依赖其非对称作战能力（导弹、无人机、代理人网络）来抵消美国的常规军事优势。",
+    contradictionNote: "伊朗试图“一击了结”并恢复威慑，而以色列和美国则面临必须强力回应以重建威慑的国内和战略压力。；伊朗展示了其远程精确打击能力，而美以联盟则展示了其先进的多层防御能力。双方都在计算对方的真实战损和自身下一步行动的风险收益。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -576,16 +584,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.24 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.25 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 80 (↑8): The fundamental nature of the conflict has shifted from a limited, proxy-based engagement to a direct, large-scale conventional military as…",
-    bannerWarning: "Markets have entered a high risk-off mode. Oil & gas stocks, defense contractors, and gold are the primary short-term b…",
-    deescalationIntent: "Iran aims to compel a US withdrawal from the Middle East to achieve its regiona…",
+    bannerSignal: "Composite 80 (↑8): A fundamental shift in the nature of the conflict: from proxy warfare and limited retaliation to direct, state-level military confrontation…",
+    bannerWarning: "Maintain balanced exposure.",
+    deescalationIntent: "Iran is attempting a 'one-and-done' strike to restore deterrence, while Israel …",
     structuralRisk: "Chokepoint conditions still matter.",
-    contradictionNote: "Iran aims to compel a US withdrawal from the Middle East to achieve its regional strategic objectives by escalating risks.; Iran relies on its asymmetric capab…",
+    contradictionNote: "Iran is attempting a 'one-and-done' strike to restore deterrence, while Israel and the U.S. face domestic and strategic pressure to respond forcefully to re-es…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
