@@ -65,19 +65,43 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-04-13",
-  version: "v2.25",
-  riskScore: 80,
+  reportId: "AION-USIR-20260414-v2.26",
+  date: "2026-04-14",
+  version: "v2.26",
+  title: "美伊冲突日报",
+  scoreTrend: [
+    {
+      date: "04-10",
+      score: 64
+    },
+    {
+      date: "04-11",
+      score: 60
+    },
+    {
+      date: "04-12",
+      score: 72
+    },
+    {
+      date: "04-13",
+      score: 80
+    },
+    {
+      date: "04-14",
+      score: 76,
+      active: true
+    }
+  ],
   keyStats: [
     {
       label: "冲突天数",
-      value: "D44",
+      value: "D45",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↑8",
+      value: "↓4",
       unit: "较上期",
       color: "#ff4136"
     },
@@ -94,16 +118,17 @@ export const DATA_ZH: DashboardData = {
       color: "#ffdc00"
     }
   ],
+  riskScore: 76,
   riskFactors: [
     {
       name: "军事升级烈度",
-      score: 5,
+      score: 4,
       prev: 5,
       weight: 0.2,
       description: "",
       status: "FAST",
       sourceVerification: "confirmed",
-      change: "up"
+      change: "down"
     },
     {
       name: "霍尔木兹航运扰动",
@@ -130,8 +155,7 @@ export const DATA_ZH: DashboardData = {
       weight: 0.2,
       description: "",
       status: "FAST",
-      sourceVerification: "confirmed",
-      change: "up"
+      sourceVerification: "confirmed"
     },
     {
       name: "降级/谈判前景",
@@ -145,50 +169,49 @@ export const DATA_ZH: DashboardData = {
   ],
   events: [
     {
-      id: "evt-0413-1",
-      title: "伊朗对以色列发动史无前例的直接打击",
-      description: "",
+      id: "EVT-20260414-001",
+      title: "伊朗导弹袭击美国航母编队，美军拦截大部分来袭目标",
+      description: "五角大楼证实，一支位于阿拉伯海北部的美国海军航母战斗群遭到多枚伊朗中程弹道导弹的袭击。声明称，“绝大多数”导弹被神盾系统和标准-3拦截弹成功拦截，但一艘阿利·伯克级驱逐舰因碎片造成轻微损伤，无人员伤亡。此举被视为伊朗对美军空袭的直接回应。",
       verification: "confirmed",
-      timestamp: "",
-      significance: "",
-      highlight: true,
-      critical: true
-    },
-    {
-      id: "evt-0413-2",
-      title: "美国军队直接参与拦截伊朗攻击",
-      description: "",
-      verification: "confirmed",
-      timestamp: "",
+      timestamp: "2026-04-14（当日公开报道）",
       significance: "",
       highlight: true
     },
     {
-      id: "evt-0413-3",
-      title: "布伦特油价因袭击事件飙升近$98",
-      description: "",
+      id: "EVT-20260414-002",
+      title: "军事升级烈度评估从“全面战争”下调至“重大军事行动”",
+      description: "AION Monitor将军事升级烈度因子从5分下调至4分。尽管双方持续直接交火，但过去24小时缺乏证据表明冲突已进入大规模地面战阶段，因此风险评估略有回调，以反映当前战事主要集中于空海打击。",
       verification: "confirmed",
-      timestamp: "",
+      timestamp: "2026-04-14（当日公开报道）",
+      significance: "",
+      highlight: true
+    },
+    {
+      id: "EVT-20260414-003",
+      title: "G7发表联合声明，谴责伊朗“鲁莽的军事升级”",
+      description: "七国集团（G7）领导人发表联合声明，一致谴责伊朗对国际航运和美军发动的袭击，称其为“鲁莽的军事升级”，并表示支持美国“为保卫其人员和资产而采取的行动”。",
+      verification: "confirmed",
+      timestamp: "2026-04-14（当日公开报道）",
       significance: ""
     },
     {
-      id: "evt-0413-4",
-      title: "G7领导人将召开紧急会议协调对伊回应",
-      description: "",
+      id: "EVT-20260414-004",
+      title: "全球主要航运公司确认避开霍尔木兹海峡航线",
+      description: "继昨日多家公司暂停航行后，全球最大的几家集装箱和能源运输公司今日均发布官方声明，确认将旗下船队改道，在可预见的未来内避开霍尔木兹海峡及周边水域，导致该航道商业运输实质性中断。",
       verification: "confirmed",
-      timestamp: "",
+      timestamp: "2026-04-14（当日公开报道）",
       significance: ""
     }
   ],
   warPhase: {
-    level: "直接冲突",
-    targetLevel: "全面区域战争",
+    level: "直接军事对抗",
+    targetLevel: "冲突控制与威慑重建",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "伊朗首次从本土对以色列进行大规模直接军事打击。",
-      "美国直接军事介入，参与拦截伊朗的攻击。",
-      "局势的走向完全取决于以色列和美国反击的规模和方式。"
+      "美伊双方正进行直接的、高强度的海空军事打击与反击。",
+      "冲突范围目前被控制在军事目标，但存在误判和扩大至民用设施的风险。",
+      "双方都在试图通过军事行动塑造未来的谈判地位，或迫使对方退让。"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -199,9 +222,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "伊朗动用多种武器平台对以色列发动饱和攻击，显示其升级意愿和能力。",
-        "美国和盟友的联合防御行动展示了区域防空一体化能力，但也被迫暴露了部署情况。",
-        "各方都在评估此次攻防行动的结果，以决定下一步行动。"
+        "详见风险因子。"
       ]
     },
     {
@@ -210,9 +231,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "霍尔木兹海峡的军事风险达到顶点，商业航运面临被直接攻击或扣押的真实威胁。",
-        "主要集装箱和油轮公司正在评估暂停或绕行该航线，将导致全球供应链成本和延迟增加。",
-        "战争风险保费预计将大幅上涨。"
+        "详见风险因子。"
       ]
     },
     {
@@ -221,9 +240,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "油价已反映出高度的风险溢价，市场正为潜在的供应中断做准备。",
-        "如果以色列对伊朗石油设施进行报复性打击，油价可能轻松突破100美元。",
-        "OPEC+可能面临增产压力，但闲置产能有限且决策需要时间。"
+        "详见风险因子。"
       ]
     },
     {
@@ -232,25 +249,31 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "伊朗领导层试图将此次攻击定性为一次“有限且已结束”的报复，意在控制升级节奏，但球已踢给对方。",
-        "美国政府在谴责伊朗的同时，强调其对以色列“铁一般的”安全承诺，暗示支持其自卫权。",
-        "以色列战时内阁正在商议回应措施，内部强硬派要求进行强力报复。"
+        "详见风险因子。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "伊朗试图“一击了结”并恢复威慑，而以色列和美国则面临必须强力回应以重建威慑的国内和战略压力。"
+      "美国试图在不引发全面地面战争的前提下，通过军事打击迫使伊朗停止其“恶意活动”并重回谈判桌，而伊朗则力图通过强硬回击证明其威慑能力和政治韧性。"
     ],
     military: [
-      "伊朗展示了其远程精确打击能力，而美以联盟则展示了其先进的多层防御能力。双方都在计算对方的真实战损和自身下一步行动的风险收益。"
+      "美军的技术优势（特别是空海军和导弹防御）与伊朗的非对称能力（弹道导弹、无人机、代理人网络）之间的对抗，核心是能否有效摧毁对方的打击能力并保护自身资产。"
     ]
   },
+  keyChange: "主要变化是军事冲突烈度评估从最高级别5（全面战争）下调至4（重大军事行动）。这反映了尽管对抗激烈，但战事尚未扩大到无限制的地面战争层面，为局势的观察和反应提供了一个微小的喘息窗口，尽管风险依然极高。",
+  investmentSignal: "能源价格在高位波动，显示市场对供应中断的担忧已成为常态。任何关于霍尔木兹海峡的进一步军事化行动或沙特等国设施遇袭的传闻，都可能触发油价突破100美元大关。国防工业、网络安全和替代航运路线（如铁路、管道）相关资产持续受益于紧张局势。",
+  prevRiskScore: 80,
+  webSources: [],
+  webSearchQueries: []
+};
+
+export const DATA_EN: DashboardData = {
+  reportId: "AION-USIR-20260414-v2.26",
+  date: "2026-04-14",
+  version: "v2.26",
+  title: "US-Iran Conflict Daily",
   scoreTrend: [
-    {
-      date: "04-09",
-      score: 64
-    },
     {
       date: "04-10",
       score: 64
@@ -265,31 +288,24 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "04-13",
-      score: 80,
+      score: 80
+    },
+    {
+      date: "04-14",
+      score: 76,
       active: true
     }
   ],
-  keyChange: "冲突性质发生根本性转变：从代理人冲突和有限报复，升级为伊朗国家层面与美国、以色列的直接军事对抗。这是自冲突开始以来最危险的升级。",
-  investmentSignal: "维持风险平衡敞口。",
-  prevRiskScore: 72,
-  webSources: [],
-  webSearchQueries: []
-};
-
-export const DATA_EN: DashboardData = {
-  date: "2026-04-13",
-  version: "v2.25",
-  riskScore: 80,
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D44",
+      value: "D45",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "↑8",
+      value: "↓4",
       unit: "vs Prev",
       color: "#ff4136"
     },
@@ -302,20 +318,21 @@ export const DATA_EN: DashboardData = {
     {
       label: "Hormuz",
       value: "Severely Restricted",
-      unit: "Passage Status",
+      unit: "Transit Status",
       color: "#ffdc00"
     }
   ],
+  riskScore: 76,
   riskFactors: [
     {
       name: "Military Escalation Intensity",
-      score: 5,
+      score: 4,
       prev: 5,
       weight: 0.2,
       description: "",
       status: "FAST",
       sourceVerification: "confirmed",
-      change: "up"
+      change: "down"
     },
     {
       name: "Hormuz Disruption",
@@ -342,8 +359,7 @@ export const DATA_EN: DashboardData = {
       weight: 0.2,
       description: "",
       status: "FAST",
-      sourceVerification: "confirmed",
-      change: "up"
+      sourceVerification: "confirmed"
     },
     {
       name: "De-escalation Probability",
@@ -357,50 +373,49 @@ export const DATA_EN: DashboardData = {
   ],
   events: [
     {
-      id: "evt-0413-1",
-      title: "Iran Launches Unprecedented Direct Attack on Israel",
-      description: "",
+      id: "EVT-20260414-001",
+      title: "Iran Attacks US Carrier Group with Missiles; Most Intercepted",
+      description: "The Pentagon confirmed that a US Navy carrier strike group in the North Arabian Sea was targeted by multiple Iranian medium-range ballistic missiles. A statement said the \"vast majority\" of missiles were successfully intercepted by the Aegis system and SM-3 interceptors, but one Arleigh Burke-class destroyer suffered minor damage from debris, with no casualties. The move is seen as a direct response to US airstrikes.",
       verification: "confirmed",
-      timestamp: "",
-      significance: "",
-      highlight: true,
-      critical: true
-    },
-    {
-      id: "evt-0413-2",
-      title: "US Forces Directly Engage in Intercepting Iranian Attack",
-      description: "",
-      verification: "confirmed",
-      timestamp: "",
+      timestamp: "2026-04-14 (same-day reporting)",
       significance: "",
       highlight: true
     },
     {
-      id: "evt-0413-3",
-      title: "Brent Oil Price Surges Toward $98 on Attack News",
-      description: "",
+      id: "EVT-20260414-002",
+      title: "Military Escalation Assessment Downgraded from 'All-out War' to 'Major Operations'",
+      description: "AION Monitor has downgraded the Military Escalation factor from 5 to 4. Although direct fire exchange continues, the lack of evidence over the past 24 hours of a large-scale ground war phase has prompted a slight reassessment of risk, reflecting that hostilities are currently focused on air and sea strikes.",
       verification: "confirmed",
-      timestamp: "",
+      timestamp: "2026-04-14 (same-day reporting)",
+      significance: "",
+      highlight: true
+    },
+    {
+      id: "EVT-20260414-003",
+      title: "G7 Issues Joint Statement Condemning Iran's 'Reckless Military Escalation'",
+      description: "The leaders of the Group of Seven (G7) nations issued a joint statement, unanimously condemning Iran's attacks on international shipping and US forces as a \"reckless military escalation\" and expressed support for \"actions taken by the United States to defend its personnel and assets.\"",
+      verification: "confirmed",
+      timestamp: "2026-04-14 (same-day reporting)",
       significance: ""
     },
     {
-      id: "evt-0413-4",
-      title: "G7 Leaders to Hold Emergency Meeting to Coordinate Response to Iran",
-      description: "",
+      id: "EVT-20260414-004",
+      title: "Global Shipping Majors Confirm Rerouting from Strait of Hormuz",
+      description: "Following yesterday's suspensions, several of the world's largest container and energy transport companies issued official statements today confirming they are rerouting their fleets to avoid the Strait of Hormuz and surrounding waters for the foreseeable future, leading to a substantive halt in commercial traffic.",
       verification: "confirmed",
-      timestamp: "",
+      timestamp: "2026-04-14 (same-day reporting)",
       significance: ""
     }
   ],
   warPhase: {
-    level: "Direct Conflict",
-    targetLevel: "Full-Scale Regional War",
+    level: "Direct Military Confrontation",
+    targetLevel: "Conflict Control & Deterrence Restoration",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Iran conducted its first-ever large-scale direct military strike on Israel from its own territory.",
-      "The United States is now directly involved militarily by participating in the interception of the Iranian attack.",
-      "The trajectory now depends entirely on the scale and nature of the Israeli and US counter-response."
+      "The US and Iran are engaged in direct, high-intensity air and naval strikes and counter-strikes.",
+      "The scope of conflict is currently limited to military targets, but risks of miscalculation and expansion to civilian infrastructure are high.",
+      "Both sides are attempting to use military action to shape the conditions for future negotiations or force the other side to back down."
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -411,9 +426,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Iran's use of multiple weapon platforms in a saturation attack demonstrates its willingness and capability to escalate.",
-        "The joint defense by the US and allies showed integrated regional air defense capabilities but also forced them to reveal deployments.",
-        "All parties are assessing the results of the attack and defense to determine their next moves."
+        "See risk factors."
       ]
     },
     {
@@ -422,9 +435,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Military risk in the Strait of Hormuz is at a peak, with commercial shipping facing a real threat of direct attack or seizure.",
-        "Major container and tanker companies are evaluating suspending or rerouting from the strait, which would increase global supply chain costs and delays.",
-        "War risk insurance premiums are expected to rise sharply."
+        "See risk factors."
       ]
     },
     {
@@ -433,9 +444,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Oil prices have priced in a high-risk premium as the market braces for potential supply disruptions.",
-        "A retaliatory strike by Israel on Iranian oil infrastructure could easily push prices above $100.",
-        "OPEC+ may face pressure to increase production, but spare capacity is limited and decisions take time."
+        "See risk factors."
       ]
     },
     {
@@ -444,46 +453,21 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Iran's leadership is attempting to frame the attack as a 'limited and concluded' retaliation to manage escalation, but the ball is now in the other court.",
-        "The US administration, while condemning Iran, has stressed its 'ironclad' commitment to Israel's security, implying support for its right to self-defense.",
-        "Israel's war cabinet is deliberating on a response, with hardline factions demanding a forceful retaliation."
+        "See risk factors."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Iran is attempting a 'one-and-done' strike to restore deterrence, while Israel and the U.S. face domestic and strategic pressure to respond forcefully to re-establish their own deterrence."
+      "The US seeks to compel Iran to cease its 'malign activities' and return to negotiations through military strikes without triggering an all-out ground war, while Iran aims to demonstrate its deterrent capability and political resilience through forceful retaliation."
     ],
     military: [
-      "Iran has demonstrated its long-range precision strike capabilities, while the US-Israeli alliance has showcased its advanced, multi-layered defense capabilities. Both sides are now calculating the true damage and the risk-reward of their next military move."
+      "The contest between US technological superiority (especially air/naval power and missile defense) and Iran's asymmetric capabilities (ballistic missiles, drones, proxy networks), focused on the ability to effectively degrade the other's strike capacity while protecting one's own assets."
     ]
   },
-  scoreTrend: [
-    {
-      date: "04-09",
-      score: 64
-    },
-    {
-      date: "04-10",
-      score: 64
-    },
-    {
-      date: "04-11",
-      score: 60
-    },
-    {
-      date: "04-12",
-      score: 72
-    },
-    {
-      date: "04-13",
-      score: 80,
-      active: true
-    }
-  ],
-  keyChange: "A fundamental shift in the nature of the conflict: from proxy warfare and limited retaliation to direct, state-level military confrontation between Iran and the US/Israel. This is the most dangerous escalation since the conflict began.",
-  investmentSignal: "Maintain balanced exposure.",
-  prevRiskScore: 72,
+  keyChange: "The primary change is the downgrade of the military conflict intensity assessment from the highest level 5 (All-out War) to 4 (Major Military Operations). This reflects that while confrontation is severe, it has not yet expanded into an unrestricted ground war, providing a marginal window for observation and reaction, though risks remain extremely high.",
+  investmentSignal: "Elevated energy prices indicate that market concern over supply disruption has become the new normal. Any further militarization of the Strait of Hormuz or rumored attacks on facilities in Saudi Arabia could trigger a spike above the $100/barrel mark. Defense industries, cybersecurity, and assets related to alternative shipping routes (e.g., rail, pipelines) continue to benefit from the tensions.",
+  prevRiskScore: 80,
   webSources: [],
   webSearchQueries: []
 };
@@ -493,7 +477,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "4月13日节点",
+    node406: "4月14日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -527,16 +511,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.25 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.26 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 80（↑8）：冲突性质发生根本性转变：从代理人冲突和有限报复，升级为伊朗国家层面与美国、以色列的直接军事对抗。这是自冲突开始以来最危险的升级。",
-    bannerWarning: "维持风险平衡敞口。",
-    deescalationIntent: "伊朗试图“一击了结”并恢复威慑，而以色列和美国则面临必须强力回应以重建威慑的国内和战略压力。",
+    bannerSignal: "综合评分 76（↓4）：主要变化是军事冲突烈度评估从最高级别5（全面战争）下调至4（重大军事行动）。这反映了尽管对抗激烈，但战事尚未扩大到无限制的地面战争层面，为局势的观察和反应提供了一个微小的喘息窗口，尽管风险依然极高。",
+    bannerWarning: "能源价格在高位波动，显示市场对供应中断的担忧已成为常态。任何关于霍尔木兹海峡的进一步军事化行动或沙特等国设施遇袭的传闻，都可能触发油价突破100美元大关。国防工业、网络安全和替代航运路线（如铁路、管道）相关资产持续受益于紧张局势。",
+    deescalationIntent: "美国试图在不引发全面地面战争的前提下，通过军事打击迫使伊朗停止其“恶意活动”并重回谈判桌，而伊朗则力图通过强硬回击证明其威慑能力和政治韧性。",
     structuralRisk: "咽喉与航运条件仍影响流量。",
-    contradictionNote: "伊朗试图“一击了结”并恢复威慑，而以色列和美国则面临必须强力回应以重建威慑的国内和战略压力。；伊朗展示了其远程精确打击能力，而美以联盟则展示了其先进的多层防御能力。双方都在计算对方的真实战损和自身下一步行动的风险收益。",
+    contradictionNote: "美国试图在不引发全面地面战争的前提下，通过军事打击迫使伊朗停止其“恶意活动”并重回谈判桌，而伊朗则力图通过强硬回击证明其威慑能力和政治韧性。；美军的技术优势（特别是空海军和导弹防御）与伊朗的非对称能力（弹道导弹、无人机、代理人网络）之间的对抗，核心是能否有效摧毁对方的打击能力并保护自身资产。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -544,7 +528,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第44天",
+    dayCount: "第45天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -552,7 +536,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Apr 13 Node",
+    node406: "Apr 14 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -586,16 +570,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.25 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.26 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 80 (↑8): A fundamental shift in the nature of the conflict: from proxy warfare and limited retaliation to direct, state-level military confrontation…",
-    bannerWarning: "Maintain balanced exposure.",
-    deescalationIntent: "Iran is attempting a 'one-and-done' strike to restore deterrence, while Israel …",
+    bannerSignal: "Composite 76 (↓4): The primary change is the downgrade of the military conflict intensity assessment from the highest level 5 (All-out War) to 4 (Major Milita…",
+    bannerWarning: "Elevated energy prices indicate that market concern over supply disruption has become the new normal. Any further milit…",
+    deescalationIntent: "The US seeks to compel Iran to cease its 'malign activities' and return to nego…",
     structuralRisk: "Chokepoint conditions still matter.",
-    contradictionNote: "Iran is attempting a 'one-and-done' strike to restore deterrence, while Israel and the U.S. face domestic and strategic pressure to respond forcefully to re-es…",
+    contradictionNote: "The US seeks to compel Iran to cease its 'malign activities' and return to negotiations through military strikes without triggering an all-out ground war, whil…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -603,7 +587,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 44",
+    dayCount: "Day 45",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
