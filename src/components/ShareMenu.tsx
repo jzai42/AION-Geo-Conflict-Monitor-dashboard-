@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Share2, Link2, FileDown, Loader2, Smartphone } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { buildCopyLinkUrl, tabToShareView, type ShareUrlState } from '../lib/share-url';
+import { buildCopyLinkUrl, tabToShareView } from '../lib/share-url';
 import type { DashboardData } from '../data';
 import { readFetchErrorMessage } from '../lib/api-error';
 import { apiAbsoluteUrl, canGeneratePdf } from '../lib/api-url';
@@ -32,13 +32,6 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
     return () => document.removeEventListener('mousedown', onDoc);
   }, []);
 
-  const shareState: ShareUrlState = {
-    lang: language,
-    date: data.date,
-    version: data.version,
-    view: tabToShareView(activeTab),
-  };
-
   const copyLink = useCallback(async () => {
     const url = buildCopyLinkUrl();
     try {
@@ -48,7 +41,7 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
       setToast({ message: language === 'zh' ? '复制失败，请手动复制地址栏' : 'Copy failed', tone: 'error' });
     }
     setOpen(false);
-  }, [language, shareState]);
+  }, [language]);
 
   const pollStatus = useCallback(
     async (jobId: string): Promise<string> => {
@@ -86,7 +79,7 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
           date: data.date,
           lang: language,
           version: data.version,
-          view: shareState.view,
+          view: tabToShareView(activeTab),
         }),
       });
       if (!res.ok) {
@@ -118,7 +111,7 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
       setPdfLoading(false);
       setOpen(false);
     }
-  }, [data.date, data.version, language, pollStatus, shareState.view]);
+  }, [data.date, data.version, language, activeTab, pollStatus]);
 
   const systemShare = useCallback(async () => {
     const url = buildCopyLinkUrl();
@@ -134,7 +127,7 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
         /* user cancel */
       }
     }
-  }, [language, shareState]);
+  }, [language]);
 
   const canShare = typeof navigator !== 'undefined' && !!navigator.share;
   /** MVP：线上静态站以复制链接为主；PDF 需自建 API（VITE_API_BASE）或本地 dev，此时才展示入口 */
