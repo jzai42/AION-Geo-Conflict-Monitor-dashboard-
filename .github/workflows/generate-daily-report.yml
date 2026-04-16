@@ -25,17 +25,26 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - name: Check New York time guard
+      - name: Check New York DST guard
         id: ny_guard
         run: |
-          ny_hour="$(TZ=America/New_York date +%H)"
-          if [ "$ny_hour" = "05" ]; then
-            echo "run=true" >> "$GITHUB_OUTPUT"
-            echo "NY hour is 05 — proceeding."
-          else
-            echo "run=false" >> "$GITHUB_OUTPUT"
-            echo "NY hour is $ny_hour — skipping."
+          # GitHub scheduled runs can be delayed; do not rely on local hour only.
+          # Instead, pair each cron with expected NY UTC offset:
+          # - cron 09:00 UTC should run only in EDT (UTC-4)
+          # - cron 10:00 UTC should run only in EST (UTC-5)
+          schedule="${{ github.event.schedule }}"
+          ny_offset="$(TZ=America/New_York date +%z)"
+          run=false
+
+          if [ "$schedule" = "0 9 * * *" ] && [ "$ny_offset" = "-0400" ]; then
+            run=true
           fi
+          if [ "$schedule" = "0 10 * * *" ] && [ "$ny_offset" = "-0500" ]; then
+            run=true
+          fi
+
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+          echo "schedule=$schedule ny_offset=$ny_offset run=$run"
 
       - name: Checkout
         if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
