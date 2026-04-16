@@ -7,7 +7,8 @@ import { GoogleGenAI } from "@google/genai";
 const CONFIG = {
   conflictStartDate: "2026-02-28",
   ensembleN: 1,
-  oilDemoUrl: "https://api.oilpriceapi.com/v1/demo/prices",
+  /** Commodities WTI / BRENT — requires ALPHA_VANTAGE_API_KEY (see www.alphavantage.co/documentation/). */
+  alphaVantageQueryUrl: "https://www.alphavantage.co/query",
   geminiMaxAttempts: 4,
   geminiRetryBaseMs: 1500,
   geminiRetryMaxMs: 12000,
@@ -18,6 +19,7 @@ const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-pro";
 if (!GEMINI_API_KEY) throw new Error("Missing GEMINI_API_KEY (or GOOGLE_API_KEY)");
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
 const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4.1-mini";
+const ALPHA_VANTAGE_API_KEY = (process.env.ALPHA_VANTAGE_API_KEY || "").trim();
 
 const genai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
@@ -96,32 +98,113 @@ function isRetriableOpenAIError(msg) {
   return /429|500|502|503|504|rate limit|overloaded|timeout|ETIMEDOUT|ECONNRESET/i.test(msg);
 }
 
-/** WTI + Brent spot from OilPriceAPI demo (no key; ~20 req/h per IP). */
+/**
+ * Latest daily close from Alpha Vantage commodity JSON (`function=WTI` or `BRENT`).
+ * Handles `data` as an array of { date, value } or a date-keyed object (API variants).
+ */
+function parseAlphaVantageCommodityBody(body) {
+  if (!body || typeof body !== "object") return null;
+  const note = body.Note || body.Information || body["Error Message"];
+  if (note) return { error: String(note) };
+
+  const meta = body["Meta Data"] || body.metaData;
+  let lastFromMeta = null;
+  if (meta && typeof meta === "object") {
+    lastFromMeta = meta["3. Last Refreshed"] || meta["3: Last Refreshed"] || null;
+  }
+
+  const raw = body.data;
+  let bestDate = null;
+  let bestVal = null;
+
+  if (Array.isArray(raw)) {
+    const sorted = [...raw].filter((r) => r && (r.date || r.timestamp)).sort((a, b) => {
+      const da = String(a.date || a.timestamp || "");
+      const db = String(b.date || b.timestamp || "");
+      return db.localeCompare(da);
+    });
+    const row = sorted[0];
+    if (row) {
+      bestDate = String(row.date || row.timestamp || "").slice(0, 10);
+      bestVal = row.value ?? row.close ?? row["4. close"];
+    }
+  } else if (raw && typeof raw === "object") {
+    const keys = Object.keys(raw).filter((k) => /^\d{4}-\d{2}-\d{2}/.test(k));
+    keys.sort((a, b) => b.localeCompare(a));
+    const d = keys[0];
+    if (d) {
+      bestDate = d;
+      const entry = raw[d];
+      bestVal = entry && typeof entry === "object" ? entry.value ?? entry.close : entry;
+    }
+  }
+
+  const num = Number(bestVal);
+  if (!bestDate || !Number.isFinite(num) || num <= 0) {
+    return { error: lastFromMeta ? `unparseable series (meta last: ${lastFromMeta})` : "unparseable commodity series" };
+  }
+
+  const isoDate = /^\d{4}-\d{2}-\d{2}$/.test(bestDate) ? bestDate : String(lastFromMeta || "").slice(0, 10);
+  const stamp = /^\d{4}-\d{2}-\d{2}$/.test(isoDate) ? `${isoDate}T00:00:00.000Z` : null;
+  return { price: num, date: isoDate, updatedAt: stamp };
+}
+
+async function fetchAlphaVantageCommodity(functionName, apiKey) {
+  const url = new URL(CONFIG.alphaVantageQueryUrl);
+  url.searchParams.set("function", functionName);
+  url.searchParams.set("interval", "daily");
+  url.searchParams.set("apikey", apiKey);
+  const resp = await fetch(url);
+  if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  return resp.json();
+}
+
+/**
+ * WTI + Brent daily levels from Alpha Vantage (two API calls; spaced to reduce rate-limit noise).
+ * Docs: https://www.alphavantage.co/documentation/
+ */
 async function fetchOilPrices() {
+  const fail = () => ({ ok: false, wti: null, brent: null, updatedAt: null, source: null });
+
+  if (!ALPHA_VANTAGE_API_KEY) {
+    console.warn("Oil: missing ALPHA_VANTAGE_API_KEY; set it for WTI/Brent from Alpha Vantage.");
+    return fail();
+  }
+
   try {
-    const resp = await fetch(CONFIG.oilDemoUrl);
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    const body = await resp.json();
-    const arr = body?.data?.prices;
-    if (!Array.isArray(arr)) return { ok: false, wti: null, brent: null, updatedAt: null };
-    const byCode = Object.fromEntries(arr.map(p => [p.code, p]));
-    const wti = byCode.WTI_USD?.price;
-    const brent = byCode.BRENT_CRUDE_USD?.price;
-    const wtiNum = Number(wti);
-    const brentNum = Number(brent);
-    const wtiOk = Number.isFinite(wtiNum) && wtiNum > 0;
-    const brentOk = Number.isFinite(brentNum) && brentNum > 0;
-    if (!wtiOk && !brentOk) return { ok: false, wti: null, brent: null, updatedAt: null };
-    const updatedAt = byCode.WTI_USD?.updated_at || byCode.BRENT_CRUDE_USD?.updated_at || null;
+    const bodyWti = await fetchAlphaVantageCommodity("WTI", ALPHA_VANTAGE_API_KEY);
+    const wtiParsed = parseAlphaVantageCommodityBody(bodyWti);
+    await sleep(1500);
+
+    const bodyBrent = await fetchAlphaVantageCommodity("BRENT", ALPHA_VANTAGE_API_KEY);
+    const brentParsed = parseAlphaVantageCommodityBody(bodyBrent);
+
+    if (wtiParsed?.error) console.warn(`Alpha Vantage WTI: ${wtiParsed.error}`);
+    if (brentParsed?.error) console.warn(`Alpha Vantage BRENT: ${brentParsed.error}`);
+
+    const wti = wtiParsed && !wtiParsed.error ? wtiParsed.price : null;
+    const brent = brentParsed && !brentParsed.error ? brentParsed.price : null;
+    const wtiOk = wti != null && Number.isFinite(wti) && wti > 0;
+    const brentOk = brent != null && Number.isFinite(brent) && brent > 0;
+    if (!wtiOk && !brentOk) return fail();
+
+    const d1 = wtiOk ? wtiParsed.date : null;
+    const d2 = brentOk ? brentParsed.date : null;
+    const dateMax = d1 && d2 ? (d1 > d2 ? d1 : d2) : d1 || d2;
+    const u1 = wtiOk ? wtiParsed.updatedAt : null;
+    const u2 = brentOk ? brentParsed.updatedAt : null;
+    const updatedAt = u1 && u2 ? (u1 > u2 ? u1 : u2) : u1 || u2 || (dateMax ? `${dateMax}T00:00:00.000Z` : null);
+
     return {
       ok: true,
-      wti: wtiOk ? wtiNum : null,
-      brent: brentOk ? brentNum : null,
+      wti: wtiOk ? wti : null,
+      brent: brentOk ? brent : null,
       updatedAt,
+      source: "alphavantage",
     };
   } catch (err) {
-    console.warn(`Oil price fetch failed: ${err.message}`);
-    return { ok: false, wti: null, brent: null, updatedAt: null };
+    console.warn(`Oil price fetch failed: ${errorMessage(err)}`);
+    return fail();
   }
 }
 
@@ -204,9 +287,13 @@ console.log(`History: ${store.history.length} points; prevTrendLast4: ${JSON.str
 
 const oilSnapshot = await fetchOilPrices();
 if (oilSnapshot.ok) {
-  console.log(`Oil (live demo): WTI=${oilSnapshot.wti} Brent=${oilSnapshot.brent} @ ${oilSnapshot.updatedAt ?? "?"}`);
+  console.log(
+    `Oil (Alpha Vantage): WTI=${oilSnapshot.wti} Brent=${oilSnapshot.brent} @ ${oilSnapshot.updatedAt ?? "?"}`,
+  );
 } else {
-  console.warn("Oil: demo API unavailable or invalid; energy factor relies on web search + rubric only.");
+  console.warn(
+    "Oil: Alpha Vantage unavailable or invalid; set ALPHA_VANTAGE_API_KEY, or energy factor relies on web search + rubric only.",
+  );
 }
 
 const prevOil = prev.oilPrice;
@@ -692,7 +779,12 @@ const histMap = new Map(store.history.map(p => [p.date, p.score]));
 histMap.set(todayNy, finalRiskScore);
 store.history = [...histMap.entries()].map(([date, score]) => ({ date, score })).sort((a, b) => a.date.localeCompare(b.date)).slice(-120);
 const oilForStore = oilSnapshot.ok
-  ? { wti: oilSnapshot.wti, brent: oilSnapshot.brent, updatedAt: oilSnapshot.updatedAt }
+  ? {
+      wti: oilSnapshot.wti,
+      brent: oilSnapshot.brent,
+      updatedAt: oilSnapshot.updatedAt,
+      ...(oilSnapshot.source ? { source: oilSnapshot.source } : {}),
+    }
   : prev.oilPrice;
 store.latest = {
   date: todayNy,
