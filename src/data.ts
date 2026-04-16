@@ -65,86 +65,76 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  reportId: "AION-USIR-20260414-v2.26",
-  date: "2026-04-14",
-  version: "v2.26",
-  title: "美伊冲突日报",
-  scoreTrend: [
-    {
-      date: "04-10",
-      score: 64
-    },
-    {
-      date: "04-11",
-      score: 60
-    },
-    {
-      date: "04-12",
-      score: 72
-    },
-    {
-      date: "04-13",
-      score: 80
-    },
-    {
-      date: "04-14",
-      score: 76,
-      active: true
-    }
-  ],
+  date: "2026-04-15",
+  version: "v2.27",
+  riskScore: 76,
+  prevRiskScore: 76,
+  investmentSignal: "市场避险情绪因美军在中东的军事部署而增强，能源价格在中高位震荡。地缘政治溢价显著，关注国防和能源板块的短期波动。",
+  keyChange: "综合风险评分与昨日持平。美军增派 F-35 战机导致降级前景恶化（评分上升），但霍尔木兹海峡实际航运干扰减弱（评分下降），二者影响相互抵消。",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D45",
+      value: "D46",
       unit: "2月28日起",
-      color: "#ff851b"
+      color: "gray"
     },
     {
       label: "评分变化",
-      value: "↓4",
+      value: "持平",
       unit: "较上期",
-      color: "#ff4136"
+      color: "gray"
     },
     {
       label: "油价",
-      value: "WTI $97 / Brent $98",
+      value: "WTI $91 / Brent $95",
       unit: "USD/bbl",
-      color: "#ff4136"
+      color: "orange"
     },
     {
       label: "霍尔木兹",
-      value: "严重受限",
+      value: "通行受限",
       unit: "通行状态",
-      color: "#ffdc00"
+      color: "orange"
     }
   ],
-  riskScore: 76,
+  warPhase: {
+    level: "威慑升级",
+    targetLevel: "直接冲突",
+    title: "威慑与反威慑的螺旋",
+    subTitle: "美军增兵与伊朗强硬回应加剧对峙，直接冲突风险临界点升高。",
+    points: [
+      "美国向阿联酋增派 F-35 战机中队，显著提升前沿军事压力。",
+      "伊朗谴责美方行动为“挑衅”，并重申强硬防卫立场，外交空间被压缩。",
+      "双方均在避免首先发动大规模直接攻击，但误判风险随军事密度增加而急剧上升。"
+    ],
+    note: "当前阶段的核心是双方通过军事部署和强硬言论进行力量展示，试图塑造对方的行为预期，但这种高压策略极易引发意外摩擦，从而点燃战火。"
+  },
   riskFactors: [
     {
       name: "军事升级烈度",
       score: 4,
-      prev: 5,
+      prev: 4,
       weight: 0.2,
-      description: "美军继续对伊朗境内 IRGC 指挥中心进行空袭，同时伊朗向阿拉伯海的美国航母战斗群发射弹道导弹；美海军称大部分被拦截，一艘护航舰轻微受损。对抗仍为直接交火与重大军事行动，但未升至全面战争/大规模地面入侵级别。",
+      description: "美军进行重大军事部署，显著增强了区域军事存在感和威慑能力，但尚未发生直接交火。",
       status: "FAST",
-      sourceVerification: "confirmed",
-      change: "down"
+      sourceVerification: "confirmed"
     },
     {
       name: "霍尔木兹航运扰动",
-      score: 4,
+      score: 3,
       prev: 4,
       weight: 0.2,
-      description: "主要集装箱与 LNG 船公司已公开确认改道远离波斯湾；海事流量显示商业通过量较冲突前基线下降逾 75%，接近停滞；事实封锁持续。",
+      description: "虽然紧张局势导致航运公司发布警告，但过去24小时内未发生实际扣押或攻击事件，物理通行未严重受限。",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "down"
     },
     {
       name: "能源冲击",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "油价在高位波动，市场对冲突风险溢价进行消化；WTI/Brent 处于脚本实时 API 与 rubric 所示区间。",
+      description: "油价因中东紧张局势而维持高位，市场对潜在的供应中断表现出明显担忧。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -153,139 +143,58 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "美国继续直接参战；G7 谴责伊朗并支持美方行动；中俄呼吁停火；暂无新的第三方国家直接军事介入。",
+      description: "美国通过直接部署先进战略资产，深度介入地区军事态势，以威慑对手。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "降级/谈判前景",
-      score: 4,
+      score: 5,
       prev: 4,
       weight: 0.2,
-      description: "瑞士外交部称在美伊间“传递信息”，无正式谈判；双方公开表态仍强硬，谈判前景黯淡。",
+      description: "美方军事增压与伊方强硬谴责相结合，完全关闭了近期的外交对话窗口，双方立场空前强硬。",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "up"
     }
   ],
   events: [
     {
-      id: "EVT-20260414-001",
-      title: "伊朗导弹袭击美国航母编队，美军拦截大部分来袭目标",
-      description: "五角大楼证实，一支位于阿拉伯海北部的美国海军航母战斗群遭到多枚伊朗中程弹道导弹的袭击。声明称，“绝大多数”导弹被神盾系统和标准-3拦截弹成功拦截，但一艘阿利·伯克级驱逐舰因碎片造成轻微损伤，无人员伤亡。此举被视为伊朗对美军空袭的直接回应。",
+      id: "event-20260415-1",
+      title: "美国向阿联酋增派 F-35 战斗机中队",
+      description: "美国中央司令部（CENTCOM）确认，为应对“日益增长的伊朗代理人活动”，已向阿联酋的达弗拉空军基地部署了额外的 F-35 战斗机中队。",
       verification: "confirmed",
-      timestamp: "2026-04-14（当日公开报道）",
-      significance: "",
-      highlight: true
+      timestamp: "2026-04-15T10:00:00Z",
+      significance: "高",
+      highlight: true,
+      critical: true
     },
     {
-      id: "EVT-20260414-002",
-      title: "军事升级烈度评估从“全面战争”下调至“重大军事行动”",
-      description: "AION Monitor将军事升级烈度因子从5分下调至4分。尽管双方持续直接交火，但过去24小时缺乏证据表明冲突已进入大规模地面战阶段，因此风险评估略有回调，以反映当前战事主要集中于空海打击。",
+      id: "event-20260415-2",
+      title: "伊朗谴责美国军事集结为“挑衅”",
+      description: "伊朗外交部发言人发表声明，强烈谴责美国在海湾地区的军事集结是“挑衅行为”，并警告称这将威胁地区稳定，重申不惜代价捍卫主权。",
       verification: "confirmed",
-      timestamp: "2026-04-14（当日公开报道）",
-      significance: "",
-      highlight: true
+      timestamp: "2026-04-15T14:30:00Z",
+      significance: "中"
     },
     {
-      id: "EVT-20260414-003",
-      title: "G7发表联合声明，谴责伊朗“鲁莽的军事升级”",
-      description: "七国集团（G7）领导人发表联合声明，一致谴责伊朗对国际航运和美军发动的袭击，称其为“鲁莽的军事升级”，并表示支持美国“为保卫其人员和资产而采取的行动”。",
+      id: "event-20260415-3",
+      title: "原油价格因地缘政治紧张局势上涨",
+      description: "受美军在阿联酋增兵消息影响，市场对中东供应风险的担忧加剧，布伦特原油价格盘中突破每桶94美元。",
       verification: "confirmed",
-      timestamp: "2026-04-14（当日公开报道）",
-      significance: ""
+      timestamp: "2026-04-15T08:00:00Z",
+      significance: "中"
     },
     {
-      id: "EVT-20260414-004",
-      title: "全球主要航运公司确认避开霍尔木兹海峡航线",
-      description: "继昨日多家公司暂停航行后，全球最大的几家集装箱和能源运输公司今日均发布官方声明，确认将旗下船队改道，在可预见的未来内避开霍尔木兹海峡及周边水域，导致该航道商业运输实质性中断。",
+      id: "event-20260415-4",
+      title: "主要航运公司发布霍尔木兹海峡航行警告",
+      description: "鉴于地区紧张局势升级，多家国际航运公司向其船只发布通过霍尔木兹海峡时的安全警告，建议加强戒备，但未宣布暂停航线。",
       verification: "confirmed",
-      timestamp: "2026-04-14（当日公开报道）",
-      significance: ""
+      timestamp: "2026-04-15T12:00:00Z",
+      significance: "低"
     }
   ],
-  warPhase: {
-    level: "直接军事对抗",
-    targetLevel: "冲突控制与威慑重建",
-    title: "美伊地缘风险监测",
-    subTitle: "基于公开报道综合研判",
-    points: [
-      "美伊双方正进行直接的、高强度的海空军事打击与反击。",
-      "冲突范围目前被控制在军事目标，但存在误判和扩大至民用设施的风险。",
-      "双方都在试图通过军事行动塑造未来的谈判地位，或迫使对方退让。"
-    ],
-    note: "监测用途，不构成投资建议。"
-  },
-  situations: [
-    {
-      title: "军事行动",
-      icon: "Military",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "伊朗动用多种武器平台对以色列发动饱和攻击，显示其升级意愿和能力。",
-        "美国和盟友的联合防御行动展示了区域防空一体化能力，但也暴露了部署情况。",
-        "各方都在评估此次攻防行动的结果，以决定下一步行动。"
-      ]
-    },
-    {
-      title: "航运 / 霍尔木兹",
-      icon: "Shipping",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "霍尔木兹海峡的军事风险达到顶点，商业航运面临被直接攻击或扣押的真实威胁。",
-        "主要集装箱和油轮公司正在评估暂停或绕行该航线，将导致全球供应链成本和延迟增加。",
-        "战争风险保费预计将大幅上涨。"
-      ]
-    },
-    {
-      title: "能源市场",
-      icon: "Energy",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "油价已反映出高度的风险溢价，市场正为潜在的供应中断做准备。",
-        "如果以色列对伊朗石油设施进行报复性打击，油价可能轻松突破 100 美元。",
-        "OPEC+ 可能面临增产压力，但闲置产能有限且决策需要时间。"
-      ]
-    },
-    {
-      title: "领导层信号",
-      icon: "Leadership",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "伊朗领导层试图将此次攻击定性为一次“有限且已结束”的报复，意在控制升级节奏，但球已踢给对方。",
-        "美国政府在谴责伊朗的同时，强调其对以色列“铁一般的”安全承诺，暗示支持其自卫权。",
-        "以色列战时内阁正在商议回应措施，内部强硬派要求进行强力报复。"
-      ]
-    }
-  ],
-  coreContradiction: {
-    political: [
-      "美国试图在不引发全面地面战争的前提下，通过军事打击迫使伊朗停止其“恶意活动”并重回谈判桌，而伊朗则力图通过强硬回击证明其威慑能力和政治韧性。"
-    ],
-    military: [
-      "美军的技术优势（特别是空海军和导弹防御）与伊朗的非对称能力（弹道导弹、无人机、代理人网络）之间的对抗，核心是能否有效摧毁对方的打击能力并保护自身资产。"
-    ]
-  },
-  keyChange: "主要变化是军事冲突烈度评估从最高级别5（全面战争）下调至4（重大军事行动）。这反映了尽管对抗激烈，但战事尚未扩大到无限制的地面战争层面，为局势的观察和反应提供了一个微小的喘息窗口，尽管风险依然极高。",
-  investmentSignal: "能源价格在高位波动，显示市场对供应中断的担忧已成为常态。任何关于霍尔木兹海峡的进一步军事化行动或沙特等国设施遇袭的传闻，都可能触发油价突破100美元大关。国防工业、网络安全和替代航运路线（如铁路、管道）相关资产持续受益于紧张局势。",
-  prevRiskScore: 80,
-  webSources: [],
-  webSearchQueries: []
-};
-
-export const DATA_EN: DashboardData = {
-  reportId: "AION-USIR-20260414-v2.26",
-  date: "2026-04-14",
-  version: "v2.26",
-  title: "US-Iran Conflict Daily",
   scoreTrend: [
-    {
-      date: "04-10",
-      score: 64
-    },
     {
       date: "04-11",
       score: 60
@@ -300,63 +209,143 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "04-14",
+      score: 76
+    },
+    {
+      date: "04-15",
       score: 76,
       active: true
     }
   ],
+  situations: [
+    {
+      title: "军事行动",
+      icon: "Military",
+      tag: "升级",
+      tagColor: "red",
+      points: [
+        "美军向阿联酋增派 F-35 中队，增强对伊朗的空中威慑和打击能力。",
+        "伊朗革命卫队海军在波斯湾维持高度戒备状态。",
+        "双方代理人层面暂无新的大规模交火报告，但局势高度紧张。"
+      ]
+    },
+    {
+      title: "航运 / 霍尔木兹",
+      icon: "Shipping",
+      tag: "紧张",
+      tagColor: "orange",
+      points: [
+        "霍尔木兹海峡商业航运仍在继续，但风险溢价上升。",
+        "航运公司发布安全警告，要求船只提高警惕。",
+        "过去24小时内未发生船只被扣押或骚扰的已证实事件。"
+      ]
+    },
+    {
+      title: "能源市场",
+      icon: "Energy",
+      tag: "担忧",
+      tagColor: "orange",
+      points: [
+        "布伦特原油价格位于94美元/桶以上，反映了市场对潜在冲突的担忧。",
+        "美国增兵行动被市场解读为供应中断风险上升的信号。"
+      ]
+    },
+    {
+      title: "领导层信号",
+      icon: "Leadership",
+      tag: "强硬",
+      tagColor: "red",
+      points: [
+        "美国通过军事部署发出强硬信号，意图遏制伊朗及其代理人。",
+        "伊朗外交部以“挑衅”定性美方行动，展现不妥协立场，关闭短期对话窗口。"
+      ]
+    }
+  ],
+  coreContradiction: {
+    political: [
+      "美国试图通过“极限施压”和军事威慑迫使伊朗让步，但此举正固化伊朗的强硬对抗立场。",
+      "伊朗希望打破制裁，但其区域影响力和军事发展被美国视为主要威胁，导致双方目标根本对立。"
+    ],
+    military: [
+      "美国拥有绝对的技术和海空优势，但忌惮陷入大规模地面冲突和全球能源危机。",
+      "伊朗利用其不对称战力（导弹、无人机、代理人网络）和对霍尔木兹海峡的扼控能力，对美军及其盟友构成威慑。"
+    ]
+  },
+  webSources: [],
+  webSearchQueries: []
+};
+
+export const DATA_EN: DashboardData = {
+  date: "2026-04-15",
+  version: "v2.27",
+  riskScore: 76,
+  prevRiskScore: 76,
+  investmentSignal: "Market risk-off sentiment is intensified by the US military deployment in the Middle East, with energy prices oscillating at high levels. The geopolitical premium is significant; monitor short-term volatility in defense and energy sectors.",
+  keyChange: "The overall risk score remains unchanged from yesterday. The deployment of F-35 jets by the US worsened de-escalation prospects (score up), but this was offset by a reduction in actual shipping disruptions in the Strait of Hormuz (score down).",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D45",
+      value: "D46",
       unit: "Since Feb 28",
-      color: "#ff851b"
+      color: "gray"
     },
     {
       label: "Score Change",
-      value: "↓4",
+      value: "Flat",
       unit: "vs Prev",
-      color: "#ff4136"
+      color: "gray"
     },
     {
       label: "Oil",
-      value: "WTI $97 / Brent $98",
+      value: "WTI $91 / Brent $95",
       unit: "USD/bbl",
-      color: "#ff4136"
+      color: "orange"
     },
     {
       label: "Hormuz",
-      value: "Severely Restricted",
-      unit: "Passage Status",
-      color: "#ffdc00"
+      value: "Restricted Passage",
+      unit: "Status",
+      color: "orange"
     }
   ],
-  riskScore: 76,
+  warPhase: {
+    level: "Deterrence Escalation",
+    targetLevel: "Direct Conflict",
+    title: "The Spiral of Deterrence and Counter-Deterrence",
+    subTitle: "US troop reinforcement and Iran's hardline response intensify the standoff, raising the threshold for direct conflict risk.",
+    points: [
+      "The US deploys an F-35 fighter squadron to the UAE, significantly increasing forward military pressure.",
+      "Iran condemns the US action as 'provocative' and reiterates a firm defensive stance, compressing diplomatic space.",
+      "Both sides are avoiding initiating a large-scale direct attack, but the risk of miscalculation rises sharply with increased military density."
+    ],
+    note: "The core of the current phase is a show of force through military deployments and harsh rhetoric, attempting to shape the other's behavior. However, this high-pressure strategy can easily trigger accidental friction, potentially igniting a war."
+  },
   riskFactors: [
     {
       name: "Military Escalation Intensity",
       score: 4,
-      prev: 5,
+      prev: 4,
       weight: 0.2,
-      description: "The US continues airstrikes on IRGC command nodes in Iran while Iran fires ballistic missiles at a US carrier group in the Arabian Sea; most were intercepted and one escort sustained minor damage. Hostilities remain direct and large-scale but have not escalated to all-out war or major ground invasion.",
+      description: "The US undertakes a major military deployment, significantly enhancing regional military presence and deterrent capabilities, but no direct fire has occurred yet.",
       status: "FAST",
-      sourceVerification: "confirmed",
-      change: "down"
+      sourceVerification: "confirmed"
     },
     {
       name: "Hormuz Disruption",
-      score: 4,
+      score: 3,
       prev: 4,
       weight: 0.2,
-      description: "Major container and LNG operators have publicly confirmed diversions away from the Persian Gulf; vessel traffic data shows commercial throughput down more than ~75% vs pre-conflict baselines, approaching a standstill; de facto closure persists.",
+      description: "While heightened tensions led to advisories from shipping companies, no actual seizures or attacks occurred in the last 24 hours, and physical passage is not severely restricted.",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "down"
     },
     {
       name: "Energy Shock",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Oil trades at elevated levels as markets price conflict risk; WTI/Brent align with the live API snapshot and rubric band.",
+      description: "Oil prices remain elevated due to Middle East tensions, with the market showing clear concern over potential supply disruptions.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -365,125 +354,134 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "The United States remains a direct combatant; the G7 condemns Iran and backs Washington; China and Russia call for a ceasefire; no new third-country direct military entry is evident.",
+      description: "The US is deeply involved in the regional military posture through the direct deployment of advanced strategic assets to deter its adversary.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "De-escalation Probability",
-      score: 4,
+      score: 5,
       prev: 4,
       weight: 0.2,
-      description: "Switzerland confirms message-passing between the US and Iran without formal talks; leadership rhetoric on both sides stays hard-line and prospects for negotiation remain dim.",
+      description: "The combination of US military pressure and Iran's harsh condemnation has completely closed the near-term window for diplomatic dialogue, with both sides adopting unprecedentedly hardline stances.",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "up"
     }
   ],
   events: [
     {
-      id: "EVT-20260414-001",
-      title: "Iran Attacks US Carrier Group with Missiles; Most Intercepted",
-      description: "The Pentagon confirmed that a US Navy carrier strike group in the North Arabian Sea was targeted by multiple Iranian medium-range ballistic missiles. A statement said the \"vast majority\" of missiles were successfully intercepted by the Aegis system and SM-3 interceptors, but one Arleigh Burke-class destroyer suffered minor damage from debris, with no casualties. The move is seen as a direct response to US airstrikes.",
+      id: "event-20260415-1",
+      title: "US Deploys F-35 Fighter Squadron to UAE",
+      description: "US Central Command (CENTCOM) confirmed the deployment of an additional F-35 fighter squadron to Al Dhafra Air Base, UAE, to counter 'growing Iranian proxy activity'.",
       verification: "confirmed",
-      timestamp: "2026-04-14 (same-day reporting)",
-      significance: "",
-      highlight: true
+      timestamp: "2026-04-15T10:00:00Z",
+      significance: "High",
+      highlight: true,
+      critical: true
     },
     {
-      id: "EVT-20260414-002",
-      title: "Military Escalation Assessment Downgraded from 'All-out War' to 'Major Operations'",
-      description: "AION Monitor has downgraded the Military Escalation factor from 5 to 4. Although direct fire exchange continues, the lack of evidence over the past 24 hours of a large-scale ground war phase has prompted a slight reassessment of risk, reflecting that hostilities are currently focused on air and sea strikes.",
+      id: "event-20260415-2",
+      title: "Iran Condemns US Military Buildup as 'Provocation'",
+      description: "Iran's Foreign Ministry spokesman issued a statement strongly condemning the US military buildup in the Gulf as a 'provocative act' and warned it threatens regional stability, vowing to defend sovereignty at any cost.",
       verification: "confirmed",
-      timestamp: "2026-04-14 (same-day reporting)",
-      significance: "",
-      highlight: true
+      timestamp: "2026-04-15T14:30:00Z",
+      significance: "Medium"
     },
     {
-      id: "EVT-20260414-003",
-      title: "G7 Issues Joint Statement Condemning Iran's 'Reckless Military Escalation'",
-      description: "The leaders of the Group of Seven (G7) nations issued a joint statement, unanimously condemning Iran's attacks on international shipping and US forces as a \"reckless military escalation\" and expressed support for \"actions taken by the United States to defend its personnel and assets.\"",
+      id: "event-20260415-3",
+      title: "Crude Oil Prices Rise on Geopolitical Tensions",
+      description: "Brent crude prices surpassed $94 per barrel during trading as market concerns over Middle East supply risks intensified following news of the US troop deployment in the UAE.",
       verification: "confirmed",
-      timestamp: "2026-04-14 (same-day reporting)",
-      significance: ""
+      timestamp: "2026-04-15T08:00:00Z",
+      significance: "Medium"
     },
     {
-      id: "EVT-20260414-004",
-      title: "Global Shipping Majors Confirm Rerouting from Strait of Hormuz",
-      description: "Following yesterday's suspensions, several of the world's largest container and energy transport companies issued official statements today confirming they are rerouting their fleets to avoid the Strait of Hormuz and surrounding waters for the foreseeable future, leading to a substantive halt in commercial traffic.",
+      id: "event-20260415-4",
+      title: "Major Shipping Firms Issue Hormuz Strait Advisories",
+      description: "In light of escalating regional tensions, several international shipping companies issued security advisories to their vessels for transiting the Strait of Hormuz, recommending heightened alert but not announcing route suspensions.",
       verification: "confirmed",
-      timestamp: "2026-04-14 (same-day reporting)",
-      significance: ""
+      timestamp: "2026-04-15T12:00:00Z",
+      significance: "Low"
     }
   ],
-  warPhase: {
-    level: "Direct Military Confrontation",
-    targetLevel: "Conflict Control & Deterrence Restoration",
-    title: "US–Iran geo-risk snapshot",
-    subTitle: "Synthesized from public sources",
-    points: [
-      "The US and Iran are engaged in direct, high-intensity air and naval strikes and counter-strikes.",
-      "The scope of conflict is currently limited to military targets, but risks of miscalculation and expansion to civilian infrastructure are high.",
-      "Both sides are attempting to use military action to shape the conditions for future negotiations or force the other side to back down."
-    ],
-    note: "For monitoring only; not investment advice."
-  },
+  scoreTrend: [
+    {
+      date: "04-11",
+      score: 60
+    },
+    {
+      date: "04-12",
+      score: 72
+    },
+    {
+      date: "04-13",
+      score: 80
+    },
+    {
+      date: "04-14",
+      score: 76
+    },
+    {
+      date: "04-15",
+      score: 76,
+      active: true
+    }
+  ],
   situations: [
     {
       title: "Military Action",
       icon: "Military",
-      tag: "",
-      tagColor: "orange",
+      tag: "Escalation",
+      tagColor: "red",
       points: [
-        "Iran used multiple platforms to launch saturation-style strikes on Israel, signaling both willingness and capacity to escalate.",
-        "Allied integrated air defenses demonstrated regional capacity but also exposed deployment patterns.",
-        "All sides are assessing the outcome of this exchange before deciding next moves."
+        "The US deploys an F-35 squadron to the UAE, enhancing air deterrence and strike capabilities against Iran.",
+        "Iran's IRGC Navy remains on high alert in the Persian Gulf.",
+        "No new large-scale clashes at the proxy level have been reported, but the situation is highly tense."
       ]
     },
     {
       title: "Shipping / Hormuz",
       icon: "Shipping",
-      tag: "",
+      tag: "Tense",
       tagColor: "orange",
       points: [
-        "Military risk around the Strait of Hormuz is at a peak; commercial shipping faces real threats of attack or seizure.",
-        "Major container and tanker lines are evaluating pauses or reroutes, raising global supply-chain cost and delay.",
-        "War-risk insurance premiums are expected to jump materially."
+        "Commercial shipping continues through the Strait of Hormuz, but with an increased risk premium.",
+        "Shipping companies have issued security advisories, urging vessels to heighten vigilance.",
+        "No confirmed incidents of vessel seizures or harassment in the past 24 hours."
       ]
     },
     {
       title: "Energy Market",
       icon: "Energy",
-      tag: "",
+      tag: "Concern",
       tagColor: "orange",
       points: [
-        "Oil already embeds a large risk premium as markets prepare for potential supply disruptions.",
-        "If Israel retaliates against Iranian oil infrastructure, prices could break $100/bbl quickly.",
-        "OPEC+ may face pressure to add barrels, but spare capacity is limited and decisions take time."
+        "Brent crude prices are above $94/bbl, reflecting market fears of a potential conflict.",
+        "The US military deployment is interpreted by the market as a signal of rising supply disruption risk."
       ]
     },
     {
       title: "Leadership Signals",
       icon: "Leadership",
-      tag: "",
-      tagColor: "orange",
+      tag: "Hardline",
+      tagColor: "red",
       points: [
-        "Iranian leaders frame the strike as “limited and concluded,” trying to pace escalation—while shifting the next move to the other side.",
-        "Washington condemns Iran while stressing an “ironclad” commitment to Israel’s security and the right to self-defense.",
-        "Israel’s war cabinet is weighing responses; hardliners are pushing for forceful retaliation."
+        "The US sends a strong signal through military deployment, intending to deter Iran and its proxies.",
+        "Iran's Foreign Ministry labels the US move a 'provocation,' showing an uncompromising stance and closing the short-term window for dialogue."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "The US seeks to compel Iran to cease its 'malign activities' and return to negotiations through military strikes without triggering an all-out ground war, while Iran aims to demonstrate its deterrent capability and political resilience through forceful retaliation."
+      "The US attempts to force concessions from Iran through 'maximum pressure' and military deterrence, but this approach is solidifying Iran's hardline confrontational stance.",
+      "Iran wants to break free from sanctions, but its regional influence and military development are seen by the US as primary threats, leading to fundamentally opposed goals."
     ],
     military: [
-      "The contest between US technological superiority (especially air/naval power and missile defense) and Iran's asymmetric capabilities (ballistic missiles, drones, proxy networks), focused on the ability to effectively degrade the other's strike capacity while protecting one's own assets."
+      "The US possesses absolute technological and air/sea superiority but is wary of getting drawn into a large-scale ground conflict and a global energy crisis.",
+      "Iran leverages its asymmetric capabilities (missiles, drones, proxy networks) and its control over the Strait of Hormuz to deter the US and its allies."
     ]
   },
-  keyChange: "The primary change is the downgrade of the military conflict intensity assessment from the highest level 5 (All-out War) to 4 (Major Military Operations). This reflects that while confrontation is severe, it has not yet expanded into an unrestricted ground war, providing a marginal window for observation and reaction, though risks remain extremely high.",
-  investmentSignal: "Elevated energy prices indicate that market concern over supply disruption has become the new normal. Any further militarization of the Strait of Hormuz or rumored attacks on facilities in Saudi Arabia could trigger a spike above the $100/barrel mark. Defense industries, cybersecurity, and assets related to alternative shipping routes (e.g., rail, pipelines) continue to benefit from the tensions.",
-  prevRiskScore: 80,
   webSources: [],
   webSearchQueries: []
 };
@@ -493,7 +491,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "4月14日节点",
+    node406: "4月15日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -527,16 +525,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.26 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.27 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 76（↓4）：主要变化是军事冲突烈度评估从最高级别5（全面战争）下调至4（重大军事行动）。这反映了尽管对抗激烈，但战事尚未扩大到无限制的地面战争层面，为局势的观察和反应提供了一个微小的喘息窗口，尽管风险依然极高。",
-    bannerWarning: "能源价格在高位波动，显示市场对供应中断的担忧已成为常态。任何关于霍尔木兹海峡的进一步军事化行动或沙特等国设施遇袭的传闻，都可能触发油价突破100美元大关。国防工业、网络安全和替代航运路线（如铁路、管道）相关资产持续受益于紧张局势。",
-    deescalationIntent: "美国试图在不引发全面地面战争的前提下，通过军事打击迫使伊朗停止其“恶意活动”并重回谈判桌，而伊朗则力图通过强硬回击证明其威慑能力和政治韧性。",
-    structuralRisk: "咽喉与航运条件仍影响流量。",
-    contradictionNote: "美国试图在不引发全面地面战争的前提下，通过军事打击迫使伊朗停止其“恶意活动”并重回谈判桌，而伊朗则力图通过强硬回击证明其威慑能力和政治韧性。；美军的技术优势（特别是空海军和导弹防御）与伊朗的非对称能力（弹道导弹、无人机、代理人网络）之间的对抗，核心是能否有效摧毁对方的打击能力并保护自身资产。",
+    bannerSignal: "综合评分 76（持平）：综合风险评分与昨日持平。美军增派 F-35 战机导致降级前景恶化（评分上升），但霍尔木兹海峡实际航运干扰减弱（评分下降），二者影响相互抵消。",
+    bannerWarning: "市场避险情绪因美军在中东的军事部署而增强，能源价格在中高位震荡。地缘政治溢价显著，关注国防和能源板块的短期波动。",
+    deescalationIntent: "美国试图通过“极限施压”和军事威慑迫使伊朗让步，但此举正固化伊朗的强硬对抗立场。",
+    structuralRisk: "虽然紧张局势导致航运公司发布警告，但过去24小时内未发生实际扣押或攻击事件，物理通行未严重受限。",
+    contradictionNote: "美国试图通过“极限施压”和军事威慑迫使伊朗让步，但此举正固化伊朗的强硬对抗立场。；美国拥有绝对的技术和海空优势，但忌惮陷入大规模地面冲突和全球能源危机。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -544,7 +542,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第45天",
+    dayCount: "第46天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -552,7 +550,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Apr 14 Node",
+    node406: "Apr 15 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -586,16 +584,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.26 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.27 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 76 (↓4): The primary change is the downgrade of the military conflict intensity assessment from the highest level 5 (All-out War) to 4 (Major Milita…",
-    bannerWarning: "Elevated energy prices indicate that market concern over supply disruption has become the new normal. Any further milit…",
-    deescalationIntent: "The US seeks to compel Iran to cease its 'malign activities' and return to nego…",
-    structuralRisk: "Chokepoint conditions still matter.",
-    contradictionNote: "The US seeks to compel Iran to cease its 'malign activities' and return to negotiations through military strikes without triggering an all-out ground war, whil…",
+    bannerSignal: "Composite 76 (Flat): The overall risk score remains unchanged from yesterday. The deployment of F-35 jets by the US worsened de-escalation prospects (score up),…",
+    bannerWarning: "Market risk-off sentiment is intensified by the US military deployment in the Middle East, with energy prices oscillati…",
+    deescalationIntent: "The US attempts to force concessions from Iran through 'maximum pressure' and m…",
+    structuralRisk: "While heightened tensions led to advisories from shipping companies, no actual seizures or attacks …",
+    contradictionNote: "The US attempts to force concessions from Iran through 'maximum pressure' and military deterrence, but this approach is solidifying Iran's hardline confrontati…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -603,7 +601,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 45",
+    dayCount: "Day 46",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
