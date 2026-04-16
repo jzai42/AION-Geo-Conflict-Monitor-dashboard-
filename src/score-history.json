@@ -1,23 +1,18 @@
 {
   "version": 2,
   "latest": {
-    "date": "2026-04-15",
-    "appVersion": "v2.27",
-    "riskScore": 76,
+    "date": "2026-04-16",
+    "appVersion": "v2.32",
+    "riskScore": 72,
     "prevRiskScore": 76,
-    "conflictDay": 46,
+    "conflictDay": 47,
     "factorScores": [
       4,
       3,
       3,
       4,
-      5
-    ],
-    "oilPrice": {
-      "wti": 91.25,
-      "brent": 94.8,
-      "updatedAt": "2026-04-16T03:30:14Z"
-    }
+      4
+    ]
   },
   "history": [
     {
@@ -59,6 +54,10 @@
     {
       "date": "2026-04-15",
       "score": 76
+    },
+    {
+      "date": "2026-04-16",
+      "score": 72
     }
   ]
 }

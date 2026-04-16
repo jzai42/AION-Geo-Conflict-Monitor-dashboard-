@@ -117,7 +117,13 @@ export default function App() {
         <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 [&>*]:min-w-0">
           {data.keyStats.map((stat, i) => (
             <Fragment key={i}>
-              <StatCard label={stat.label} value={stat.value} unit={stat.unit} color={stat.color} />
+              <StatCard
+                label={stat.label}
+                value={stat.value}
+                unit={stat.unit}
+                color={stat.color}
+                layout={stat.layout}
+              />
             </Fragment>
           ))}
         </div>

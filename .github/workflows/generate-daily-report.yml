@@ -1,6 +1,5 @@
 # Needs secret GEMINI_API_KEY: Repo → Settings → Secrets and variables → Actions.
 # If using Environment "production" below, also add GEMINI_API_KEY under that environment.
-# Optional: ALPHA_VANTAGE_API_KEY — WTI/Brent from Alpha Vantage (commodities API).
 name: Generate Daily AION Report
 
 on:
@@ -12,7 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  GEMINI_MODEL: gemini-2.5-pro
+  GEMINI_MODEL: gemini-3-flash-preview
 
 concurrency:
   group: generate-daily-report
@@ -81,7 +80,6 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-4.1-mini
-          ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
         run: node .github/scripts/generate-aion-daily.mjs
 
       - name: Commit and push

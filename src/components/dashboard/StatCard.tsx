@@ -10,12 +10,44 @@ export function StatCard({
   value,
   unit,
   color,
+  layout = "default",
 }: {
   label: string;
   value: string;
   unit: string;
   color: string;
+  layout?: "default" | "unitPrimary";
 }) {
+  if (layout === "unitPrimary") {
+    return (
+      <div
+        className="aion-card flex min-h-[120px] min-w-0 flex-col items-center justify-center text-center group transition-all"
+        style={{ borderColor: `${color}40`, backgroundColor: `${color}08` }}
+      >
+        <StatCardFitLine
+          text={value}
+          maxPx={12}
+          minPx={7}
+          className="mb-1 font-semibold"
+          style={{ color, textShadow: `0 0 12px ${color}35` }}
+        />
+        <StatCardFitLine
+          text={unit}
+          maxPx={28}
+          minPx={9}
+          className="mb-1 font-bold"
+          style={{ color: `${color}cc`, textShadow: `0 0 10px ${color}30` }}
+        />
+        <StatCardFitLine
+          text={label}
+          maxPx={10}
+          minPx={6}
+          className="font-mono text-aion-text-dim uppercase tracking-tighter"
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       className="aion-card flex min-h-[120px] min-w-0 flex-col items-center justify-center text-center group transition-all"
