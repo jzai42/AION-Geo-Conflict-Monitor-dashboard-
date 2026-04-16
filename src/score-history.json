@@ -2,16 +2,16 @@
   "version": 2,
   "latest": {
     "date": "2026-04-16",
-    "appVersion": "v2.32",
+    "appVersion": "v2.33",
     "riskScore": 72,
     "prevRiskScore": 76,
     "conflictDay": 47,
     "factorScores": [
-      4,
       3,
       3,
+      3,
       4,
-      4
+      5
     ]
   },
   "history": [
