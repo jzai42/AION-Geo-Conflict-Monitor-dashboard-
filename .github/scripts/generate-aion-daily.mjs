@@ -46,7 +46,7 @@ const CANONICAL = {
   zh: {
     keyStatLabels: ["冲突天数", "评分变化", "油价", "霍尔木兹"],
     keyStatUnitsFixed: ["2月28日起", "较上期"],
-    keyStatDefaultUnits34: ["区间·趋势参考", "通行状态"],
+    keyStatDefaultUnits34: ["参考", "通行状态"],
     keyStatColors: ["#ff851b", "#ff4136", "#ff4136", "#ffdc00"],
     riskFactorNames: ["军事升级烈度", "霍尔木兹航运扰动", "能源冲击", "大国介入深度", "降级/谈判前景"],
     situations: [
@@ -59,7 +59,7 @@ const CANONICAL = {
   en: {
     keyStatLabels: ["Conflict Days", "Score Change", "Oil", "Hormuz"],
     keyStatUnitsFixed: ["Since Feb 28", "vs Prev"],
-    keyStatDefaultUnits34: ["Range · trend ref", "Passage Status"],
+    keyStatDefaultUnits34: ["Ref.", "Passage Status"],
     keyStatColors: ["#ff851b", "#ff4136", "#ff4136", "#ffdc00"],
     riskFactorNames: ["Military Escalation Intensity", "Hormuz Disruption", "Energy Shock", "Great Power Involvement", "De-escalation Probability"],
     situations: [
@@ -402,7 +402,7 @@ const oilPromptBlock = `
 - 在撰写 **${factorNamesZh[2]}** 与 **keyStats[2] 油价** 前，**必须通过 Google 搜索接地**检索主流财经/通讯社对 **WTI**、**Brent** 的表述（现货或主力近月均可，evidence 写明口径）。优先 Reuters、Bloomberg、WSJ、FT、BBC、AFP、AP 等一级来源。
 - **不要**把油价写成单一绝对数字作为主结论：日更用于**趋势与档位判断**，须容忍报道时差与盘中波动。请综合接地结果给出 **美元/桶 区间**（例如多家报道或同一报道中的高低价、当日振幅、或「约 $90–94」式合并区间），并在 evidence 简述**方向**（企稳 / 温和上行 / 承压回落 / 剧烈波动等）。
 - **黑天鹅 / 闪崩闪涨**：若新闻显示短时跳变、区间极宽或报价分歧大，在 evidence 明确写出**不确定性**，仍以**区间上沿或更保守的一侧**对照下方 rubric 给分，避免假装精确到「唯一现价」。
-- **keyStats[2]**：**value** 推荐格式 \`WTI $低–$高 · Brent $低–$高\`（半角 $，区间用 **–** 连接）；其后可加极短趋势词，如 \`· 企稳\`、\`· 宽幅震荡\`。**unit** 中文用 \`区间·趋势参考\`，英文用 \`Range · trend ref\`（须与 dataEn 一致）；**脚本不会对油价行做任何覆盖**，禁止空值、禁止与接地图无关的臆造区间。
+- **keyStats[2]**：**value** **仅** \`WTI $低–$高 · Brent $低–$高\`（半角 $，区间用 **–** 连接）；**趋势、叙事、补充说明写入 riskFactors[2] 的 evidence/description**，**不要**塞进 keyStats[2].value（仪表盘油价卡只突出价格区间）。**unit** 中文固定 \`参考\`、英文固定 \`Ref.\`（须与 dataEn 一致）；**脚本只统一 unit**；禁止空值、禁止与接地图无关的臆造区间。
 - **evidence**（riskFactors[2]）须含上述区间与趋势的**文字依据**，并附 **至少一条接地 URL**（可末句）。
 - 若接地无法形成可信区间，keyStats[2] value 须诚实说明「搜索未获可靠现价」等，该因子 \`sourceVerification\` 标 \`unverified\`，分数不得相对昨日上调。${prevOilHint}`;
 
@@ -493,7 +493,7 @@ ${REPORT_MARKDOWN_ZH_SPEC}
 - version: "${prevVersion}" 的下一个版本（小版本号 +1）
 - keyStats[0] 冲突天数: 必须是 "D${correctConflictDay}"（不要自己算，用这个值）
 - keyStats[1] 评分变化: 今日 riskScore 与 **昨日收盘综合分 ${priorDayComposite}** 的差值（如 ↑3 或 ↓2 或 持平）；脚本以此为准
-- keyStats 恰好 4 项，顺序：冲突天数、评分变化、油价、霍尔木兹。每项 unit 非空；**keyStats[2] 油价**：value 为 **WTI/Brent 美元区间 + 极短趋势词**（见系统提示油价专节），**unit** 中文固定 \`区间·趋势参考\`、英文固定 \`Range · trend ref\`；脚本只统一 unit
+- keyStats 恰好 4 项，顺序：冲突天数、评分变化、油价、霍尔木兹。每项 unit 非空；**keyStats[2] 油价**：value **仅** **WTI/Brent 两段子区间**（见油价专节）；**unit** 中文固定 \`参考\`、英文固定 \`Ref.\`；脚本只统一 unit。**dataEn.keyStats[2].value 全英文数字与符号**，勿混入中文趋势词
 - keyStats[3] 霍尔木兹：**value** 为航道通行强度摘要（如「严重受限」）；**unit** 固定为「通行状态」。勿用「-」或仅百分比作主行（脚本会将空值/- 兜底为「严重受限」+「通行状态」）
 - riskFactors 恰好 5 项，顺序：${factorNamesZh.join("、")}。weight 一律 0.2。riskScore = round(avg(scores) × 20)
 - 每个 riskFactor 必须包含 **sourceVerification**（confirmed / partial / unverified），规则见上文「交叉验证」
@@ -1054,7 +1054,7 @@ function enforceLayout(d, lang) {
     if (i === 0) value = `D${correctConflictDay}`;
     if (i === 1) value = scoreDelta > 0 ? `↑${scoreDelta}` : scoreDelta < 0 ? `↓${Math.abs(scoreDelta)}` : (lang === "zh" ? "持平" : "Flat");
     if (i === 2) {
-      unitExtra = lang === "zh" ? "区间·趋势参考" : "Range · trend ref";
+      unitExtra = lang === "zh" ? "参考" : "Ref.";
     }
     if (i === 3) {
       const raw = s(ks[i]?.value).trim();
@@ -1189,7 +1189,7 @@ en.riskScore = zh.riskScore;
 en.prevRiskScore = zh.prevRiskScore;
 en.scoreTrend = JSON.parse(JSON.stringify(zh.scoreTrend));
 en.keyStats[0].value = zh.keyStats[0].value;
-en.keyStats[2].value = zh.keyStats[2].value;
+// 油价主行语言分离：英文卡勿同步中文 value（趋势留在 riskFactors[2] 英文叙述）
 // 油价 unit 须保持英文 canonical（enforceLayout 已写入），勿用中文 unit 覆盖
 en.riskFactors.forEach((f, i) => {
   f.score = zh.riskFactors[i].score;

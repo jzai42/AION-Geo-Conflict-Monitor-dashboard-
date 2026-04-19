@@ -41,6 +41,7 @@ export interface DashboardData {
     value: string;
     unit: string;
     color: string;
+    layout?: "default" | "unitPrimary";
   }[];
   warPhase: {
     level: string;
@@ -130,8 +131,8 @@ export const DATA_ZH: DashboardData = {
     },
     {
       label: "油价",
-      value: "WTI $81.80–$86.28 · Brent $86.15–$90.75 · 宽幅震荡",
-      unit: "区间·趋势参考",
+      value: "WTI $81.80–$86.28 · Brent $86.15–$90.75",
+      unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
     },
@@ -330,8 +331,8 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Oil",
-      value: "WTI $81.80–$86.28 · Brent $86.15–$90.75 · 宽幅震荡",
-      unit: "Range · trend ref",
+      value: "WTI $81.80–$86.28 · Brent $86.15–$90.75",
+      unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
     },

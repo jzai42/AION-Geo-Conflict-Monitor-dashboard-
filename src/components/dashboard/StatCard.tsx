@@ -5,6 +5,26 @@
 
 import { StatCardFitLine } from "./StatCardFitLine";
 
+/** 油价卡：拆出 WTI / Brent 两段（忽略后续趋势词） */
+function oilPriceSplitParts(raw: string): { wti: string; brent: string } | null {
+  const parts = raw
+    .split(/\s*·\s*/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+  const wtiIdx = parts.findIndex((p) => /^WTI\b/i.test(p));
+  const brentIdx = parts.findIndex((p) => /^Brent\b/i.test(p));
+  if (wtiIdx >= 0 && brentIdx >= 0) {
+    return { wti: parts[wtiIdx], brent: parts[brentIdx] };
+  }
+  return null;
+}
+
+function oilPriceDisplayCore(raw: string): string {
+  const s = oilPriceSplitParts(raw);
+  if (s) return `${s.wti} · ${s.brent}`;
+  return raw.trim();
+}
+
 export function StatCard({
   label,
   value,
@@ -19,24 +39,50 @@ export function StatCard({
   layout?: "default" | "unitPrimary";
 }) {
   if (layout === "unitPrimary") {
+    const split = oilPriceSplitParts(value);
+    const priceLine = oilPriceDisplayCore(value);
+    /** 与默认布局主数字（如评分变化「↓4」）同一套字号上限，视觉权重一致 */
+    const priceStyle = { color, textShadow: `0 0 15px ${color}40` } as const;
     return (
       <div
-        className="aion-card flex min-h-[120px] min-w-0 flex-col items-center justify-center text-center group transition-all"
+        className="aion-card flex min-h-[128px] min-w-0 flex-col items-center justify-center gap-1.5 text-center group transition-all"
         style={{ borderColor: `${color}40`, backgroundColor: `${color}08` }}
       >
-        <StatCardFitLine
-          text={value}
-          maxPx={12}
-          minPx={7}
-          className="mb-1 font-semibold"
-          style={{ color, textShadow: `0 0 12px ${color}35` }}
-        />
+        {split ? (
+          <div className="flex w-full min-w-0 flex-row items-center justify-center gap-2 sm:gap-3 px-0.5">
+            <div className="min-w-0 flex-1 basis-0">
+              <StatCardFitLine
+                text={split.wti}
+                maxPx={36}
+                minPx={8}
+                className="mb-0 font-bold leading-tight"
+                style={priceStyle}
+              />
+            </div>
+            <div className="min-w-0 flex-1 basis-0">
+              <StatCardFitLine
+                text={split.brent}
+                maxPx={36}
+                minPx={8}
+                className="mb-0 font-bold leading-tight"
+                style={priceStyle}
+              />
+            </div>
+          </div>
+        ) : (
+          <StatCardFitLine
+            text={priceLine}
+            maxPx={36}
+            minPx={8}
+            className="mb-0 font-bold leading-tight"
+            style={priceStyle}
+          />
+        )}
         <StatCardFitLine
           text={unit}
-          maxPx={28}
-          minPx={9}
-          className="mb-1 font-bold"
-          style={{ color: `${color}cc`, textShadow: `0 0 10px ${color}30` }}
+          maxPx={9}
+          minPx={6}
+          className="aion-label text-aion-text-dim/60"
         />
         <StatCardFitLine
           text={label}
