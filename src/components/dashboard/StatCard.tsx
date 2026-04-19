@@ -45,36 +45,32 @@ export function StatCard({
     const priceStyle = { color, textShadow: `0 0 15px ${color}40` } as const;
     return (
       <div
-        className="aion-card flex min-h-[128px] min-w-0 flex-col items-center justify-center gap-1.5 text-center group transition-all"
+        className="aion-card flex min-h-[140px] min-w-0 flex-col items-center justify-center gap-1.5 text-center group transition-all"
         style={{ borderColor: `${color}40`, backgroundColor: `${color}08` }}
       >
         {split ? (
-          <div className="flex w-full min-w-0 flex-row items-center justify-center gap-2 sm:gap-3 px-0.5">
-            <div className="min-w-0 flex-1 basis-0">
-              <StatCardFitLine
-                text={split.wti}
-                maxPx={36}
-                minPx={8}
-                className="mb-0 font-bold leading-tight"
-                style={priceStyle}
-              />
-            </div>
-            <div className="min-w-0 flex-1 basis-0">
-              <StatCardFitLine
-                text={split.brent}
-                maxPx={36}
-                minPx={8}
-                className="mb-0 font-bold leading-tight"
-                style={priceStyle}
-              />
-            </div>
+          <div className="flex w-full min-w-0 flex-col items-center justify-center gap-0 px-0.5">
+            <StatCardFitLine
+              text={split.wti}
+              maxPx={36}
+              minPx={8}
+              className="font-bold leading-none"
+              style={priceStyle}
+            />
+            <StatCardFitLine
+              text={split.brent}
+              maxPx={36}
+              minPx={8}
+              className="mb-1 font-bold leading-none"
+              style={priceStyle}
+            />
           </div>
         ) : (
           <StatCardFitLine
             text={priceLine}
             maxPx={36}
             minPx={8}
-            className="mb-0 font-bold leading-tight"
+            className="mb-1 font-bold"
             style={priceStyle}
           />
         )}
