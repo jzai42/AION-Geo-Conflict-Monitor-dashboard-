@@ -41,7 +41,6 @@ export interface DashboardData {
     value: string;
     unit: string;
     color: string;
-    layout?: "default" | "unitPrimary";
   }[];
   warPhase: {
     level: string;
@@ -66,144 +65,141 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-04-19",
-  version: "v2.38",
-  riskScore: 68,
-  riskFactors: [
+  date: "2026-04-20",
+  version: "v2.39",
+  riskScore: 72,
+  riskTrend: [
     {
-      name: "军事升级烈度",
-      score: 3,
-      prev: 4,
-      weight: 0.2,
-      description:
-        "停火违规指控与追加打击威胁上升，但过去24小时未见双源确认的新大规模直接打击。参考：Reuters、AP。",
-      status: "FAST",
-      sourceVerification: "confirmed"
+      date: "2026-04-16",
+      score: 76
     },
     {
-      name: "霍尔木兹航运扰动",
-      score: 5,
-      prev: 3,
-      weight: 0.2,
-      description: "海峡重新关闭/严重受限，为过去24小时最核心恶化变量。参考：Reuters、AP。",
-      status: "FAST",
-      sourceVerification: "confirmed"
+      date: "2026-04-17",
+      score: 72
     },
     {
-      name: "能源冲击",
-      score: 4,
-      prev: 3,
-      weight: 0.2,
-      description:
-        "海峡重新关闭显著抬升供应风险；报道未显示过去24小时油价重新突破极端峰值。参考：Reuters。",
-      status: "FAST",
-      sourceVerification: "confirmed"
+      date: "2026-04-18",
+      score: 60
     },
     {
-      name: "大国介入深度",
-      score: 3,
-      prev: 4,
-      weight: 0.2,
-      description: "巴基斯坦中介与安保安排上升，但未见新增大国直接军事介入。参考：AP。",
-      status: "FAST",
-      sourceVerification: "confirmed"
+      date: "2026-04-19",
+      score: 68
     },
     {
-      name: "降级/谈判前景",
-      score: 2,
-      prev: 4,
-      weight: 0.2,
-      description: "谈判仍在巴基斯坦推进，但停火已现严重摩擦，短期去升级可信度下降。参考：Reuters。",
-      status: "FAST",
-      sourceVerification: "confirmed"
+      date: "2026-04-20",
+      score: 72
     }
   ],
   keyStats: [
     {
       label: "冲突天数",
-      value: "D50",
+      value: "D51",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↑8",
+      value: "↑4",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $84–$91 · Brent $89–$95",
+      value: "WTI $84.35–$89.04 · Brent $94.35–$97.50",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "霍尔木兹",
-      value: "海峡关闭/严重受限",
+      value: "严重受限",
       unit: "通行状态",
       color: "#ffdc00"
+    }
+  ],
+  riskFactors: [
+    {
+      name: "军事升级烈度",
+      score: 4,
+      prev: 3,
+      weight: 0.2,
+      description: "美伊发生直接海上摩擦，美军驱逐舰扣押伊朗“Tosca”号导致局势实质升级。",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "霍尔木兹航运扰动",
+      score: 5,
+      prev: 5,
+      weight: 0.2,
+      description: "海峡通航陷入停滞，伊朗宣布撤销短暂的复航承诺，重新实施严密封锁。",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "能源冲击",
+      score: 3,
+      prev: 4,
+      weight: 0.2,
+      description: "油价随对抗升级而反弹，但绝对价格区间回落至$100下方，市场处于紧平衡。",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "大国介入深度",
+      score: 3,
+      prev: 3,
+      weight: 0.2,
+      description: "美方维持封锁烈度并由高级别外交团队介入，俄罗斯对封锁表示关切但未直接干预。",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "降级/谈判前景",
+      score: 3,
+      prev: 2,
+      weight: 0.2,
+      description: "由于扣船事件及互信丧失，原定的和平曙光被削弱，谈判进入高压摊牌阶段。",
+      status: "FAST",
+      sourceVerification: "confirmed"
     }
   ],
   events: [
     {
       id: "EVT-01",
-      title: "特朗普指伊朗“完全违反”停火并威胁追加打击",
-      description:
-        "特朗普称因霍尔木兹附近船只遇袭与伊朗重新关闭海峡，伊朗已“完全违反”停火；威胁若伊朗不接受美方协议将打击电厂与桥梁，同时称美方代表将赴巴基斯坦继续谈判。Reuters、AP。",
+      title: "美军扣押伊朗“Tosca”号货轮",
+      description: "美军驱逐舰在阿曼湾瘫痪并扣押一艘试图突围的伊朗货轮，系本次封锁以来首例。",
       verification: "confirmed",
-      timestamp: "2026-04-19（当日公开报道）",
+      timestamp: "2026-04-20",
       significance: "",
-      highlight: true,
       critical: true
     },
     {
       id: "EVT-02",
-      title: "霍尔木兹再次关闭，条件为美国解除对伊港口封锁",
-      description:
-        "伊朗重新关闭霍尔木兹，并表示在美国解除对伊朗港口封锁前不会恢复正常通行；Reuters 与 AP 均描述海峡重新处于关闭/严重受限状态。",
+      title: "油价报复性上涨超6%",
+      description: "WTI原油周一冲至$89，收复周末大部分跌幅，受海峡局势不确定性驱动。",
       verification: "confirmed",
-      timestamp: "2026-04-18 至 2026-04-19",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-03",
-      title: "谈判将恢复，分歧仍集中在核与海峡条件",
-      description:
-        "特朗普称美伊谈判将在巴基斯坦继续；AP 称巴基斯坦已加强安保以准备恢复会谈，伊朗仍坚持解除封锁与更长期安排。Reuters、AP。",
-      verification: "confirmed",
-      timestamp: "2026-04-19（当日公开报道）",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-04",
-      title: "伊朗军方关于海峡通行与“协调通行”的表述",
-      description:
-        "Guardian 报道伊朗军方强调仅在特定条件下可能恢复通行，并称曾对尝试通过的船只开火。单源，待更多互证。The Guardian。",
-      verification: "single",
-      timestamp: "2026-04-19（当日公开报道）",
+      timestamp: "2026-04-20",
       significance: ""
     },
     {
-      id: "EVT-05",
-      title: "巴基斯坦加强安保以筹备恢复会谈",
-      description: "AP 报道巴方加强安保与后勤，为下一轮美伊接触做准备。",
-      verification: "confirmed",
-      timestamp: "2026-04-19（当日公开报道）",
+      id: "EVT-03",
+      title: "伊朗法医组织确认死亡人数",
+      description: "战争爆发51天以来已有3375人确认死亡，暴露了冲突造成的惨重人道代价。",
+      verification: "single",
+      timestamp: "2026-04-20",
       significance: ""
     }
   ],
   warPhase: {
-    level: "脆弱停火",
-    targetLevel: "结构性紧张",
+    level: "海上封锁对抗期",
+    targetLevel: "脆弱平衡",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "停火框架受到严重冲击：违规指控与追加打击威胁并行",
-      "关键变化：霍尔木兹再度关闭，开放条件与美方封锁深度绑定",
-      "去升级路径未消失，但局势已从谈判窗口滑向高风险边缘博弈"
+      "美伊双方从远程空袭转向面对面的海上截击与报复性夺船。",
+      "霍尔木兹海峡成为双方外交博弈的核心筹码，而非单纯的航道。",
+      "国际社会斡旋重点转向延长即将到期的临时停火协议。"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -214,8 +210,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美伊直接停火框架受到严重冲击；主变化为停火违规指控与追加打击威胁。",
-        "延续：过去24小时内尚未见经双源确认的新一轮大规模空袭落地。"
+        "变化：美海军驱逐舰直接介入商船拦截，导致资产受损。",
+        "变化：伊朗启动无人机群对美军舰艇实施战术驱离。"
       ]
     },
     {
@@ -224,8 +220,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：霍尔木兹重新进入关闭/严重受限状态；开放再次与“解除美方封锁”挂钩。",
-        "延续：当前仍非正常商业通航状态。"
+        "延续：海峡通行效率维持在正常水平的5%以下。",
+        "变化：伊朗官方明确将航道安全与取消石油制裁挂钩。"
       ]
     },
     {
@@ -234,8 +230,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：市场重新计入海峡关闭风险。",
-        "延续：结构上仍为高波动能源风险；报道亦提及会谈将继续的缓和预期。"
+        "变化：市场重新定价封锁风险，WTI回升至$89一线。",
+        "延续：大宗商品呈现地缘避险属性，波动性加剧。"
       ]
     },
     {
@@ -244,23 +240,26 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美方强硬威胁升级，但仍称谈判将在巴基斯坦继续。",
-        "延续：伊朗坚持先解除封锁；巴基斯坦继续作为谈判中介。"
+        "变化：伊朗总统裴泽希齐扬表达对美外交的不信任。",
+        "延续：特朗普重申“极限施压”政策在达成交易前不会停止。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美方威胁升级与仍派员赴巴谈判之间的张力",
-      "伊朗封锁海峡与寻求解除美方封锁条件之间的张力"
+      "美方要求伊方完全停止核浓缩及导弹试验作为解除封锁的前提。",
+      "伊方要求先撤销封锁作为进入实质性核谈判的条件。"
     ],
-    military: ["谈判渠道尚存与海峡军事化风险骤升之间的张力"]
+    military: [
+      "海上拦截主权与航行自由权之间的激烈冲突。",
+      "常规报复手段向高价值资产打击的升级压力。"
+    ]
   },
+  keyChange: "美军从防御性封锁转为进攻性扣押，导致双方互信归零。",
+  investmentSignal: "→ 维持能源防御性头寸，减持高溢价风险资产。",
+  change: "up",
+  prevRiskScore: 68,
   scoreTrend: [
-    {
-      date: "04-15",
-      score: 76
-    },
     {
       date: "04-16",
       score: 72
@@ -275,173 +274,191 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "04-19",
-      score: 68,
+      score: 68
+    },
+    {
+      date: "04-20",
+      score: 72,
       active: true
     }
   ],
-  keyChange:
-    "停火出现严重摩擦，霍尔木兹再度关闭；局势从低强度对峙滑向高风险边缘博弈，综合分较上日 +8。",
-  investmentSignal: "→ 立即恢复防御与能源对冲配置，不应把当前局势视为稳定谈判期。",
-  prevRiskScore: 60,
   webSources: [
     {
-      title: "Trump accuses Iran of 'total violation' of ceasefire, threatens new attacks",
-      uri: "https://www.reuters.com/world/asia-pacific/trump-iran-cite-progress-talks-uncertainty-hangs-over-strait-2026-04-19/"
+      title: "wanaen.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHHibCLxH5olZ7jNsS-KfwoCHUDt-o5wav9TqUuRNEc9p9O1dmbLQ6qNd3efXE0L2CK3pgiK1oMKYiX4hQKNxR4PmbfGlYizx-cdx50WQY7EkgQAqh-_K2aZajHop45KzqKIoy10Jb5hhAb0bua5Rf2WU4GyoECr7FP9YfJVPaBXQO6MnMs"
     },
     {
-      title: "Iran closes strait of Hormuz again 'until US lifts blockade'",
-      uri: "https://www.theguardian.com/world/2026/apr/18/iran-closes-strait-of-hormuz-again-until-us-lifts-blockade"
+      title: "tradingeconomics.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGY-x6xbdaxI-BYsVv8suGDCLQPzMWafGNciMmYr8rEgKcltnpgVtMQx0wyiOGw6A87WQKry3NvjbiAgT3FZqdUeSUZzHziq-CC3Y6yHPh3hV8ylrXMlbrbFvSarJUTvZicQWHvWhuy7X8iDw=="
     },
     {
-      title: "The Latest: Trump says talks to resume as standoff escalates over Strait of Hormuz",
-      uri: "https://apnews.com/article/ab529b5f926a274ca7dc8ce3f1042b56"
+      title: "bairdmaritime.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHunZpOReTeel2h77TqkvDdenhxqyT6ZjEXyo1uAGXtv1IhBXN9n-qzPpZxUJ6qpoJf36osnkp86YZJB94ODfdJiQWzYKhjn6xHLBZ2iRvGil0cGbq6qH5gbo3k9tgapo7JyjE_94LHMF7yGos-UxyRPI8mu2CuZmjoZcSVMnATpEMUh9zuDFb_UjDMCarTfbN0oZn-cjj6nQ=="
+    },
+    {
+      title: "investing.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHI_V3M4xW9-bEH0aanD1bNPhOHGmilz9Q4Ja3Uj3zQivmi4g2ce0BHfIuak5GDSxbTJi_7T8NNvdp1mypOW-vg8CjpvhEqdpxLPLzHlBCwLDRPPmxMqW-rbsdtFFMncpj77hgdsVg7jh65IepDVvwrZ7RQPdy3gZHkeA=="
+    },
+    {
+      title: "hormuzstraitmonitor.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHAT-UZ0itlQZxkOIP6KbuCI7AdQnHCwUDsExVHHqG5B-zVuSfIhhz9cE6e3RR9V0Wm3OsKJTO2xl1kFL1iMhBpyT39Ow77iHPT945jU7D80U-xzVpEl4PV41yN"
+    },
+    {
+      title: "2news.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEEiXi4qyZwu1dol5zm5fegtDX0TH0iFGWNv7Ex8LxqzJrn7LNAz2zBXSp6HE93SaHQ5HnmC8tTP7NNt7VoYieU1skWfKSlSQskDquIiM2rfwW7-OfUxOW7ajJOAxR4PqDMeJfVwu8aUpcIjnS-9rpagPq0PjA2e_qP2hfOcJXnC2MhSXiqwZ8L2oUJ3MLAzHdly_s3x_u5oDZlX5FGcTGWhLCUoiOD5dAmHQDJ5ui-psogOQWvfdgFSgC7CZRGgerNWYu_NJhcgcH8vWUfN7MCKtVnCJ6s5GF1dAI4EKM="
+    },
+    {
+      title: "barchart.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHlivMybf4XNNbv78DuIOxQZr0ZZNAcji8kEeviED0grPdJR4-xcwrUYted5sMU-JWYpwM4811XzpCcpMde-1mR_qnmwwPh51VeA3JPhIASkBL0RYHXntLOpdZFMILa8zxYwpWeTFrE1Q=="
+    },
+    {
+      title: "nationthailand.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFP8AnOqKcUBFUe8uQQlsZnYF9I4anJDId09jW1Y0OYJl8JyzK6dC_kGPmKvlo2E9BATNLZmpCa8ZUoW1dAUdUwIqtGURI1PQ_Ls504KREugQaZnQJSvgdB4A4FOatqhSY18UcueFzvCEb0Bia6"
     }
   ],
-  webSearchQueries: []
+  webSearchQueries: [
+    "Hormuz Strait shipping status April 20 2024",
+    "latest US Iran Israel conflict news April 20 2024",
+    "WTI Brent oil price range April 19 20 2024 trend"
+  ]
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-04-19",
-  version: "v2.38",
-  riskScore: 68,
-  riskFactors: [
+  date: "2026-04-20",
+  version: "v2.39",
+  riskScore: 72,
+  riskTrend: [
     {
-      name: "Military Escalation Intensity",
-      score: 3,
-      prev: 4,
-      weight: 0.2,
-      description:
-        "Ceasefire-violation allegations and follow-on strike threats rose, but no dual-source confirmation of a new large-scale kinetic exchange in 24h. Sources: Reuters, AP.",
-      status: "FAST",
-      sourceVerification: "confirmed"
+      date: "2026-04-16",
+      score: 76
     },
     {
-      name: "Hormuz Disruption",
-      score: 5,
-      prev: 3,
-      weight: 0.2,
-      description:
-        "Strait back in closed/severe restriction—core deterioration variable for the window. Sources: Reuters, AP.",
-      status: "FAST",
-      sourceVerification: "confirmed"
+      date: "2026-04-17",
+      score: 72
     },
     {
-      name: "Energy Shock",
-      score: 4,
-      prev: 3,
-      weight: 0.2,
-      description:
-        "Strait closure reprices supply risk sharply; reporting did not show oil re-breaking extreme highs in 24h. Sources: Reuters.",
-      status: "FAST",
-      sourceVerification: "confirmed"
+      date: "2026-04-18",
+      score: 60
     },
     {
-      name: "Great Power Involvement",
-      score: 3,
-      prev: 4,
-      weight: 0.2,
-      description:
-        "Pakistan mediation/security footprint rises; no new major-power direct military entry. Sources: AP.",
-      status: "FAST",
-      sourceVerification: "confirmed"
+      date: "2026-04-19",
+      score: 68
     },
     {
-      name: "De-escalation Probability",
-      score: 2,
-      prev: 4,
-      weight: 0.2,
-      description:
-        "Talks still scheduled, but ceasefire friction is severe—near-term de-escalation credibility down. Sources: Reuters.",
-      status: "FAST",
-      sourceVerification: "confirmed"
+      date: "2026-04-20",
+      score: 72
     }
   ],
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D50",
+      value: "D51",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "↑8",
+      value: "↑4",
       unit: "vs Prev",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $84–$91 · Brent $89–$95",
+      value: "WTI $84.35–$89.04 · Brent $94.35–$97.50",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
-      value: "Strait Closed / Severely Restricted",
-      unit: "Passage Status",
+      value: "Severely Restricted",
+      unit: "Transit Status",
       color: "#ffdc00"
+    }
+  ],
+  riskFactors: [
+    {
+      name: "Military Escalation Intensity",
+      score: 4,
+      prev: 3,
+      weight: 0.2,
+      description: "Direct maritime friction as US Navy seizes an Iranian vessel, marking a significant escalation.",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "Hormuz Disruption",
+      score: 5,
+      prev: 5,
+      weight: 0.2,
+      description: "Strait remains at a standstill as Iran reneges on brief reopening promise.",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "Energy Shock",
+      score: 3,
+      prev: 4,
+      weight: 0.2,
+      description: "Prices rebound on conflict news but remain within the $85-100 range.",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "Great Power Involvement",
+      score: 3,
+      prev: 3,
+      weight: 0.2,
+      description: "High-level US diplomatic mission (VP Vance) balanced by naval enforcement.",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "De-escalation Probability",
+      score: 3,
+      prev: 2,
+      weight: 0.2,
+      description: "Fragile ceasefire window closing as ship seizure erodes mutual trust.",
+      status: "FAST",
+      sourceVerification: "confirmed"
     }
   ],
   events: [
     {
       id: "EVT-01",
-      title: "Trump accuses Iran of 'total' ceasefire breach, threatens further strikes",
-      description:
-        "Trump ties the breach to Hormuz incidents and renewed closure; threatens power plants and bridges if Iran rejects the US proposal, while saying talks will continue in Pakistan. Reuters, AP.",
+      title: "US Seizure of Iranian Vessel 'Tosca'",
+      description: "USS Spruance intercepted and disabled an Iranian-flagged cargo ship in the Gulf of Oman.",
       verification: "confirmed",
-      timestamp: "2026-04-19 (same-day reporting)",
+      timestamp: "2026-04-20",
       significance: "",
-      highlight: true,
       critical: true
     },
     {
       id: "EVT-02",
-      title: "Hormuz closed again until US lifts port blockade",
-      description:
-        "Iran re-closes Hormuz and conditions reopening on lifting the US blockade on Iranian ports; Reuters and AP describe closure/severe restriction. 2026-04-18 to 2026-04-19.",
+      title: "Oil Prices Surge over 6%",
+      description: "WTI crude futures jumped back to $89 on Monday driven by Hormuz escalations.",
       verification: "confirmed",
-      timestamp: "2026-04-18 to 2026-04-19",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-03",
-      title: "Talks to resume; gaps remain on nuclear and strait terms",
-      description:
-        "Trump says US–Iran talks continue in Pakistan; AP reports tighter security for resumed sessions while Iran still demands blockade relief and longer-term terms. Reuters, AP.",
-      verification: "confirmed",
-      timestamp: "2026-04-19 (same-day reporting)",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-04",
-      title: "IRGC messaging on strait access and warning shots",
-      description:
-        "Guardian reports IRGC emphasis on conditional reopening and warning shots at attempted transits—single source pending corroboration. The Guardian.",
-      verification: "single",
-      timestamp: "2026-04-19 (same-day reporting)",
+      timestamp: "2026-04-20",
       significance: ""
     },
     {
-      id: "EVT-05",
-      title: "Pakistan tightens security ahead of resumed talks",
-      description: "AP notes enhanced security and logistics preparation for the next US–Iran contact round.",
-      verification: "confirmed",
-      timestamp: "2026-04-19 (same-day reporting)",
+      id: "EVT-03",
+      title: "Iran Death Toll Surpasses 3,300",
+      description: "Forensic reports confirm 3,375 killed since the start of the conflict.",
+      verification: "single",
+      timestamp: "2026-04-20",
       significance: ""
     }
   ],
   warPhase: {
-    level: "Fragile Ceasefire",
-    targetLevel: "Structural Tension",
+    level: "Maritime Blockade Confrontation",
+    targetLevel: "Fragile Balance",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Ceasefire framework under heavy strain: violation claims and strike threats in parallel",
-      "Key shift: Hormuz closed again; reopening tied to US blockade relief",
-      "De-escalation paths not gone, but the edge-game risk is back from the negotiation window"
+      "Shift from proxy strikes to direct face-to-face maritime seizures.",
+      "The Strait of Hormuz is now the primary lever for diplomatic leverage.",
+      "International focus shifts to preventing the expiration of the ceasefire."
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -452,8 +469,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Direct ceasefire framework under strain; main delta is violation allegations plus follow-on strike threats.",
-        "Continue: No dual-source confirmation of a new large-scale air campaign inside 24h."
+        "Change: US Navy directly intercepts commercial assets, damaging engines.",
+        "Change: Iran deploys drone swarms for tactical harassment of US warships."
       ]
     },
     {
@@ -462,8 +479,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Strait back to closed/severe restriction; reopening again tied to lifting the US blockade.",
-        "Continue: Not normal commercial throughput."
+        "Continue: Traffic remains below 5% of pre-war capacity.",
+        "Change: Passage rights explicitly linked to oil sanction relief."
       ]
     },
     {
@@ -472,8 +489,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Markets re-price strait-closure risk.",
-        "Continue: High-volatility energy risk; reporting also notes talks-continue relief trades."
+        "Change: Market re-prices blockade risk; WTI recovers to $89.",
+        "Continue: Geopolitical hedging drives high volatility in commodities."
       ]
     },
     {
@@ -482,23 +499,26 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: US rhetoric hardens while still scheduling Pakistan talks.",
-        "Continue: Iran insists on blockade relief first; Pakistan remains the venue/broker."
+        "Change: Iranian President Pezeshkian voices deep distrust in US diplomacy.",
+        "Continue: Trump reiterates blockade will stay until a deal is signed."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "US escalation threats vs. continued envoy travel to Pakistan talks",
-      "Iranian strait closure vs. demands to lift the US port blockade"
+      "US demands nuclear freeze; Iran demands immediate sanction relief.",
+      "Zero-sum approach to Hormuz security vs. international law."
     ],
-    military: ["Talks still alive while strait militarization risk jumps"]
+    military: [
+      "Direct naval confrontation vs. proxy containment strategies.",
+      "Escalation pressure on high-value maritime assets."
+    ]
   },
+  keyChange: "US shift from defensive blockade to offensive seizure resets diplomatic trust to zero.",
+  investmentSignal: "→ Maintain energy defensive positions, reduce high-premium risk assets.",
+  change: "up",
+  prevRiskScore: 68,
   scoreTrend: [
-    {
-      date: "04-15",
-      score: 76
-    },
     {
       date: "04-16",
       score: 72
@@ -513,30 +533,53 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "04-19",
-      score: 68,
+      score: 68
+    },
+    {
+      date: "04-20",
+      score: 72,
       active: true
     }
   ],
-  keyChange:
-    "Severe ceasefire friction and Hormuz re-closure; slide from low-intensity standoff to high edge-game risk—composite +8 vs prior close.",
-  investmentSignal:
-    "→ Restore defensive and energy hedges immediately; do not treat this as a stable negotiation window.",
-  prevRiskScore: 60,
   webSources: [
     {
-      title: "Trump accuses Iran of 'total violation' of ceasefire, threatens new attacks",
-      uri: "https://www.reuters.com/world/asia-pacific/trump-iran-cite-progress-talks-uncertainty-hangs-over-strait-2026-04-19/"
+      title: "wanaen.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHHibCLxH5olZ7jNsS-KfwoCHUDt-o5wav9TqUuRNEc9p9O1dmbLQ6qNd3efXE0L2CK3pgiK1oMKYiX4hQKNxR4PmbfGlYizx-cdx50WQY7EkgQAqh-_K2aZajHop45KzqKIoy10Jb5hhAb0bua5Rf2WU4GyoECr7FP9YfJVPaBXQO6MnMs"
     },
     {
-      title: "Iran closes strait of Hormuz again 'until US lifts blockade'",
-      uri: "https://www.theguardian.com/world/2026/apr/18/iran-closes-strait-of-hormuz-again-until-us-lifts-blockade"
+      title: "tradingeconomics.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGY-x6xbdaxI-BYsVv8suGDCLQPzMWafGNciMmYr8rEgKcltnpgVtMQx0wyiOGw6A87WQKry3NvjbiAgT3FZqdUeSUZzHziq-CC3Y6yHPh3hV8ylrXMlbrbFvSarJUTvZicQWHvWhuy7X8iDw=="
     },
     {
-      title: "The Latest: Trump says talks to resume as standoff escalates over Strait of Hormuz",
-      uri: "https://apnews.com/article/ab529b5f926a274ca7dc8ce3f1042b56"
+      title: "bairdmaritime.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHunZpOReTeel2h77TqkvDdenhxqyT6ZjEXyo1uAGXtv1IhBXN9n-qzPpZxUJ6qpoJf36osnkp86YZJB94ODfdJiQWzYKhjn6xHLBZ2iRvGil0cGbq6qH5gbo3k9tgapo7JyjE_94LHMF7yGos-UxyRPI8mu2CuZmjoZcSVMnATpEMUh9zuDFb_UjDMCarTfbN0oZn-cjj6nQ=="
+    },
+    {
+      title: "investing.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHI_V3M4xW9-bEH0aanD1bNPhOHGmilz9Q4Ja3Uj3zQivmi4g2ce0BHfIuak5GDSxbTJi_7T8NNvdp1mypOW-vg8CjpvhEqdpxLPLzHlBCwLDRPPmxMqW-rbsdtFFMncpj77hgdsVg7jh65IepDVvwrZ7RQPdy3gZHkeA=="
+    },
+    {
+      title: "hormuzstraitmonitor.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHAT-UZ0itlQZxkOIP6KbuCI7AdQnHCwUDsExVHHqG5B-zVuSfIhhz9cE6e3RR9V0Wm3OsKJTO2xl1kFL1iMhBpyT39Ow77iHPT945jU7D80U-xzVpEl4PV41yN"
+    },
+    {
+      title: "2news.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEEiXi4qyZwu1dol5zm5fegtDX0TH0iFGWNv7Ex8LxqzJrn7LNAz2zBXSp6HE93SaHQ5HnmC8tTP7NNt7VoYieU1skWfKSlSQskDquIiM2rfwW7-OfUxOW7ajJOAxR4PqDMeJfVwu8aUpcIjnS-9rpagPq0PjA2e_qP2hfOcJXnC2MhSXiqwZ8L2oUJ3MLAzHdly_s3x_u5oDZlX5FGcTGWhLCUoiOD5dAmHQDJ5ui-psogOQWvfdgFSgC7CZRGgerNWYu_NJhcgcH8vWUfN7MCKtVnCJ6s5GF1dAI4EKM="
+    },
+    {
+      title: "barchart.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHlivMybf4XNNbv78DuIOxQZr0ZZNAcji8kEeviED0grPdJR4-xcwrUYted5sMU-JWYpwM4811XzpCcpMde-1mR_qnmwwPh51VeA3JPhIASkBL0RYHXntLOpdZFMILa8zxYwpWeTFrE1Q=="
+    },
+    {
+      title: "nationthailand.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFP8AnOqKcUBFUe8uQQlsZnYF9I4anJDId09jW1Y0OYJl8JyzK6dC_kGPmKvlo2E9BATNLZmpCa8ZUoW1dAUdUwIqtGURI1PQ_Ls504KREugQaZnQJSvgdB4A4FOatqhSY18UcueFzvCEb0Bia6"
     }
   ],
-  webSearchQueries: []
+  webSearchQueries: [
+    "Hormuz Strait shipping status April 20 2024",
+    "latest US Iran Israel conflict news April 20 2024",
+    "WTI Brent oil price range April 19 20 2024 trend"
+  ]
 };
 
 export const TRANSLATIONS = {
@@ -544,7 +587,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "4月19日节点",
+    node406: "4月20日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -578,17 +621,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.38 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.39 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal:
-      "综合评分 68（↑8）：停火严重摩擦、霍尔木兹再度关闭；局势从谈判窗口滑向高风险边缘博弈。",
-    bannerWarning: "→ 立即恢复防御与能源对冲配置，不应把当前局势视为稳定谈判期。",
-    deescalationIntent: "美方威胁升级与仍派员赴巴谈判之间的张力",
-    structuralRisk: "霍尔木兹重新关闭/严重受限，为24h核心恶化变量",
-    contradictionNote: "美方威胁升级与仍派员赴巴谈判之间的张力；谈判渠道尚存与海峡军事化风险骤升之间的张力",
+    bannerSignal: "综合评分 72（↑4）：美军从防御性封锁转为进攻性扣押，导致双方互信归零。",
+    bannerWarning: "→ 维持能源防御性头寸，减持高溢价风险资产。",
+    deescalationIntent: "美方要求伊方完全停止核浓缩及导弹试验作为解除封锁的前提。",
+    structuralRisk: "海峡通航陷入停滞，伊朗宣布撤销短暂的复航承诺，重新实施严密封锁。",
+    contradictionNote: "美方要求伊方完全停止核浓缩及导弹试验作为解除封锁的前提。；海上拦截主权与航行自由权之间的激烈冲突。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -596,7 +638,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第50天",
+    dayCount: "第51天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -604,7 +646,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Apr 19 Node",
+    node406: "Apr 20 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -638,19 +680,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.38 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.39 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal:
-      "Composite 68 (↑8): Severe ceasefire friction and Hormuz re-closure; edge-game risk returns from the negotiation window.",
-    bannerWarning:
-      "→ Restore defensive and energy hedges immediately; do not treat this as a stable negotiation window.",
-    deescalationIntent: "US escalation rhetoric vs. continued envoy travel to Pakistan talks",
-    structuralRisk: "Strait closed/severe restriction—core 24h deterioration variable",
-    contradictionNote:
-      "US escalation rhetoric vs. continued Pakistan talks; talks still alive while strait militarization risk jumps",
+    bannerSignal: "Composite 72 (↑4): US shift from defensive blockade to offensive seizure resets diplomatic trust to zero.",
+    bannerWarning: "→ Maintain energy defensive positions, reduce high-premium risk assets.",
+    deescalationIntent: "US demands nuclear freeze; Iran demands immediate sanction relief.",
+    structuralRisk: "Strait remains at a standstill as Iran reneges on brief reopening promise.",
+    contradictionNote: "US demands nuclear freeze; Iran demands immediate sanction relief.; Direct naval confrontation vs. proxy containment strategies.",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -658,7 +697,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 50",
+    dayCount: "Day 51",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
