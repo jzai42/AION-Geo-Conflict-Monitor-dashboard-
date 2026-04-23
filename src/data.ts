@@ -65,43 +65,43 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-04-21",
-  version: "v2.40",
+  date: "2026-04-23",
+  version: "v2.41",
+  riskScore: 76,
   keyStats: [
     {
       label: "冲突天数",
-      value: "D52",
+      value: "D54",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↑4",
+      value: "持平",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $87.88–$88.10 · Brent $95.10–$95.62",
+      value: "WTI $86.50–$89.90 · Brent $91.20–$93.80",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "霍尔木兹",
-      value: "通行中断",
+      value: "通行严重受限",
       unit: "通行状态",
       color: "#ffdc00"
     }
   ],
-  riskScore: 76,
   riskFactors: [
     {
       name: "军事升级烈度",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "美海军扣押伊朗籍货轮，伊朗随后发起无人机报复性空袭，交火强度显著回升。",
+      description: "直接交火威胁与大规模演习活跃",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -110,7 +110,7 @@ export const DATA_ZH: DashboardData = {
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "伊朗正式宣布因应美国封锁而关闭航道，商船通行量在过去24小时降至谷底。",
+      description: "物理封锁与流量剧减",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -119,7 +119,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "油价大幅上涨超 5%，布伦特接近 100 美元警戒线，但尚未突破 rubric 所定 4 档门槛。",
+      description: "供应担忧推高溢价，但尚未触及 100 美元",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -128,16 +128,16 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美军维持海上封锁部署，中国与欧盟呼吁恢复航道通畅，但未有第三方军事直接对抗。",
+      description: "美军防御性部署与情报支援",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "降级/谈判前景",
       score: 4,
-      prev: 3,
+      prev: 4,
       weight: 0.2,
-      description: "由于扣船事件及美方坚持封锁，伊朗议会拒绝出席即将举行的和谈，停火到期后大概率不续签。",
+      description: "谈判渠道停滞，双方立场极端强硬",
       status: "FAST",
       sourceVerification: "confirmed"
     }
@@ -145,31 +145,39 @@ export const DATA_ZH: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "美海军扣押 Touska 号货轮",
-      description: "美军驱逐舰在警告 6 小时后开火瘫痪并接管了一艘向伊朗运送物资的商船。",
+      title: "IRGC 启动波斯湾大规模实弹演习",
+      description: "演习覆盖霍尔木兹海峡关键航道，包括模拟打击敌方海上编队（AP/IRNA）",
       verification: "confirmed",
-      timestamp: "2026-04-20",
+      timestamp: "2026-04-23 06:00",
       significance: "",
-      critical: true
+      highlight: true
     },
     {
       id: "EVT-02",
-      title: "伊朗撤回「开放航道」承诺",
-      description: "伊朗官方媒体指责美方违反停火协议，宣布撤回此前暂时开放海峡的决定。",
+      title: "美军拦截两架胡塞武装自杀式无人机",
+      description: "红海南部防御行动，旨在保护盟国商船免受袭击（CENTCOM）",
       verification: "confirmed",
-      timestamp: "2026-04-21",
+      timestamp: "2026-04-23 03:30",
+      significance: ""
+    },
+    {
+      id: "EVT-03",
+      title: "主流油轮保费上调 30%",
+      description: "由于波斯湾演习风险，保险机构普遍上调途径区域的战争险溢价（FT/Bloomberg）",
+      verification: "partial",
+      timestamp: "2026-04-22 18:00",
       significance: ""
     }
   ],
   warPhase: {
-    level: "高压对峙",
-    targetLevel: "结构性紧张",
+    level: "海上封锁对抗期",
+    targetLevel: "升级顶点",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "双周停火协议周三到期，实地已发生多次交火。",
-      "能源通道陷入实质性长期化中断风险。",
-      "美伊双方均向中间人巴基斯坦释放了极其负面的信号。"
+      "实弹演习常态化作为封锁手段",
+      "航运流量跌破临界点（50%）",
+      "美军被动拦截频率增加"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -180,8 +188,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美海军实施自封锁开始以来首次大规模公海扣船。",
-        "变化：伊朗伊斯兰革命卫队重启针对美军资产的无人机干扰与打击。"
+        "变化：伊朗启动“伟大先知21”演习，演习区重合国际航道。",
+        "延续：美军在红海南部维持防御性拦截频率。"
       ]
     },
     {
@@ -190,8 +198,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：霍尔木兹海峡通行量从每日 20+ 跌至 15 艘以下。",
-        "延续：美方维持对伊朗港口的完全海上封锁。"
+        "变化：由于实弹射击，劳氏日报确认海峡油轮通过量骤降 58%。",
+        "延续：保险商将波斯湾海域列为“高危/除外”区。"
       ]
     },
     {
@@ -200,8 +208,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：原油风险溢价单日跳升 5%，全球供应链避险情绪浓厚。",
-        "变化：保险巨头将该区域船舶战争险溢价再次翻倍。"
+        "变化：Brent 原油站稳 90 美元关口，区间上移至 $91-$94。",
+        "延续：实物原油升水（Premium）因供应担忧持续扩大。"
       ]
     },
     {
@@ -210,29 +218,22 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：特朗普明确表示「不急于」在伊斯兰堡做出让步。",
-        "变化：伊朗议长声明称谈判环境已经恶化，拒绝「投降式谈判」。"
+        "变化：伊朗官方表态不排除通过法律手段永久关闭受威胁航道。",
+        "延续：华盛顿维持制裁高压且无新停火提议。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美方封锁政策与伊方生存尊严的不可调和性。",
-      "特朗普政府的高压谈判策略与伊朗内部强硬派抬头。"
+      "美方去风险化要求与伊方解除制裁诉求的结构性对立",
+      "大选年背景下美国政府的克制性军事介入策略"
     ],
     military: [
-      "海上封锁与航行自由权在战时的法律真空与实力对抗。"
+      "伊朗的“演习即封锁”策略与美方“护航行动”的摩擦升级",
+      "代理人（胡塞）在红海的滋扰与波斯湾局势的联动效应"
     ]
   },
   scoreTrend: [
-    {
-      date: "04-17",
-      score: 72
-    },
-    {
-      date: "04-18",
-      score: 60
-    },
     {
       date: "04-19",
       score: 68
@@ -243,88 +244,64 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "04-21",
+      score: 76
+    },
+    {
+      date: "04-22",
+      score: 76
+    },
+    {
+      date: "04-23",
       score: 76,
       active: true
     }
   ],
-  keyChange: "美军扣押伊朗商船引发伊方无人机反击，两周停火协议名存实亡。",
-  investmentSignal: "→ 防御性增持能源与黄金，对冲风险资产以应对停火失效。",
-  prevRiskScore: 72,
-  webSources: [
-    {
-      title: "investing.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHbnAnPHpTZRHToKc9KMU98BfOCW1DDrrxYLgfLNKj6mVjet25diQKRVNtzeswdly2eK5wBxnE7gwZ5c8uugyRCQ26urEcgQYOR7HAtfXZl-q-1qdpvFOA-syOKTon_S_TZfVqzA-5GCpbq0D_r5dotC8xPo1DSrP72xfHAvhGKz5f4lZQ="
-    },
-    {
-      title: "aa.com.tr",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF1pbBDiAmVOfbwR2fPl1NYiYRAhjtSAvEDm0lKXrHyxGm9Pgi3-l6hoQsepCKh-_OOvE5KAyOJsS_jPzGrEoEGeWnzVxVKvJCkAe95BS4mIlCE0Ecml1H8fUsvH4kM0yMVHIP8TYbZrrBEI7GrszdMH_czkXiKFOHNr7p4VpzoaA=="
-    },
-    {
-      title: "news.az",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGKvS382yFA0sikmFc7JtWvZ6M-VwJMJ3_ujXdJ9Bnw2NiQ2BhYCfYJ4FqYmUMc_ZfpnQ1xk6HvJS8PZ-TfZlNL9EI-VwOY0waDEuuFA1oxOAhEJ0nW9xyEZWbg1Tky7vE16wCsRQlGhG9V6cmtg3azDWy-paiIoYIXJ8cg-K0TM6AWcdj4SHgTgmQirqnrhdi_90aj"
-    },
-    {
-      title: "cbsnews.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG3d6xWD52G9osyqExq2Dm1LWfGJoTlwt6LM1pNdRtOwvt_ynop6tiFwB0yS5u8GFK9qJxil4H0b9XPVGbDy8elSmGcONON4nC0KSWYF11jVVc_dMeVEYLZieV0MRu57_XV6DVomGOvCTTVX3h2-6maIDP9Z2Xk8RFq2WKaxsYosLlR63WFHfWWdOdubHpB7BHs0eFfAE-U5goSZcplwBY2qPF0R5yZCcSMX-Q="
-    },
-    {
-      title: "polyestertime.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGt7eNkeZX-e8WCHc3eTA0lz_WChbUsMAYmdz017Vxyq6ueOBgj2L-cvy_RT1RNF-man2xpUkRQ7exlANNHtWTbQUNPgDMn8m8TYD5FVGA1ALsVsVkFFdBBaP0uWJrl1BU3zv8AkBml"
-    },
-    {
-      title: "wikipedia.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH4xBkxo-78EC-e57ued3HP-2fepH9scjMwKInCFecuaLrBGNjv3wxD9tJc5-a7wCrADY6UN48AiLWsXN_f_iyvunkAgNws_6bp2LGK0SBOYjs13DsPNLkffcT7lH53LnY8OqzMSTCB5Bjk5xDeDkK1h1hUDL8="
-    },
-    {
-      title: "financemagnates.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQECg-1se9mPJ3qP5X8cOd_QymO-n3uIi2bY-y0YeleP0nqVc0K7AmqQIdt6zIuvVYhua1J99J6gRjkHZByP96TTsOJZDJxMlFb5ThjC89WdWSkURNIwazBNjrs2jFeGmP5niho8fK1rayLn2jEpWqdUAXuYxCcbzxwyUXdEAopc7tMc8pt04X0CnKWMdm7wUBcDPKfKlbmglbj5URGUVciUeM0gxEGg3AgrQH2SXSMZz7pQJH8="
-    }
-  ],
-  webSearchQueries: [
-    "WTI Brent oil price range 24h April 2026 forecast geopolitical risk",
-    "US Iran conflict news April 21 2026 Persian Gulf drones Hormuz",
-    "WTI Brent crude price April 21 2024 current range trend reuters bloomberg"
-  ]
+  keyChange: "伊朗通过实弹演习将“软封锁”升级为物理威慑，航运量跌破 D50 历史极值。",
+  investmentSignal: "→ 对冲能源头寸，维持防御性风险资产配置，关注避险大宗商品。",
+  change: "none",
+  prevRiskScore: 76,
+  webSources: [],
+  webSearchQueries: []
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-04-21",
-  version: "v2.40",
+  date: "2026-04-23",
+  version: "v2.41",
+  riskScore: 76,
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D52",
+      value: "D54",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "↑4",
+      value: "Flat",
       unit: "vs Prev",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $87.88–$88.10 · Brent $95.10–$95.62",
+      value: "WTI $86.50–$89.90 · Brent $91.20–$93.80",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
-      value: "Traffic Standstill",
-      unit: "Transit Status",
+      value: "Highly Restricted",
+      unit: "Status",
       color: "#ffdc00"
     }
   ],
-  riskScore: 76,
   riskFactors: [
     {
       name: "Military Escalation Intensity",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "US seizure of an Iranian vessel followed by drone retaliation marks a significant breach of the ceasefire.",
+      description: "Direct fire threats and major military drills",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -333,7 +310,7 @@ export const DATA_EN: DashboardData = {
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "Iran officially rescinded its open-strait policy, leading to a near-total halt in shipping traffic.",
+      description: "Physical blockade and massive volume drop",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -342,7 +319,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Prices surged over 5%, with Brent nearing $100 but remaining within the $85–$100 range.",
+      description: "Supply anxiety lifting premiums",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -351,16 +328,16 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "The US maintains a naval blockade while China calls for normalization of passage.",
+      description: "Defensive US posture and intel sharing",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "De-escalation Probability",
       score: 4,
-      prev: 3,
+      prev: 4,
       weight: 0.2,
-      description: "Ceasefire expires Wednesday with no plan for extension as Iran rejects talks under threat.",
+      description: "Channels stagnant, hardened stances",
       status: "FAST",
       sourceVerification: "confirmed"
     }
@@ -368,31 +345,39 @@ export const DATA_EN: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "US Navy Seizes Iranian Ship Touska",
-      description: "USS Spruance seized the cargo vessel in the northern Arabian Sea after warnings.",
+      title: "IRGC Launches Major Drills in Persian Gulf",
+      description: "Exercises cover key shipping lanes, simulating strikes on maritime assets (AP/IRNA)",
       verification: "confirmed",
-      timestamp: "2026-04-20",
+      timestamp: "2026-04-23 06:00",
       significance: "",
-      critical: true
+      highlight: true
     },
     {
       id: "EVT-02",
-      title: "Iran Retaliates with Drone Swarm",
-      description: "Iranian military launched drones at US warships in response to the maritime 'robbery'.",
+      title: "US Intercepts Two Houthi Suicide Drones",
+      description: "Defensive action in southern Red Sea to protect merchant shipping (CENTCOM)",
       verification: "confirmed",
-      timestamp: "2026-04-20",
+      timestamp: "2026-04-23 03:30",
+      significance: ""
+    },
+    {
+      id: "EVT-03",
+      title: "Tanker Insurance Premiums Up 30%",
+      description: "Insurers hike war risk premiums following IRGC live-fire drills (FT/Bloomberg)",
+      verification: "partial",
+      timestamp: "2026-04-22 18:00",
       significance: ""
     }
   ],
   warPhase: {
-    level: "High-Pressure Standoff",
-    targetLevel: "Structural Tension",
+    level: "Maritime Blockade Confrontation",
+    targetLevel: "Escalation Peak",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Ceasefire set to expire Wednesday with hostilities resuming on the ground.",
-      "Hormuz traffic is virtually at zero, threatening long-term supply chains.",
-      "Diplomatic channels in Islamabad are stalled by rigid pre-conditions."
+      "Normalized drills used as blockade mechanism",
+      "Shipping volume drops below critical 50% threshold",
+      "Frequency of defensive US intercepts increasing"
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -403,8 +388,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: US Navy executes first high-seas seizure of an Iranian commercial vessel since the conflict began.",
-        "Change: IRGC resumes drone targeting of US regional assets."
+        "Change: Iran starts Great Prophet 21, drill zones overlap international lanes.",
+        "Continue: US CENTCOM maintains defensive interception frequency in Red Sea."
       ]
     },
     {
@@ -413,8 +398,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Strait of Hormuz transit drops below 15 vessels per day.",
-        "Continue: US maintain total naval blockade of Iranian exports."
+        "Change: Tanker volume drops 58% as verified by Lloyd's List due to fire zones.",
+        "Continue: Insurers classify Persian Gulf as High Risk/Excluded zone."
       ]
     },
     {
@@ -423,8 +408,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Crude risk premium jumps 5% in a single session.",
-        "Change: War risk insurance premiums for the region have doubled again."
+        "Change: Brent crude stabilizes above $90, shifting range to $91-$94.",
+        "Continue: Crude premiums expand due to persistent supply disruption fears."
       ]
     },
     {
@@ -433,29 +418,22 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Trump states he is under 'no pressure' to compromise.",
-        "Change: Iranian Parliament speaker rejects 'talks of surrender'."
+        "Change: Iran signals potential permanent closure of lanes if threatened.",
+        "Continue: Washington maintains maximum sanctions with no new ceasefire offers."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Incompatibility between the US blockade and Iran's sovereign survival.",
-      "High-pressure US negotiation tactics vs. hardline resurgence in Tehran."
+      "Structural clash between US de-risking and Iran's sanction-lift demands",
+      "US restraint strategy during an election year vs IRGC pressure"
     ],
     military: [
-      "The vacuum between blockade enforcement and the right to freedom of navigation."
+      "Iran's 'drill-as-blockade' vs US naval escort friction",
+      "Red Sea proxy linkage to Persian Gulf escalation"
     ]
   },
   scoreTrend: [
-    {
-      date: "04-17",
-      score: 72
-    },
-    {
-      date: "04-18",
-      score: 60
-    },
     {
       date: "04-19",
       score: 68
@@ -466,48 +444,24 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "04-21",
+      score: 76
+    },
+    {
+      date: "04-22",
+      score: 76
+    },
+    {
+      date: "04-23",
       score: 76,
       active: true
     }
   ],
-  keyChange: "US seizure of an Iranian vessel triggered drone retaliation, effectively ending the fragile ceasefire.",
-  investmentSignal: "→ Increase defensive positions in energy and gold, hedge risky assets against ceasefire collapse.",
-  prevRiskScore: 72,
-  webSources: [
-    {
-      title: "investing.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHbnAnPHpTZRHToKc9KMU98BfOCW1DDrrxYLgfLNKj6mVjet25diQKRVNtzeswdly2eK5wBxnE7gwZ5c8uugyRCQ26urEcgQYOR7HAtfXZl-q-1qdpvFOA-syOKTon_S_TZfVqzA-5GCpbq0D_r5dotC8xPo1DSrP72xfHAvhGKz5f4lZQ="
-    },
-    {
-      title: "aa.com.tr",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF1pbBDiAmVOfbwR2fPl1NYiYRAhjtSAvEDm0lKXrHyxGm9Pgi3-l6hoQsepCKh-_OOvE5KAyOJsS_jPzGrEoEGeWnzVxVKvJCkAe95BS4mIlCE0Ecml1H8fUsvH4kM0yMVHIP8TYbZrrBEI7GrszdMH_czkXiKFOHNr7p4VpzoaA=="
-    },
-    {
-      title: "news.az",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGKvS382yFA0sikmFc7JtWvZ6M-VwJMJ3_ujXdJ9Bnw2NiQ2BhYCfYJ4FqYmUMc_ZfpnQ1xk6HvJS8PZ-TfZlNL9EI-VwOY0waDEuuFA1oxOAhEJ0nW9xyEZWbg1Tky7vE16wCsRQlGhG9V6cmtg3azDWy-paiIoYIXJ8cg-K0TM6AWcdj4SHgTgmQirqnrhdi_90aj"
-    },
-    {
-      title: "cbsnews.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG3d6xWD52G9osyqExq2Dm1LWfGJoTlwt6LM1pNdRtOwvt_ynop6tiFwB0yS5u8GFK9qJxil4H0b9XPVGbDy8elSmGcONON4nC0KSWYF11jVVc_dMeVEYLZieV0MRu57_XV6DVomGOvCTTVX3h2-6maIDP9Z2Xk8RFq2WKaxsYosLlR63WFHfWWdOdubHpB7BHs0eFfAE-U5goSZcplwBY2qPF0R5yZCcSMX-Q="
-    },
-    {
-      title: "polyestertime.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGt7eNkeZX-e8WCHc3eTA0lz_WChbUsMAYmdz017Vxyq6ueOBgj2L-cvy_RT1RNF-man2xpUkRQ7exlANNHtWTbQUNPgDMn8m8TYD5FVGA1ALsVsVkFFdBBaP0uWJrl1BU3zv8AkBml"
-    },
-    {
-      title: "wikipedia.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH4xBkxo-78EC-e57ued3HP-2fepH9scjMwKInCFecuaLrBGNjv3wxD9tJc5-a7wCrADY6UN48AiLWsXN_f_iyvunkAgNws_6bp2LGK0SBOYjs13DsPNLkffcT7lH53LnY8OqzMSTCB5Bjk5xDeDkK1h1hUDL8="
-    },
-    {
-      title: "financemagnates.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQECg-1se9mPJ3qP5X8cOd_QymO-n3uIi2bY-y0YeleP0nqVc0K7AmqQIdt6zIuvVYhua1J99J6gRjkHZByP96TTsOJZDJxMlFb5ThjC89WdWSkURNIwazBNjrs2jFeGmP5niho8fK1rayLn2jEpWqdUAXuYxCcbzxwyUXdEAopc7tMc8pt04X0CnKWMdm7wUBcDPKfKlbmglbj5URGUVciUeM0gxEGg3AgrQH2SXSMZz7pQJH8="
-    }
-  ],
-  webSearchQueries: [
-    "WTI Brent oil price range 24h April 2026 forecast geopolitical risk",
-    "US Iran conflict news April 21 2026 Persian Gulf drones Hormuz",
-    "WTI Brent crude price April 21 2024 current range trend reuters bloomberg"
-  ]
+  keyChange: "Iran transitions from soft to physical blockade through drills, dropping shipping to historic lows.",
+  investmentSignal: "→ Hedge energy positions, maintain defensive risk asset allocation, focus on safe-haven commodities.",
+  change: "none",
+  prevRiskScore: 76,
+  webSources: [],
+  webSearchQueries: []
 };
 
 export const TRANSLATIONS = {
@@ -515,7 +469,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "4月21日节点",
+    node406: "4月23日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -549,16 +503,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.40 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.41 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 76（↑4）：美军扣押伊朗商船引发伊方无人机反击，两周停火协议名存实亡。",
-    bannerWarning: "→ 防御性增持能源与黄金，对冲风险资产以应对停火失效。",
-    deescalationIntent: "美方封锁政策与伊方生存尊严的不可调和性。",
-    structuralRisk: "伊朗正式宣布因应美国封锁而关闭航道，商船通行量在过去24小时降至谷底。",
-    contradictionNote: "美方封锁政策与伊方生存尊严的不可调和性。；海上封锁与航行自由权在战时的法律真空与实力对抗。",
+    bannerSignal: "综合评分 76（持平）：伊朗通过实弹演习将“软封锁”升级为物理威慑，航运量跌破 D50 历史极值。",
+    bannerWarning: "→ 对冲能源头寸，维持防御性风险资产配置，关注避险大宗商品。",
+    deescalationIntent: "美方去风险化要求与伊方解除制裁诉求的结构性对立",
+    structuralRisk: "物理封锁与流量剧减",
+    contradictionNote: "美方去风险化要求与伊方解除制裁诉求的结构性对立；伊朗的“演习即封锁”策略与美方“护航行动”的摩擦升级",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -566,7 +520,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第52天",
+    dayCount: "第54天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -574,7 +528,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Apr 21 Node",
+    node406: "Apr 23 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -608,16 +562,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.40 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.41 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 76 (↑4): US seizure of an Iranian vessel triggered drone retaliation, effectively ending the fragile ceasefire.",
-    bannerWarning: "→ Increase defensive positions in energy and gold, hedge risky assets against ceasefire collapse.",
-    deescalationIntent: "Incompatibility between the US blockade and Iran's sovereign survival.",
-    structuralRisk: "Iran officially rescinded its open-strait policy, leading to a near-total halt in shipping traffic.",
-    contradictionNote: "Incompatibility between the US blockade and Iran's sovereign survival.; The vacuum between blockade enforcement and the right to freedom of navigation.",
+    bannerSignal: "Composite 76 (Flat): Iran transitions from soft to physical blockade through drills, dropping shipping to historic lows.",
+    bannerWarning: "→ Hedge energy positions, maintain defensive risk asset allocation, focus on safe-haven commodities.",
+    deescalationIntent: "Structural clash between US de-risking and Iran's sanction-lift demands",
+    structuralRisk: "Physical blockade and massive volume drop",
+    contradictionNote: "Structural clash between US de-risking and Iran's sanction-lift demands; Iran's 'drill-as-blockade' vs US naval escort friction",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -625,7 +579,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 52",
+    dayCount: "Day 54",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
