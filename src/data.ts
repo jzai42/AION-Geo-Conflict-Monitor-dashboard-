@@ -41,6 +41,7 @@ export interface DashboardData {
     value: string;
     unit: string;
     color: string;
+    layout?: "default" | "unitPrimary";
   }[];
   warPhase: {
     level: string;
@@ -67,7 +68,7 @@ export interface DashboardData {
 export const DATA_ZH: DashboardData = {
   date: "2026-04-25",
   version: "v2.43",
-  riskScore: 76,
+  riskScore: 72,
   keyStats: [
     {
       label: "冲突天数",
@@ -227,16 +228,12 @@ export const DATA_ZH: DashboardData = {
   },
   scoreTrend: [
     {
-      date: "04-21",
-      score: 76
-    },
-    {
       date: "04-22",
       score: 76
     },
     {
       date: "04-23",
-      score: 76
+      score: 80
     },
     {
       date: "04-24",
@@ -244,14 +241,17 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "04-25",
-      score: 76,
+      score: 72
+    },
+    {
+      date: "04-26",
+      score: 72,
       active: true
     }
   ],
   keyChange: "美军驱逐舰增援动作确认了长期护航对抗的预期，地缘溢价在能源价格中固化。",
   investmentSignal: "→ 维持对能源、黄金及风险防御资产的超配，减持受供应链影响较大的中游制造部位。",
-  change: "none",
-  prevRiskScore: 76,
+  prevRiskScore: 72,
   webSources: [],
   webSearchQueries: []
 };
@@ -259,7 +259,7 @@ export const DATA_ZH: DashboardData = {
 export const DATA_EN: DashboardData = {
   date: "2026-04-25",
   version: "v2.43",
-  riskScore: 76,
+  riskScore: 72,
   keyStats: [
     {
       label: "Conflict Days",
@@ -419,16 +419,12 @@ export const DATA_EN: DashboardData = {
   },
   scoreTrend: [
     {
-      date: "04-21",
-      score: 76
-    },
-    {
       date: "04-22",
       score: 76
     },
     {
       date: "04-23",
-      score: 76
+      score: 80
     },
     {
       date: "04-24",
@@ -436,14 +432,17 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "04-25",
-      score: 76,
+      score: 72
+    },
+    {
+      date: "04-26",
+      score: 72,
       active: true
     }
   ],
   keyChange: "US destroyer reinforcement confirms expectations of long-term escort confrontation.",
   investmentSignal: "→ Maintain overweight in energy, gold, and defensive assets; underweight manufacturing vulnerable to supply chains.",
-  change: "none",
-  prevRiskScore: 76,
+  prevRiskScore: 72,
   webSources: [],
   webSearchQueries: []
 };
