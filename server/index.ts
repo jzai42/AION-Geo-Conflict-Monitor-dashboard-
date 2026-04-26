@@ -33,6 +33,8 @@ function resolveChromeExecutable(): string {
   if (fromEnv && fs.existsSync(fromEnv)) return fromEnv;
   const candidates = [
     '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
+    '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser',
     '/Applications/Chromium.app/Contents/MacOS/Chromium',
     '/usr/bin/google-chrome-stable',
     '/usr/bin/google-chrome',

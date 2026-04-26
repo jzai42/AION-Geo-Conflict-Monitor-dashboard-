@@ -195,11 +195,26 @@ function lookupScore(historyMap, iso, fallback) {
 }
 
 function buildFiveDayTrend(historyArr, todayIso, fallback) {
-  const map = new Map(historyArr.map(p => [p.date, p.score]));
-  return Array.from({ length: 5 }, (_, i) => {
-    const iso = addDaysIso(todayIso, i - 4);
-    return { date: iso.slice(5), score: lookupScore(map, iso, fallback) };
-  });
+  const rows = (historyArr || [])
+    .filter((p) => p?.date && Number.isFinite(Number(p.score)))
+    .slice()
+    .sort((a, b) => String(a.date).localeCompare(String(b.date)));
+
+  const out = rows.slice(-5).map((p) => ({
+    date: String(p.date).slice(5),
+    score: Math.round(Number(p.score)),
+  }));
+
+  // 冷启动兜底：历史不足 5 条时，才按公历日回填，避免在缺失日“复制前值”造成误导性平直线。
+  if (out.length < 5) {
+    const map = new Map(rows.map((p) => [p.date, Number(p.score)]));
+    for (let i = out.length; i < 5; i++) {
+      const iso = addDaysIso(todayIso, i - 4);
+      out.unshift({ date: iso.slice(5), score: lookupScore(map, iso, fallback) });
+    }
+  }
+
+  return out.slice(-5);
 }
 
 /** Exact calendar-day composite in history, or null */
