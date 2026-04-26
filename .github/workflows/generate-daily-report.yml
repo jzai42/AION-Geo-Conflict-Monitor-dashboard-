@@ -12,6 +12,9 @@ on:
 
 env:
   GEMINI_MODEL: gemini-3-flash-preview
+  GEMINI_ESCALATION_MODEL: gemini-3.1-pro
+  AION_ENSEMBLE_N: "3"
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 concurrency:
   group: generate-daily-report
@@ -57,7 +60,7 @@ jobs:
         if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
         uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Install dependencies
@@ -74,7 +77,7 @@ jobs:
             exit 1
           fi
 
-      - name: Generate report via Gemini
+      - name: Generate report via model pipeline
         if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -93,12 +96,18 @@ jobs:
             exit 0
           fi
           git commit -m "chore(report): auto-generate daily AION report"
-          git pull --rebase --strategy-option=theirs origin main
+          git fetch origin main
+          BASE_COMMIT="$(git rev-parse HEAD^)"
+          REMOTE_HEAD="$(git rev-parse origin/main)"
+          if [ "$BASE_COMMIT" != "$REMOTE_HEAD" ]; then
+            echo "::warning::Remote main moved during run; skipping auto-push to avoid overwriting manual edits."
+            exit 0
+          fi
           git push origin HEAD:main
 
       - name: Upload debug artifacts on failure
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: daily-report-debug
           path: reports/daily/*

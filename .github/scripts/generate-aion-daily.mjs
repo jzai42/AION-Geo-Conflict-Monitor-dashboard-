@@ -6,7 +6,7 @@ import { GoogleGenAI } from "@google/genai";
 // ── CONFIG ─────────────────────────────────────────────────────────
 const CONFIG = {
   conflictStartDate: "2026-02-28",
-  ensembleN: 1,
+  ensembleN: Math.max(1, Math.min(5, Number.parseInt(process.env.AION_ENSEMBLE_N || "3", 10) || 3)),
   geminiMaxAttempts: 4,
   geminiRetryBaseMs: 1500,
   geminiRetryMaxMs: 12000,
@@ -17,6 +17,9 @@ const AION_USE_OPENAI_WEBSEARCH = /^(1|true|yes)$/i.test(process.env.AION_USE_OP
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || "";
 /** 默认：Gemini 3 Flash Preview（text）；可按需设 gemini-3.1-flash-lite-preview 或 gemini-3.1-pro-preview */
 const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-3-flash-preview";
+const GEMINI_ESCALATION_MODEL = process.env.GEMINI_ESCALATION_MODEL || "gemini-3.1-pro";
+const MODEL_ESCALATION_DELTA_THRESHOLD = Math.max(1, Number.parseInt(process.env.MODEL_ESCALATION_DELTA_THRESHOLD || "8", 10) || 8);
+let ACTIVE_GEMINI_MODEL = GEMINI_MODEL;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
 const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4.1-mini";
 /** Responses API + web_search 所用模型（与 Chat Completions 的 OPENAI_MODEL 可分开） */
@@ -152,6 +155,43 @@ function addDaysIso(iso, delta) {
 function median(arr) {
   const sorted = [...arr].sort((a, b) => a - b);
   return sorted[Math.floor(sorted.length / 2)];
+}
+
+function maxAbsAdjacentDelta(nums) {
+  if (!Array.isArray(nums) || nums.length < 2) return 0;
+  let m = 0;
+  for (let i = 1; i < nums.length; i++) {
+    const d = Math.abs(Number(nums[i]) - Number(nums[i - 1]));
+    if (Number.isFinite(d)) m = Math.max(m, d);
+  }
+  return m;
+}
+
+function normalizeLockedDates(v) {
+  if (!Array.isArray(v)) return [];
+  return [...new Set(v.map((x) => s(x).trim()).filter((x) => /^\d{4}-\d{2}-\d{2}$/.test(x)))].sort();
+}
+
+function factorsForLockedScore(targetScore, baseFactors) {
+  const targetSum = Math.max(5, Math.min(25, Math.round((Number(targetScore) / 20) * 5)));
+  const arr = (Array.isArray(baseFactors) ? baseFactors : [3, 3, 3, 3, 3])
+    .slice(0, 5)
+    .map((x) => Math.max(1, Math.min(5, Math.round(Number(x) || 3))));
+  while (arr.length < 5) arr.push(3);
+  let sum = arr.reduce((a, b) => a + b, 0);
+  while (sum < targetSum) {
+    const idx = arr.findIndex((x) => x < 5);
+    if (idx < 0) break;
+    arr[idx] += 1;
+    sum += 1;
+  }
+  while (sum > targetSum) {
+    const idx = arr.findIndex((x) => x > 1);
+    if (idx < 0) break;
+    arr[idx] -= 1;
+    sum -= 1;
+  }
+  return arr;
 }
 
 function sleep(ms) {
@@ -337,6 +377,8 @@ if (store.version === 1 && Array.isArray(store.points)) {
   store.version = 2;
   delete store.points;
 }
+store.lockedDates = normalizeLockedDates(store.lockedDates);
+const lockedDatesSet = new Set(store.lockedDates);
 
 const prev = store.latest || {
   date: "",
@@ -361,6 +403,14 @@ const priorDayComposite = scoreForDate(store.history, yesterdayIso)
   ?? lookupScore(histMapPrior, yesterdayIso, prev.riskScore);
 
 const prevTrendLast4 = buildFiveDayTrend(store.history, addDaysIso(todayNy, -1), priorDayComposite).slice(-4);
+const prevTrendScores = prevTrendLast4.map((p) => Number(p.score)).filter((x) => Number.isFinite(x));
+const recentSwing = maxAbsAdjacentDelta(prevTrendScores);
+const shouldEscalateModel =
+  !AION_USE_OPENAI_WEBSEARCH &&
+  (Math.abs(Number(prev.riskScore) - Number(priorDayComposite)) >= MODEL_ESCALATION_DELTA_THRESHOLD ||
+    recentSwing >= MODEL_ESCALATION_DELTA_THRESHOLD);
+ACTIVE_GEMINI_MODEL = shouldEscalateModel ? GEMINI_ESCALATION_MODEL : GEMINI_MODEL;
+const isTodayLocked = lockedDatesSet.has(todayNy);
 
 console.log(`Previous: ${prev.date} ${prevVersion}, latest.riskScore=${prev.riskScore}, D${prev.conflictDay}`);
 console.log(`Prior calendar day ${yesterdayIso} composite (for 较上期): ${priorDayComposite}`);
@@ -371,6 +421,12 @@ console.log(
     ? "Oil: WTI/Brent from model (OpenAI web_search; no commodity API; keyStats[2] unit canonicalized)."
     : "Oil: WTI/Brent via Gemini Google Search grounding only (no commodity API; keyStats[2] value from model, unit canonicalized).",
 );
+if (!AION_USE_OPENAI_WEBSEARCH) {
+  console.log(
+    `Model: base=${GEMINI_MODEL}, escalation=${GEMINI_ESCALATION_MODEL}, active=${ACTIVE_GEMINI_MODEL}, ` +
+      `threshold=${MODEL_ESCALATION_DELTA_THRESHOLD}, recentSwing=${recentSwing}, lockedToday=${isTodayLocked}`
+  );
+}
 
 // ── JSON Schema for structured output ──────────────────────────────
 const dashboardSchema = {
@@ -577,7 +633,7 @@ async function callGemini(withWeb) {
     ? `请生成 ${todayNy} 的 AION 日报。\n\n**务必先通过 Google 搜索接地**：检索 WTI、Brent 的**日内或近日美元/桶区间**（高低、振幅或多源合并区间均可）及**趋势**（企稳/上行/回落/剧烈波动等），引用一级财经/通讯社来源，再写入 riskFactors 能源项与 keyStats[2]（区间格式，勿写死单一精确价作为主展示）。\n\n**版面**：reportMarkdownZh 须严格按系统提示中专节所列 **### 小节标题与顺序**；dataZh.situations 每条 point 须以 **「延续：」或「变化：」** 开头（dataEn 用 **Continue:** / **Change:**）；dataZh/dataEn 的 **investmentSignal** 必须以 **→** 开头并含方向/部位词；warPhase.level/targetLevel 须从系统提示枚举中逐字选取。\n\n**输出**：只输出一个 JSON 对象（不要 markdown 围栏、不要前后说明），顶层键为 reportMarkdownZh、dataZh、dataEn，结构与系统提示中的 Schema 完全一致。`
     : `请生成 ${todayNy} 的 AION 日报。`;
   return genai.models.generateContent({
-    model: GEMINI_MODEL,
+    model: ACTIVE_GEMINI_MODEL,
     contents: userText,
     config,
   });
@@ -970,36 +1026,56 @@ finalFactors = finalFactors.map((sc, i) => {
 });
 
 const finalRiskScore = Math.round(finalFactors.reduce((a, b) => a + b, 0) / 5 * 20);
-if (Math.abs(finalRiskScore - priorDayComposite) > 20) {
-  console.warn(`  ⚠ Large swing vs prior day: ${priorDayComposite} → ${finalRiskScore}`);
+let adjustedFinalFactors = [...finalFactors];
+let adjustedFinalRiskScore = finalRiskScore;
+if (isTodayLocked) {
+  const lockedScore =
+    scoreForDate(store.history, todayNy) ??
+    (store.latest?.date === todayNy && Number.isFinite(Number(store.latest?.riskScore))
+      ? Math.round(Number(store.latest.riskScore))
+      : null);
+  if (lockedScore != null) {
+    adjustedFinalFactors =
+      Array.isArray(store.latest?.factorScores) && store.latest.date === todayNy && store.latest.factorScores.length === 5
+        ? store.latest.factorScores.map((x) => Math.max(1, Math.min(5, Math.round(Number(x) || 3))))
+        : factorsForLockedScore(lockedScore, prevFactorScores);
+    adjustedFinalRiskScore = Math.round(adjustedFinalFactors.reduce((a, b) => a + b, 0) / 5 * 20);
+    console.warn(
+      `  ⚠ ${todayNy} is locked; preserving locked score path: requested=${lockedScore}, applied=${adjustedFinalRiskScore}, factors=[${adjustedFinalFactors.join(",")}]`
+    );
+  }
 }
-console.log(`Final: factors=[${finalFactors.join(",")}] riskScore=${finalRiskScore} (priorDay=${priorDayComposite}, Δ=${finalRiskScore - priorDayComposite})`);
+if (Math.abs(adjustedFinalRiskScore - priorDayComposite) > 20) {
+  console.warn(`  ⚠ Large swing vs prior day: ${priorDayComposite} → ${adjustedFinalRiskScore}`);
+}
+console.log(`Final: factors=[${adjustedFinalFactors.join(",")}] riskScore=${adjustedFinalRiskScore} (priorDay=${priorDayComposite}, Δ=${adjustedFinalRiskScore - priorDayComposite})`);
 
 // Override factor scores in payload
 for (const lang of ["dataZh", "dataEn"]) {
-  (payload[lang]?.riskFactors || []).forEach((f, i) => { f.score = finalFactors[i]; });
+  (payload[lang]?.riskFactors || []).forEach((f, i) => { f.score = adjustedFinalFactors[i]; });
 }
 
 // ── Update history ─────────────────────────────────────────────────
 const histMap = new Map(store.history.map(p => [p.date, p.score]));
-histMap.set(todayNy, finalRiskScore);
+histMap.set(todayNy, adjustedFinalRiskScore);
 store.history = [...histMap.entries()].map(([date, score]) => ({ date, score })).sort((a, b) => a.date.localeCompare(b.date)).slice(-120);
 store.latest = {
   date: todayNy,
   appVersion: version,
-  riskScore: finalRiskScore,
+  riskScore: adjustedFinalRiskScore,
   prevRiskScore: priorDayComposite,
   conflictDay: correctConflictDay,
-  factorScores: [...finalFactors],
+  factorScores: [...adjustedFinalFactors],
 };
 store.version = 2;
+store.lockedDates = normalizeLockedDates(store.lockedDates);
 await saveHistory(store);
 
 const scoreTrend = buildFiveDayTrend(store.history, todayNy, priorDayComposite);
 console.log(`History saved; trend: ${scoreTrend.map(p => `${p.date}:${p.score}`).join(", ")}`);
 
 // ── Post-process: enforce canonical layout ──────────────────────────
-const scoreDelta = finalRiskScore - priorDayComposite;
+const scoreDelta = adjustedFinalRiskScore - priorDayComposite;
 
 /** 将 evidence/描述拆成 1–3 条，供态势卡 bullet 使用 */
 function splitEvidenceToPoints(text, lang) {
@@ -1032,7 +1108,7 @@ function enforceLayout(d, lang) {
   const c = CANONICAL[lang];
   d.date = todayNy;
   d.version = version;
-  d.riskScore = finalRiskScore;
+  d.riskScore = adjustedFinalRiskScore;
   d.prevRiskScore = priorDayComposite;
 
   // riskFactors
@@ -1048,7 +1124,7 @@ function enforceLayout(d, lang) {
     const rawDesc = s(src.description) || s(src.evidence) || "";
     const out = {
       name,
-      score: finalFactors[i],
+      score: adjustedFinalFactors[i],
       prev: prevFactorScores[i],
       weight: 0.2,
       /** 模型常把长叙述放在 evidence；description 空时沿用 evidence，供 UI/态势卡兜底使用 */
@@ -1086,7 +1162,7 @@ function enforceLayout(d, lang) {
   });
 
   // scoreTrend from authoritative history
-  d.scoreTrend = scoreTrend.map((p, idx) => ({ date: p.date, score: idx === 4 ? finalRiskScore : p.score, ...(idx === 4 ? { active: true } : {}) }));
+  d.scoreTrend = scoreTrend.map((p, idx) => ({ date: p.date, score: idx === 4 ? adjustedFinalRiskScore : p.score, ...(idx === 4 ? { active: true } : {}) }));
 
   // situations（延续/变化前缀 + 占位则用因子拆条）
   const sitSrc = Array.isArray(d.situations) ? d.situations : [];
@@ -1292,7 +1368,7 @@ payload.reportMarkdownZh = appendZhReportDataAppendix(
   store.history,
   todayNy,
   priorDayComposite,
-  finalRiskScore,
+  adjustedFinalRiskScore,
 );
 await mkdir(PATHS.reports, { recursive: true });
 await writeFile(path.join(PATHS.reports, `${todayNy}.md`), payload.reportMarkdownZh + "\n", "utf8");
