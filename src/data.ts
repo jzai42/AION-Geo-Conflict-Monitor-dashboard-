@@ -65,32 +65,33 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-04-27",
-  version: "v2.45",
-  riskScore: 76,
+  date: "2026-04-28",
+  version: "v2.46",
+  riskScore: 80,
+  riskChange: "up",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D58",
+      value: "D59",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "持平",
+      value: "↑4",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $88.50–$91.20 · Brent $92.30–$95.10",
+      value: "WTI $96.92–$99.75 · Brent $108.62–$111.16",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "霍尔木兹",
-      value: "严重受限",
+      value: "实质停滞",
       unit: "通行状态",
       color: "#ffdc00"
     }
@@ -101,7 +102,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "红海防御交火持续，多线代理冲突活跃。",
+      description: "美军维持对伊封锁，以色列扩大对真主党打击。核心来源：ISW、The Hindu。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -110,16 +111,16 @@ export const DATA_ZH: DashboardData = {
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "航道维持高压对峙，通行安全极度受限。",
+      description: "海峡通航量处于极低水位，20000 名船员滞留。核心来源：Reuters、HormuzTracker。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "能源冲击",
-      score: 3,
+      score: 4,
       prev: 3,
       weight: 0.2,
-      description: "油价在$90上方震荡，地缘溢价效应显著。",
+      description: "Brent 与 WTI 双双上行，Brent 站稳 $100 以上危机区间。核心来源：Trading Economics。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -128,7 +129,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美方维持航母威慑部署，介入深度保持平稳。",
+      description: "中俄美在联合国就核问题交锋，但无直接军事冲突。核心来源：UN、Reuters。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -137,7 +138,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "外交渠道进展甚微，双方立场保持强硬。",
+      description: "伊朗提议「搁置核谈判以换取解封」，美方反应冷淡。核心来源：Axios、White House。",
       status: "FAST",
       sourceVerification: "confirmed"
     }
@@ -145,32 +146,49 @@ export const DATA_ZH: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "红海拦截无人机事件",
-      description: "美军驱逐舰在红海拦截3架攻击型无人机，事件未造成人员伤亡。来源：AP、Reuters。",
+      title: "伊朗「提议换取海峡开放」方案细节披露",
+      description: "伊朗通过巴基斯坦提议先行结束封锁并停战，但特朗普政府因其未涵盖核去化细节而倾向于拒绝。来源：Axios。",
       verification: "confirmed",
-      timestamp: "2026-04-27T06:30:00Z",
+      timestamp: "2026-04-27",
       significance: "",
       highlight: true,
       critical: true
     },
     {
       id: "EVT-02",
-      title: "IRGC霍尔木兹海峡监视",
-      description: "伊朗革命卫队宣布对美军舰队进行近距离监视，称其为正常主权防卫。来源：Al Jazeera。",
-      verification: "single",
-      timestamp: "2026-04-27T04:15:00Z",
+      title: "联合国核协议审议会议爆发美伊冲突",
+      description: "美伊双方就伊朗核不扩散条约（NPT）执行情况及伊朗任职问题激烈互呛，外交窗口收紧。来源：Reuters。",
+      verification: "confirmed",
+      timestamp: "2026-04-28",
       significance: ""
+    },
+    {
+      id: "EVT-03",
+      title: "冲突以来首艘满载 LNG 货轮穿越测试",
+      description: "「Mubaraz」号 LNG 货轮被观测到通过海峡，尽管属于个案，但反映出极度受限下的关键能源流动尝试。来源：Gulf News。",
+      verification: "confirmed",
+      timestamp: "2026-04-28",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "伊朗原油库存告急，面临物理溢出风险",
+      description: "美国封锁导致伊朗每日近 900 万桶产能受阻，伊朗被迫使用非正规容器储油，风险加剧。来源：WSJ。",
+      verification: "confirmed",
+      timestamp: "2026-04-27",
+      significance: "",
+      highlight: true
     }
   ],
   warPhase: {
-    level: "高压对峙",
-    targetLevel: "脆弱平衡",
+    level: "霍尔木兹危机",
+    targetLevel: "结构性紧张",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "双方保持直接交火但不扩大战线的默契",
-      "霍尔木兹航道成为地缘博弈的核心支点",
-      "外交谈判作为战术缓冲而非解决方案存在"
+      "伊朗提议绕开核协议优先解封，旨在缓解国内库存和经济极限。",
+      "美国坚持核红线，通过海上封锁维持「极限施压」，尚未见退让空间。",
+      "航运业进入长期停摆预期，保费飙升至不可维系水平。"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -181,8 +199,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：红海拦截频率上升，代理人攻击手段趋向集束化。",
-        "延续：伊朗保持二线部署，未直接参与前线冲突。"
+        "延续：美军第五舰队维持对伊朗主要港口的物理封锁，阻止油船出港。",
+        "变化：以色列空军加强对黎巴嫩境内真主党中长程导弹设施的定点打击。"
       ]
     },
     {
@@ -191,8 +209,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：电子战干扰导致的定位偏差仍是主要通行风险。",
-        "延续：霍尔木兹海峡通行费率因安全成本攀升而维持高位。"
+        "延续：主流班轮公司继续绕行好望角，由于保险撤出，海峡商业价值几乎归零。",
+        "变化：出现零星非油轮（如 LNG 货轮）通关案例，但需获得特定方的书面放行。"
       ]
     },
     {
@@ -201,8 +219,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：油价在$90关口形成技术支撑位，波动率维持高位。",
-        "变化：部分中东石油贸易转向溢价更高的即期合约。"
+        "变化：Brent 价格由于谈判破裂预期突破 $110，市场恐慌情绪蔓延。",
+        "变化：伊朗国内储油设施达到饱和，后续若无解封，可能被迫大规模关井。"
       ]
     },
     {
@@ -211,26 +229,20 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：白宫重申防御承诺，排斥大规模地面介入。",
-        "延续：德黑兰强调区域安全应由地区国家主导。"
+        "变化：白宫暗示其「红线」包括彻底终止核能力，而非仅仅是局部的海峡解封。",
+        "延续：伊朗外交部在莫斯科寻求俄罗斯对和平方案的外交背书。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美方海上安全承诺与伊朗海域管辖权的结构性对立",
-      "代理人武装行动与大国控制力减弱的矛盾"
+      "伊朗的「搁置核议题先行解封」生存策略与特朗普的「彻底解决核问题」红线直接碰撞。"
     ],
     military: [
-      "低成本消耗性攻击对高成本拦截系统的技术压制",
-      "霍尔木兹封锁威胁与全球能源链脆弱性的博弈"
+      "美军海上封锁的窒息效应与伊朗利用霍尔木兹海峡作为最后谈判筹码的存亡博弈。"
     ]
   },
   scoreTrend: [
-    {
-      date: "04-23",
-      score: 80
-    },
     {
       date: "04-24",
       score: 76
@@ -245,46 +257,104 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "04-27",
-      score: 76,
+      score: 76
+    },
+    {
+      date: "04-28",
+      score: 80,
       active: true
     }
   ],
-  keyChange: "冲突进入高位横盘期，红海拦截频率小幅回升但未触发层级跃迁。",
-  investmentSignal: "→ 维持防御性配置，通过能源和大宗商品头寸对冲局部冲突带来的供应侧波动风险。",
-  change: "none",
+  keyChange: "能源因素由 3 上调至 4，带动综合分突破 80，反映油价正式进入危机博弈带。",
+  investmentSignal: "→ 增持 能源/避险资产，通过对冲策略防御长期封锁带来的大宗商品波动。",
   prevRiskScore: 76,
-  webSources: [],
-  webSearchQueries: []
+  webSources: [
+    {
+      title: "hormuztracker.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEnY1lr9GUwJjy7iJn2bPnxZOa6DWf0g3GsoilZzqy_R9EIMtETcSh_Tryz5dRY-X7FdRIC0_l0m2ZLqOclOdtVGwewDPVftFtP92F8-slc8_ozoAVD5S9ksg=="
+    },
+    {
+      title: "timesofisrael.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHA_F-W4Pkt6LrlkNtfszQpqYKfOgmLSCPWyHd20SWG1rxQHm7O2T6l3nGqNyewYuapRJJlDS4dzsUe6-Liwvw8mdWfZ9aTytkBxHqET7Es4Fu5-NK1uzh3XwHgbl2e1qhUIm5RiOWa2LT5Qt5wwHhe5jHtGUJ2Hs49kWfxIbTS1R6JAU4dq65MDoo78fxYKCoegZIY1iobOBFI3kqxau-FjpJKN17HaQ=="
+    },
+    {
+      title: "tradingeconomics.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEm-AGp2eNj_Q0zFuU7mfQLKRMj6GZpW4l3shnYsp7agmCJ5SMAQ7N5q4ZPz4vofVVZEHXdq226c7OXfai8yIoFbSE9CQaxVGwk6Lg605Apcam9Fe6OLTFxEPfalC5T0nnNJJqZulsBDrnTJA=="
+    },
+    {
+      title: "wikipedia.org",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH0MY4MPmLScNJpdD4eiyEXpKYB0TAha-ryZsGL9Xgn7gQLWn5viovQewFTiOuddlAzy2r76bABzvFSUZjgnAm8Po-amEMXuPMmbmRCgulzCMBQ8_-Fx9u6TW3GOMfT8PJcejLiSqxnDpRaUm2VPRrePFcn4JUVmMTJ98Ogmx6PoIL-YNCuT759PEH3TX1n-ANVPg=="
+    },
+    {
+      title: "forbes.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH24hduv6dZdelVf10_1YgAIW2MXQiPv4KP1NIW3cZoKBm56tnuz-cG6h85gb7kKdeM0_o7XficX1ObPlqlIioXXj9ZSCHBUa_THne6BezhnC2lz1AkiAmINcPS36ioLonXLgLw-HoxFN6o3z2LvwbOdJobaeA="
+    },
+    {
+      title: "oneindia.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEKcZ_QpYZWvaZwcgN_uq2ckk8-D3s8pfMYUSH4gpHxkbu7ERcTtrhmzzXezu9FsaKO_N9CXFRRhCFe3nMMV7X4vM1ZA9t8fiH5f6puq1crnyxxdnFFOqZghuDQURcm7qGJ5Ou9Rh4xrHQv2YUdFV8ZBWvQBAmTNClSN6bDxzknY5zNKlZCcpuY2YIV3j7rCIkR-n95e48Q6yCLZz7XSrFQhDbs3ArJMc8ov9IWKtlY9lIZXP6GnInNYJdi1VOEosc6HefexQ=="
+    },
+    {
+      title: "tradingeconomics.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGqFrBZH9G-wlRt7S9uCrdeP-pf239m4D5HAkRASWrDSZv8YQizyOI1HObQrb6CkLY8iFptxn1u463pkpg4d7brkDnuHDo6lVa456_guKOzgZqMms0YINXbS7tmqIvWQiBfEl9YE_pvhBU9PsMgtX-MXw=="
+    },
+    {
+      title: "eia.gov",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHNYt8cnR_74fjMaCDMTp6cDi252bBnhlaN1mjhiNcdkMAZiyLcNoUdFOyGwxVmIHsNs5zQxuko3ojIKVdxgT5BrtTuU-om0hnzQDFoDvZOkyW7UvDrCysj9Yzs4qk="
+    },
+    {
+      title: "jpost.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFWCFOWWEL3EeFq44zauCTE-wnFIVEy64B70pzb4Wcj4PR22U_K89O4vBosH2-3-gRhhPJhyjZFOOLr4VVECZYdKudzjpifu3YAN2cGmqLsgd0aKYNTvm58vWXtaN4Tv-R0CpJVoShLb_mLl4ZD6E5oR8Qxpu0="
+    },
+    {
+      title: "timesofisrael.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHchIrZ4c0UIuqRvFPQyz4C3vcNbj4arQe_brGhe-EM02ywTJXcOExUFp2e8RMkQc7uT7scAJeH70xSzMzqFkBQIQ3LHqnyMPVtlIVMZ92iEbXhBKuRg8N1zTNG4p8FLWH0rvJFvoIlossQOpfW92lAKBGXF1pD9G5lMY3iHMkfVnvgczmv2jhEAU_XW2xNV-qiABzCE-eBQGUeri4QephjrqefNJRcIEaaFmS2q_GYdA=="
+    },
+    {
+      title: "gulfnews.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFo95wCfZoQy7NRH6nBDVXIZu95iFSyNmZvQURTT9PHc98hlaZIjKvVqOoV1lV6DO_EtK1zscnuk6awxnJCdwYcAbWpjcu6edRzSpAbbUqer3OF_eTxG3b4dUnjYPm6G2WGNgVgBMBsRRLSEBlWkJUPjGs_yC-UmOw8L0D2vJ4rMSeH4QmrGjuhEMSawCFXtySTbg_xmtP-XfHesCsVkPxkXFdORgVQhsqd1q15rrhsbiiAEIZbpq0="
+    },
+    {
+      title: "alarabiya.net",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFMzCtcH5FNjmsCpqRLH-jtZDJJ3H9hOibLS9jfqqODK-Op6LfmvIiiB04jQ1P6nc_Liie1v7_qT9UbdZhAmcWIhrNf0i45PhM5YXLtlvDy1xO7Xpop72w6SO6AayB29v0sU0g6e1VGa46BZoJWqmhGEPiMl7jUqkIbq2i4-f5WPk2Awb8WF0qPXZALArR4Scc8cdZbaXSI6OEjD4jpddOSRgK-Jk6IMQT1Q5K31xATzCxvXUvCEsYg"
+    }
+  ],
+  webSearchQueries: [
+    "US Iran tension news April 27 28 2024 2026",
+    "WTI Brent oil price April 28 2024 2026 news trend",
+    "Hormuz Strait shipping status April 28 2024",
+    "Oman back channel talks US Iran status April 2024 2026"
+  ]
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-04-27",
-  version: "v2.45",
-  riskScore: 76,
+  date: "2026-04-28",
+  version: "v2.46",
+  riskScore: 80,
+  riskChange: "up",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D58",
+      value: "D59",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "Flat",
+      value: "↑4",
       unit: "vs Prev",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $88.50–$91.20 · Brent $92.30–$95.10",
+      value: "WTI $96.92–$99.75 · Brent $108.62–$111.16",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
-      value: "Severely Restricted",
-      unit: "Traffic Status",
+      value: "Effectively Closed",
+      unit: "Status",
       color: "#ffdc00"
     }
   ],
@@ -294,7 +364,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Active defensive engagements in the Red Sea and proxy conflicts.",
+      description: "US blockade and Israeli strikes on Hezbollah maintain high military pressure. Sources: ISW, The Hindu.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -303,16 +373,16 @@ export const DATA_EN: DashboardData = {
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "High-pressure standoff in the strait, transit security severely limited.",
+      description: "Commercial transit remains effectively halted with 20,000 seafarers stranded. Sources: Reuters, HormuzTracker.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "Energy Shock",
-      score: 3,
+      score: 4,
       prev: 3,
       weight: 0.2,
-      description: "Oil prices volatile above $90, geopolitical premium significant.",
+      description: "Brent crosses $110 as prolonged blockade fears grow. Sources: Trading Economics.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -321,7 +391,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "US carrier deployment continues as a deterrent.",
+      description: "US, Russia, and China clash diplomatically at the UN. Sources: UN, Reuters.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -330,7 +400,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Diplomatic channels stagnant with rigid positions from both sides.",
+      description: "Iran's proposal to delay nuclear talks rejected by US. Sources: Axios, White House.",
       status: "FAST",
       sourceVerification: "confirmed"
     }
@@ -338,32 +408,49 @@ export const DATA_EN: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "Red Sea Drone Interception",
-      description: "US destroyer intercepted 3 attack drones in the Red Sea. No casualties reported. Sources: AP, Reuters.",
+      title: "Details of Iran's 'Hormuz Reopening' Proposal Revealed",
+      description: "Tehran offered to reopen the strait and end war in exchange for lifting the blockade, but Trump is reportedly dissatisfied due to lack of nuclear concessions. Source: Axios.",
       verification: "confirmed",
-      timestamp: "2026-04-27T06:30:00Z",
+      timestamp: "2026-04-27",
       significance: "",
       highlight: true,
       critical: true
     },
     {
       id: "EVT-02",
-      title: "IRGC Monitoring in Hormuz",
-      description: "IRGC announced close-range monitoring of US fleet, citing sovereign defense. Source: Al Jazeera.",
-      verification: "single",
-      timestamp: "2026-04-27T04:15:00Z",
+      title: "US and Iran Clash at UN Review of Atomic Treaty",
+      description: "Tensions flared at the UN NPT conference over Iran's vice-presidency and enrichment levels. Source: Reuters.",
+      verification: "confirmed",
+      timestamp: "2026-04-28",
       significance: ""
+    },
+    {
+      id: "EVT-03",
+      title: "First LNG Tanker Crosses Hormuz Since Conflict Start",
+      description: "The 'Mubaraz' LNG carrier traversed the strait in a rare and limited shipment, monitored as a pressure test for the chokepoint. Source: Gulf News.",
+      verification: "confirmed",
+      timestamp: "2026-04-28",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "Iran Oil Storage Reaching Physical Capacity",
+      description: "US blockade has forced Iran to store millions of barrels in makeshift containers, risking environmental spill or production shutdown. Source: WSJ.",
+      verification: "confirmed",
+      timestamp: "2026-04-27",
+      significance: "",
+      highlight: true
     }
   ],
   warPhase: {
-    level: "High-Pressure Standoff",
-    targetLevel: "Fragile Balance",
+    level: "Chokepoint Crisis",
+    targetLevel: "Structural Tension",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Tacit agreement on direct engagement without full escalation",
-      "Hormuz remains the central pivot of geopolitical leverage",
-      "Diplomatic channels serve as tactical buffers rather than solutions"
+      "Iran attempts to trade transit leverage for economic survival.",
+      "US maintains 'Maximum Pressure' blockade targeting nuclear concessions.",
+      "Market shifts toward a long-term closure scenario."
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -374,8 +461,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Increased interception frequency in the Red Sea; proxy attacks becoming more clustered.",
-        "Continue: Iran maintains second-line deployment, avoiding direct front-line conflict."
+        "Continue: US Fifth Fleet maintains active blockade of Iranian oil terminals.",
+        "Change: Israeli Air Force intensifies strikes against Hezbollah assets in eastern Lebanon."
       ]
     },
     {
@@ -384,8 +471,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: GPS spoofing and EW interference remain primary transit risks.",
-        "Continue: Transit costs remain high due to rising security and insurance expenses."
+        "Continue: Global carriers bypass the region; insurance remains withdrawn.",
+        "Change: Limited non-oil transits attempted under specific permission regimes."
       ]
     },
     {
@@ -394,8 +481,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Oil prices found technical support at $90; volatility remains high.",
-        "Change: Some regional crude trades shifted toward higher-premium spot contracts."
+        "Change: Brent breaks $110 as ceasefire talks reaching an impasse triggers panic buying.",
+        "Change: Iran storage saturation threatens shut-ins of major oil fields."
       ]
     },
     {
@@ -404,26 +491,20 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: White House reiterates defense commitment, ruling out large-scale ground intervention.",
-        "Continue: Tehran insists regional security should be led by regional states."
+        "Change: Trump signals 'Red Lines' are non-negotiable regarding Tehran's nuclear capabilities.",
+        "Continue: Iran seeks Russian diplomatic support for its new peace proposal."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Structural opposition between US maritime security and Iranian territorial jurisdiction",
-      "Conflict between proxy militia autonomy and major power restraint"
+      "Iran's survival-first proposal vs. US nuclear-first demand."
     ],
     military: [
-      "Low-cost attrition attacks vs. high-cost interception systems",
-      "Hormuz blockade threats vs. global energy chain vulnerability"
+      "Asymmetric naval blockade vs. potential Iranian escalation in the Strait."
     ]
   },
   scoreTrend: [
-    {
-      date: "04-23",
-      score: 80
-    },
     {
       date: "04-24",
       score: 76
@@ -438,16 +519,73 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "04-27",
-      score: 76,
+      score: 76
+    },
+    {
+      date: "04-28",
+      score: 80,
       active: true
     }
   ],
-  keyChange: "Conflict enters a high-level consolidation phase; Red Sea activity increased slightly but remains within thresholds.",
-  investmentSignal: "→ Maintain defensive postures and hedge supply-side volatility via energy and commodities.",
-  change: "none",
+  keyChange: "Energy factor upgraded from 3 to 4, driving the composite score to 80 as oil prices enter the crisis zone.",
+  investmentSignal: "→ Increase exposure to Energy and Defensive assets; Maintain hedges against volatile commodity shifts.",
   prevRiskScore: 76,
-  webSources: [],
-  webSearchQueries: []
+  webSources: [
+    {
+      title: "hormuztracker.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEnY1lr9GUwJjy7iJn2bPnxZOa6DWf0g3GsoilZzqy_R9EIMtETcSh_Tryz5dRY-X7FdRIC0_l0m2ZLqOclOdtVGwewDPVftFtP92F8-slc8_ozoAVD5S9ksg=="
+    },
+    {
+      title: "timesofisrael.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHA_F-W4Pkt6LrlkNtfszQpqYKfOgmLSCPWyHd20SWG1rxQHm7O2T6l3nGqNyewYuapRJJlDS4dzsUe6-Liwvw8mdWfZ9aTytkBxHqET7Es4Fu5-NK1uzh3XwHgbl2e1qhUIm5RiOWa2LT5Qt5wwHhe5jHtGUJ2Hs49kWfxIbTS1R6JAU4dq65MDoo78fxYKCoegZIY1iobOBFI3kqxau-FjpJKN17HaQ=="
+    },
+    {
+      title: "tradingeconomics.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEm-AGp2eNj_Q0zFuU7mfQLKRMj6GZpW4l3shnYsp7agmCJ5SMAQ7N5q4ZPz4vofVVZEHXdq226c7OXfai8yIoFbSE9CQaxVGwk6Lg605Apcam9Fe6OLTFxEPfalC5T0nnNJJqZulsBDrnTJA=="
+    },
+    {
+      title: "wikipedia.org",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH0MY4MPmLScNJpdD4eiyEXpKYB0TAha-ryZsGL9Xgn7gQLWn5viovQewFTiOuddlAzy2r76bABzvFSUZjgnAm8Po-amEMXuPMmbmRCgulzCMBQ8_-Fx9u6TW3GOMfT8PJcejLiSqxnDpRaUm2VPRrePFcn4JUVmMTJ98Ogmx6PoIL-YNCuT759PEH3TX1n-ANVPg=="
+    },
+    {
+      title: "forbes.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH24hduv6dZdelVf10_1YgAIW2MXQiPv4KP1NIW3cZoKBm56tnuz-cG6h85gb7kKdeM0_o7XficX1ObPlqlIioXXj9ZSCHBUa_THne6BezhnC2lz1AkiAmINcPS36ioLonXLgLw-HoxFN6o3z2LvwbOdJobaeA="
+    },
+    {
+      title: "oneindia.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEKcZ_QpYZWvaZwcgN_uq2ckk8-D3s8pfMYUSH4gpHxkbu7ERcTtrhmzzXezu9FsaKO_N9CXFRRhCFe3nMMV7X4vM1ZA9t8fiH5f6puq1crnyxxdnFFOqZghuDQURcm7qGJ5Ou9Rh4xrHQv2YUdFV8ZBWvQBAmTNClSN6bDxzknY5zNKlZCcpuY2YIV3j7rCIkR-n95e48Q6yCLZz7XSrFQhDbs3ArJMc8ov9IWKtlY9lIZXP6GnInNYJdi1VOEosc6HefexQ=="
+    },
+    {
+      title: "tradingeconomics.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGqFrBZH9G-wlRt7S9uCrdeP-pf239m4D5HAkRASWrDSZv8YQizyOI1HObQrb6CkLY8iFptxn1u463pkpg4d7brkDnuHDo6lVa456_guKOzgZqMms0YINXbS7tmqIvWQiBfEl9YE_pvhBU9PsMgtX-MXw=="
+    },
+    {
+      title: "eia.gov",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHNYt8cnR_74fjMaCDMTp6cDi252bBnhlaN1mjhiNcdkMAZiyLcNoUdFOyGwxVmIHsNs5zQxuko3ojIKVdxgT5BrtTuU-om0hnzQDFoDvZOkyW7UvDrCysj9Yzs4qk="
+    },
+    {
+      title: "jpost.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFWCFOWWEL3EeFq44zauCTE-wnFIVEy64B70pzb4Wcj4PR22U_K89O4vBosH2-3-gRhhPJhyjZFOOLr4VVECZYdKudzjpifu3YAN2cGmqLsgd0aKYNTvm58vWXtaN4Tv-R0CpJVoShLb_mLl4ZD6E5oR8Qxpu0="
+    },
+    {
+      title: "timesofisrael.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHchIrZ4c0UIuqRvFPQyz4C3vcNbj4arQe_brGhe-EM02ywTJXcOExUFp2e8RMkQc7uT7scAJeH70xSzMzqFkBQIQ3LHqnyMPVtlIVMZ92iEbXhBKuRg8N1zTNG4p8FLWH0rvJFvoIlossQOpfW92lAKBGXF1pD9G5lMY3iHMkfVnvgczmv2jhEAU_XW2xNV-qiABzCE-eBQGUeri4QephjrqefNJRcIEaaFmS2q_GYdA=="
+    },
+    {
+      title: "gulfnews.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFo95wCfZoQy7NRH6nBDVXIZu95iFSyNmZvQURTT9PHc98hlaZIjKvVqOoV1lV6DO_EtK1zscnuk6awxnJCdwYcAbWpjcu6edRzSpAbbUqer3OF_eTxG3b4dUnjYPm6G2WGNgVgBMBsRRLSEBlWkJUPjGs_yC-UmOw8L0D2vJ4rMSeH4QmrGjuhEMSawCFXtySTbg_xmtP-XfHesCsVkPxkXFdORgVQhsqd1q15rrhsbiiAEIZbpq0="
+    },
+    {
+      title: "alarabiya.net",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFMzCtcH5FNjmsCpqRLH-jtZDJJ3H9hOibLS9jfqqODK-Op6LfmvIiiB04jQ1P6nc_Liie1v7_qT9UbdZhAmcWIhrNf0i45PhM5YXLtlvDy1xO7Xpop72w6SO6AayB29v0sU0g6e1VGa46BZoJWqmhGEPiMl7jUqkIbq2i4-f5WPk2Awb8WF0qPXZALArR4Scc8cdZbaXSI6OEjD4jpddOSRgK-Jk6IMQT1Q5K31xATzCxvXUvCEsYg"
+    }
+  ],
+  webSearchQueries: [
+    "US Iran tension news April 27 28 2024 2026",
+    "WTI Brent oil price April 28 2024 2026 news trend",
+    "Hormuz Strait shipping status April 28 2024",
+    "Oman back channel talks US Iran status April 2024 2026"
+  ]
 };
 
 export const TRANSLATIONS = {
@@ -455,7 +593,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "4月27日节点",
+    node406: "4月28日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -489,16 +627,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.45 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.46 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 76（持平）：冲突进入高位横盘期，红海拦截频率小幅回升但未触发层级跃迁。",
-    bannerWarning: "→ 维持防御性配置，通过能源和大宗商品头寸对冲局部冲突带来的供应侧波动风险。",
-    deescalationIntent: "美方海上安全承诺与伊朗海域管辖权的结构性对立",
-    structuralRisk: "航道维持高压对峙，通行安全极度受限。",
-    contradictionNote: "美方海上安全承诺与伊朗海域管辖权的结构性对立；低成本消耗性攻击对高成本拦截系统的技术压制",
+    bannerSignal: "综合评分 80（↑4）：能源因素由 3 上调至 4，带动综合分突破 80，反映油价正式进入危机博弈带。",
+    bannerWarning: "→ 增持 能源/避险资产，通过对冲策略防御长期封锁带来的大宗商品波动。",
+    deescalationIntent: "伊朗的「搁置核议题先行解封」生存策略与特朗普的「彻底解决核问题」红线直接碰撞。",
+    structuralRisk: "海峡通航量处于极低水位，20000 名船员滞留。核心来源：Reuters、HormuzTracker。",
+    contradictionNote: "伊朗的「搁置核议题先行解封」生存策略与特朗普的「彻底解决核问题」红线直接碰撞。；美军海上封锁的窒息效应与伊朗利用霍尔木兹海峡作为最后谈判筹码的存亡博弈。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -506,7 +644,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第58天",
+    dayCount: "第59天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -514,7 +652,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Apr 27 Node",
+    node406: "Apr 28 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -548,16 +686,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.45 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.46 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 76 (Flat): Conflict enters a high-level consolidation phase; Red Sea activity increased slightly but remains within thresholds.",
-    bannerWarning: "→ Maintain defensive postures and hedge supply-side volatility via energy and commodities.",
-    deescalationIntent: "Structural opposition between US maritime security and Iranian territorial juri…",
-    structuralRisk: "High-pressure standoff in the strait, transit security severely limited.",
-    contradictionNote: "Structural opposition between US maritime security and Iranian territorial jurisdiction; Low-cost attrition attacks vs. high-cost interception systems",
+    bannerSignal: "Composite 80 (↑4): Energy factor upgraded from 3 to 4, driving the composite score to 80 as oil prices enter the crisis zone.",
+    bannerWarning: "→ Increase exposure to Energy and Defensive assets; Maintain hedges against volatile commodity shifts.",
+    deescalationIntent: "Iran's survival-first proposal vs. US nuclear-first demand.",
+    structuralRisk: "Commercial transit remains effectively halted with 20,000 seafarers stranded. Sources: Reuters, Hor…",
+    contradictionNote: "Iran's survival-first proposal vs. US nuclear-first demand.; Asymmetric naval blockade vs. potential Iranian escalation in the Strait.",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -565,7 +703,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 58",
+    dayCount: "Day 59",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
