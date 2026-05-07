@@ -14,16 +14,28 @@ export function RiskGauge({
   prev,
   trend,
   t,
+  language,
 }: {
   score: number;
   prev: number;
   trend: DashboardData["scoreTrend"];
   t: Record<string, string>;
+  language: "zh" | "en";
 }) {
   const delta = score - prev;
   const radius = 70;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (score / 100) * circumference;
+  const trail = [...(trend || [])].map((x) => Number(x.score)).filter((x) => Number.isFinite(x));
+  let staleDays = 0;
+  if (trail.length) {
+    const last = trail[trail.length - 1];
+    for (let i = trail.length - 1; i >= 0; i--) {
+      if (trail[i] !== last) break;
+      staleDays += 1;
+    }
+  }
+  const confidence = staleDays >= 4 ? (language === "zh" ? "低" : "Low") : staleDays >= 3 ? (language === "zh" ? "中" : "Medium") : (language === "zh" ? "高" : "High");
 
   return (
     <div className="aion-card flex flex-col items-center justify-center p-6 relative overflow-hidden">
@@ -81,6 +93,11 @@ export function RiskGauge({
         <div className="w-full pt-4 border-t border-aion-gray">
           <div className="aion-label text-[9px] mb-2">{t.trendTitle}</div>
           <TrendChart trend={trend} />
+          <div className="mt-2 text-[10px] font-mono text-aion-text-dim">
+            {language === "zh"
+              ? `置信度 ${confidence} · 连续同分 ${staleDays} 天`
+              : `Confidence ${confidence} · Stale ${staleDays}d`}
+          </div>
         </div>
       </div>
     </div>

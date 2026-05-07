@@ -132,7 +132,7 @@ export default function App() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left: Risk Gauge */}
           <div className="lg:col-span-3">
-            <RiskGauge score={data.riskScore} prev={data.prevRiskScore} trend={data.scoreTrend} t={t} />
+            <RiskGauge score={data.riskScore} prev={data.prevRiskScore} trend={data.scoreTrend} t={t} language={language} />
           </div>
 
           {/* Right: War Phase & Signal */}

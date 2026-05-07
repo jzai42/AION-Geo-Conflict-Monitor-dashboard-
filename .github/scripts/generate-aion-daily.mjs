@@ -7,6 +7,7 @@ import { GoogleGenAI } from "@google/genai";
 const CONFIG = {
   conflictStartDate: "2026-02-28",
   ensembleN: Math.max(1, Math.min(5, Number.parseInt(process.env.AION_ENSEMBLE_N || "3", 10) || 3)),
+  staleReviewDays: Math.max(2, Number.parseInt(process.env.AION_STALE_REVIEW_DAYS || "3", 10) || 3),
   geminiMaxAttempts: 4,
   geminiRetryBaseMs: 1500,
   geminiRetryMaxMs: 12000,
@@ -165,6 +166,28 @@ function maxAbsAdjacentDelta(nums) {
     if (Number.isFinite(d)) m = Math.max(m, d);
   }
   return m;
+}
+
+function trailingSameScoreDays(historyArr, score) {
+  const rows = (historyArr || [])
+    .filter((p) => p?.date && Number.isFinite(Number(p.score)))
+    .slice()
+    .sort((a, b) => String(a.date).localeCompare(String(b.date)));
+  let n = 0;
+  for (let i = rows.length - 1; i >= 0; i--) {
+    const s0 = Math.round(Number(rows[i].score));
+    if (s0 !== Math.round(Number(score))) break;
+    n += 1;
+  }
+  return n;
+}
+
+function quantizeFactorScore(idx, raw) {
+  const v = Math.max(1, Math.min(5, Number(raw)));
+  if (!Number.isFinite(v)) return 3;
+  // Energy Shock allows 0.5 steps; other factors stay integer.
+  if (idx === 2) return Math.round(v * 2) / 2;
+  return Math.round(v);
 }
 
 function normalizeLockedDates(v) {
@@ -403,6 +426,7 @@ const priorDayComposite = scoreForDate(store.history, yesterdayIso)
   ?? lookupScore(histMapPrior, yesterdayIso, prev.riskScore);
 
 const prevTrendLast4 = buildFiveDayTrend(store.history, addDaysIso(todayNy, -1), priorDayComposite).slice(-4);
+const staleScoreDays = trailingSameScoreDays(store.history, priorDayComposite);
 const prevTrendScores = prevTrendLast4.map((p) => Number(p.score)).filter((x) => Number.isFinite(x));
 const recentSwing = maxAbsAdjacentDelta(prevTrendScores);
 const shouldEscalateModel =
@@ -411,6 +435,10 @@ const shouldEscalateModel =
     recentSwing >= MODEL_ESCALATION_DELTA_THRESHOLD);
 ACTIVE_GEMINI_MODEL = shouldEscalateModel ? GEMINI_ESCALATION_MODEL : GEMINI_MODEL;
 const isTodayLocked = lockedDatesSet.has(todayNy);
+const shouldRunSecondaryWebReview =
+  !AION_USE_OPENAI_WEBSEARCH &&
+  staleScoreDays >= CONFIG.staleReviewDays &&
+  Boolean(OPENAI_API_KEY);
 
 console.log(`Previous: ${prev.date} ${prevVersion}, latest.riskScore=${prev.riskScore}, D${prev.conflictDay}`);
 console.log(`Prior calendar day ${yesterdayIso} composite (for 较上期): ${priorDayComposite}`);
@@ -424,8 +452,11 @@ console.log(
 if (!AION_USE_OPENAI_WEBSEARCH) {
   console.log(
     `Model: base=${GEMINI_MODEL}, escalation=${GEMINI_ESCALATION_MODEL}, active=${ACTIVE_GEMINI_MODEL}, ` +
-      `threshold=${MODEL_ESCALATION_DELTA_THRESHOLD}, recentSwing=${recentSwing}, lockedToday=${isTodayLocked}`
+      `threshold=${MODEL_ESCALATION_DELTA_THRESHOLD}, recentSwing=${recentSwing}, staleDays=${staleScoreDays}, lockedToday=${isTodayLocked}`
   );
+  if (shouldRunSecondaryWebReview) {
+    console.log(`Secondary review enabled: staleDays>=${CONFIG.staleReviewDays}, adding OpenAI web_search adjudication sample.`);
+  }
 }
 
 // ── JSON Schema for structured output ──────────────────────────────
@@ -504,7 +535,7 @@ ${REPORT_MARKDOWN_ZH_SPEC}
 
 ## 评分标准（Scoring Rubric）——必须严格对照打分
 
-每个因子 1–5 分（整数），必须根据下列条件对号入座，不可凭感觉。
+每个因子 1–5 分（默认整数；仅第3项「能源冲击」允许 0.5 档），必须根据下列条件对号入座，不可凭感觉。
 若 24h 内无充分多源证据支持变化，**默认沿用前一天分数**。
 
 ### 1. ${factorNamesZh[0]}
@@ -566,7 +597,7 @@ ${REPORT_MARKDOWN_ZH_SPEC}
 - keyStats[1] 评分变化: 今日 riskScore 与 **昨日收盘综合分 ${priorDayComposite}** 的差值（如 ↑3 或 ↓2 或 持平）；脚本以此为准
 - keyStats 恰好 4 项，顺序：冲突天数、评分变化、油价、霍尔木兹。每项 unit 非空；**keyStats[2] 油价**：value **仅** **WTI/Brent 两段子区间**（见油价专节）；**unit** 中文固定 \`参考\`、英文固定 \`Ref.\`；脚本只统一 unit。**dataEn.keyStats[2].value 全英文数字与符号**，勿混入中文趋势词
 - keyStats[3] 霍尔木兹：**value** 为航道通行强度摘要（如「严重受限」）；**unit** 固定为「通行状态」。勿用「-」或仅百分比作主行（脚本会将空值/- 兜底为「严重受限」+「通行状态」）
-- riskFactors 恰好 5 项，顺序：${factorNamesZh.join("、")}。weight 一律 0.2。riskScore = round(avg(scores) × 20)
+- riskFactors 恰好 5 项，顺序：${factorNamesZh.join("、")}。weight 一律 0.2。除第3项可 0.5 递进外其余用整数。riskScore = round(avg(scores) × 20)
 - 每个 riskFactor 必须包含 **sourceVerification**（confirmed / partial / unverified），规则见上文「交叉验证」
 - riskFactors 的 prev 字段必须等于前一天对应因子的 score
 - events 1–5 条。verification 只能是 confirmed/partial/single。highlight/critical 不需要时设 false
@@ -811,7 +842,7 @@ function parsePayload(raw) {
 }
 
 function extractFactorScores(p) {
-  return (p?.dataZh?.riskFactors || []).map(f => Number(f.score) || 3);
+  return (p?.dataZh?.riskFactors || []).map((f, i) => quantizeFactorScore(i, Number(f.score) || 3));
 }
 
 function buildFallbackPayload(todayIso) {
@@ -947,6 +978,23 @@ if (AION_USE_OPENAI_WEBSEARCH) {
 } else {
   for (let i = 0; i < CONFIG.ensembleN; i++) {
     results.push(await singleCall(i));
+  }
+  if (shouldRunSecondaryWebReview) {
+    try {
+      const data = await callOpenAIResponsesWebSearchWithRetry();
+      const text = extractResponsesOutputText(data);
+      const p = parsePayload({ text });
+      if (p) {
+        const grounding = extractOpenAIWebSourcesFromResponse(data);
+        const srcHint = grounding.webSources.length ? `, sources=${grounding.webSources.length} urls` : "";
+        console.log(`  Secondary OpenAI review: factors=[${extractFactorScores(p).join(",")}]${srcHint}`);
+        results.push({ parsed: p, grounding });
+      } else {
+        console.warn("  Secondary OpenAI review parse failed.");
+      }
+    } catch (err) {
+      console.warn(`  Secondary OpenAI review failed: ${errorMessage(err)}`);
+    }
   }
 }
 
