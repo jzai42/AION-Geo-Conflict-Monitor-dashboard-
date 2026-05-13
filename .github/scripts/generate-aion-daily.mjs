@@ -1060,6 +1060,21 @@ for (const r of validResults) {
   }
 }
 
+// 历史多日同分时，median 易与 Gemini 簇合、secondary 难单独拉动总分；与 adjudication 做逐维均值再量化，便于打破粘滞（仍走后述 sourceVerification）。
+if (
+  !isTodayLocked &&
+  !AION_USE_OPENAI_WEBSEARCH &&
+  shouldRunSecondaryWebReview &&
+  validResults.length >= 4 &&
+  staleScoreDays >= 4
+) {
+  const secondary = extractFactorScores(validResults[validResults.length - 1].parsed);
+  finalFactors = finalFactors.map((sc, i) =>
+    quantizeFactorScore(i, (sc + (secondary[i] ?? 3)) / 2),
+  );
+  console.log(`Stale high: blended factors with secondary adjudication → [${finalFactors.join(",")}]`);
+}
+
 // 仅「已证实」(confirmed) 允许相对昨日保留 ensemble 分数；部分证实/未证实 → 与昨日持平
 const rfSv = payload?.dataZh?.riskFactors || [];
 finalFactors = finalFactors.map((sc, i) => {
@@ -1067,10 +1082,14 @@ finalFactors = finalFactors.map((sc, i) => {
   const legacy = sv === "dual" ? "confirmed" : sv === "single" ? "unverified" : sv;
   const isConfirmed = legacy === "confirmed";
   if (isConfirmed) return sc;
-  if (sc !== prevFactorScores[i]) {
-    console.warn(`  ⚠ ${factorNamesZh[i]}: sourceVerification=${legacy ?? "missing"} → clamp to prev=${prevFactorScores[i]} (需要已证实)`);
+  const prev = prevFactorScores[i];
+  if (legacy === "partial" && staleScoreDays >= 5 && Math.abs(sc - prev) <= 1) {
+    return sc;
   }
-  return prevFactorScores[i];
+  if (sc !== prev) {
+    console.warn(`  ⚠ ${factorNamesZh[i]}: sourceVerification=${legacy ?? "missing"} → clamp to prev=${prev} (需要已证实)`);
+  }
+  return prev;
 });
 
 const finalRiskScore = Math.round(finalFactors.reduce((a, b) => a + b, 0) / 5 * 20);

@@ -27,15 +27,28 @@ export function RiskGauge({
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (score / 100) * circumference;
   const trail = [...(trend || [])].map((x) => Number(x.score)).filter((x) => Number.isFinite(x));
-  let staleDays = 0;
+  let tailFlatBars = 0;
   if (trail.length) {
     const last = trail[trail.length - 1];
     for (let i = trail.length - 1; i >= 0; i--) {
       if (trail[i] !== last) break;
-      staleDays += 1;
+      tailFlatBars += 1;
     }
   }
-  const confidence = staleDays >= 4 ? (language === "zh" ? "低" : "Low") : staleDays >= 3 ? (language === "zh" ? "中" : "Medium") : (language === "zh" ? "高" : "High");
+  const nBars = trail.length || 1;
+  const fullWindowFlat = trail.length >= 2 && tailFlatBars === trail.length;
+  const confidence =
+    delta !== 0
+      ? language === "zh"
+        ? "高"
+        : "High"
+      : fullWindowFlat && trail.length >= 4
+        ? language === "zh"
+          ? "低"
+          : "Low"
+        : language === "zh"
+          ? "中"
+          : "Medium";
 
   return (
     <div className="aion-card flex flex-col items-center justify-center p-6 relative overflow-hidden">
@@ -93,10 +106,10 @@ export function RiskGauge({
         <div className="w-full pt-4 border-t border-aion-gray">
           <div className="aion-label text-[9px] mb-2">{t.trendTitle}</div>
           <TrendChart trend={trend} />
-          <div className="mt-2 text-[10px] font-mono text-aion-text-dim">
+          <div className="mt-2 text-[10px] font-mono text-aion-text-dim leading-tight text-center px-1">
             {language === "zh"
-              ? `置信度 ${confidence} · 连续同分 ${staleDays} 天`
-              : `Confidence ${confidence} · Stale ${staleDays}d`}
+              ? `置信 ${confidence} · 趋势窗末端 ${tailFlatBars}/${nBars} 根同分（柱数≠自然日）`
+              : `Conf ${confidence} · ${tailFlatBars}/${nBars} flat bars (trend window ≠ calendar days)`}
           </div>
         </div>
       </div>
