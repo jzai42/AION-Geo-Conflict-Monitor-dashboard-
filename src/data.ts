@@ -65,24 +65,48 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-05-20",
-  version: "v2.70",
+  date: "2026-05-21",
+  version: "v2.71",
+  riskScore: 76,
+  scoreTrend: [
+    {
+      date: "05-17",
+      score: 80
+    },
+    {
+      date: "05-18",
+      score: 80
+    },
+    {
+      date: "05-19",
+      score: 74
+    },
+    {
+      date: "05-20",
+      score: 74
+    },
+    {
+      date: "05-21",
+      score: 76,
+      active: true
+    }
+  ],
   keyStats: [
     {
       label: "冲突天数",
-      value: "D81",
+      value: "D82",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "持平",
+      value: "↑2",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $91.50–$93.80 · Brent $95.20–$97.50",
+      value: "WTI $96.97–$99.96 · Brent $104.26–$106.46",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -94,14 +118,13 @@ export const DATA_ZH: DashboardData = {
       color: "#ffdc00"
     }
   ],
-  riskScore: 74,
   riskFactors: [
     {
       name: "军事升级烈度",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "美军在红海区域持续拦截伊朗支持的攻击载具，军事对抗频率维持高位。",
+      description: "美军确认拦截多架针对海上资产的自杀式无人机，双方均维持高等级戒备。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -110,16 +133,16 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "航道流量持续低迷，通行效率受伊朗军事演习与高度警戒影响严重受限。",
+      description: "航道实质处于封锁与拦截并行的受限状态，通行量远低于正常水平。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "能源冲击",
-      score: 3.5,
+      score: 4,
       prev: 3.5,
       weight: 0.2,
-      description: "油价反映出显著的地缘政治溢价，但市场供需基本面限制了其单边突破百元的动力。",
+      description: "油价虽有回落但仍稳居百美元关口以上，市场对供应长期中断感到担忧。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -128,7 +151,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美国集中于区域防御与资产护航，主要大国尚未出现直接且全面的军事冲突介入。",
+      description: "周边大国与卡塔尔等中介方积极斡旋，避免全面战争爆发。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -137,9 +160,37 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "双方均无意在当前条件下让步，外交渠道维持在最低限度的危机沟通层面。",
+      description: "部分证实：外交渠道重启，美方称接近协议，但核心条款分歧依然巨大。",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "partial"
+    }
+  ],
+  events: [
+    {
+      id: "EVT-01",
+      title: "特朗普称外交协议进入尾声",
+      description: "特朗普公开表示美伊谈判取得实质性突破，油价应声回落。",
+      verification: "confirmed",
+      timestamp: "2026-05-21",
+      significance: "",
+      critical: true
+    },
+    {
+      id: "EVT-02",
+      title: "布伦特原油跌破110美元",
+      description: "受谈判预期影响，布伦特原油单日回撤超过 5%，收于 $105.16 附近。",
+      verification: "confirmed",
+      timestamp: "2026-05-21",
+      significance: "",
+      highlight: true
+    },
+    {
+      id: "EVT-03",
+      title: "美军霍尔木兹拦截无人机",
+      description: "中央司令部确认击落 3 架来袭无人机，冲突风险仍在高位。",
+      verification: "confirmed",
+      timestamp: "2026-05-21",
+      significance: ""
     }
   ],
   warPhase: {
@@ -148,9 +199,9 @@ export const DATA_ZH: DashboardData = {
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "拦截技术常态化替代了大规模反击",
-      "霍尔木兹海峡形成长期结构性拥堵",
-      "能源市场计价地缘溢价已趋于饱和"
+      "停火协议依然有效但名存实亡，海上摩擦加剧",
+      "外交谈判释放混合信号，市场情绪极度敏感",
+      "全球能源供应链处于高成本适应期"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -161,8 +212,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：美军中央司令部维持红海区域的无人机与导弹拦截频率。",
-        "延续：伊朗伊斯兰革命卫队（IRGC）在波斯湾出口保持战备巡航。"
+        "延续：美海军第五舰队维持对伊朗港口的封锁监测。",
+        "变化：美军开始常态化拦截针对民用商船的低空无人机攻击。"
       ]
     },
     {
@@ -171,8 +222,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：霍尔木兹海峡通行费与保险溢价维持在三年内最高水平。",
-        "变化：少量中小型油轮尝试恢复通行，但大型班轮公司仍处于观望状态。"
+        "延续：伊朗维持对通过海峡船只的身份核查与强制引航。",
+        "变化：美国“自由行动”拦截多艘疑似转运被制裁油品的货船。"
       ]
     },
     {
@@ -181,8 +232,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：油价在 $95 附近（Brent）出现阶段性技术筑底，波动率有所回落。",
-        "延续：全球原油库存低位运行，放大了地缘突发事件的价格敏感度。"
+        "变化：由于预期协议达成，短期投机资金撤离，油价单日跌幅创三周新高。",
+        "延续：实货市场因霍尔木兹通航不足 50% 依然保持高升水。"
       ]
     },
     {
@@ -191,26 +242,74 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：德黑兰保持强硬对美姿态，利用区域代理人施加非对称压力。",
-        "变化：白宫面临国内大选压力，在军事行动的烈度选择上表现出谨慎平衡。"
+        "变化：特朗普改口称其目标是“快速结束战争”而非政权更迭。",
+        "延续：德黑兰内部强硬派拒绝在制裁完全解除前签署正式文本。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美国制裁压力与伊朗政权生存意志的直接碰撞",
-      "区域大国对中东秩序主导权的长期博弈"
+      "美国极限施压与国内大选对能源降价的需求",
+      "伊朗主权尊严与国内经济崩溃压力的对抗"
     ],
     military: [
-      "非对称战争手段（无人机/代理人）对常规航运保护的长期消耗",
-      "红海拦截成本与发射成本的极端不对称性"
+      "霍尔木兹海峡控制权的争夺与自由航行权冲突"
     ]
   },
-  scoreTrend: [
+  keyChange: "油价从恐慌性上涨转为震荡下行，但外交信号存在高度不确定性。",
+  investmentSignal: "→ 维持对冲，增持能源大宗。",
+  change: "none",
+  prevRiskScore: 74,
+  webSources: [
     {
-      date: "05-16",
-      score: 80
+      title: "investing.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEZlhkI5GQ0z0HrpjNmlvgNxaKAXM4he-qAYlgbpLZaAE_3X5_yZmrIH3B3tj0Fo3Zp0lnq04nBuTnWfVW1-ieHEsWkZV2C5UZr8vVhNE1cBn0TFFyInkgRJ5wQK3eVALmo1P9CvUQVOLzZyvToRiBsFc_DfotEvoDNzw=="
     },
+    {
+      title: "tradingeconomics.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHYzypYtLjv9AWujG28tQBRjTTVSS0hMIr51qe7RM_J-6k2lX5kD993gEhvGCmPPh9Tm8GIvtqBDkI7Soou-A86IgWtz_r0roFMkEuA21L2wZGQnwTNfowgrMJnlXDBygbqOKonuUqWijJedA=="
+    },
+    {
+      title: "aljazeera.net",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQESaZtMx2oibS2ncbbJZlZf2v6t7q7yRy56rwuYWouDNjTJ39UOejyHXZnQVpJYS0sR9z8cwFPQoaEpULHpDXhANXHVUCdEgWyhV5SX_vJ7iLfzdqmPPYz3hvVNLu8YhqrADkATwvMXmkBbzX03PNSq0UUoN9nONV9ZjTi0UzV8tHkIy7hCzuVsPsrLzXW0_4PU6jlpj2IESpgo4thYJA=="
+    },
+    {
+      title: "barchart.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGL-JfxdDdJlJRUUxePg8o0fYPRahyXUU3fBJ12Z35jPbHkFFiy0h_eNeuT8FXdaKXclZJvSCKc_2SdXf4IPSWsK5xN7pgf3c3OtxIp42MWze7aPHKhw7fwNkuRy_h967o_x5_Ydx0iAA=="
+    },
+    {
+      title: "dailynewsegypt.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF47xOGlyJg8eiJ_l05MrutqaP4HzPZvQCWwa-V6MglBV-q6IaE5BiHk923RjnjKp9UWUCNw2fvHT1rf8pvI1a3KrtuJolRRwZLHMno9r8ZXTwhbjF9buASbE-xWFW-pGAUlm4oZKzQ672dalqadZfyOFx86y325MyR3WqKO_Aq3e2yjmUvTMWMrfbw6ukJTwDOWtDaPiZafGQgKdqDTdlB3sKkEwQREswoh0g6JjQ="
+    },
+    {
+      title: "britannica.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEOGqL1yTACSF_kFdiEzQpn73NlfLZMWQSPXQWjDj_B3v47KS8GRHtYY9A9Dqvh8yz-51XwJAqROVbXOm4vKot4wSgp-QptvLtO3phAjOoOu6OcmAWSegn6R2gZMwVNejfSqvgV_hRHg_M="
+    },
+    {
+      title: "tradingeconomics.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHNofiC5uhJ7ZeNgz6dZc3HhwNE2qkjHft8hbKF13jFppjtJonSets3VcnYC4XSmy6KTKoM_YrZYmehiPVZ-BfKVW-rdKPV-I3N0oOLX2kBSEWrEJoH11gLUFjmtrhINzhZktIUl-Wwz90hcikOSuT7pA=="
+    },
+    {
+      title: "newsweek.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFj7kZJU73Cg09VXbPZMb-AuNsTLPvIzstxqqQGqbnMgWwYx4H1r5m0jfEThbOPG_1S9EgPgL73nMRtzcfFsgVm1Z2xV4JjWjqs8sT_KYBfClZ3PL2tTLxHBbNrYO6k7OxkVr2Gs4qIcyOvwBGcIj7ODD9O1Xe7JcAluM6Gu4dRciQ-"
+    },
+    {
+      title: "barchart.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHYFaMq0IqUXP_oL2IhVnRp_sWtAdWSjUfdzqOiRYKaoPTOj-Cwpriv_-6zoVoX_Btoi9FRfVQWWyqzgHaelWhRr5gxgUCIArQA4BtCcjNkHxcJ4Nt_rEgxSbOtsRfe5WrKFZYLlu6tMw=="
+    }
+  ],
+  webSearchQueries: [
+    "US Iran naval tension news May 21 2026 scenario analysis",
+    "WTI Brent oil price news 24h May 20 2024 May 21 2024",
+    "current WTI Brent crude oil price range 2024-06-20"
+  ]
+};
+
+export const DATA_EN: DashboardData = {
+  date: "2026-05-21",
+  version: "v2.71",
+  riskScore: 76,
+  scoreTrend: [
     {
       date: "05-17",
       score: 80
@@ -225,74 +324,48 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "05-20",
-      score: 74,
+      score: 74
+    },
+    {
+      date: "05-21",
+      score: 76,
       active: true
     }
   ],
-  keyChange: "冲突进入第81天，美伊双方从爆发式对抗转向结构性僵持，拦截战术成为常态。",
-  investmentSignal: "→ 维持对能源资产与避险大宗商品的防御性配置，对冲地缘风险溢价。",
-  change: "none",
-  prevRiskScore: 74,
-  events: [
-    {
-      id: "EVT-AUTO-01",
-      title: "美军在红海区域持续拦截伊朗支持的攻击载具，军事对抗频率维持高位",
-      description: "美军在红海区域持续拦截伊朗支持的攻击载具，军事对抗频率维持高位。",
-      verification: "single",
-      timestamp: "2026-05-20（当日公开报道）",
-      significance: ""
-    },
-    {
-      id: "EVT-AUTO-02",
-      title: "航道流量持续低迷，通行效率受伊朗军事演习与高度警戒影响严重受限",
-      description: "航道流量持续低迷，通行效率受伊朗军事演习与高度警戒影响严重受限。",
-      verification: "single",
-      timestamp: "2026-05-20（当日公开报道）",
-      significance: ""
-    }
-  ],
-  webSources: [],
-  webSearchQueries: []
-};
-
-export const DATA_EN: DashboardData = {
-  date: "2026-05-20",
-  version: "v2.70",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D81",
+      value: "D82",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "Flat",
+      value: "↑2",
       unit: "vs Prev",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $91.50–$93.80 · Brent $95.20–$97.50",
+      value: "WTI $96.97–$99.96 · Brent $104.26–$106.46",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
-      value: "Severely Restricted",
+      value: "Severe Restriction",
       unit: "Transit Status",
       color: "#ffdc00"
     }
   ],
-  riskScore: 74,
   riskFactors: [
     {
       name: "Military Escalation Intensity",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "US continues to intercept Iran-backed attack assets in the Red Sea, maintaining high operational friction.",
+      description: "US confirms intercepting drones targeting naval assets; both sides remain on high alert.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -301,16 +374,16 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Chokepoint traffic remains low due to high alert levels and Iranian naval maneuvers.",
+      description: "Shipping remains restricted with ongoing blockades and selective transit permissions.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "Energy Shock",
-      score: 3.5,
+      score: 4,
       prev: 3.5,
       weight: 0.2,
-      description: "Prices reflect significant risk premium, though fundamentals limit a move past $100/bbl.",
+      description: "Prices retracted but remain in the critical $100+ zone due to structural supply risks.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -319,7 +392,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "US focus remains on defensive posture and asset protection; no direct peer-to-peer combat escalations reported.",
+      description: "Regional powers and mediators like Qatar active in preventing total war.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -328,9 +401,37 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Neither side shows willingness to concede; diplomatic channels restricted to minimal crisis management.",
+      description: "Partial: Diplomatic channels active with Trump claiming 'final stage' talks, though Tehran remains wary.",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "partial"
+    }
+  ],
+  events: [
+    {
+      id: "EVT-01",
+      title: "Trump Claims Negotiation Final Phase",
+      description: "President Trump states a deal with Iran is close, triggering a pullback in oil prices.",
+      verification: "confirmed",
+      timestamp: "2026-05-21",
+      significance: "",
+      critical: true
+    },
+    {
+      id: "EVT-02",
+      title: "Brent Oil Falls Below $110",
+      description: "Crude futures drop over 5% as market bets on diplomatic resolution, closing near $105.",
+      verification: "confirmed",
+      timestamp: "2026-05-21",
+      significance: "",
+      highlight: true
+    },
+    {
+      id: "EVT-03",
+      title: "US Navy Intercepts Drones",
+      description: "CENTCOM confirms downing of 3 attack drones in eastern Hormuz Strait.",
+      verification: "confirmed",
+      timestamp: "2026-05-21",
+      significance: ""
     }
   ],
   warPhase: {
@@ -339,9 +440,9 @@ export const DATA_EN: DashboardData = {
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Interception tactics becoming the new operational norm",
-      "Structural congestion in Hormuz Strait persists",
-      "Energy risk premium nearing temporary saturation"
+      "Ceasefire technically survives despite naval skirmishes",
+      "Mixed diplomatic signals keeping markets extremely volatile",
+      "Energy markets adapting to long-term high-cost supply routes"
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -352,8 +453,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: CENTCOM maintains high frequency of drone/missile intercepts in the Red Sea.",
-        "Continue: IRGC naval assets maintain combat patrols near the Strait of Hormuz."
+        "Continue: US 5th Fleet maintains blockade monitoring off Iranian ports.",
+        "Change: US begins routine intercepts of low-altitude UAVs targeting merchant vessels."
       ]
     },
     {
@@ -362,8 +463,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Insurance premiums for regional transit remain at multi-year highs.",
-        "Change: Minor uptick in small tanker traffic while major liners remain cautious."
+        "Continue: Iran maintains ID verification and forced pilotage in the Strait.",
+        "Change: Operation Project Freedom intercepts multiple tankers carrying sanctioned oil."
       ]
     },
     {
@@ -372,8 +473,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Brent finding a technical floor near $95; volatility shows slight compression.",
-        "Continue: Low global inventories amplify price sensitivity to any new geopolitical shocks."
+        "Change: Speculative retreat in oil prices as diplomatic hopes rise.",
+        "Continue: Physical markets remain tight due to <50% normal Hormuz throughput."
       ]
     },
     {
@@ -382,68 +483,67 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Tehran maintains defiant rhetoric, utilizing proxies for asymmetric pressure.",
-        "Change: White House domestic pressure leads to a balanced, cautious military response strategy."
+        "Change: Trump shifts rhetoric toward 'ending the war quickly' over regime change.",
+        "Continue: Tehran hardliners refuse to sign any deal without total sanctions removal."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Direct collision between US sanctions pressure and Iranian regime survival instinct.",
-      "Long-term competition for regional order hegemony."
+      "US 'Maximum Pressure' vs domestic demand for lower energy prices",
+      "Iran's sovereignty vs economic collapse and regime survival"
     ],
     military: [
-      "Attrition of conventional naval defense by asymmetric means.",
-      "Extreme cost asymmetry between interception and launch assets."
+      "Control of the Strait of Hormuz vs International Freedom of Navigation"
     ]
   },
-  scoreTrend: [
-    {
-      date: "05-16",
-      score: 80
-    },
-    {
-      date: "05-17",
-      score: 80
-    },
-    {
-      date: "05-18",
-      score: 80
-    },
-    {
-      date: "05-19",
-      score: 74
-    },
-    {
-      date: "05-20",
-      score: 74,
-      active: true
-    }
-  ],
-  keyChange: "The conflict enters Day 81 with a shift from explosive escalation to a structural, high-pressure standoff.",
-  investmentSignal: "→ Maintain defensive positioning in energy assets and safe-haven commodities to hedge geopolitical risk.",
+  keyChange: "Oil prices shifted from panic buying to a diplomatic discount, but core risks remain unresolved.",
+  investmentSignal: "→ Maintain hedge, increase energy exposure.",
   change: "none",
   prevRiskScore: 74,
-  events: [
+  webSources: [
     {
-      id: "EVT-AUTO-01",
-      title: "US continues to intercept Iran-backed attack assets in the Red Sea, maintaining high operationa…",
-      description: "US continues to intercept Iran-backed attack assets in the Red Sea, maintaining high operational friction.",
-      verification: "single",
-      timestamp: "2026-05-20 (same-day reporting)",
-      significance: ""
+      title: "investing.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEZlhkI5GQ0z0HrpjNmlvgNxaKAXM4he-qAYlgbpLZaAE_3X5_yZmrIH3B3tj0Fo3Zp0lnq04nBuTnWfVW1-ieHEsWkZV2C5UZr8vVhNE1cBn0TFFyInkgRJ5wQK3eVALmo1P9CvUQVOLzZyvToRiBsFc_DfotEvoDNzw=="
     },
     {
-      id: "EVT-AUTO-02",
-      title: "Chokepoint traffic remains low due to high alert levels and Iranian naval maneuvers",
-      description: "Chokepoint traffic remains low due to high alert levels and Iranian naval maneuvers.",
-      verification: "single",
-      timestamp: "2026-05-20 (same-day reporting)",
-      significance: ""
+      title: "tradingeconomics.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHYzypYtLjv9AWujG28tQBRjTTVSS0hMIr51qe7RM_J-6k2lX5kD993gEhvGCmPPh9Tm8GIvtqBDkI7Soou-A86IgWtz_r0roFMkEuA21L2wZGQnwTNfowgrMJnlXDBygbqOKonuUqWijJedA=="
+    },
+    {
+      title: "aljazeera.net",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQESaZtMx2oibS2ncbbJZlZf2v6t7q7yRy56rwuYWouDNjTJ39UOejyHXZnQVpJYS0sR9z8cwFPQoaEpULHpDXhANXHVUCdEgWyhV5SX_vJ7iLfzdqmPPYz3hvVNLu8YhqrADkATwvMXmkBbzX03PNSq0UUoN9nONV9ZjTi0UzV8tHkIy7hCzuVsPsrLzXW0_4PU6jlpj2IESpgo4thYJA=="
+    },
+    {
+      title: "barchart.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGL-JfxdDdJlJRUUxePg8o0fYPRahyXUU3fBJ12Z35jPbHkFFiy0h_eNeuT8FXdaKXclZJvSCKc_2SdXf4IPSWsK5xN7pgf3c3OtxIp42MWze7aPHKhw7fwNkuRy_h967o_x5_Ydx0iAA=="
+    },
+    {
+      title: "dailynewsegypt.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF47xOGlyJg8eiJ_l05MrutqaP4HzPZvQCWwa-V6MglBV-q6IaE5BiHk923RjnjKp9UWUCNw2fvHT1rf8pvI1a3KrtuJolRRwZLHMno9r8ZXTwhbjF9buASbE-xWFW-pGAUlm4oZKzQ672dalqadZfyOFx86y325MyR3WqKO_Aq3e2yjmUvTMWMrfbw6ukJTwDOWtDaPiZafGQgKdqDTdlB3sKkEwQREswoh0g6JjQ="
+    },
+    {
+      title: "britannica.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEOGqL1yTACSF_kFdiEzQpn73NlfLZMWQSPXQWjDj_B3v47KS8GRHtYY9A9Dqvh8yz-51XwJAqROVbXOm4vKot4wSgp-QptvLtO3phAjOoOu6OcmAWSegn6R2gZMwVNejfSqvgV_hRHg_M="
+    },
+    {
+      title: "tradingeconomics.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHNofiC5uhJ7ZeNgz6dZc3HhwNE2qkjHft8hbKF13jFppjtJonSets3VcnYC4XSmy6KTKoM_YrZYmehiPVZ-BfKVW-rdKPV-I3N0oOLX2kBSEWrEJoH11gLUFjmtrhINzhZktIUl-Wwz90hcikOSuT7pA=="
+    },
+    {
+      title: "newsweek.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFj7kZJU73Cg09VXbPZMb-AuNsTLPvIzstxqqQGqbnMgWwYx4H1r5m0jfEThbOPG_1S9EgPgL73nMRtzcfFsgVm1Z2xV4JjWjqs8sT_KYBfClZ3PL2tTLxHBbNrYO6k7OxkVr2Gs4qIcyOvwBGcIj7ODD9O1Xe7JcAluM6Gu4dRciQ-"
+    },
+    {
+      title: "barchart.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHYFaMq0IqUXP_oL2IhVnRp_sWtAdWSjUfdzqOiRYKaoPTOj-Cwpriv_-6zoVoX_Btoi9FRfVQWWyqzgHaelWhRr5gxgUCIArQA4BtCcjNkHxcJ4Nt_rEgxSbOtsRfe5WrKFZYLlu6tMw=="
     }
   ],
-  webSources: [],
-  webSearchQueries: []
+  webSearchQueries: [
+    "US Iran naval tension news May 21 2026 scenario analysis",
+    "WTI Brent oil price news 24h May 20 2024 May 21 2024",
+    "current WTI Brent crude oil price range 2024-06-20"
+  ]
 };
 
 export const TRANSLATIONS = {
@@ -451,7 +551,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "5月20日节点",
+    node406: "5月21日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -485,16 +585,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.70 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.71 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 74（持平）：冲突进入第81天，美伊双方从爆发式对抗转向结构性僵持，拦截战术成为常态。",
-    bannerWarning: "→ 维持对能源资产与避险大宗商品的防御性配置，对冲地缘风险溢价。",
-    deescalationIntent: "美国制裁压力与伊朗政权生存意志的直接碰撞",
-    structuralRisk: "航道流量持续低迷，通行效率受伊朗军事演习与高度警戒影响严重受限。",
-    contradictionNote: "美国制裁压力与伊朗政权生存意志的直接碰撞；非对称战争手段（无人机/代理人）对常规航运保护的长期消耗",
+    bannerSignal: "综合评分 76（↑2）：油价从恐慌性上涨转为震荡下行，但外交信号存在高度不确定性。",
+    bannerWarning: "→ 维持对冲，增持能源大宗。",
+    deescalationIntent: "美国极限施压与国内大选对能源降价的需求",
+    structuralRisk: "航道实质处于封锁与拦截并行的受限状态，通行量远低于正常水平。",
+    contradictionNote: "美国极限施压与国内大选对能源降价的需求；霍尔木兹海峡控制权的争夺与自由航行权冲突",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -502,7 +602,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第81天",
+    dayCount: "第82天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -510,7 +610,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "May 20 Node",
+    node406: "May 21 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -544,16 +644,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.70 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.71 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 74 (Flat): The conflict enters Day 81 with a shift from explosive escalation to a structural, high-pressure standoff.",
-    bannerWarning: "→ Maintain defensive positioning in energy assets and safe-haven commodities to hedge geopolitical risk.",
-    deescalationIntent: "Direct collision between US sanctions pressure and Iranian regime survival inst…",
-    structuralRisk: "Chokepoint traffic remains low due to high alert levels and Iranian naval maneuvers.",
-    contradictionNote: "Direct collision between US sanctions pressure and Iranian regime survival instinct.; Attrition of conventional naval defense by asymmetric means.",
+    bannerSignal: "Composite 76 (↑2): Oil prices shifted from panic buying to a diplomatic discount, but core risks remain unresolved.",
+    bannerWarning: "→ Maintain hedge, increase energy exposure.",
+    deescalationIntent: "US 'Maximum Pressure' vs domestic demand for lower energy prices",
+    structuralRisk: "Shipping remains restricted with ongoing blockades and selective transit permissions.",
+    contradictionNote: "US 'Maximum Pressure' vs domestic demand for lower energy prices; Control of the Strait of Hormuz vs International Freedom of Navigation",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -561,7 +661,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 81",
+    dayCount: "Day 82",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
