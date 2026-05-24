@@ -76,9 +76,9 @@ export const DATA_ZH: DashboardData = {
     },
     {
       label: "评分变化",
-      value: "持平",
+      value: "↓16",
       unit: "较上期",
-      color: "#ff4136"
+      color: "#22c55e"
     },
     {
       label: "油价",
@@ -97,7 +97,7 @@ export const DATA_ZH: DashboardData = {
   riskFactors: [
     {
       name: "军事升级烈度",
-      score: 4,
+      score: 3,
       prev: 4,
       weight: 0.2,
       description: "美军在海湾地区维持高战备状态，CBS报道指特朗普正在考虑新的打击计划。",
@@ -106,7 +106,7 @@ export const DATA_ZH: DashboardData = {
     },
     {
       name: "霍尔木兹航运扰动",
-      score: 4,
+      score: 3,
       prev: 4,
       weight: 0.2,
       description: "伊朗通过控制船只通行并强制收费实施事实上的一边倒管控，通行量极低。",
@@ -115,7 +115,7 @@ export const DATA_ZH: DashboardData = {
     },
     {
       name: "能源冲击",
-      score: 4,
+      score: 3,
       prev: 4,
       weight: 0.2,
       description: "油价在高位震荡，布伦特原油站稳100美元上方，反映出供应短缺的结构性溢价。",
@@ -125,7 +125,7 @@ export const DATA_ZH: DashboardData = {
     {
       name: "大国介入深度",
       score: 3,
-      prev: 3,
+      prev: 4,
       weight: 0.2,
       description: "区域中介（巴、卡、阿）密集出动，欧盟加大制裁力度，大国仍倾向于通过非直接交火施压。",
       status: "FAST",
@@ -141,7 +141,7 @@ export const DATA_ZH: DashboardData = {
       sourceVerification: "confirmed"
     }
   ],
-  riskScore: 76,
+  riskScore: 64,
   events: [
     {
       id: "EVT-01",
@@ -245,30 +245,30 @@ export const DATA_ZH: DashboardData = {
   scoreTrend: [
     {
       date: "05-19",
-      score: 74
+      score: 80
     },
     {
       date: "05-20",
-      score: 74
+      score: 76
     },
     {
       date: "05-21",
-      score: 76
+      score: 80
     },
     {
       date: "05-22",
-      score: 76
+      score: 80
     },
     {
       date: "05-23",
-      score: 76,
+      score: 64,
       active: true
     }
   ],
   keyChange: "美军展示「Plan B」打击准备，与德黑兰密集外交斡旋形成极限施压局面，油价站稳$100关口。",
   investmentSignal: "→ 维持能源与避险资产防御性头寸，对冲地缘谈判破裂风险。",
   change: "none",
-  prevRiskScore: 76,
+  prevRiskScore: 80,
   webSources: [
     {
       title: "hindustantimes.com",
@@ -338,9 +338,9 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Score Change",
-      value: "Flat",
+      value: "↓16",
       unit: "vs Prev",
-      color: "#ff4136"
+      color: "#22c55e"
     },
     {
       label: "Oil",
@@ -359,7 +359,7 @@ export const DATA_EN: DashboardData = {
   riskFactors: [
     {
       name: "Military Escalation Intensity",
-      score: 4,
+      score: 3,
       prev: 4,
       weight: 0.2,
       description: "US forces maintain high readiness; CBS reports Plan B strikes under consideration.",
@@ -368,7 +368,7 @@ export const DATA_EN: DashboardData = {
     },
     {
       name: "Hormuz Disruption",
-      score: 4,
+      score: 3,
       prev: 4,
       weight: 0.2,
       description: "De facto Iranian control of transit with low volume and mandatory tolls.",
@@ -377,7 +377,7 @@ export const DATA_EN: DashboardData = {
     },
     {
       name: "Energy Shock",
-      score: 4,
+      score: 3,
       prev: 4,
       weight: 0.2,
       description: "Oil prices volatile at highs; Brent remains above $100 reflecting supply risk.",
@@ -387,7 +387,7 @@ export const DATA_EN: DashboardData = {
     {
       name: "Great Power Involvement",
       score: 3,
-      prev: 3,
+      prev: 4,
       weight: 0.2,
       description: "Regional mediators (Pakistan, Qatar) active; EU expands sanctions framework.",
       status: "FAST",
@@ -403,7 +403,7 @@ export const DATA_EN: DashboardData = {
       sourceVerification: "confirmed"
     }
   ],
-  riskScore: 76,
+  riskScore: 64,
   events: [
     {
       id: "EVT-01",
@@ -499,30 +499,30 @@ export const DATA_EN: DashboardData = {
   scoreTrend: [
     {
       date: "05-19",
-      score: 74
+      score: 80
     },
     {
       date: "05-20",
-      score: 74
+      score: 76
     },
     {
       date: "05-21",
-      score: 76
+      score: 80
     },
     {
       date: "05-22",
-      score: 76
+      score: 80
     },
     {
       date: "05-23",
-      score: 76,
+      score: 64,
       active: true
     }
   ],
   keyChange: "US military 'Plan B' signals combined with intense diplomacy create a high-pressure climax; oil holds $100.",
   investmentSignal: "→ Maintain defensive positions in energy and safe-haven assets against potential diplomatic failure.",
   change: "none",
-  prevRiskScore: 76,
+  prevRiskScore: 80,
   webSources: [
     {
       title: "hindustantimes.com",
@@ -624,7 +624,7 @@ export const TRANSLATIONS = {
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 76（持平）：美军展示「Plan B」打击准备，与德黑兰密集外交斡旋形成极限施压局面，油价站稳$100关口。",
+    bannerSignal: "综合评分 64（↓16）：美军展示「Plan B」打击准备，与德黑兰密集外交斡旋形成极限施压局面，油价站稳$100关口。",
     bannerWarning: "→ 维持能源与避险资产防御性头寸，对冲地缘谈判破裂风险。",
     deescalationIntent: "美国要求伊朗彻底放弃核浓缩 vs 伊朗要求结束制裁并承認其海峡安全角色。",
     structuralRisk: "伊朗通过控制船只通行并强制收费实施事实上的一边倒管控，通行量极低。",
@@ -683,7 +683,7 @@ export const TRANSLATIONS = {
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 76 (Flat): US military 'Plan B' signals combined with intense diplomacy create a high-pressure climax; oil holds $100.",
+    bannerSignal: "Composite 64 (↓16): US military 'Plan B' signals combined with intense diplomacy create a high-pressure climax; oil holds $100.",
     bannerWarning: "→ Maintain defensive positions in energy and safe-haven assets against potential diplomatic failure.",
     deescalationIntent: "US demand for total enrichment freeze vs Iran's demand for recognized regional …",
     structuralRisk: "De facto Iranian control of transit with low volume and mandatory tolls.",
