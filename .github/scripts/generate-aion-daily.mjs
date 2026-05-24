@@ -13,6 +13,8 @@ const CONFIG = {
   geminiRetryMaxMs: 12000,
 };
 
+/** 设为 1 时允许在全部 API 失败后写入兜底占位；默认 0（手动重跑须产出真实报告） */
+const AION_ALLOW_FALLBACK = /^(1|true|yes)$/i.test(process.env.AION_ALLOW_FALLBACK || "");
 /** 设为 1 时仅用 OpenAI Responses API + 内置 web_search，不调用 Gemini（需 OPENAI_API_KEY） */
 const AION_USE_OPENAI_WEBSEARCH = /^(1|true|yes)$/i.test(process.env.AION_USE_OPENAI_WEBSEARCH || "");
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || "";
@@ -193,6 +195,44 @@ function quantizeFactorScore(idx, raw) {
 function normalizeLockedDates(v) {
   if (!Array.isArray(v)) return [];
   return [...new Set(v.map((x) => s(x).trim()).filter((x) => /^\d{4}-\d{2}-\d{2}$/.test(x)))].sort();
+}
+
+function isFallbackLatest(entry) {
+  return entry?.generationMode === "fallback";
+}
+
+/** 人工锁定/校正分数表 — 注入模型提示，作为评分轨迹校准参考 */
+function buildCalibrationReferenceBlock(historyArr, lockedDates, todayIso, priorScore) {
+  const locked = normalizeLockedDates(lockedDates);
+  if (!locked.length) return "";
+  const map = new Map((historyArr || []).map((p) => [p.date, p.score]));
+  const rows = locked
+    .filter((iso) => iso <= todayIso)
+    .map((iso) => `| ${iso} | ${map.get(iso) ?? "—"} | **人工校正·脚本锁定** |`)
+    .join("\n");
+  if (!rows) return "";
+  const recent = [4, 3, 2, 1, 0]
+    .map((k) => addDaysIso(todayIso, -k))
+    .map((iso) => {
+      const sc = scoreForDate(historyArr, iso);
+      const tag = locked.includes(iso) ? "（锁定）" : "";
+      return `- ${iso}: ${sc ?? "—"}${tag}`;
+    })
+    .join("\n");
+  return `
+
+## 人工校正基准分（lockedDates · 脚本强制，模型须对齐）
+以下日期综合分已经 **人工核对**，脚本 **不得改写**；今日打分须与这一轨迹 **连贯**（勿无视昨日大幅下调后无理由再持平）。
+
+| 日期 | 综合分 | 说明 |
+|------|--------|------|
+${rows}
+
+- **昨日(${addDaysIso(todayIso, -1)}) 收盘**：${priorScore}（今日「较上期」以此为基准）
+- **近 5 个公历日（含锁定标记）**：
+${recent}
+- 今日须基于昨日因子档位做 disciplined ±1 调整；**禁止**输出「模型服务兜底/503」类占位内容。
+`;
 }
 
 function factorsForLockedScore(targetScore, baseFactors) {
@@ -402,8 +442,26 @@ if (store.version === 1 && Array.isArray(store.points)) {
 }
 store.lockedDates = normalizeLockedDates(store.lockedDates);
 const lockedDatesSet = new Set(store.lockedDates);
+const yesterdayIso = addDaysIso(todayNy, -1);
 
-const prev = store.latest || {
+/** 同日重跑：若上一版为兜底占位，从历史中剔除该日条目，版本号不递增 */
+let sameDayRegenAfterFallback = false;
+if (store.latest?.date === todayNy && isFallbackLatest(store.latest)) {
+  sameDayRegenAfterFallback = true;
+  store.history = (store.history || []).filter((p) => p.date !== todayNy);
+  console.warn(`Same-day regen: stripping fallback history entry for ${todayNy}`);
+}
+
+const prev = (sameDayRegenAfterFallback
+  ? {
+      date: yesterdayIso,
+      appVersion: store.latest.appVersion,
+      riskScore: scoreForDate(store.history, yesterdayIso) ?? store.latest.prevRiskScore,
+      prevRiskScore: scoreForDate(store.history, addDaysIso(yesterdayIso, -1)) ?? store.latest.prevRiskScore,
+      conflictDay: correctConflictDay - 1,
+      factorScores: store.latest.factorScores,
+    }
+  : store.latest) || {
   date: "",
   appVersion: "v2.9",
   riskScore: 64,
@@ -415,12 +473,13 @@ const prev = store.latest || {
 const prevVersion = prev.appVersion || "v2.9";
 const vMajor = Number(prevVersion.match(/(\d+)\./)?.[1]) || 2;
 const vMinor = Number(prevVersion.match(/\.(\d+)/)?.[1]) || 9;
-const version = `v${vMajor}.${vMinor + 1}`;
+const version = sameDayRegenAfterFallback
+  ? prevVersion
+  : `v${vMajor}.${vMinor + 1}`;
 
 const prevFactorScores = Array.isArray(prev.factorScores) ? prev.factorScores : [3, 3, 3, 3, 3];
 
 /** 昨日（日历）收盘综合分 — 用于「较上期」与 prevRiskScore；勿用 latest.riskScore（同日重跑会与今日相同 → 误显示持平） */
-const yesterdayIso = addDaysIso(todayNy, -1);
 const histMapPrior = new Map((store.history || []).map(p => [p.date, p.score]));
 const priorDayComposite = scoreForDate(store.history, yesterdayIso)
   ?? lookupScore(histMapPrior, yesterdayIso, prev.riskScore);
@@ -491,6 +550,7 @@ const outputSchema = {
 // ── Prompt ──────────────────────────────────────────────────────────
 const factorNamesZh = CANONICAL.zh.riskFactorNames;
 const prevFactorStr = factorNamesZh.map((name, i) => `${name}: ${prevFactorScores[i]}`).join(", ");
+const calibrationReferenceBlock = buildCalibrationReferenceBlock(store.history, store.lockedDates, todayNy, priorDayComposite);
 
 const prevOil = prev.oilPrice;
 const prevOilHint =
@@ -525,6 +585,7 @@ ${SOURCE_TIER_TABLE_PROMPT}
 - **昨日(${yesterdayIso})收盘综合分**（用于「较上期」）: ${priorDayComposite}（来自 score-history history；勿用与今日同日的 latest.riskScore 当作上期）
 - 五维因子分: ${prevFactorStr}
 - 近日综合评分历史: ${JSON.stringify(store.history.slice(-10))}
+${calibrationReferenceBlock}
 
 ${REPORT_MARKDOWN_ZH_SPEC}
 
@@ -999,6 +1060,7 @@ if (AION_USE_OPENAI_WEBSEARCH) {
 }
 
 let validResults = results.filter(Boolean);
+let generationMode = "live";
 
 if (!validResults.length) {
   await mkdir(PATHS.reports, { recursive: true });
@@ -1019,12 +1081,31 @@ if (!validResults.length) {
     }];
   } catch (err) {
     console.warn(`  OpenAI Chat Completions failed: ${errorMessage(err)}`);
-    console.warn("  Using static baseline fallback payload.");
-    validResults = [{
-      parsed: buildFallbackPayload(todayNy),
-      grounding: { webSources: [], webSearchQueries: [] },
-    }];
+    if (!AION_USE_OPENAI_WEBSEARCH && ACTIVE_GEMINI_MODEL !== GEMINI_ESCALATION_MODEL) {
+      console.warn(`  Retrying ensemble with escalation model ${GEMINI_ESCALATION_MODEL} ...`);
+      ACTIVE_GEMINI_MODEL = GEMINI_ESCALATION_MODEL;
+      const escalationResults = [];
+      for (let i = 0; i < CONFIG.ensembleN; i++) {
+        escalationResults.push(await singleCall(i));
+      }
+      validResults = escalationResults.filter(Boolean);
+    }
+    if (!validResults.length) {
+      if (!AION_ALLOW_FALLBACK) {
+        throw new Error("All model providers failed and AION_ALLOW_FALLBACK is not set — aborting instead of writing fallback placeholder.");
+      }
+      console.warn("  Using static baseline fallback payload.");
+      validResults = [{
+        parsed: buildFallbackPayload(todayNy),
+        grounding: { webSources: [], webSearchQueries: [] },
+      }];
+      generationMode = "fallback";
+    }
   }
+}
+
+if (validResults.some((r) => (r.parsed?.dataZh?.events || []).some((e) => e?.id === "EVT-FALLBACK-01"))) {
+  generationMode = "fallback";
 }
 
 // ── Ensemble scoring with guardrails ───────────────────────────────
@@ -1133,6 +1214,7 @@ store.latest = {
   prevRiskScore: priorDayComposite,
   conflictDay: correctConflictDay,
   factorScores: [...adjustedFinalFactors],
+  generationMode,
 };
 store.version = 2;
 store.lockedDates = normalizeLockedDates(store.lockedDates);

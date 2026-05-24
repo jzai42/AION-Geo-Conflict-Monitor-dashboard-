@@ -83,6 +83,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-4.1-mini
+          AION_ALLOW_FALLBACK: "0"
         run: node .github/scripts/generate-aion-daily.mjs
 
       - name: Commit and push
