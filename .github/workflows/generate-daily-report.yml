@@ -12,7 +12,7 @@ on:
 
 env:
   GEMINI_MODEL: gemini-3-flash-preview
-  GEMINI_ESCALATION_MODEL: gemini-3.1-pro
+  GEMINI_ESCALATION_MODEL: gemini-2.5-pro
   AION_ENSEMBLE_N: "3"
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 

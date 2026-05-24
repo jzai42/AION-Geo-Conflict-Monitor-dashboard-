@@ -20,7 +20,7 @@ const AION_USE_OPENAI_WEBSEARCH = /^(1|true|yes)$/i.test(process.env.AION_USE_OP
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || "";
 /** 默认：Gemini 3 Flash Preview（text）；可按需设 gemini-3.1-flash-lite-preview 或 gemini-3.1-pro-preview */
 const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-3-flash-preview";
-const GEMINI_ESCALATION_MODEL = process.env.GEMINI_ESCALATION_MODEL || "gemini-3.1-pro";
+const GEMINI_ESCALATION_MODEL = process.env.GEMINI_ESCALATION_MODEL || "gemini-2.5-pro";
 const MODEL_ESCALATION_DELTA_THRESHOLD = Math.max(1, Number.parseInt(process.env.MODEL_ESCALATION_DELTA_THRESHOLD || "8", 10) || 8);
 let ACTIVE_GEMINI_MODEL = GEMINI_MODEL;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
@@ -528,7 +528,7 @@ const dashboardSchema = {
     prevRiskScore:     { type: "number" },
     investmentSignal:  { type: "string" },
     keyChange:         { type: "string" },
-    keyStats:          { type: "array", items: { type: "object", properties: { label: { type: "string" }, value: { type: "string" }, unit: { type: "string" }, color: { type: "string" }, layout: { type: "string", enum: ["default", "unitPrimary"] } }, required: ["label", "value", "unit", "color"], additionalProperties: false } },
+    keyStats:          { type: "array", items: { type: "object", properties: { label: { type: "string" }, value: { type: "string" }, unit: { type: "string" }, color: { type: "string" } }, required: ["label", "value", "unit", "color"], additionalProperties: false } },
     warPhase:          { type: "object", properties: { level: { type: "string" }, targetLevel: { type: "string" }, title: { type: "string" }, subTitle: { type: "string" }, points: { type: "array", items: { type: "string" } }, note: { type: "string" } }, required: ["level", "targetLevel", "title", "subTitle", "points", "note"], additionalProperties: false },
     riskFactors:       { type: "array", items: { type: "object", properties: { name: { type: "string" }, score: { type: "number" }, prev: { type: "number" }, weight: { type: "number" }, description: { type: "string" }, status: { type: "string" }, change: { type: "string" }, evidence: { type: "string" }, sourceVerification: { type: "string", enum: ["confirmed", "partial", "unverified"] } }, required: ["name", "score", "prev", "weight", "description", "status", "change", "evidence", "sourceVerification"], additionalProperties: false } },
     events:            { type: "array", items: { type: "object", properties: { id: { type: "string" }, title: { type: "string" }, description: { type: "string" }, verification: { type: "string" }, timestamp: { type: "string" }, significance: { type: "string" }, highlight: { type: "boolean" }, critical: { type: "boolean" } }, required: ["id", "title", "description", "verification", "timestamp", "significance", "highlight", "critical"], additionalProperties: false } },
