@@ -1,18 +1,19 @@
 {
   "version": 2,
   "latest": {
-    "date": "2026-05-23",
-    "appVersion": "v2.73",
-    "riskScore": 64,
-    "prevRiskScore": 80,
-    "conflictDay": 84,
+    "date": "2026-05-24",
+    "appVersion": "v2.74",
+    "riskScore": 52,
+    "prevRiskScore": 64,
+    "conflictDay": 85,
     "factorScores": [
       3,
+      2,
       3,
       3,
-      3,
-      4
-    ]
+      2
+    ],
+    "generationMode": "live"
   },
   "lockedDates": [
     "2026-04-22",
@@ -218,6 +219,10 @@
     {
       "date": "2026-05-23",
       "score": 64
+    },
+    {
+      "date": "2026-05-24",
+      "score": 52
     }
   ]
 }
