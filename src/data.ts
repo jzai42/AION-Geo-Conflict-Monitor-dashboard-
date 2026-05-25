@@ -65,24 +65,26 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-05-24",
-  version: "v2.74",
+  date: "2026-05-25",
+  version: "v2.75",
+  riskScore: 48,
+  keyChange: "美伊谈判取得重大进展，风险评分显著下降",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D85",
+      value: "D86",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↓12",
+      value: "↓4",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $96–$98 · Brent $103–$107",
+      value: "WTI $91–$93 · Brent $95–$99",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -94,23 +96,22 @@ export const DATA_ZH: DashboardData = {
       color: "#ffdc00"
     }
   ],
-  riskScore: 52,
   riskFactors: [
     {
       name: "军事升级烈度",
-      score: 3,
+      score: 2,
       prev: 3,
       weight: 0.2,
-      description: "双方维持高度军事戒备，代理人冲突偶发，但美伊之间没有新的直接军事对抗。",
+      description: "烈度下降。过去24小时内，未有关于美伊之间新的直接军事交火或打击行动的报道。冲突的主要形式已从积极的军事对抗转变为高强度的外交谈判，旨在达成停火和解决方案。然而，美军对伊朗港口的海上封锁作为一项持续的军事行动，使得该评分未降至最低水平。",
       status: "FAST",
-      sourceVerification: "partial"
+      sourceVerification: "confirmed"
     },
     {
       name: "霍尔木兹航运扰动",
       score: 2,
-      prev: 3,
+      prev: 2,
       weight: 0.2,
-      description: "海峡通行仍受严重限制，但重开海峡已成为美伊临时协议的核心议题，显著降低了封锁升级的风险。",
+      description: "无变化。霍尔木兹海峡的商业航运仍处于基本停滞状态，受美国海上封锁和伊朗军事存在的双重影响。尽管重新开放海峡是当前谈判的核心议题，并带来了积极预期，但实际的通行状况在过去24小时内并未发生改变。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -119,7 +120,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "油价因谈判取得突破性进展的预期而承压，但由于协议尚未签署且海峡仍处关闭状态，价格维持在显著偏强区间。",
+      description: "油价因谈判取得突破的预期而大幅承压。市场正在定价冲突缓和的可能性，这可能导致霍尔木兹海峡重新开放，从而缓解全球供应紧张。布伦特和WTI价格均大幅下跌，但仍处于相对高位，反映出协议尚未最终达成的风险。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -128,62 +129,55 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美国通过外交谈判和维持军事封锁深度介入，但未采取新的直接作战行动。",
+      description: "无变化。美国作为冲突的主要一方，其介入程度依然很深。其军事力量在执行海上封锁，同时其外交官僚体系正全力投入与伊朗的谈判。这种军事施压与外交接触并行的策略，维持了其深度介入的态势。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "降级/谈判前景",
       score: 2,
-      prev: 4,
+      prev: 2,
       weight: 0.2,
-      description: "谈判取得重大突破，双方接近达成一份为期60天的临时协议，显著改善了降级前景。",
+      description: "前景显著改善。美方高级别官员通过媒体释放了协议“基本谈妥”的强烈信号，涵盖了结束战争、开放海峡和核材料处理等核心问题。尽管伊朗方面表态更为谨慎，但双方均确认谈判取得重大进展，显著提升了通过谈判实现局势降级的可能性。",
       status: "FAST",
-      sourceVerification: "confirmed",
-      change: "down"
+      sourceVerification: "confirmed"
     }
   ],
   events: [
     {
-      id: "e20260524-1",
-      title: "美伊接近达成60天停火协议，涉及重开霍尔木兹海峡",
-      description: "多家独立媒体报道，引述美国官员消息称，美伊接近签署一份谅解备忘录，内容包括60天停火、重开霍尔木兹海峡、伊朗获准出售石油，以及在此期间就核问题进行谈判。美国总统特朗普称协议已“基本谈妥”。 (Sources: Axios, CBS News, Times of Israel)",
+      id: "evt-01",
+      title: "美伊接近达成结束冲突协议，谈判取得实质性进展",
+      description: "多位匿名美国及地区官员向多家媒体透露，美国与伊朗已接近达成一项协议。协议内容包括结束战争、重新开放霍尔木兹海峡、伊朗放弃其高浓缩铀库存。美国总统特朗普称协议已“基本谈妥”，但同时表示“不会仓促行事”。（来源：Associated Press, Reuters, CBS News）",
       verification: "confirmed",
-      timestamp: "2026-05-24T08:00:00Z",
+      timestamp: "2026-05-24T18:00:00Z",
       significance: "",
       highlight: true,
       critical: true
     },
     {
-      id: "e20260524-2",
-      title: "伊朗对协议条款表态谨慎，称霍尔木兹海峡主权不变",
-      description: "伊朗官方及半官方媒体回应称，即便达成协议，霍尔木兹海峡也将继续处于伊朗的“主权管理”之下，不会恢复到战前“自由通行”的状态，但承认通行船只数量可在30天内恢复至战前水平。一名伊朗高级信源否认已同意移交其高浓缩铀库存。 (Sources: Mehr News Agency, Reuters)",
+      id: "evt-02",
+      title: "伊朗官方称协议尚未“迫在眉睫”，指责美方立场变化",
+      description: "伊朗外交部发言人表示，尽管在许多问题上与美方达成了谅解，但协议并非“迫在眉睫”。他表示，现阶段谈判重点是结束战争，而非核问题，并指责华盛顿方面改变立场。（来源：The Guardian, CBS News）",
       verification: "confirmed",
-      timestamp: "2026-05-24T10:30:00Z",
-      significance: ""
+      timestamp: "2026-05-25T04:00:00Z",
+      significance: "",
+      highlight: true
     },
     {
-      id: "e20260524-3",
-      title: "油价因潜在协议前景而承压，但仍处高位",
-      description: "尽管地缘政治紧张局势存在，但美伊可能达成协议的消息导致油价在本周小幅回落。市场分析认为，协议将缓解部分供应担忧。目前布伦特原油交易价格区间约为103-107美元/桶，WTI原油约为96-98美元/桶，显示市场仍在消化不确定性。 (Sources: Trading Economics, Forbes, TheStreet)",
+      id: "evt-03",
+      title: "受美伊谈判进展影响，国际油价大幅下跌超4%",
+      description: "市场对美伊可能达成和平协议并重开霍尔木兹海峡的预期感到乐观，导致国际油价周一大幅下跌。布伦特原油期货跌破100美元/桶，WTI原油期货也跌至92美元/桶附近，双双触及两周低点。（来源：Reuters, Investing.com）",
       verification: "confirmed",
-      timestamp: "2026-05-24T06:00:00Z",
-      significance: ""
+      timestamp: "2026-05-25T08:30:00Z",
+      significance: "",
+      highlight: true
     },
     {
-      id: "e20260524-4",
-      title: "以色列官员对美伊潜在协议表示担忧",
-      description: "据报道，一名未具名的以色列高级官员称正在形成的协议是“坏的”，认为这向德黑兰表明，它能够有效地将霍尔木兹海峡武器化，其效力不亚于核武器。以色列总理内塔尼亚胡据称也向美方表达了对协议将核问题谈判推迟的关切。 (Sources: Times of Israel, Channel 12)",
-      verification: "single",
-      timestamp: "2026-05-24T09:00:00Z",
-      significance: ""
-    },
-    {
-      id: "e20260524-5",
-      title: "区域军事态势维持紧张，无新增直接冲突",
-      description: "公开信息显示，过去24小时内美伊之间没有新的直接军事交火事件。双方军事力量继续维持高度戒备的前沿部署态势，但行动重点已转向外交层面。 (Sources: 公开数据不足以确认具体行动)",
-      verification: "partial",
-      timestamp: "2026-05-24T12:00:00Z",
+      id: "evt-04",
+      title: "美国防部报告 blockade 成果，军事对峙仍在持续",
+      description: "尽管外交谈判成为焦点，但美军的军事行动仍在持续。美国中央司令部（CENTCOM）于5月23日发布声明称，自4月13日开始对伊朗实施海上封锁以来，已成功拦截或转向了100艘商船，显示出军事高压态势并未解除。（来源：U.S. CENTCOM）",
+      verification: "confirmed",
+      timestamp: "2026-05-23T12:00:00Z",
       significance: ""
     }
   ],
@@ -193,9 +187,9 @@ export const DATA_ZH: DashboardData = {
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "美伊双方从军事对抗转向高强度外交斡旋，寻求达成一份临时性协议以避免冲突全面升级。",
-      "协议的核心围绕霍尔木兹海峡的重新开放与对伊朗石油出口的制裁豁免，以换取未来就核问题的谈判。",
-      "尽管前景显著改善，但双方在关键条款（如海峡主权、核查范围）上的分歧仍可能导致谈判破裂，使局势重回紧张。"
+      "双方释放出接近达成协议的强烈信号，市场风险偏好随之快速修复。",
+      "当前阶段的核心矛盾从军事对抗转向协议细节的敲定。",
+      "虽然协议尚未签署，存在变数，但冲突已从高烈度对抗转入以政治解决为主要特征的窗口期。"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -206,8 +200,9 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：双方军事力量维持前沿部署和高度戒备，但无直接交火报告。",
-        "延续：区域内代理人武装（如真主党）与以色列的冲突仍在继续，构成潜在的溢出风险。"
+        "变化：烈度下降。",
+        "变化：过去24小时内，未有关于美伊之间新的直接军事交火或打击行动的报道。",
+        "变化：冲突的主要形式已从积极的军事对抗转变为高强度的外交谈判，旨在达成停火和解决方案。"
       ]
     },
     {
@@ -216,8 +211,9 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：重开霍尔木兹海峡已成为谈判的核心议题，双方均释放出通行量有望恢复的信号。",
-        "延续：海峡目前仍处于伊朗的严格管控之下，商业航运流量依然极低。"
+        "变化：无变化。",
+        "变化：霍尔木兹海峡的商业航运仍处于基本停滞状态，受美国海上封锁和伊朗军事存在的双重影响。",
+        "变化：尽管重新开放海峡是当前谈判的核心议题，并带来了积极预期，但实际的通行状况在过去24小时内并未发生改变。"
       ]
     },
     {
@@ -226,8 +222,9 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：对达成协议的预期给油价带来下行压力，风险溢价开始收缩。",
-        "延续：由于协议尚未签署，且全球石油库存处于低位，油价依然维持在100美元/桶附近的高位区间。"
+        "变化：油价因谈判取得突破的预期而大幅承压。",
+        "变化：市场正在定价冲突缓和的可能性，这可能导致霍尔木兹海峡重新开放，从而缓解全球供应紧张。",
+        "变化：布伦特和WTI价格均大幅下跌，但仍处于相对高位，反映出协议尚未最终达成的风险。"
       ]
     },
     {
@@ -236,26 +233,23 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美国总统特朗普公开表示协议“基本谈妥”，释放出强烈的乐观信号，旨在推动达成协议。",
-        "变化：伊朗方面通过官方媒体谨慎回应，强调其在霍尔木兹海峡主权等核心利益上的立场，试图管理国内预期并增加谈判筹码。"
+        "变化：无变化。",
+        "变化：美国作为冲突的主要一方，其介入程度依然很深。",
+        "变化：其军事力量在执行海上封锁，同时其外交官僚体系正全力投入与伊朗的谈判。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美国寻求通过一份临时协议，在选举年到来前迅速降低油价并避免陷入更大规模的战争，同时将棘手的核问题推迟处理。",
-      "伊朗试图利用其对霍尔木兹海峡的控制权作为杠杆，换取经济制裁的解除和对其区域影响力的默认，同时避免在核计划上做出实质性让步。"
+      "美方希望快速敲定协议以缓解能源危机并宣告外交胜利，与伊朗方面希望在解除封锁和制裁等核心利益上获得更确切保障之间的矛盾。",
+      "协议细节（如核查机制、制裁解除步骤）尚未公布，双方内部的强硬派可能对潜在的让步构成阻力。"
     ],
     military: [
-      "美军通过持续的军事封锁和威慑，为外交谈判创造压力和筹码。",
-      "伊朗及其代理人网络通过展示其扰乱区域安全的能力，以确保其在谈判桌上的地位，并威慑任何潜在的军事打击。"
+      "美军维持海上封锁以作为谈判筹码的军事压力，与伊朗要求立即解除封锁作为达成协议的前提之间的对峙。",
+      "停火状态依然脆弱，任何一方的误判或强硬派的蓄意破坏都可能导致谈判窗口关闭，重燃战火。"
     ]
   },
   scoreTrend: [
-    {
-      date: "05-20",
-      score: 76
-    },
     {
       date: "05-21",
       score: 80
@@ -270,42 +264,49 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "05-24",
-      score: 52,
+      score: 52
+    },
+    {
+      date: "05-25",
+      score: 48,
       active: true
     }
   ],
-  keyChange: "谈判前景因子从4（停滞）大幅改善至2（实质性进展），主要基于多方已证实的美伊接近达成60天临时协议的报道，导致综合风险评分显著下降。",
-  investmentSignal: "→ 鉴于短期冲突风险显著下降，可考虑逐步减持部分能源对冲头寸，并适度增加对风险资产的敞口，但需警惕谈判细节破裂的风险。",
-  prevRiskScore: 64,
+  investmentSignal: "→ 冲突缓和预期驱动油价下行，可考虑减持部分能源对冲，并试探性增持风险资产。",
+  prevRiskScore: 52,
   webSources: [],
   webSearchQueries: [
-    "WTI Brent crude oil price May 24 2026",
-    "US Iran tensions latest news May 23-24 2026",
-    "Strait of Hormuz shipping status May 24 2026",
-    "Iran nuclear talks update May 2026",
-    "US military posture Middle East May 2026"
+    "US Iran relations latest news 24 hours",
+    "Iran military activity May 2026",
+    "Strait of Hormuz shipping disruption May 2026",
+    "US CENTCOM press release Iran",
+    "Iran nuclear deal talks progress May 2026",
+    "WTI Brent crude oil price May 25 2026 Reuters",
+    "oil price trend analysis Bloomberg May 2026"
   ]
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-05-24",
-  version: "v2.74",
+  date: "2026-05-25",
+  version: "v2.75",
+  riskScore: 48,
+  keyChange: "Significant progress in US-Iran negotiations leads to a notable decrease in the risk score",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D85",
+      value: "D86",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "↓12",
+      value: "↓4",
       unit: "vs Prev",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $96–$98 · Brent $103–$107",
+      value: "WTI $91–$93 · Brent $95–$99",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -317,23 +318,22 @@ export const DATA_EN: DashboardData = {
       color: "#ffdc00"
     }
   ],
-  riskScore: 52,
   riskFactors: [
     {
       name: "Military Escalation Intensity",
-      score: 3,
+      score: 2,
       prev: 3,
       weight: 0.2,
-      description: "Both sides maintain high military alert and sporadic proxy conflicts continue, but there is no new direct military confrontation between the US and Iran.",
+      description: "Intensity has decreased. In the past 24 hours, there have been no reports of new direct military engagements or strikes between the US and Iran. The primary form of conflict has shifted from active military confrontation to high-stakes diplomatic negotiations aimed at achieving a ceasefire and resolution. However, the ongoing US naval blockade of Iranian ports, as a continuous military operation, prevents this score from dropping to its lowest level.",
       status: "FAST",
-      sourceVerification: "partial"
+      sourceVerification: "confirmed"
     },
     {
       name: "Hormuz Disruption",
       score: 2,
-      prev: 3,
+      prev: 2,
       weight: 0.2,
-      description: "Passage through the strait remains severely restricted, but the reopening of the strait has become a central issue in the prospective US-Iran interim agreement, significantly reducing the risk of an escalation of the blockade.",
+      description: "No change. Commercial shipping in the Strait of Hormuz remains effectively halted, impacted by both the US naval blockade and Iran's military presence. Although reopening the strait is a central topic of current negotiations, creating positive expectations, the actual transit situation has not changed in the past 24 hours.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -342,7 +342,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Oil prices are under pressure from the prospect of a breakthrough in negotiations, but remain in a significantly strong range as no deal has been signed and the strait remains closed.",
+      description: "Oil prices are under significant pressure due to expectations of a breakthrough in negotiations. The market is pricing in the possibility of de-escalation, which could lead to the reopening of the Strait of Hormuz and ease global supply tightness. Both Brent and WTI prices fell sharply but remain at relatively high levels, reflecting the risk that a final deal has not yet been reached.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -351,62 +351,55 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "The United States is deeply involved through diplomatic negotiations and maintaining a military blockade, but has not taken new direct combat actions.",
+      description: "No change. The United States remains deeply involved as a primary party to the conflict. Its military forces are enforcing a naval blockade while its diplomatic corps is fully engaged in negotiations with Iran. This parallel strategy of military pressure and diplomatic engagement maintains its deep level of intervention.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "De-escalation Probability",
       score: 2,
-      prev: 4,
+      prev: 2,
       weight: 0.2,
-      description: "Negotiations have made a major breakthrough, with both sides nearing a 60-day interim agreement, significantly improving de-escalation prospects.",
+      description: "Prospects have significantly improved. High-level US officials have sent strong signals through the media that a deal is \"largely negotiated,\" covering core issues like ending the war, reopening the strait, and handling nuclear materials. Although Iran's statements are more cautious, both sides confirm major progress in talks, markedly increasing the likelihood of de-escalation through negotiation.",
       status: "FAST",
-      sourceVerification: "confirmed",
-      change: "down"
+      sourceVerification: "confirmed"
     }
   ],
   events: [
     {
-      id: "e20260524-1",
-      title: "US and Iran close to a 60-day ceasefire deal involving reopening of Strait of Hormuz",
-      description: "Multiple independent media outlets, citing US officials, report that the US and Iran are close to signing a memorandum of understanding for a 60-day ceasefire, the reopening of the Strait of Hormuz, allowing Iran to sell oil, and negotiations on the nuclear issue during this period. US President Trump stated the deal is 'largely negotiated.' (Sources: Axios, CBS News, Times of Israel)",
+      id: "evt-01",
+      title: "US and Iran close to deal to end conflict, negotiations show substantive progress",
+      description: "Several anonymous U.S. and regional officials told multiple media outlets that the U.S. and Iran are close to an agreement. The deal reportedly includes ending the war, reopening the Strait of Hormuz, and Iran giving up its stockpile of highly enriched uranium. U.S. President Trump stated the deal is \"largely negotiated\" but also said he would \"not to rush into a deal.\" (Sources: Associated Press, Reuters, CBS News)",
       verification: "confirmed",
-      timestamp: "2026-05-24T08:00:00Z",
+      timestamp: "2026-05-24T18:00:00Z",
       significance: "",
       highlight: true,
       critical: true
     },
     {
-      id: "e20260524-2",
-      title: "Iran expresses caution on deal terms, claims sovereignty over Strait of Hormuz will remain",
-      description: "Iranian official and semi-official media responded that even if a deal is reached, the Strait of Hormuz will remain under Iran's 'sovereign management' and will not return to the pre-war 'free passage' status, though they acknowledged transit volume could return to pre-war levels within 30 days. A senior Iranian source denied agreeing to ship out its highly enriched uranium stockpile. (Sources: Mehr News Agency, Reuters)",
+      id: "evt-02",
+      title: "Iran official says deal not 'imminent,' blames changing US positions",
+      description: "An Iranian Foreign Ministry spokesman stated that while understandings have been reached on many issues with the US, an agreement is not \"imminent.\" He said the current focus of talks is on ending the war, not the nuclear issue, and accused Washington of shifting its positions. (Sources: The Guardian, CBS News)",
       verification: "confirmed",
-      timestamp: "2026-05-24T10:30:00Z",
-      significance: ""
+      timestamp: "2026-05-25T04:00:00Z",
+      significance: "",
+      highlight: true
     },
     {
-      id: "e20260524-3",
-      title: "Oil prices under pressure from potential deal but remain elevated",
-      description: "Despite ongoing geopolitical tensions, news of a possible US-Iran deal has led to a slight pullback in oil prices this week. Market analysis suggests a deal would ease some supply concerns. Brent crude is currently trading in a range of approximately $103-$107/bbl, with WTI around $96-$98/bbl, indicating the market is still pricing in uncertainty. (Sources: Trading Economics, Forbes, TheStreet)",
+      id: "evt-03",
+      title: "Global oil prices fall over 4% on US-Iran negotiation progress",
+      description: "Market optimism that the US and Iran could reach a peace deal and reopen the Strait of Hormuz led to a sharp drop in international oil prices on Monday. Brent crude futures fell below $100/barrel, and WTI crude futures dropped to around $92/barrel, both hitting two-week lows. (Sources: Reuters, Investing.com)",
       verification: "confirmed",
-      timestamp: "2026-05-24T06:00:00Z",
-      significance: ""
+      timestamp: "2026-05-25T08:30:00Z",
+      significance: "",
+      highlight: true
     },
     {
-      id: "e20260524-4",
-      title: "Israeli officials express concern over potential US-Iran deal",
-      description: "An unnamed senior Israeli official reportedly called the emerging agreement 'bad,' arguing it shows Tehran that it can effectively weaponize the Strait of Hormuz, which is no less effective than a nuclear weapon. Israeli PM Netanyahu has also allegedly expressed concerns to the US about the deal's postponement of nuclear talks. (Sources: Times of Israel, Channel 12)",
-      verification: "single",
-      timestamp: "2026-05-24T09:00:00Z",
-      significance: ""
-    },
-    {
-      id: "e20260524-5",
-      title: "Regional military posture remains tense with no new direct clashes",
-      description: "Open-source information indicates no new direct military engagements between the US and Iran in the last 24 hours. Both forces continue to maintain a high-alert, forward-deployed posture, but the focus of actions has shifted to the diplomatic sphere. (Sources: Insufficient public data to confirm specific actions)",
-      verification: "partial",
-      timestamp: "2026-05-24T12:00:00Z",
+      id: "evt-04",
+      title: "Pentagon reports on blockade success as military standoff continues",
+      description: "While diplomatic talks are in focus, U.S. military operations continue. U.S. Central Command (CENTCOM) stated on May 23 that it had successfully intercepted or diverted 100 commercial vessels since the maritime blockade against Iran began on April 13, showing that the high-pressure military posture has not been lifted. (Source: U.S. CENTCOM)",
+      verification: "confirmed",
+      timestamp: "2026-05-23T12:00:00Z",
       significance: ""
     }
   ],
@@ -416,9 +409,9 @@ export const DATA_EN: DashboardData = {
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "The conflict parties have shifted from high-pressure military standoff to intense diplomatic maneuvering, seeking an interim agreement to avert a full-scale conflict.",
-      "The core of the agreement revolves around the reopening of the Strait of Hormuz and sanctions waivers for Iranian oil exports in exchange for future negotiations on the nuclear issue.",
-      "Despite the significantly improved outlook, disagreements on key terms (such as sovereignty over the strait and verification scope) could still cause talks to collapse, returning the situation to high tension."
+      "Strong signals from both sides about an impending deal have led to a rapid improvement in market risk appetite.",
+      "The core conflict at this stage has shifted from military confrontation to finalizing the details of the agreement.",
+      "Although the deal is not yet signed and variables remain, the conflict has transitioned from high-intensity confrontation to a window characterized primarily by political resolution efforts."
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -429,8 +422,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Both sides maintain forward deployments and high alert levels, but with no reports of direct engagement.",
-        "Continue: Conflicts involving regional proxies (like Hezbollah) and Israel are ongoing, posing a potential spillover risk."
+        "Change: Intensity has decreased.",
+        "Change: In the past 24 hours, there have been no reports of new direct military engagements or strikes between the US and Iran.",
+        "Change: The primary form of conflict has shifted from active military confrontation to high-stakes diplomatic negotiations aimed at achieving a ceasefire and r…"
       ]
     },
     {
@@ -439,8 +433,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Reopening the Strait of Hormuz has become a central topic of negotiation, with both sides signaling that traffic volume could be restored.",
-        "Continue: The strait currently remains under strict Iranian control, with commercial shipping traffic still extremely low."
+        "Change: No change.",
+        "Change: Commercial shipping in the Strait of Hormuz remains effectively halted, impacted by both the US naval blockade and Iran's military presence.",
+        "Change: Although reopening the strait is a central topic of current negotiations, creating positive expectations, the actual transit situation has not changed …"
       ]
     },
     {
@@ -449,8 +444,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Expectations of a deal are putting downward pressure on oil prices, and the risk premium is beginning to contract.",
-        "Continue: As a deal is not yet signed and global oil inventories are low, prices remain elevated in the high range around $100/barrel."
+        "Change: Oil prices are under significant pressure due to expectations of a breakthrough in negotiations.",
+        "Change: The market is pricing in the possibility of de-escalation, which could lead to the reopening of the Strait of Hormuz and ease global supply tightness.",
+        "Change: Both Brent and WTI prices fell sharply but remain at relatively high levels, reflecting the risk that a final deal has not yet been reached."
       ]
     },
     {
@@ -459,26 +455,23 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: US President Trump has publicly stated a deal is 'largely negotiated,' sending a strong optimistic signal to push for an agreement.",
-        "Change: Iran has responded cautiously through official media, emphasizing its stance on core interests like sovereignty over the Strait of Hormuz to manage dom…"
+        "Change: No change.",
+        "Change: The United States remains deeply involved as a primary party to the conflict.",
+        "Change: Its military forces are enforcing a naval blockade while its diplomatic corps is fully engaged in negotiations with Iran."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "The US seeks a temporary deal to quickly lower oil prices and avoid a larger war ahead of an election year, while postponing the thorny nuclear issue.",
-      "Iran aims to leverage its control over the Strait of Hormuz to gain relief from economic sanctions and a tacit acceptance of its regional influence, while avoiding substantive concessions on its nuclear program."
+      "The contradiction between the US desire to quickly finalize a deal to ease the energy crisis and claim a diplomatic victory, and Iran's desire for more concrete guarantees on lifting the blockade and sanctions.",
+      "Details of the agreement (such as verification mechanisms, steps for sanctions relief) remain undisclosed, and hardliners within both countries could pose obstacles to potential concessions."
     ],
     military: [
-      "The US military uses a continued blockade and deterrence posture to create pressure and leverage for diplomatic negotiations.",
-      "Iran and its proxy network demonstrate their ability to disrupt regional security to secure their position at the negotiating table and deter any potential military strikes."
+      "The standoff between the US maintaining its naval blockade as military leverage for negotiations, and Iran's demand for an immediate lifting of the blockade as a precondition for a deal.",
+      "The ceasefire remains fragile; any miscalculation or deliberate sabotage by hardliners on either side could close the negotiation window and reignite hostilities."
     ]
   },
   scoreTrend: [
-    {
-      date: "05-20",
-      score: 76
-    },
     {
       date: "05-21",
       score: 80
@@ -493,20 +486,25 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "05-24",
-      score: 52,
+      score: 52
+    },
+    {
+      date: "05-25",
+      score: 48,
       active: true
     }
   ],
-  keyChange: "The 'De-escalation/Negotiation Prospects' factor improved dramatically from 4 (Stalled) to 2 (Substantive Progress), based on confirmed, multi-source reports of the US and Iran nearing a 60-day interim deal, leading to a significant drop in the composite risk score.",
-  investmentSignal: "→ Given the significant decline in short-term conflict risk, consider gradually reducing some energy hedging positions and moderately increasing exposure to risk assets, while remaining vigilant to the risk of a breakdown in negotiation details.",
-  prevRiskScore: 64,
+  investmentSignal: "→ Expectations of conflict de-escalation are driving oil prices down; consider reducing some energy hedges and tentatively increasing exposure to risk assets.",
+  prevRiskScore: 52,
   webSources: [],
   webSearchQueries: [
-    "WTI Brent crude oil price May 24 2026",
-    "US Iran tensions latest news May 23-24 2026",
-    "Strait of Hormuz shipping status May 24 2026",
-    "Iran nuclear talks update May 2026",
-    "US military posture Middle East May 2026"
+    "US Iran relations latest news 24 hours",
+    "Iran military activity May 2026",
+    "Strait of Hormuz shipping disruption May 2026",
+    "US CENTCOM press release Iran",
+    "Iran nuclear deal talks progress May 2026",
+    "WTI Brent crude oil price May 25 2026 Reuters",
+    "oil price trend analysis Bloomberg May 2026"
   ]
 };
 
@@ -515,7 +513,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "5月24日节点",
+    node406: "5月25日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -549,16 +547,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.74 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.75 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 52（↓12）：谈判前景因子从4（停滞）大幅改善至2（实质性进展），主要基于多方已证实的美伊接近达成60天临时协议的报道，导致综合风险评分显著下降。",
-    bannerWarning: "→ 鉴于短期冲突风险显著下降，可考虑逐步减持部分能源对冲头寸，并适度增加对风险资产的敞口，但需警惕谈判细节破裂的风险。",
-    deescalationIntent: "美国寻求通过一份临时协议，在选举年到来前迅速降低油价并避免陷入更大规模的战争，同时将棘手的核问题推迟处理。",
-    structuralRisk: "海峡通行仍受严重限制，但重开海峡已成为美伊临时协议的核心议题，显著降低了封锁升级的风险。",
-    contradictionNote: "美国寻求通过一份临时协议，在选举年到来前迅速降低油价并避免陷入更大规模的战争，同时将棘手的核问题推迟处理。；美军通过持续的军事封锁和威慑，为外交谈判创造压力和筹码。",
+    bannerSignal: "综合评分 48（↓4）：美伊谈判取得重大进展，风险评分显著下降",
+    bannerWarning: "→ 冲突缓和预期驱动油价下行，可考虑减持部分能源对冲，并试探性增持风险资产。",
+    deescalationIntent: "美方希望快速敲定协议以缓解能源危机并宣告外交胜利，与伊朗方面希望在解除封锁和制裁等核心利益上获得更确切保障之间的矛盾。",
+    structuralRisk: "无变化。霍尔木兹海峡的商业航运仍处于基本停滞状态，受美国海上封锁和伊朗军事存在的双重影响。尽管重新开放海峡是当前谈判的核心议题，并带来了积极预期，但实际的通行状况在过去24小时内并未发生改变。",
+    contradictionNote: "美方希望快速敲定协议以缓解能源危机并宣告外交胜利，与伊朗方面希望在解除封锁和制裁等核心利益上获得更确切保障之间的矛盾。；美军维持海上封锁以作为谈判筹码的军事压力，与伊朗要求立即解除封锁作为达成协议的前提之间的对峙。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -566,7 +564,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第85天",
+    dayCount: "第86天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -574,7 +572,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "May 24 Node",
+    node406: "May 25 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -608,16 +606,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.74 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.75 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 52 (↓12): The 'De-escalation/Negotiation Prospects' factor improved dramatically from 4 (Stalled) to 2 (Substantive Progress), based on confirmed, mu…",
-    bannerWarning: "→ Given the significant decline in short-term conflict risk, consider gradually reducing some energy hedging positions …",
-    deescalationIntent: "The US seeks a temporary deal to quickly lower oil prices and avoid a larger wa…",
-    structuralRisk: "Passage through the strait remains severely restricted, but the reopening of the strait has become …",
-    contradictionNote: "The US seeks a temporary deal to quickly lower oil prices and avoid a larger war ahead of an election year, while postponing the thorny nuclear issue.; The US …",
+    bannerSignal: "Composite 48 (↓4): Significant progress in US-Iran negotiations leads to a notable decrease in the risk score",
+    bannerWarning: "→ Expectations of conflict de-escalation are driving oil prices down; consider reducing some energy hedges and tentativ…",
+    deescalationIntent: "The contradiction between the US desire to quickly finalize a deal to ease the …",
+    structuralRisk: "No change. Commercial shipping in the Strait of Hormuz remains effectively halted, impacted by both…",
+    contradictionNote: "The contradiction between the US desire to quickly finalize a deal to ease the energy crisis and claim a diplomatic victory, and Iran's desire for more concret…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -625,7 +623,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 85",
+    dayCount: "Day 86",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
