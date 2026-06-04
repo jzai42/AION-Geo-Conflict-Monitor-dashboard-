@@ -65,24 +65,26 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-06-03",
-  version: "v2.84",
+  date: "2026-06-04",
+  version: "v2.85",
+  conflictDay: "D96",
+  keyChange: "冲突烈度因伊朗袭击科威特、巴林而急剧升级，但被以色列-黎巴嫩停火带来的微弱外交希望所对冲，综合风险维持高位。",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D95",
+      value: "D96",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↑8",
+      value: "持平",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $87.63–$92.49 · Brent $94.78–$98.98",
+      value: "WTI $95.00–$96.50 · Brent $96.50–$98.00",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -99,9 +101,9 @@ export const DATA_ZH: DashboardData = {
     {
       name: "军事升级烈度",
       score: 4,
-      prev: 3,
+      prev: 4,
       weight: 0.2,
-      description: "直接交火与重大军事行动。",
+      description: "伊朗对科威特、巴林境内目标发动直接导弹和无人机袭击，并造成平民伤亡，是冲突显著扩大的标志。美国中央司令部确认对伊朗境内目标进行了报复性打击，双方交火烈度维持在极高水平。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -110,7 +112,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "流量降至正常水平5%以下，主要班轮暂停。",
+      description: "霍尔木兹海峡的商业航运交通仍处于瘫痪状态。数据显示，当前通行量不足正常水平的10%，主要航运公司因保险和安全问题继续暂停该航线，海峡处于“功能性受限”状态。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -119,7 +121,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "价格主体落在$85–100区间，供应担忧明显。",
+      description: "原油价格因军事与外交消息对冲而高位震荡，但价格区间仍处于85-100美元/桶的范围内。供应中断的风险溢价持续存在，但尚未突破进入下一风险等级。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -128,16 +130,16 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "大国直接参与作战行动及定点打击。",
+      description: "美国军事力量直接参与冲突，不仅拦截伊朗的导弹和无人机，还主动对伊朗领土（格什姆岛）上的军事目标发起打击。这属于直接的军事交战行为。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "降级/谈判前景",
       score: 4,
-      prev: 3,
+      prev: 4,
       weight: 0.2,
-      description: "谈判停滞，双方立场极端强硬。",
+      description: "局势高度矛盾。一方面，伊朗直接袭击第三方国家使军事冲突螺旋升级；另一方面，以色列与黎巴嫩达成停火，为外交斡旋保留了微弱的可能性。总体而言，双方立场依然强硬，谈判破裂风险极高。",
       status: "FAST",
       sourceVerification: "confirmed"
     }
@@ -145,57 +147,57 @@ export const DATA_ZH: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "伊朗袭击海湾区域多点目标",
-      description: "IRGC发射导弹命中科威特机场，导致设施损坏及人员伤亡；同时袭击巴林美军总部。来源：AP。",
+      title: "伊朗对科威特和巴林发动导弹与无人机袭击",
+      description: "伊朗伊斯兰革命卫队（IRGC）宣称，为报复美国此前的空袭，对位于科威特和巴林的美国军事基地发动了导弹与无人机袭击。科威特方面证实，其国际机场遭到袭击，造成1人死亡，数十人受伤。美国与巴林防空系统拦截了部分射向巴林的导弹，其中一个目标是美国第五舰队总部。(Sources: CBS News, ISW)",
       verification: "confirmed",
-      timestamp: "2026-06-03 03:10",
+      timestamp: "2026-06-04T00:00:00Z",
       significance: "",
+      highlight: true,
       critical: true
     },
     {
       id: "EVT-02",
-      title: "美国实施「自卫性」反击",
-      description: "美军战机打击伊朗格什姆岛雷达及无人机地面站，作为对导弹袭击的回应。来源：CENTCOM。",
+      title: "美军确认对霍尔木兹海峡附近的伊朗目标进行“自卫打击”",
+      description: "美国中央司令部（CENTCOM）确认，为应对伊朗针对民用船只的无人机威胁及其他攻击行为，美军对位于霍尔木兹海峡格什姆岛（Qeshm Island）的一个伊朗军事地面控制站实施了“自卫打击”。(Sources: CENTCOM, Fox News)",
       verification: "confirmed",
-      timestamp: "2026-06-03 04:45",
-      significance: "",
-      critical: true
-    },
-    {
-      id: "EVT-03",
-      title: "中介谈判陷入停滞",
-      description: "伊朗方面表示在黎巴嫩局势平息前不考虑继续海峡谈判，拒绝中介介入。来源：RFE/RL。",
-      verification: "confirmed",
-      timestamp: "2026-06-03 05:55",
+      timestamp: "2026-06-03T21:00:00Z",
       significance: "",
       highlight: true
     },
     {
-      id: "EVT-04",
-      title: "科威特航空宣布停飞",
-      description: "受导弹及无人机攻击影响，科威特国际机场一度完全关闭，目前仅限部分航站楼运营。来源：Straits Times。",
+      id: "EVT-03",
+      title: "以色列与黎巴嫩达成有条件的停火协议，市场出现缓和预期",
+      description: "据报道，在美国调解下，以色列与黎巴嫩就实施停火达成协议，这被市场解读为可能为更广泛的美伊缓和局势创造条件的信号。伊朗此前曾将美伊谈判进展与以色列-黎巴嫩真主党冲突的降级相联系。然而，伊朗外交部表示，与美国的谈判“没有取得实质性进展”。(Sources: Reuters, The Business Times, CBS News)",
       verification: "confirmed",
-      timestamp: "2026-06-03 07:25",
+      timestamp: "2026-06-04T05:00:00Z",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "霍尔木兹海峡航运仍严重受阻",
+      description: "尽管有零星油轮通过，但多数是通过关闭AIS“变暗”或沿伊朗水域航行的方式。主流航运公司因战争风险保险费率极高而继续暂停服务。数据显示，当前通行量仍不足正常时期的10%，海峡处于“功能性受限”状态。(Sources: Modern Diplomacy, UANI)",
+      verification: "confirmed",
+      timestamp: "2026-06-04T00:00:00Z",
       significance: ""
     },
     {
       id: "EVT-05",
-      title: "布伦特原油因断供预期大涨",
-      description: "因霍尔木兹海峡重新开放预期落空，油价单日上涨超2美元。来源：Bloomberg。",
+      title: "油价因军事升级和外交信号对冲而剧烈波动",
+      description: "在伊朗袭击科威特的消息传出后，油价在前一个交易日上涨约2%。随后，因以色列-黎巴嫩达成停火协议带来的一线希望，油价在6月4日小幅回落。WTI原油价格在95-96.5美元区间波动，布伦特原油在96.5-98美元区间。(Sources: Reuters, Gotrade)",
       verification: "confirmed",
-      timestamp: "2026-06-03 09:30",
+      timestamp: "2026-06-04T08:00:00Z",
       significance: ""
     }
   ],
   warPhase: {
-    level: "危机升级期",
-    targetLevel: "升级顶点",
+    level: "高强度冲突",
+    targetLevel: "脆弱平衡",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "冲突重心从单纯海战向区域性基础设施战转型。",
-      "停火协议框架在双边导弹交火后已基本失效。",
-      "霍尔木兹封锁常态化，全球能源供应处于临界压力点。"
+      "冲突已从代理人战争和有限打击升级为国家间的直接军事对抗。",
+      "打击范围首次显著扩大到科威特和巴林等第三方国家，增加了地区全面战争的风险。",
+      "尽管烈度升级，但边缘外交渠道（如促成黎以停火）仍在运作，表明各方可能仍在试探避免冲突完全失控的底线。"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -206,8 +208,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：伊朗由被动拦截转为主动跨国境打击邻国及美军基地。",
-        "变化：美军开始对伊朗本土沿岸军事控制设施实施直接空中打击。"
+        "变化：伊朗对科威特、巴林境内目标发动直接导弹和无人机袭击，并造成平民伤亡，是冲突显著扩大的标志。",
+        "变化：美国中央司令部确认对伊朗境内目标进行了报复性打击，双方交火烈度维持在极高水平。"
       ]
     },
     {
@@ -216,8 +218,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：海峡通行能力保持在正常水平的4.1%，处于「实质性断绝」状态。",
-        "变化：商船保险费率受袭击事件影响再次上调，主要保赔协会发出极端红色警报。"
+        "变化：霍尔木兹海峡的商业航运交通仍处于瘫痪状态。",
+        "变化：数据显示，当前通行量不足正常水平的10%，主要航运公司因保险和安全问题继续暂停该航线，海峡处于“功能性受限”状态。"
       ]
     },
     {
@@ -226,8 +228,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：油价突破近期高位震荡带，向每桶100美元整数关口加速进逼。",
-        "延续：沙特等邻国原油出口受航道封锁及袭击风险的双重压制。"
+        "变化：原油价格因军事与外交消息对冲而高位震荡，但价格区间仍处于85-100美元/桶的范围内。",
+        "变化：供应中断的风险溢价持续存在，但尚未突破进入下一风险等级。"
       ]
     },
     {
@@ -236,26 +238,20 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：伊朗正式切断中介机构联络，谈判窗口期暂时关闭。",
-        "变化：特朗普对达成交易的乐观预期被战场现实严重削弱。"
+        "变化：美国军事力量直接参与冲突，不仅拦截伊朗的导弹和无人机，还主动对伊朗领土（格什姆岛）上的军事目标发起打击。",
+        "变化：这属于直接的军事交战行为。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美方要求的海峡无条件开放与伊朗要求的黎巴嫩/制裁全面解除完全对立。",
-      "海湾邻国主权受损使地区外交博弈进一步复杂化。"
+      "美国寻求通过极限施压（军事打击+经济封锁）迫使伊朗在核问题与地区影响力上让步，而伊朗则试图通过扩大打击范围来证明美国的压力政策将使其盟友付出代价，从而瓦解其压力联盟。"
     ],
     military: [
-      "伊朗的饱和式打击能力与美军的反导/定点清除能力在核心节点对抗。",
-      "非对称作战已经演变为公开的中程武器对抗。"
+      "美国试图将冲突控制在“有节制的报复性打击”范围内，而伊朗则通过攻击美国在中东的盟友来提升冲突成本，试图打破美国的控制，迫使其在更高风险下进行决策。"
     ]
   },
   scoreTrend: [
-    {
-      date: "05-30",
-      score: 64
-    },
     {
       date: "05-31",
       score: 64
@@ -270,102 +266,48 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "06-03",
+      score: 76
+    },
+    {
+      date: "06-04",
       score: 76,
       active: true
     }
   ],
-  keyChange: "冲突烈度质变：导弹战开启，谈判渠道中断。",
-  investmentSignal: "→ 增持 能源 及 避险资产，对冲 风险资产 下行 压力。",
-  change: "up",
-  prevRiskScore: 68,
-  webSources: [
-    {
-      title: "hormuzstraitmonitor.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFuGT8Ih5NDXZIyPe3n7KE11YgrgFprY8g3R2rU-Jq4XE-rYqh4UvNYeJANlCtUdbPMU38qAjKu7pxqY-VHEJRMIEZ50I9F6ftL5JLbHU7eD-9KIiiJHg=="
-    },
-    {
-      title: "straitstimes.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQETT9ZDczH6CqahFhUIs_pRGIMVK-PQovxHB8vzIPXucahatx8dqZo8C9zQgrOY6QmfizBKaJnrKipIaR0xMxfahdkwVrHokBNy6yOQYANEGr4KDM_f59icrKYxQzctcHawMYkVU-kRFgix98i3qcCWFhNEJUkRMIdN80XeM-CmQrJCGN5Z7H2QBvuCFH5F44zWwh9F10z9yf9QtH_H"
-    },
-    {
-      title: "investing.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE0mp-cTWWAhQ7143pXt-MGyJCpNws6Yq1JrITh-nvlMHbMluI5w8QA4A704lzJH0vxPcmlTv3_srjJ6n1dI4HYB9cZsGTsOoT8y0LXk1DnB52aidzMKIP1JWS1C5OKcfImKdOKornfmJpBZmBicGSqqjUPdOY="
-    },
-    {
-      title: "insurancejournal.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXbRHsYCgzWKnVC7fYaTE5KvyeMomGDlyPJYjgBRMRtCNG6odimEypUGasWDYJCP4JbbLFu1MCkLMesYxQPXrtzdH09NC_6eyL0rWJBy2LEC4BE7g3F7V1GAlXFP7vg1mNfXkGrDkNJyy7Ze95vzwYIE98r1zF-XJLEkmIeZGU"
-    },
-    {
-      title: "gpb.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGfhqkG0dH5GPu49eQzMo4PM6Atp50lN8oKqmkhrlFMYm3Ye-bMNfqCardQePWEaDys1JU05rN-Oqza4Ughk17GYBnbsS7UXXXWfJcpgy4YzZ5u2Sa6cx0Z5I_17CcvWk2I38XHZOTxSi9BKVYrsvCuoyc_2ggmygX3IyA_nZ3dXXasebZhme2IWeJBPlU9ujiRMsd5D-dOOTQEgMk="
-    },
-    {
-      title: "moderndiplomacy.eu",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHBq6zgvH9pCnq8FSNvISyfKirYppjPjvLLCpa3xx3gwlSXLKX7foRvp0bouL5lkQeVxgxNpL_KYXOxE-Cu-BoXByM-yRORnz9O0hdedKiDPlOVPt4fuBf62MUimZny_PgeoClfDqUgNTMYq5ubiuwRk3pGyiyc-dm7-KcVIcQTuesi0UwezLNBrxEMOLWMd9hL0M5sQInIdyk="
-    },
-    {
-      title: "eurasiareview.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEy49su3U_pH1JtR9BJG-6WwOzYh0a4BD_k89GKsd80KoLO6_kRXp77mmceWTyuk1yFxGPEJinpRxcM6iMm-ZtZx-IiNjj3DjtLJmhyw6sIRTR6ik-i-BKGqJe8fjEJDAAvucTXVcd_YThG2HKxdBvqoqID5CB3X3bT1MnbAo1WbgIYY05rnnhaqZXePzIz1Eh_UWkufdRDs9NSf8fScwf_"
-    },
-    {
-      title: "investing.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFjlVfiu3DbzeikF-QocWDmBwSwTAddUdx-Qq2sVjWvVrno5gczwReLCRCX4FJQYYPoQd6ma9fy_03zBKvCrBZLIS21-FkLg102LODqbBH7vMN8fYwUGHV81fVjXB2JZLqL5VCtzFxX7DQIeunbvk2vIyvJ_G723kvkGSw6y7fM"
-    },
-    {
-      title: "marinelink.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHQVyBpeDjuI-RTgkADOcJ2a6s8YT3EFzxRTTCSJJHBoQYa10GrIaRaoRPB8PZc23dpBgEU3wEu2r2Yp7OuacgpBzdz705rFPooOKqKlN0pRiKni4M9PwwFktWlYSDKf5r8TCqe7RV_RqKwNE5idLjvkj-2t2l6ChZok2MQ7eh5yyw1HA=="
-    },
-    {
-      title: "armenpress.am",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHQeotfAUDKDferrca5XN4txd1JZ7SOvfGMe78QveIGCnJaEZIhxgCVRykCgj5DA8OBKpnwsFNudJgfAS7y_uDfx4O-XiCQRvA0Iw32-c0uG0kD0GOGaWoGXjVb8haQ"
-    },
-    {
-      title: "energynewsbeat.co",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEBhDGLfIe5-nq2TicCK2dbRjn4KY657_Zwta6pJlQ5VHf8WEKvPg5ZDtVm2FN9g3QM7S6WqTY6sKoMrmxfLDR5WlR5gK_qCJ6ct2aYSD44M9rCycuREtazvk2E43Ty_suW0TzcGs2oKHooppJMilSl7xritOuihKz9QbzrwtoEB59I2-Lb-ZCGLuAOKEH_Z5DupRnMgohN4eCfTx0OLXdJlnE1pickuoEwP2LDEd0YeF95uGJMrX0sTU3lrvHlCKJRu8MIIPbKInuoZjh6eFdGvcGYkOZ3IA=="
-    },
-    {
-      title: "barchart.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFdhGFdi2_F-0SceF8S_5PA5NqWNxpF03oOmh8WYfuvzwEwHBapdTgg1D-NaXM8Jd6puAns1gPh6LaMFHO9btmqJ0zeZKdKsUydUf8EUm9gcl13bbGkAB0uaZnTqV5Ovnp5ng=="
-    },
-    {
-      title: "rferl.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHHf1VzKtFeWBWe3pAM2eT0v3hgzyPeV1uOiQ2qCSb0boEMvqGA18zXZ7iKBz17r3pmCChls_9ThW6arZv5szmPxyara9g9iishcg28objsq_gJXBH1vak0F_5opXCnmFlLqRIPq2XqtEMqZYM5Retn_h7nANdNuWENw1SnGJwmr2TVBqMn8LkVDb62xMV28Odm9WQgUA=="
-    },
-    {
-      title: "britannica.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHiZJeI_KZZu2wjiaJ9Qvmu0b-TqUoLB656v5jAiejFRkdVlkZ6A-wOUq2EgEjiVbLfT6_yxzz7B6fB3a56NkxgiGhL7a3EL6-Kbjt2asGcvMxSlUmUCvYOK5MZHRklLuPo451X"
-    },
-    {
-      title: "timeskuwait.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQAhs2xOdIyMkGUA56EHUBvcFwLF09Sy1c9oMb-EhsO78wNQHMKfZP-g-SZqqMzUc8TEVFk3tGeJtgy_QT9O9cktlm7AfzeN8tAlvBb46MIxenrVKMF1aDv9UZ-5CL1-7Aq51MpbDTNO69sfhx_-vH1ezB7PxdWKAjfRTqUvXvMsVy9BLgvrsWZvQvYOL-NjkwiNDaj4-_3JmYumvP1_XSiTWWrVQ="
-    }
-  ],
+  investmentSignal: "→ 风险资产维持防御姿态，地缘风险溢价使能源与大宗商品的多头部位仍具支撑，但需警惕外交信号引发的短期价格剧烈波动。",
+  prevRiskScore: 76,
+  webSources: [],
   webSearchQueries: [
-    "WTI Brent oil price June 3 2026 range trend Reuters Bloomberg",
-    "US Iran maritime tension June 3 2026 drone Hormuz",
-    "Hormuz Strait shipping status June 3 2026"
+    "US Iran tensions last 24 hours",
+    "Strait of Hormuz shipping status June 4 2026",
+    "Pentagon statement Iran June 2026",
+    "Iranian military activity June 2026",
+    "WTI Brent crude oil price range June 4 2026 Reuters",
+    "WTI Brent crude oil price trend June 4 2026 Bloomberg"
   ]
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-06-03",
-  version: "v2.84",
+  date: "2026-06-04",
+  version: "v2.85",
+  conflictDay: "D96",
+  keyChange: "Conflict intensity sharply escalated due to Iranian attacks on Kuwait and Bahrain, but was counterbalanced by faint diplomatic hopes from the Israel-Lebanon ceasefire, keeping overall risk at a high plateau.",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D95",
+      value: "D96",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "↑8",
+      value: "Flat",
       unit: "vs Prev",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $87.63–$92.49 · Brent $94.78–$98.98",
+      value: "WTI $95.00–$96.50 · Brent $96.50–$98.00",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -373,7 +315,7 @@ export const DATA_EN: DashboardData = {
     {
       label: "Hormuz",
       value: "Severely Restricted",
-      unit: "Passage Status",
+      unit: "Transit Status",
       color: "#ffdc00"
     }
   ],
@@ -382,9 +324,9 @@ export const DATA_EN: DashboardData = {
     {
       name: "Military Escalation Intensity",
       score: 4,
-      prev: 3,
+      prev: 4,
       weight: 0.2,
-      description: "Direct fire and major military operations.",
+      description: "Iran's direct missile and drone attacks on targets in Kuwait and Bahrain, causing civilian casualties, mark a significant expansion of the conflict. U.S. CENTCOM confirmed retaliatory strikes on targets in Iran, maintaining the intensity of engagement at a very high level.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -393,7 +335,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Flow dropped below 5%; main liners suspended.",
+      description: "Commercial shipping traffic through the Strait of Hormuz remains paralyzed. Data shows current transit volume is less than 10% of normal levels, with major liners suspending the route due to insurance and safety issues. The strait is in a state of 'functional restriction'.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -402,7 +344,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Prices primarily in $85–100; supply concerns obvious.",
+      description: "Crude oil prices are highly volatile, caught between military and diplomatic news, but the price range remains within the $85-100/barrel band. The risk premium for supply disruption persists but has not broken into the next risk tier.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -411,16 +353,16 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Great powers directly involved in combat/strikes.",
+      description: "U.S. military forces are directly engaged in the conflict, not only intercepting Iranian missiles and drones but also actively launching strikes against military targets on Iranian territory (Qeshm Island). This constitutes direct military combat operations.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "De-escalation Probability",
       score: 4,
-      prev: 3,
+      prev: 4,
       weight: 0.2,
-      description: "Negotiations stalled; extreme hardening of positions.",
+      description: "The situation is highly contradictory. On one hand, direct attacks on third-party countries escalate the military conflict. On the other, a ceasefire between Israel and Lebanon offers a faint possibility for diplomatic maneuvering. Overall, stances remain hardline, and the risk of negotiation collapse is very high.",
       status: "FAST",
       sourceVerification: "confirmed"
     }
@@ -428,57 +370,57 @@ export const DATA_EN: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "Iran Attacks Regional Gulf Targets",
-      description: "IRGC fired missiles hitting Kuwait Airport and US Fifth Fleet HQ in Bahrain. Source: AP.",
+      title: "Iran Launches Missile and Drone Attacks on Kuwait and Bahrain",
+      description: "Iran's IRGC claimed retaliatory missile and drone attacks on U.S. military bases in Kuwait and Bahrain. Kuwait confirmed its international airport was hit, resulting in one death and dozens of injuries. U.S. and Bahraini air defenses intercepted some missiles aimed at Bahrain, including one targeting the U.S. 5th Fleet headquarters. (Sources: CBS News, ISW)",
       verification: "confirmed",
-      timestamp: "2026-06-03 03:10",
+      timestamp: "2026-06-04T00:00:00Z",
       significance: "",
+      highlight: true,
       critical: true
     },
     {
       id: "EVT-02",
-      title: "US Conducts Self-Defense Strikes",
-      description: "CENTCOM targeted Iranian ground control stations on Qeshm Island following missile attacks. Source: CENTCOM.",
+      title: "U.S. Confirms 'Self-Defense Strikes' on Iranian Target near Strait of Hormuz",
+      description: "U.S. Central Command (CENTCOM) confirmed it conducted 'self-defense strikes' against an Iranian military ground control station on Qeshm Island in the Strait of Hormuz in response to Iranian drone threats against civilian shipping and other attacks. (Sources: CENTCOM, Fox News)",
       verification: "confirmed",
-      timestamp: "2026-06-03 04:45",
-      significance: "",
-      critical: true
-    },
-    {
-      id: "EVT-03",
-      title: "Mediation Dialogue Halts",
-      description: "Iran informed mediators it will not discuss ceasefire extension until Lebanon operations stop. Source: RFE/RL.",
-      verification: "confirmed",
-      timestamp: "2026-06-03 05:55",
+      timestamp: "2026-06-03T21:00:00Z",
       significance: "",
       highlight: true
     },
     {
-      id: "EVT-04",
-      title: "Kuwait Suspends Flights",
-      description: "Airport operations halted after drone and missile damage killed one and injured dozens. Source: Straits Times.",
+      id: "EVT-03",
+      title: "Israel and Lebanon Reach Conditional Ceasefire, Market Sees De-escalation Hope",
+      description: "A U.S.-mediated ceasefire was reportedly agreed between Israel and Lebanon, which markets interpreted as a signal that could create conditions for a broader U.S.-Iran de-escalation. Iran had previously linked progress with the U.S. to an easing of the Israel-Hezbollah conflict. However, Iran's Foreign Ministry stated there has been 'no tangible progress' in talks with the U.S. (Sources: Reuters, The Business Times, CBS News)",
       verification: "confirmed",
-      timestamp: "2026-06-03 07:25",
+      timestamp: "2026-06-04T05:00:00Z",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "Shipping Through Strait of Hormuz Remains Severely Disrupted",
+      description: "Although sporadic tankers are passing, most do so by 'going dark' (AIS off) or hugging Iranian waters. Mainstream shipping companies remain suspended due to extremely high war risk insurance premiums. Data indicates traffic is still less than 10% of normal, leaving the strait in a 'functionally restricted' state. (Sources: Modern Diplomacy, UANI)",
+      verification: "confirmed",
+      timestamp: "2026-06-04T00:00:00Z",
       significance: ""
     },
     {
       id: "EVT-05",
-      title: "Oil Jumps on Blockade Fears",
-      description: "Brent crude rose over 2% as expectations for a Hormuz reopening faded. Source: Bloomberg.",
+      title: "Oil Prices Volatile, Pulled Between Military Escalation and Diplomatic Signals",
+      description: "Oil prices rose about 2% in the previous session on news of the Iranian attack on Kuwait. Prices then eased slightly on June 4 on hopes stemming from the Israel-Lebanon ceasefire deal. WTI crude fluctuated in the $95-96.5 range, with Brent in the $96.5-98 range. (Sources: Reuters, Gotrade)",
       verification: "confirmed",
-      timestamp: "2026-06-03 09:30",
+      timestamp: "2026-06-04T08:00:00Z",
       significance: ""
     }
   ],
   warPhase: {
-    level: "Escalation Phase",
-    targetLevel: "Escalation Peak",
+    level: "High-Intensity Conflict",
+    targetLevel: "Fragile Balance",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Conflict shift from maritime interceptions to regional infrastructure warfare.",
-      "Ceasefire framework effectively void after cross-border missile exchanges.",
-      "Hormuz blockade normalized, energy supply at critical stress point."
+      "The conflict has escalated from proxy warfare and limited strikes to direct military confrontation between states.",
+      "The scope of attacks has significantly widened to third-party countries (Kuwait, Bahrain) for the first time, increasing the risk of a full-scale regional war.",
+      "Despite the escalation, peripheral diplomatic channels (e.g., brokering the Lebanon-Israel ceasefire) remain active, suggesting parties may still be testing limits to avoid a total loss of control."
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -489,8 +431,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Iran shifted from defensive posture to offensive cross-border strikes against neighbors and US bases.",
-        "Change: US military initiated direct strikes on Iranian coastal command and control facilities."
+        "Change: Iran's direct missile and drone attacks on targets in Kuwait and Bahrain, causing civilian casualties, mark a significant expansion of the conflict.",
+        "Change: U.S.",
+        "Change: CENTCOM confirmed retaliatory strikes on targets in Iran, maintaining the intensity of engagement at a very high level."
       ]
     },
     {
@@ -499,8 +442,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Strait throughput remains at 4.1%, maintaining 'effective closure' state.",
-        "Change: War risk premiums hiked again following airport and vessel-related attacks."
+        "Change: Commercial shipping traffic through the Strait of Hormuz remains paralyzed.",
+        "Change: Data shows current transit volume is less than 10% of normal levels, with major liners suspending the route due to insurance and safety issues.",
+        "Change: The strait is in a state of 'functional restriction'."
       ]
     },
     {
@@ -509,8 +453,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Oil prices broke previous resistance, accelerating toward the $100 psychological level.",
-        "Continue: Regional crude exports suppressed by both waterway blockade and active strike risks."
+        "Change: Crude oil prices are highly volatile, caught between military and diplomatic news, but the price range remains within the $85-100/barrel band.",
+        "Change: The risk premium for supply disruption persists but has not broken into the next risk tier."
       ]
     },
     {
@@ -519,26 +463,21 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Iran officially severed mediator contact, closing the current negotiation window.",
-        "Change: Trump's optimism for a 'one-week deal' undermined by battlefield escalation."
+        "Change: U.S.",
+        "Change: military forces are directly engaged in the conflict, not only intercepting Iranian missiles and drones but also actively launching strikes against mil…",
+        "Change: This constitutes direct military combat operations."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Irreconcilable demands between US 'Unconditional Opening' and Iran 'Lebanon/Sanctions Linkage'.",
-      "Sovereignty violations of Gulf neighbors complicate the regional diplomatic matrix."
+      "The U.S. aims to compel Iranian concessions on nuclear and regional issues through maximum pressure (military strikes + economic blockade), while Iran seeks to prove this policy will impose costs on U.S. allies, thereby fracturing the pressure coalition."
     ],
     military: [
-      "Iranian saturation strike capability confronting US missile defense/precision strike assets.",
-      "Asymmetric warfare evolved into open medium-range ballistic missile confrontation."
+      "The U.S. is attempting to contain the conflict within a scope of 'controlled retaliatory strikes', whereas Iran is escalating costs by attacking U.S. allies in the Middle East, trying to break U.S. control and force decisions under higher-risk conditions."
     ]
   },
   scoreTrend: [
-    {
-      date: "05-30",
-      score: 64
-    },
     {
       date: "05-31",
       score: 64
@@ -553,80 +492,24 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "06-03",
+      score: 76
+    },
+    {
+      date: "06-04",
       score: 76,
       active: true
     }
   ],
-  keyChange: "Qualitative escalation: Missile warfare initiated, mediation channels severed.",
-  investmentSignal: "→ Increase exposure to Energy and Safe-Haven assets; hedge Risk Asset downside.",
-  change: "up",
-  prevRiskScore: 68,
-  webSources: [
-    {
-      title: "hormuzstraitmonitor.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFuGT8Ih5NDXZIyPe3n7KE11YgrgFprY8g3R2rU-Jq4XE-rYqh4UvNYeJANlCtUdbPMU38qAjKu7pxqY-VHEJRMIEZ50I9F6ftL5JLbHU7eD-9KIiiJHg=="
-    },
-    {
-      title: "straitstimes.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQETT9ZDczH6CqahFhUIs_pRGIMVK-PQovxHB8vzIPXucahatx8dqZo8C9zQgrOY6QmfizBKaJnrKipIaR0xMxfahdkwVrHokBNy6yOQYANEGr4KDM_f59icrKYxQzctcHawMYkVU-kRFgix98i3qcCWFhNEJUkRMIdN80XeM-CmQrJCGN5Z7H2QBvuCFH5F44zWwh9F10z9yf9QtH_H"
-    },
-    {
-      title: "investing.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE0mp-cTWWAhQ7143pXt-MGyJCpNws6Yq1JrITh-nvlMHbMluI5w8QA4A704lzJH0vxPcmlTv3_srjJ6n1dI4HYB9cZsGTsOoT8y0LXk1DnB52aidzMKIP1JWS1C5OKcfImKdOKornfmJpBZmBicGSqqjUPdOY="
-    },
-    {
-      title: "insurancejournal.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXbRHsYCgzWKnVC7fYaTE5KvyeMomGDlyPJYjgBRMRtCNG6odimEypUGasWDYJCP4JbbLFu1MCkLMesYxQPXrtzdH09NC_6eyL0rWJBy2LEC4BE7g3F7V1GAlXFP7vg1mNfXkGrDkNJyy7Ze95vzwYIE98r1zF-XJLEkmIeZGU"
-    },
-    {
-      title: "gpb.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGfhqkG0dH5GPu49eQzMo4PM6Atp50lN8oKqmkhrlFMYm3Ye-bMNfqCardQePWEaDys1JU05rN-Oqza4Ughk17GYBnbsS7UXXXWfJcpgy4YzZ5u2Sa6cx0Z5I_17CcvWk2I38XHZOTxSi9BKVYrsvCuoyc_2ggmygX3IyA_nZ3dXXasebZhme2IWeJBPlU9ujiRMsd5D-dOOTQEgMk="
-    },
-    {
-      title: "moderndiplomacy.eu",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHBq6zgvH9pCnq8FSNvISyfKirYppjPjvLLCpa3xx3gwlSXLKX7foRvp0bouL5lkQeVxgxNpL_KYXOxE-Cu-BoXByM-yRORnz9O0hdedKiDPlOVPt4fuBf62MUimZny_PgeoClfDqUgNTMYq5ubiuwRk3pGyiyc-dm7-KcVIcQTuesi0UwezLNBrxEMOLWMd9hL0M5sQInIdyk="
-    },
-    {
-      title: "eurasiareview.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEy49su3U_pH1JtR9BJG-6WwOzYh0a4BD_k89GKsd80KoLO6_kRXp77mmceWTyuk1yFxGPEJinpRxcM6iMm-ZtZx-IiNjj3DjtLJmhyw6sIRTR6ik-i-BKGqJe8fjEJDAAvucTXVcd_YThG2HKxdBvqoqID5CB3X3bT1MnbAo1WbgIYY05rnnhaqZXePzIz1Eh_UWkufdRDs9NSf8fScwf_"
-    },
-    {
-      title: "investing.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFjlVfiu3DbzeikF-QocWDmBwSwTAddUdx-Qq2sVjWvVrno5gczwReLCRCX4FJQYYPoQd6ma9fy_03zBKvCrBZLIS21-FkLg102LODqbBH7vMN8fYwUGHV81fVjXB2JZLqL5VCtzFxX7DQIeunbvk2vIyvJ_G723kvkGSw6y7fM"
-    },
-    {
-      title: "marinelink.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHQVyBpeDjuI-RTgkADOcJ2a6s8YT3EFzxRTTCSJJHBoQYa10GrIaRaoRPB8PZc23dpBgEU3wEu2r2Yp7OuacgpBzdz705rFPooOKqKlN0pRiKni4M9PwwFktWlYSDKf5r8TCqe7RV_RqKwNE5idLjvkj-2t2l6ChZok2MQ7eh5yyw1HA=="
-    },
-    {
-      title: "armenpress.am",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHQeotfAUDKDferrca5XN4txd1JZ7SOvfGMe78QveIGCnJaEZIhxgCVRykCgj5DA8OBKpnwsFNudJgfAS7y_uDfx4O-XiCQRvA0Iw32-c0uG0kD0GOGaWoGXjVb8haQ"
-    },
-    {
-      title: "energynewsbeat.co",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEBhDGLfIe5-nq2TicCK2dbRjn4KY657_Zwta6pJlQ5VHf8WEKvPg5ZDtVm2FN9g3QM7S6WqTY6sKoMrmxfLDR5WlR5gK_qCJ6ct2aYSD44M9rCycuREtazvk2E43Ty_suW0TzcGs2oKHooppJMilSl7xritOuihKz9QbzrwtoEB59I2-Lb-ZCGLuAOKEH_Z5DupRnMgohN4eCfTx0OLXdJlnE1pickuoEwP2LDEd0YeF95uGJMrX0sTU3lrvHlCKJRu8MIIPbKInuoZjh6eFdGvcGYkOZ3IA=="
-    },
-    {
-      title: "barchart.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFdhGFdi2_F-0SceF8S_5PA5NqWNxpF03oOmh8WYfuvzwEwHBapdTgg1D-NaXM8Jd6puAns1gPh6LaMFHO9btmqJ0zeZKdKsUydUf8EUm9gcl13bbGkAB0uaZnTqV5Ovnp5ng=="
-    },
-    {
-      title: "rferl.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHHf1VzKtFeWBWe3pAM2eT0v3hgzyPeV1uOiQ2qCSb0boEMvqGA18zXZ7iKBz17r3pmCChls_9ThW6arZv5szmPxyara9g9iishcg28objsq_gJXBH1vak0F_5opXCnmFlLqRIPq2XqtEMqZYM5Retn_h7nANdNuWENw1SnGJwmr2TVBqMn8LkVDb62xMV28Odm9WQgUA=="
-    },
-    {
-      title: "britannica.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHiZJeI_KZZu2wjiaJ9Qvmu0b-TqUoLB656v5jAiejFRkdVlkZ6A-wOUq2EgEjiVbLfT6_yxzz7B6fB3a56NkxgiGhL7a3EL6-Kbjt2asGcvMxSlUmUCvYOK5MZHRklLuPo451X"
-    },
-    {
-      title: "timeskuwait.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQAhs2xOdIyMkGUA56EHUBvcFwLF09Sy1c9oMb-EhsO78wNQHMKfZP-g-SZqqMzUc8TEVFk3tGeJtgy_QT9O9cktlm7AfzeN8tAlvBb46MIxenrVKMF1aDv9UZ-5CL1-7Aq51MpbDTNO69sfhx_-vH1ezB7PxdWKAjfRTqUvXvMsVy9BLgvrsWZvQvYOL-NjkwiNDaj4-_3JmYumvP1_XSiTWWrVQ="
-    }
-  ],
+  investmentSignal: "→ Maintain a defensive posture on risk assets; geopolitical premiums continue to support long positions in energy and commodities, but be wary of sharp short-term price swings on diplomatic signals.",
+  prevRiskScore: 76,
+  webSources: [],
   webSearchQueries: [
-    "WTI Brent oil price June 3 2026 range trend Reuters Bloomberg",
-    "US Iran maritime tension June 3 2026 drone Hormuz",
-    "Hormuz Strait shipping status June 3 2026"
+    "US Iran tensions last 24 hours",
+    "Strait of Hormuz shipping status June 4 2026",
+    "Pentagon statement Iran June 2026",
+    "Iranian military activity June 2026",
+    "WTI Brent crude oil price range June 4 2026 Reuters",
+    "WTI Brent crude oil price trend June 4 2026 Bloomberg"
   ]
 };
 
@@ -635,7 +518,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "6月3日节点",
+    node406: "6月4日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -669,16 +552,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.84 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.85 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 76（↑8）：冲突烈度质变：导弹战开启，谈判渠道中断。",
-    bannerWarning: "→ 增持 能源 及 避险资产，对冲 风险资产 下行 压力。",
-    deescalationIntent: "美方要求的海峡无条件开放与伊朗要求的黎巴嫩/制裁全面解除完全对立。",
-    structuralRisk: "流量降至正常水平5%以下，主要班轮暂停。",
-    contradictionNote: "美方要求的海峡无条件开放与伊朗要求的黎巴嫩/制裁全面解除完全对立。；伊朗的饱和式打击能力与美军的反导/定点清除能力在核心节点对抗。",
+    bannerSignal: "综合评分 76（持平）：冲突烈度因伊朗袭击科威特、巴林而急剧升级，但被以色列-黎巴嫩停火带来的微弱外交希望所对冲，综合风险维持高位。",
+    bannerWarning: "→ 风险资产维持防御姿态，地缘风险溢价使能源与大宗商品的多头部位仍具支撑，但需警惕外交信号引发的短期价格剧烈波动。",
+    deescalationIntent: "美国寻求通过极限施压（军事打击+经济封锁）迫使伊朗在核问题与地区影响力上让步，而伊朗则试图通过扩大打击范围来证明美国的压力政策将使其盟友付出代价，从而瓦解其压…",
+    structuralRisk: "霍尔木兹海峡的商业航运交通仍处于瘫痪状态。数据显示，当前通行量不足正常水平的10%，主要航运公司因保险和安全问题继续暂停该航线，海峡处于“功能性受限”状态。",
+    contradictionNote: "美国寻求通过极限施压（军事打击+经济封锁）迫使伊朗在核问题与地区影响力上让步，而伊朗则试图通过扩大打击范围来证明美国的压力政策将使其盟友付出代价，从而瓦解其压力联盟。；美国试图将冲突控制在“有节制的报复性打击”范围内，而伊朗则通过攻击美国在中东的盟友来提升冲突成本，试图打破美国的控制，迫使其在更高风险下进行决策。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -686,7 +569,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第95天",
+    dayCount: "第96天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -694,7 +577,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Jun 3 Node",
+    node406: "Jun 4 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -728,16 +611,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.84 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.85 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 76 (↑8): Qualitative escalation: Missile warfare initiated, mediation channels severed.",
-    bannerWarning: "→ Increase exposure to Energy and Safe-Haven assets; hedge Risk Asset downside.",
-    deescalationIntent: "Irreconcilable demands between US 'Unconditional Opening' and Iran 'Lebanon/San…",
-    structuralRisk: "Flow dropped below 5%; main liners suspended.",
-    contradictionNote: "Irreconcilable demands between US 'Unconditional Opening' and Iran 'Lebanon/Sanctions Linkage'.; Iranian saturation strike capability confronting US missile de…",
+    bannerSignal: "Composite 76 (Flat): Conflict intensity sharply escalated due to Iranian attacks on Kuwait and Bahrain, but was counterbalanced by faint diplomatic hopes from t…",
+    bannerWarning: "→ Maintain a defensive posture on risk assets; geopolitical premiums continue to support long positions in energy and c…",
+    deescalationIntent: "The U.S. aims to compel Iranian concessions on nuclear and regional issues thro…",
+    structuralRisk: "Commercial shipping traffic through the Strait of Hormuz remains paralyzed. Data shows current tran…",
+    contradictionNote: "The U.S. aims to compel Iranian concessions on nuclear and regional issues through maximum pressure (military strikes + economic blockade), while Iran seeks to…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -745,7 +628,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 95",
+    dayCount: "Day 96",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
