@@ -1,11 +1,11 @@
 {
   "version": 2,
   "latest": {
-    "date": "2026-06-08",
-    "appVersion": "v2.89",
+    "date": "2026-06-09",
+    "appVersion": "v2.90",
     "riskScore": 72,
     "prevRiskScore": 72,
-    "conflictDay": 100,
+    "conflictDay": 101,
     "factorScores": [
       4,
       4,
@@ -278,6 +278,10 @@
     },
     {
       "date": "2026-06-08",
+      "score": 72
+    },
+    {
+      "date": "2026-06-09",
       "score": 72
     }
   ]
