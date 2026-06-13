@@ -65,25 +65,25 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-06-12",
-  version: "v2.93",
-  riskScore: 72,
+  date: "2026-06-13",
+  version: "v2.94",
+  conflictDay: "D105",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D104",
+      value: "D105",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↓10",
+      value: "↓12",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $84.74–$87.71 · Brent $89.17–$90.65",
+      value: "WTI $83.80–$86.80 · Brent $86.50–$89.10",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -95,13 +95,14 @@ export const DATA_ZH: DashboardData = {
       color: "#ffdc00"
     }
   ],
+  riskScore: 60,
   riskFactors: [
     {
       name: "军事升级烈度",
       score: 4,
-      prev: 5,
+      prev: 4,
       weight: 0.2,
-      description: "美方取消预定大规模空袭，但仍存在无人机拦截事件。",
+      description: "美伊双方在霍尔木兹海峡附近仍有直接、但有限的军事对抗。美国中央司令部（CENTCOM）确认于6月13日击落了多架试图袭击商业航运的伊朗无人机。这表明，尽管高层正在进行和平谈判，但前线的直接交火事件仍在发生，维持了高度紧张的军事对峙态势。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -110,62 +111,82 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "航道在名义上维持关闭，但和谈协议包含重新开放条款。",
+      description: "尽管美国军方表示在拦截无人机后，海峡交通“未受阻碍”，但伊朗持续使用无人机试图攻击商船的行为本身，对航运构成了致命威胁。这迫使主要航运公司继续暂停或规避该航线，商业航运流量远低于正常水平，通行状态依然属于“严重受限”。",
       status: "FAST",
-      sourceVerification: "partial"
+      sourceVerification: "confirmed"
     },
     {
       name: "能源冲击",
-      score: 3,
-      prev: 3.5,
+      score: 2,
+      prev: 3,
       weight: 0.2,
-      description: "和平预期驱动原油空头获利，价格回落至中等风险带。",
+      description: "由于美国与伊朗接近达成和平协议的前景日益明朗，市场对霍尔木兹海峡即将重新开放的预期升温，导致原油期货价格大幅下跌。布伦特和WTI原油价格均已跌破关键心理价位，风险溢价显著收缩。",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "down"
     },
     {
       name: "大国介入深度",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美方通过多国中介机构全力推进和平备忘录签署。",
+      description: "美国继续作为主要外部力量直接参与该地区的军事行动（拦截无人机）和最高级别的外交谈判。同时，巴基斯坦等区域大国在调解中扮演关键角色。大国介入的性质（军事部署、援助和密集外交）与前一日相比没有发生结构性变化。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "降级/谈判前景",
-      score: 4,
-      prev: 5,
+      score: 2,
+      prev: 4,
       weight: 0.2,
-      description: "谈判进入实操阶段，虽然双方对最终条款存在分歧。",
+      description: "谈判前景出现重大积极转变。美国白宫官员、伊朗外交部长以及作为调解方的巴基斯坦总理均公开表示，双方已就一份旨在结束战争的“最终协议文本”达成一致。这标志着谈判取得了决定性的实质性进展，远超此前僵持状态。",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "down"
     }
   ],
   events: [
     {
-      id: "EVT-01",
-      title: "特朗普叫停针对伊朗的「报复性打击」",
-      description: "美军在最后时刻收到撤回命令，美方转向外交解决途径，取消原定对伊基础设施打击计划（AP/Reuters）。",
+      id: "evt-01",
+      title: "美伊接近达成协议，白宫称涉霍尔木兹重开与核计划拆除",
+      description: "多位美国官员与伊朗外交部长证实，双方已就一份旨在结束冲突的协议文本达成一致，内容涵盖重开霍尔木兹海峡、拆除伊朗核计划，并以“表现为基础”释放资金。巴基斯坦作为调解方称“最终商定文本”已达成。(Sources: Reuters, Fox News, CBS News)",
       verification: "confirmed",
-      timestamp: "2026-06-11T23:00:00Z",
+      timestamp: "2026-06-12T20:00:00Z",
       significance: "",
+      highlight: true,
       critical: true
     },
     {
-      id: "EVT-02",
-      title: "伊朗外交部审慎回应「伟大的和解」",
-      description: "发言人巴盖伊警告美方称不要单方面发布乐观预期，伊朗坚持领土安全与制裁全面解除的红线（IRNA）。",
+      id: "evt-02",
+      title: "美军在霍尔木兹海峡上空击落多架伊朗攻击无人机",
+      description: "在美国与伊朗接近达成协议之际，美国中央司令部（CENTCOM）于6月13日凌晨宣布，其部队击落了数架试图袭击海峡内商船的伊朗单向攻击无人机。CENTCOM称，海峡交通未受阻碍。(Sources: CENTCOM, Reuters, AP)",
       verification: "confirmed",
-      timestamp: "2026-06-12T04:30:00Z",
+      timestamp: "2026-06-13T03:00:00Z",
+      significance: "",
+      highlight: true
+    },
+    {
+      id: "evt-03",
+      title: "石油价格因美伊可能达成协议而大幅下跌",
+      description: "受美伊谈判取得进展、有望重开霍尔木兹海峡消息提振，国际油价显著承压。布伦特原油价格跌破90美元/桶，WTI原油价格也跌至85美元/桶以下，反映出市场对供应风险缓解的预期。(Sources: Reuters, Bloomberg, The National)",
+      verification: "confirmed",
+      timestamp: "2026-06-12T18:00:00Z",
       significance: ""
     },
     {
-      id: "EVT-03",
-      title: "全球基准油价暴跌超 3%",
-      description: "由于特朗普称「战争结束」，投机资本迅速撤出能源避险，布油与美油跌至近三周低点（Bloomberg）。",
+      id: "evt-04",
+      title: "伊朗确认核问题将在协议初步执行后进行为期60天的谈判",
+      description: "伊朗外交部长阿拉格希澄清，与美国的谅解备忘录将首先处理停火与海峡问题，而核计划的细节将在协议签署后为期60天的第二阶段谈判中解决。伊朗媒体称德黑兰不会放弃铀浓缩权利。(Sources: Tasnim News Agency, The Jerusalem Post, Fox News)",
       verification: "confirmed",
-      timestamp: "2026-06-12T02:00:00Z",
+      timestamp: "2026-06-12T15:00:00Z",
+      significance: ""
+    },
+    {
+      id: "evt-05",
+      title: "以色列对黎巴嫩南部的袭击仍在继续",
+      description: "尽管美伊谈判取得进展，但以色列并未停止对黎巴嫩南部的军事行动，并发布了新的撤离令。以色列总理内塔尼亚胡表示，以色列不会成为美伊协议的一方。(Sources: Reuters, The New Arab)",
+      verification: "single",
+      timestamp: "2026-06-13T08:00:00Z",
       significance: ""
     }
   ],
@@ -175,9 +196,9 @@ export const DATA_ZH: DashboardData = {
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "军事打击行动暂停，进入外交优先阶段。",
-      "和谈协议包含解除制裁与航道开放的分阶段计划。",
-      "地区代理人冲突（如黎巴嫩）的停火被列为协议先决条件。"
+      "双方官方确认已就协议文本达成一致，为冲突降级创造了明确路径。",
+      "一线军事摩擦（如无人机事件）仍在发生，表明协议执行前仍存高度不确定性与风险。",
+      "核心矛盾正从军事对抗转向协议细节的敲定与执行监督。"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -188,8 +209,9 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：大规模空袭计划取消。",
-        "延续：美方维持海空监视高压态势。"
+        "变化：美伊双方在霍尔木兹海峡附近仍有直接、但有限的军事对抗。",
+        "变化：美国中央司令部（CENTCOM）确认于6月13日击落了多架试图袭击商业航运的伊朗无人机。",
+        "变化：这表明，尽管高层正在进行和平谈判，但前线的直接交火事件仍在发生，维持了高度紧张的军事对峙态势。"
       ]
     },
     {
@@ -198,8 +220,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：伊朗官方口径仍称航道关闭。",
-        "变化：美军协助少量受损油轮撤离争议水域。"
+        "变化：尽管美国军方表示在拦截无人机后，海峡交通“未受阻碍”，但伊朗持续使用无人机试图攻击商船的行为本身，对航运构成了致命威胁。",
+        "变化：这迫使主要航运公司继续暂停或规避该航线，商业航运流量远低于正常水平，通行状态依然属于“严重受限”。"
       ]
     },
     {
@@ -208,8 +230,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：原油价格出现大幅下探，市场情绪转向观望协议签署。",
-        "变化：对伊制裁解除的预期开始影响远月合约。"
+        "变化：由于美国与伊朗接近达成和平协议的前景日益明朗，市场对霍尔木兹海峡即将重新开放的预期升温，导致原油期货价格大幅下跌。",
+        "变化：布伦特和WTI原油价格均已跌破关键心理价位，风险溢价显著收缩。"
       ]
     },
     {
@@ -218,24 +240,21 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：特朗普寻求日内瓦快速签约以稳定国内经济。",
-        "延续：内塔尼亚胡对协议范围表示保留，坚持核设施红线。"
+        "变化：美国继续作为主要外部力量直接参与该地区的军事行动（拦截无人机）和最高级别的外交谈判。",
+        "变化：同时，巴基斯坦等区域大国在调解中扮演关键角色。",
+        "变化：大国介入的性质（军事部署、援助和密集外交）与前一日相比没有发生结构性变化。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美方速胜/撤退需求与伊朗寻求制度安全的持久战思维"
+      "美伊双方在政治上均有达成协议以结束冲突的强烈意愿，但这与两国国内的强硬派立场以及区域盟友（如以色列）的战略关切存在矛盾。"
     ],
     military: [
-      "航道安全保障的排他性控制权争议"
+      "高层外交谈判取得突破性进展与前线部队持续发生直接军事摩擦（无人机攻击与拦截）之间的矛盾，显示了局势缓和过程中的脆弱性和不稳定性。"
     ]
   },
   scoreTrend: [
-    {
-      date: "06-08",
-      score: 72
-    },
     {
       date: "06-09",
       score: 72
@@ -250,97 +269,52 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "06-12",
-      score: 72,
+      score: 72
+    },
+    {
+      date: "06-13",
+      score: 60,
       active: true
     }
   ],
-  keyChange: "美方取消打击并宣布达成和谈草案，风险溢价大幅修正。",
-  investmentSignal: "→ 减持能源对冲头寸，获利了结；转向风险资产防御，关注协议签署进度。",
-  change: "down",
-  prevRiskScore: 82,
-  webSources: [
-    {
-      title: "cmegroup.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGXrvjYimyZedvaU7AjBHz8bFaFFftjM9pXeW5kEnNzQoSi5QlbPd7VSkw5Wmr55ljmAUFfEvQRuO9dtAIArSFHSxqkjoSeiIgiHVdCuR5NYIMUKRFL4PiDtuYyjCLa98vH0XSRnQk_DfEbY2xCb55ThPLNdHzaIDc7m6orJWV_vc02yf7zwl9yYTlsK3TVSX4k8i6eV-t5_ztikPOLIXVFRB3l7g=="
-    },
-    {
-      title: "xtb.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEcdLdNLYzLY21EFmy68mduFZWgEplhol-VUvQKw8B354yXAdbmW9UCzgvahxprJvYfIYlOLOdJDSgOcgfvDKnQfXwsB0VHAs8cwFCU73QFVq3kWaxqXV6DWJWA53sKlKMMvlPdxW9m9eOzGi3uGXru4vxjDchGHrdjsmw-MNGXz_scLFHFUDLJV-NKZYGhYIQCpzsGyrK3R-2K_5zi6PgVmTOC3QRA4rrNKUeH4odROrAu40jDelN2I06qgnzkJbLvc6t2"
-    },
-    {
-      title: "icis.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHyP4oR1NNzs3L48eaF_nmNVrMSy0ak8AITFqaWrbkqggtGY4F7WzvazTGyaDTCVkD31G1Zl5haTjnMXnt4xDNGRRiMc275501puMLmfabt5bRs1pdMXCNZ2zrsv-IV4GmlZdusplWToGvIZQrLtg-nFObcN7E8yKTKmNMle5A0mj8_j6KEN72D2E-U7UJSH4iQYPUe5UU1TlZ7TlMag0zo_9_-P7-D1n5Ab4UduglhDdsMOSSqC7XS9Pei5RN9vuQ="
-    },
-    {
-      title: "tradingeconomics.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQETrO-JjvFcf_b3Dm5swwqlWUSIrANYFnBRjvsXS0fxNMdd9oSg3ztjeFc7EztMjynpAvdvW8y4vqZp0FRo0kWRGfd4IY6lEpsrfBW_7je3eykZTF0XvXSZ3tAj_LYQ9uQPq4_tVDQ="
-    },
-    {
-      title: "investing.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXaK8dw8aWtPtnSQclXQpNsM1papBjEqys9a5Ag22ixxtk6YPGgiLxNaiz-05s1ChCbbcgqi533EAf5SEOQvOE_mFdPBYWP6E23jSlqtGg5SAlBpfFVZI_HlICuhkR-5M_w9xRyFhK_8rgIoCYf5h9WhpwrrdjjNI8dcIc65Cuddx-2xvbQpGdOOKTg9IRwoOwJ5aAPEo8Mq-1xKUxE8Y8z24hm3ZJILTktlKEacIN"
-    },
-    {
-      title: "shipfinder.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGPKRL0nrOdTUKr1KL6aL4h7D3p2kmOWTFSBdAtfC1GygeNuFvXs3zNF5fUWY7WHqcD08NHGB-T6IMbkODKTp5Mmy3jedJMafe6elA5wXRP6py0Q_OuXtpfp-I7_PSzQA=="
-    },
-    {
-      title: "ncr-iran.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFXdcozx8TKY4R7d8xRzPO4jw98jp-PY4roY6NzAb1UMBw1sLzSHP4MHYi__5T5ZecV6MQ2DNHkDJJetQXSefXEOJ7l-e9q17ej_CqYQV6_YNsNomZRuO7EmoQfH2ujTHh3CwmLvR6IULHCOnL6IFt-PVjegFhfmVFVhd-NzDinF2L8urhkvEEmvp6lnJOTJGejvU2ivNfLzbV8Yd5p6OK0ZFvNm9tt5vr1CnJYwlnHTt239IeFIYA5HC7R"
-    },
-    {
-      title: "jpost.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHjncfGGUNDufSG6BDnygqDg7LkxC3_T4tncGhJypKKvmj8Icpg3GvF_BDvgu9cQosoHyqiennOoiWdelmo9A-_9CX4rQwItf0eNCfhGc02sspYUsJZ9gXJS2Ut3JL_O9K9ArKEZPjHa26u7_qv16qPll87FsMUt7Jz9Aqkm6vuwQ=="
-    },
-    {
-      title: "wanaen.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGW60MwrnK-9ZlRHsYaiRHiPu3FIGDs8KiSwCcloPe3h5LADFXLpzDaVgCsr2PlEzGsMB1GVWKg06TLUdUWVF3WJpgqV8ThxQLvh5npduXOpy6RTiErNSG0Xt6EaYHy2ErXkjldSfyhO811awiO0U3tYuhdbdiB"
-    },
-    {
-      title: "presidentialprayerteam.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH4pu4Uv8HqJqgNJ3g6ObpZNl859TyygEy0QG1ywdp8edoVMPp3OzynpJo2iXB-LWr0ZbyEvAaYaKZ7qtbRCHvUAq4-3vtH4r68MjfDoS10sruyESpr7MQQHA4Ohea_FuJ-rsBUZ-CibzR4YuULnVdl9JAMSsutu-AOL-4MrGWW42STEtu4pP1mYJWNdtCMUNwf7jgHq7G5HDRrirmY"
-    },
-    {
-      title: "hormuztracking.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHQIkAnXsNxdMIOjt_D23LN0daA85j8MCTfVzn1cPimIoVMeB46LIoCeyo1NEqPlSdFbu2_h7AbkYShiOmGUu-G_vZHuzLAm7DxFxg9wj8XdD4="
-    },
-    {
-      title: "insurancejournal.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGeA40v2okzggN9VR2xunIkmgkM2mS_WzaHX7C-bFE4Nqu_sQ_3rGLGMHdEZG2rv1_h51Y9lTJmNcnVj3yBbReEEWG-amwCKed8viFnm4RrsCPjqvFACBvxK6ljxUHH7dSBU0qehc9c0ibC1vNm-11hS7QDZiHj0VHw1UUv4Tft"
-    },
-    {
-      title: "straitstimes.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHuqHz9CJ3UKjnF_SXoKW-MA0SZDk52G6UFBf8bJVqyIk4JkM74E7WsRfLaPRX2xNKb2aVP4n1k8p-8u5tHBftpm7ulBWCZhcn1AZVq76boobHA-_GReoR4L7yMRFEnCb4A0EGK2tPNSpMJ97mwm26ngsZ554Kq5KiHn-S6RPljMW35Smm3_V0fMaeRKuTsp5zxQ4wJJjt32BN_TlwCP9R0G-eG8QEEGZHwD2BdYzA="
-    }
-  ],
+  keyChange: "谈判前景出现决定性改善，综合风险分因此大幅下调。双方首次官方确认就“最终协议文本”达成一致，显著降低了冲突全面升级的概率，并直接导致能源市场风险溢价收缩。尽管军事摩擦仍在继续，但其性质已更接近于达成协议前的施压与试探，而非旨在升级冲突。",
+  investmentSignal: "→ 市场正定价风险缓和，可适度减持能源多头头寸，但需警惕谈判破裂的尾部风险，维持部分防御性配置。",
+  prevRiskScore: 72,
+  webSources: [],
   webSearchQueries: [
-    "WTI Brent oil prices June 12 2026 analysis",
-    "US Iran military conflict news June 11 12 2026",
-    "Strait of Hormuz shipping status June 12 2026",
-    "Iran Ministry of Foreign Affairs official statements June 12 2026",
-    "US Department of Defense Iran updates June 12 2026"
+    "US Iran tensions last 24 hours",
+    "Iran nuclear deal talks news",
+    "Strait of Hormuz shipping disruptions",
+    "CENTCOM press release Iran",
+    "Iran military activity",
+    "US fifth fleet news",
+    "WTI crude oil price range June 12-13 2026",
+    "Brent crude oil price range June 12-13 2026",
+    "oil price trends Reuters",
+    "oil price analysis Bloomberg"
   ]
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-06-12",
-  version: "v2.93",
-  riskScore: 72,
+  date: "2026-06-13",
+  version: "v2.94",
+  conflictDay: "D105",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D104",
+      value: "D105",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "↓10",
+      value: "↓12",
       unit: "vs Prev",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $84.74–$87.71 · Brent $89.17–$90.65",
+      value: "WTI $83.80–$86.80 · Brent $86.50–$89.10",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -348,17 +322,18 @@ export const DATA_EN: DashboardData = {
     {
       label: "Hormuz",
       value: "Severely Restricted",
-      unit: "Status",
+      unit: "Transit Status",
       color: "#ffdc00"
     }
   ],
+  riskScore: 60,
   riskFactors: [
     {
       name: "Military Escalation Intensity",
       score: 4,
-      prev: 5,
+      prev: 4,
       weight: 0.2,
-      description: "US canceled major strikes, but localized drone interceptions persist.",
+      description: "The US and Iran continue to engage in direct, albeit limited, military confrontations near the Strait of Hormuz. US CENTCOM confirmed shooting down multiple Iranian drones attempting to attack commercial shipping on June 13. This indicates that despite high-level peace talks, direct fire incidents are ongoing, maintaining a state of high military tension.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -367,62 +342,82 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Strait remains officially closed but reopening terms are in the draft deal.",
+      description: "Although the US military stated that traffic was 'unimpeded' after intercepting the drones, Iran's continued attempts to attack commercial vessels with UAVs constitute a lethal threat to shipping. This forces major shipping lines to continue suspending or rerouting, keeping commercial traffic far below normal levels and the transit status as 'Severely Restricted'.",
       status: "FAST",
-      sourceVerification: "partial"
+      sourceVerification: "confirmed"
     },
     {
       name: "Energy Shock",
-      score: 3,
-      prev: 3.5,
+      score: 2,
+      prev: 3,
       weight: 0.2,
-      description: "Negotiation optimism drove oil prices down into the moderate risk zone.",
+      description: "As the prospect of a peace deal between the US and Iran becomes more likely, market expectations for the reopening of the Strait of Hormuz have increased, leading to a sharp fall in crude oil futures prices. Both Brent and WTI have fallen below key psychological levels as the risk premium shrinks significantly.",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "down"
     },
     {
       name: "Great Power Involvement",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "US fully engaged in diplomatic mediation via regional intermediaries.",
+      description: "The United States continues to be the primary external power directly involved in military actions (drone interceptions) and top-level diplomatic negotiations in the region. Meanwhile, regional powers like Pakistan are playing a key role in mediation. The nature of great power involvement (military deployment, aid, and intensive diplomacy) has not structurally changed from the previous day.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "De-escalation Probability",
-      score: 4,
-      prev: 5,
+      score: 2,
+      prev: 4,
       weight: 0.2,
-      description: "Diplomatic channels upgraded to highest level; draft MoU exists.",
+      description: "Negotiation prospects have shown a major positive shift. US White House officials, Iran's Foreign Minister, and the mediating Pakistani Prime Minister have all publicly stated that an agreement on a 'final text' of a deal to end the war has been reached. This marks a decisive, substantive breakthrough in talks, far exceeding the previous stalemate.",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "down"
     }
   ],
   events: [
     {
-      id: "EVT-01",
-      title: "Trump Calls Off Retaliatory Strikes on Iran",
-      description: "US military received last-minute stand-down order; focus shifted to diplomatic settlement (AP/Reuters).",
+      id: "evt-01",
+      title: "US & Iran Near Deal Involving Hormuz Reopening and Nuclear Dismantlement, White House Says",
+      description: "Multiple US officials and Iran's foreign minister confirmed that both sides have agreed on a text for a deal to end the conflict, covering the reopening of the Strait of Hormuz, dismantlement of Iran's nuclear program, and a 'performance-based' release of funds. Mediator Pakistan stated a 'final, agreed upon text' has been reached. (Sources: Reuters, Fox News, CBS News)",
       verification: "confirmed",
-      timestamp: "2026-06-11T23:00:00Z",
+      timestamp: "2026-06-12T20:00:00Z",
       significance: "",
+      highlight: true,
       critical: true
     },
     {
-      id: "EVT-02",
-      title: "Iran MFA Cautions on 'Final Conclusion'",
-      description: "Spokesman Baghaei warns US against premature optimism; red lines remain non-negotiable (IRNA).",
+      id: "evt-02",
+      title: "US Military Downs Multiple Iranian Attack Drones Over Strait of Hormuz",
+      description: "As the US and Iran neared a deal, US Central Command (CENTCOM) announced early on June 13 that its forces shot down several Iranian one-way attack drones attempting to strike commercial ships in the strait. CENTCOM stated that traffic was not impeded. (Sources: CENTCOM, Reuters, AP)",
       verification: "confirmed",
-      timestamp: "2026-06-12T04:30:00Z",
+      timestamp: "2026-06-13T03:00:00Z",
+      significance: "",
+      highlight: true
+    },
+    {
+      id: "evt-03",
+      title: "Oil Prices Tumble on Prospect of US-Iran Deal",
+      description: "Boosted by news of progress in US-Iran negotiations and the potential reopening of the Strait of Hormuz, international oil prices came under significant pressure. Brent crude fell below $90/barrel and WTI dropped below $85/barrel, reflecting market expectations of easing supply risks. (Sources: Reuters, Bloomberg, The National)",
+      verification: "confirmed",
+      timestamp: "2026-06-12T18:00:00Z",
       significance: ""
     },
     {
-      id: "EVT-03",
-      title: "Global Oil Benchmarks Slump Over 3%",
-      description: "Speculative capital exits energy hedges as Trump declares 'the war is over' (Bloomberg).",
+      id: "evt-04",
+      title: "Iran Confirms Nuclear Issues to be Negotiated for 60 Days After Initial Deal",
+      description: "Iranian Foreign Minister Araghchi clarified that the memorandum of understanding with the US will first address the ceasefire and the strait, while details of the nuclear program will be resolved in a 60-day second phase of talks after the deal is signed. Iranian media stated Tehran would not give up its right to uranium enrichment. (Sources: Tasnim News Agency, The Jerusalem Post, Fox News)",
       verification: "confirmed",
-      timestamp: "2026-06-12T02:00:00Z",
+      timestamp: "2026-06-12T15:00:00Z",
+      significance: ""
+    },
+    {
+      id: "evt-05",
+      title: "Israeli strikes on southern Lebanon continue",
+      description: "Despite progress in US-Iran talks, Israel has not ceased its military operations in southern Lebanon and has issued new evacuation orders. Prime Minister Netanyahu stated that Israel would not be a party to the US-Iran agreement. (Sources: Reuters, The New Arab)",
+      verification: "single",
+      timestamp: "2026-06-13T08:00:00Z",
       significance: ""
     }
   ],
@@ -432,9 +427,9 @@ export const DATA_EN: DashboardData = {
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Military strikes paused in favor of diplomatic priority.",
-      "Draft deal outlines phased sanctions relief and reopening of shipping lanes.",
-      "Proxy ceasefires (e.g., Lebanon) set as deal preconditions."
+      "Official confirmation from both sides on an agreed deal text creates a clear path for de-escalation.",
+      "Frontline military friction (e.g., drone incidents) persists, indicating high uncertainty and risk before implementation.",
+      "The core contradiction is shifting from military confrontation to finalizing and overseeing the implementation of the agreement's details."
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -445,8 +440,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Mass strike plans canceled.",
-        "Continue: US maintains high-pressure surveillance posture."
+        "Change: The US and Iran continue to engage in direct, albeit limited, military confrontations near the Strait of Hormuz.",
+        "Change: US CENTCOM confirmed shooting down multiple Iranian drones attempting to attack commercial shipping on June 13.",
+        "Change: This indicates that despite high-level peace talks, direct fire incidents are ongoing, maintaining a state of high military tension."
       ]
     },
     {
@@ -455,8 +451,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Iranian official stance remains 'Closed'.",
-        "Change: US military assisting extraction of stranded tankers."
+        "Change: Although the US military stated that traffic was 'unimpeded' after intercepting the drones, Iran's continued attempts to attack commercial vessels with…",
+        "Change: This forces major shipping lines to continue suspending or rerouting, keeping commercial traffic far below normal levels and the transit status as 'Sev…"
       ]
     },
     {
@@ -465,8 +461,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Crude prices testing 3-week lows; markets await deal confirmation.",
-        "Change: Sanctions relief expectations affecting forward contracts."
+        "Change: As the prospect of a peace deal between the US and Iran becomes more likely, market expectations for the reopening of the Strait of Hormuz have increas…",
+        "Change: Both Brent and WTI have fallen below key psychological levels as the risk premium shrinks significantly."
       ]
     },
     {
@@ -475,24 +471,21 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Trump pushes for Geneva signing to stabilize domestic economy.",
-        "Continue: Netanyahu maintains reservations over scope of agreement."
+        "Change: The United States continues to be the primary external power directly involved in military actions (drone interceptions) and top-level diplomatic negot…",
+        "Change: Meanwhile, regional powers like Pakistan are playing a key role in mediation.",
+        "Change: The nature of great power involvement (military deployment, aid, and intensive diplomacy) has not structurally changed from the previous day."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "US need for quick exit vs Iran's protracted regime security logic"
+      "The strong political will on both the US and Iranian sides to reach a deal to end the conflict is at odds with the positions of domestic hardliners and the strategic concerns of regional allies (like Israel)."
     ],
     military: [
-      "Contested control over maritime security guarantees"
+      "The contradiction between a breakthrough in high-level diplomatic negotiations and the continuation of direct military friction on the front lines (drone attacks and interceptions) highlights the fragility and instability of the de-escalation process."
     ]
   },
   scoreTrend: [
-    {
-      date: "06-08",
-      score: 72
-    },
     {
       date: "06-09",
       score: 72
@@ -507,74 +500,29 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "06-12",
-      score: 72,
+      score: 72
+    },
+    {
+      date: "06-13",
+      score: 60,
       active: true
     }
   ],
-  keyChange: "US cancels strikes and announces draft peace deal; risk premium corrected.",
-  investmentSignal: "→ Take profits on energy hedges; maintain defensive risk assets; monitor Geneva signing details.",
-  change: "down",
-  prevRiskScore: 82,
-  webSources: [
-    {
-      title: "cmegroup.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGXrvjYimyZedvaU7AjBHz8bFaFFftjM9pXeW5kEnNzQoSi5QlbPd7VSkw5Wmr55ljmAUFfEvQRuO9dtAIArSFHSxqkjoSeiIgiHVdCuR5NYIMUKRFL4PiDtuYyjCLa98vH0XSRnQk_DfEbY2xCb55ThPLNdHzaIDc7m6orJWV_vc02yf7zwl9yYTlsK3TVSX4k8i6eV-t5_ztikPOLIXVFRB3l7g=="
-    },
-    {
-      title: "xtb.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEcdLdNLYzLY21EFmy68mduFZWgEplhol-VUvQKw8B354yXAdbmW9UCzgvahxprJvYfIYlOLOdJDSgOcgfvDKnQfXwsB0VHAs8cwFCU73QFVq3kWaxqXV6DWJWA53sKlKMMvlPdxW9m9eOzGi3uGXru4vxjDchGHrdjsmw-MNGXz_scLFHFUDLJV-NKZYGhYIQCpzsGyrK3R-2K_5zi6PgVmTOC3QRA4rrNKUeH4odROrAu40jDelN2I06qgnzkJbLvc6t2"
-    },
-    {
-      title: "icis.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHyP4oR1NNzs3L48eaF_nmNVrMSy0ak8AITFqaWrbkqggtGY4F7WzvazTGyaDTCVkD31G1Zl5haTjnMXnt4xDNGRRiMc275501puMLmfabt5bRs1pdMXCNZ2zrsv-IV4GmlZdusplWToGvIZQrLtg-nFObcN7E8yKTKmNMle5A0mj8_j6KEN72D2E-U7UJSH4iQYPUe5UU1TlZ7TlMag0zo_9_-P7-D1n5Ab4UduglhDdsMOSSqC7XS9Pei5RN9vuQ="
-    },
-    {
-      title: "tradingeconomics.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQETrO-JjvFcf_b3Dm5swwqlWUSIrANYFnBRjvsXS0fxNMdd9oSg3ztjeFc7EztMjynpAvdvW8y4vqZp0FRo0kWRGfd4IY6lEpsrfBW_7je3eykZTF0XvXSZ3tAj_LYQ9uQPq4_tVDQ="
-    },
-    {
-      title: "investing.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXaK8dw8aWtPtnSQclXQpNsM1papBjEqys9a5Ag22ixxtk6YPGgiLxNaiz-05s1ChCbbcgqi533EAf5SEOQvOE_mFdPBYWP6E23jSlqtGg5SAlBpfFVZI_HlICuhkR-5M_w9xRyFhK_8rgIoCYf5h9WhpwrrdjjNI8dcIc65Cuddx-2xvbQpGdOOKTg9IRwoOwJ5aAPEo8Mq-1xKUxE8Y8z24hm3ZJILTktlKEacIN"
-    },
-    {
-      title: "shipfinder.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGPKRL0nrOdTUKr1KL6aL4h7D3p2kmOWTFSBdAtfC1GygeNuFvXs3zNF5fUWY7WHqcD08NHGB-T6IMbkODKTp5Mmy3jedJMafe6elA5wXRP6py0Q_OuXtpfp-I7_PSzQA=="
-    },
-    {
-      title: "ncr-iran.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFXdcozx8TKY4R7d8xRzPO4jw98jp-PY4roY6NzAb1UMBw1sLzSHP4MHYi__5T5ZecV6MQ2DNHkDJJetQXSefXEOJ7l-e9q17ej_CqYQV6_YNsNomZRuO7EmoQfH2ujTHh3CwmLvR6IULHCOnL6IFt-PVjegFhfmVFVhd-NzDinF2L8urhkvEEmvp6lnJOTJGejvU2ivNfLzbV8Yd5p6OK0ZFvNm9tt5vr1CnJYwlnHTt239IeFIYA5HC7R"
-    },
-    {
-      title: "jpost.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHjncfGGUNDufSG6BDnygqDg7LkxC3_T4tncGhJypKKvmj8Icpg3GvF_BDvgu9cQosoHyqiennOoiWdelmo9A-_9CX4rQwItf0eNCfhGc02sspYUsJZ9gXJS2Ut3JL_O9K9ArKEZPjHa26u7_qv16qPll87FsMUt7Jz9Aqkm6vuwQ=="
-    },
-    {
-      title: "wanaen.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGW60MwrnK-9ZlRHsYaiRHiPu3FIGDs8KiSwCcloPe3h5LADFXLpzDaVgCsr2PlEzGsMB1GVWKg06TLUdUWVF3WJpgqV8ThxQLvh5npduXOpy6RTiErNSG0Xt6EaYHy2ErXkjldSfyhO811awiO0U3tYuhdbdiB"
-    },
-    {
-      title: "presidentialprayerteam.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH4pu4Uv8HqJqgNJ3g6ObpZNl859TyygEy0QG1ywdp8edoVMPp3OzynpJo2iXB-LWr0ZbyEvAaYaKZ7qtbRCHvUAq4-3vtH4r68MjfDoS10sruyESpr7MQQHA4Ohea_FuJ-rsBUZ-CibzR4YuULnVdl9JAMSsutu-AOL-4MrGWW42STEtu4pP1mYJWNdtCMUNwf7jgHq7G5HDRrirmY"
-    },
-    {
-      title: "hormuztracking.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHQIkAnXsNxdMIOjt_D23LN0daA85j8MCTfVzn1cPimIoVMeB46LIoCeyo1NEqPlSdFbu2_h7AbkYShiOmGUu-G_vZHuzLAm7DxFxg9wj8XdD4="
-    },
-    {
-      title: "insurancejournal.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGeA40v2okzggN9VR2xunIkmgkM2mS_WzaHX7C-bFE4Nqu_sQ_3rGLGMHdEZG2rv1_h51Y9lTJmNcnVj3yBbReEEWG-amwCKed8viFnm4RrsCPjqvFACBvxK6ljxUHH7dSBU0qehc9c0ibC1vNm-11hS7QDZiHj0VHw1UUv4Tft"
-    },
-    {
-      title: "straitstimes.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHuqHz9CJ3UKjnF_SXoKW-MA0SZDk52G6UFBf8bJVqyIk4JkM74E7WsRfLaPRX2xNKb2aVP4n1k8p-8u5tHBftpm7ulBWCZhcn1AZVq76boobHA-_GReoR4L7yMRFEnCb4A0EGK2tPNSpMJ97mwm26ngsZ554Kq5KiHn-S6RPljMW35Smm3_V0fMaeRKuTsp5zxQ4wJJjt32BN_TlwCP9R0G-eG8QEEGZHwD2BdYzA="
-    }
-  ],
+  keyChange: "A decisive improvement in negotiation prospects has led to a significant reduction in the composite risk score. For the first time, both sides have officially confirmed agreement on a 'final deal text,' substantially lowering the probability of a full-scale escalation and directly causing a contraction in the energy market's risk premium. Although military frictions continue, their nature now appears more akin to pre-deal posturing and testing rather than attempts to escalate the conflict.",
+  investmentSignal: "→ The market is pricing in risk reduction. Consider moderately reducing long energy positions, but remain alert to tail risks of negotiation collapse and maintain some defensive allocation.",
+  prevRiskScore: 72,
+  webSources: [],
   webSearchQueries: [
-    "WTI Brent oil prices June 12 2026 analysis",
-    "US Iran military conflict news June 11 12 2026",
-    "Strait of Hormuz shipping status June 12 2026",
-    "Iran Ministry of Foreign Affairs official statements June 12 2026",
-    "US Department of Defense Iran updates June 12 2026"
+    "US Iran tensions last 24 hours",
+    "Iran nuclear deal talks news",
+    "Strait of Hormuz shipping disruptions",
+    "CENTCOM press release Iran",
+    "Iran military activity",
+    "US fifth fleet news",
+    "WTI crude oil price range June 12-13 2026",
+    "Brent crude oil price range June 12-13 2026",
+    "oil price trends Reuters",
+    "oil price analysis Bloomberg"
   ]
 };
 
@@ -583,7 +531,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "6月12日节点",
+    node406: "6月13日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -617,16 +565,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.93 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.94 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 72（↓10）：美方取消打击并宣布达成和谈草案，风险溢价大幅修正。",
-    bannerWarning: "→ 减持能源对冲头寸，获利了结；转向风险资产防御，关注协议签署进度。",
-    deescalationIntent: "美方速胜/撤退需求与伊朗寻求制度安全的持久战思维",
-    structuralRisk: "航道在名义上维持关闭，但和谈协议包含重新开放条款。",
-    contradictionNote: "美方速胜/撤退需求与伊朗寻求制度安全的持久战思维；航道安全保障的排他性控制权争议",
+    bannerSignal: "综合评分 60（↓12）：谈判前景出现决定性改善，综合风险分因此大幅下调。双方首次官方确认就“最终协议文本”达成一致，显著降低了冲突全面升级的概率，并直接导致能源市场风险溢价收缩。尽管军事摩擦仍在继续，但其性质已更接近于达成协议前的施压与试探，而非旨在升级冲突。",
+    bannerWarning: "→ 市场正定价风险缓和，可适度减持能源多头头寸，但需警惕谈判破裂的尾部风险，维持部分防御性配置。",
+    deescalationIntent: "美伊双方在政治上均有达成协议以结束冲突的强烈意愿，但这与两国国内的强硬派立场以及区域盟友（如以色列）的战略关切存在矛盾。",
+    structuralRisk: "尽管美国军方表示在拦截无人机后，海峡交通“未受阻碍”，但伊朗持续使用无人机试图攻击商船的行为本身，对航运构成了致命威胁。这迫使主要航运公司继续暂停或规避该航线，商业航运流量远低于正常水平，通行状态依…",
+    contradictionNote: "美伊双方在政治上均有达成协议以结束冲突的强烈意愿，但这与两国国内的强硬派立场以及区域盟友（如以色列）的战略关切存在矛盾。；高层外交谈判取得突破性进展与前线部队持续发生直接军事摩擦（无人机攻击与拦截）之间的矛盾，显示了局势缓和过程中的脆弱性和不稳定性。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -634,7 +582,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第104天",
+    dayCount: "第105天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -642,7 +590,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Jun 12 Node",
+    node406: "Jun 13 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -676,16 +624,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.93 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.94 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 72 (↓10): US cancels strikes and announces draft peace deal; risk premium corrected.",
-    bannerWarning: "→ Take profits on energy hedges; maintain defensive risk assets; monitor Geneva signing details.",
-    deescalationIntent: "US need for quick exit vs Iran's protracted regime security logic",
-    structuralRisk: "Strait remains officially closed but reopening terms are in the draft deal.",
-    contradictionNote: "US need for quick exit vs Iran's protracted regime security logic; Contested control over maritime security guarantees",
+    bannerSignal: "Composite 60 (↓12): A decisive improvement in negotiation prospects has led to a significant reduction in the composite risk score. For the first time, both si…",
+    bannerWarning: "→ The market is pricing in risk reduction. Consider moderately reducing long energy positions, but remain alert to tail…",
+    deescalationIntent: "The strong political will on both the US and Iranian sides to reach a deal to e…",
+    structuralRisk: "Although the US military stated that traffic was 'unimpeded' after intercepting the drones, Iran's …",
+    contradictionNote: "The strong political will on both the US and Iranian sides to reach a deal to end the conflict is at odds with the positions of domestic hardliners and the str…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -693,7 +641,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 104",
+    dayCount: "Day 105",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
