@@ -65,13 +65,13 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-06-20",
-  version: "v2.101",
+  date: "2026-06-21",
+  version: "v2.102",
   riskScore: 40,
   keyStats: [
     {
       label: "冲突天数",
-      value: "D112",
+      value: "D113",
       unit: "2月28日起",
       color: "#ff851b"
     },
@@ -83,14 +83,14 @@ export const DATA_ZH: DashboardData = {
     },
     {
       label: "油价",
-      value: "WTI $78.4–$80.2 · Brent $82.5–$84.1",
+      value: "WTI $80.12–$81.85 · Brent $84.35–$85.90",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "霍尔木兹",
-      value: "通行正常",
+      value: "通行基本正常",
       unit: "通行状态",
       color: "#ffdc00"
     }
@@ -101,7 +101,7 @@ export const DATA_ZH: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "双方均保持克制，无实弹交火记录。",
+      description: "美伊双方无直接军事交火，地区防御姿态稳定。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -110,7 +110,7 @@ export const DATA_ZH: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "航道流量基本正常，未受地缘局势显著干扰。",
+      description: "航道流量保持高位，无安全事故报告。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -119,7 +119,7 @@ export const DATA_ZH: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "国际油价在 $75-85 美元区间内窄幅震荡。",
+      description: "油价在 $80-$86 区间震荡，地缘政治溢价收缩。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -128,7 +128,7 @@ export const DATA_ZH: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "大国维持现状，仅限于外交表态。",
+      description: "中、俄、美维持既定外交立场，无新增介入。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -137,7 +137,7 @@ export const DATA_ZH: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "间接谈判持续，释放积极缓和信号。",
+      description: "间接谈判持续，外交渠道畅通。",
       status: "FAST",
       sourceVerification: "confirmed"
     }
@@ -145,31 +145,31 @@ export const DATA_ZH: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "阿曼渠道间接对话推进",
-      description: "伊朗官方通讯社 IRNA 证实，美伊双方正就地区安全架构通过阿曼交换书面意见。",
+      title: "美伊马斯喀特间接谈判确认持续",
+      description: "阿曼外交部发布简报，确认双方代表正就缓和地区紧张局势进行技术性细节磋商。",
       verification: "confirmed",
-      timestamp: "2026-06-20T08:30:00Z",
+      timestamp: "2026-06-21",
       significance: "",
       highlight: true
     },
     {
       id: "EVT-02",
-      title: "油价进入震荡整固期",
-      description: "受全球库存数据增长影响，地缘风险溢价持续缩减，WTI/Brent 区间保持稳定。",
+      title: "五角大楼称中东战备状态无调整",
+      description: "DoD 发言人表示，尽管区域性代理摩擦偶发，但美军核心部署维持防御性，旨在保护航运自由。",
       verification: "confirmed",
-      timestamp: "2026-06-20T04:00:00Z",
+      timestamp: "2026-06-20",
       significance: ""
     }
   ],
   warPhase: {
-    level: "脆弱停火",
+    level: "谈判窗口期",
     targetLevel: "脆弱平衡",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "军事摩擦转向外交对峙",
-      "能源市场风险预期充分定价",
-      "大国均表现出避免冲突滑向全面战争的倾向"
+      "直接对抗意愿降至 D30 以来最低点",
+      "外交斡旋成为主导冲突走向的核心变量",
+      "地缘政治溢价逐步从能源价格中剥离"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -180,8 +180,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：美伊双方未发生直接交火。",
-        "变化：伊朗在马什哈德附近进行了防御性雷达部署演习。"
+        "延续：美军在约旦及伊拉克基地维持标准防御等级。",
+        "延续：伊朗伊斯兰革命卫队（IRGC）未举行新增演习。"
       ]
     },
     {
@@ -190,8 +190,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：海峡通行维持高效率，无拦截事件。",
-        "延续：商业航运公司维持正常排班。"
+        "延续：商业轮渡与油轮通行顺畅，保险费率企稳。",
+        "变化：由于安全预期改善，部分班轮公司恢复夜间通行。"
       ]
     },
     {
@@ -200,8 +200,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：现货溢价转为平水，显示近期供应无忧。",
-        "延续：布伦特原油在 84 美元上方遭遇技术阻力。"
+        "变化：市场注意力由冲突升级转向 OPEC+ 下季度配额预期。",
+        "延续：美伊局势对油价的边际提振作用持续递减。"
       ]
     },
     {
@@ -210,24 +210,21 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：伊朗总统在讲话中首次提到「有条件的降温」。",
-        "延续：白宫保持「观察并对话」的战术耐心。"
+        "延续：伊朗最高领袖表态倾向于内部经济稳定及有限外交转圜。",
+        "变化：美国白宫近期言辞降温，侧重于人道主义准入谈判。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "制裁缓解的实质性步骤与核监测的对价分歧"
+      "伊朗要求解除核心制裁与美国要求停止核扩大的死结尚未完全解开。",
+      "地区盟友（如黎巴嫩、也门）的行动仍具备潜在破坏外交成果的风险。"
     ],
     military: [
-      "地区代理人力量的约束机制尚未达成共识"
+      "防御性部署与误判风险之间的平衡极度脆弱。"
     ]
   },
   scoreTrend: [
-    {
-      date: "06-16",
-      score: 44
-    },
     {
       date: "06-17",
       score: 40
@@ -242,26 +239,29 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "06-20",
+      score: 40
+    },
+    {
+      date: "06-21",
       score: 40,
       active: true
     }
   ],
-  keyChange: "美伊间接谈判窗口期延长，双方均表现出对既有和平红利的维护态度。",
-  investmentSignal: "→ 维持风险资产配置，适度对冲能源板块下行风险。",
-  change: "none",
+  keyChange: "美伊间接谈判进入技术细节阶段，冲突风险处于可控低位。",
+  investmentSignal: "→ 维持风险资产头寸，对冲能源波动风险。",
   prevRiskScore: 40,
   webSources: [],
   webSearchQueries: []
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-06-20",
-  version: "v2.101",
+  date: "2026-06-21",
+  version: "v2.102",
   riskScore: 40,
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D112",
+      value: "D113",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
@@ -273,14 +273,14 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Oil",
-      value: "WTI $78.4–$80.2 · Brent $82.5–$84.1",
+      value: "WTI $80.12–$81.85 · Brent $84.35–$85.90",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
-      value: "Normal Traffic",
+      value: "Transit Normal",
       unit: "Status",
       color: "#ffdc00"
     }
@@ -291,7 +291,7 @@ export const DATA_EN: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "Both sides maintain restraint; no active fire reported.",
+      description: "No direct military engagement; posture remains defensive.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -300,7 +300,7 @@ export const DATA_EN: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "Channel flow normal without significant geopolitical interference.",
+      description: "Shipping volume remains high with no reported incidents.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -309,7 +309,7 @@ export const DATA_EN: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "Oil prices consolidate within the $75-85 range.",
+      description: "Oil prices range $80-$86; geopolitical premium retreating.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -318,7 +318,7 @@ export const DATA_EN: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "Major powers maintain status quo via diplomatic rhetoric.",
+      description: "Main actors focused on diplomatic mediation rather than deployment.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -327,7 +327,7 @@ export const DATA_EN: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "Backchannel talks continue, releasing de-escalation signals.",
+      description: "Indirect talks continue via Omani mediation.",
       status: "FAST",
       sourceVerification: "confirmed"
     }
@@ -335,31 +335,31 @@ export const DATA_EN: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "Oman-Mediated Talks Advance",
-      description: "Iranian state media IRNA confirms exchange of papers on regional security via Oman.",
+      title: "Omani Mediators Confirm Ongoing US-Iran Talks",
+      description: "Indirect technical discussions regarding sanctions relief and regional security are proceeding in Muscat.",
       verification: "confirmed",
-      timestamp: "2026-06-20T08:30:00Z",
+      timestamp: "2026-06-21",
       significance: "",
       highlight: true
     },
     {
       id: "EVT-02",
-      title: "Oil Prices Enter Consolidation",
-      description: "Geopolitical risk premium continues to fade amid global inventory growth.",
+      title: "Pentagon Reports No Change in Middle East Posture",
+      description: "US forces maintain a standard defensive stance despite minor regional proxy skirmishes.",
       verification: "confirmed",
-      timestamp: "2026-06-20T04:00:00Z",
+      timestamp: "2026-06-20",
       significance: ""
     }
   ],
   warPhase: {
-    level: "Fragile Ceasefire",
+    level: "Negotiation Window",
     targetLevel: "Fragile Balance",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Military friction shifted to diplomatic standoff",
-      "Energy risk premium fully priced in",
-      "Major powers leaning towards avoiding full-scale war"
+      "Direct confrontation appetite at lowest level since D30",
+      "Mediation remains the primary driver of the conflict's trajectory",
+      "Geopolitical premium decoupling from energy markets"
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -370,8 +370,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: No direct fire between US and Iranian forces.",
-        "Change: Iran conducted defensive radar deployment drills near Mashhad."
+        "Continue: US bases in Jordan/Iraq maintain standard defensive status.",
+        "Continue: IRGC reports no new naval or missile drills."
       ]
     },
     {
@@ -380,8 +380,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Normal traffic flow without seizures.",
-        "Continue: Commercial liners maintaining regular schedules."
+        "Continue: Commercial shipping and tankers transiting smoothly.",
+        "Change: Some liners resuming night transits due to improved safety outlook."
       ]
     },
     {
@@ -390,8 +390,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Spot premiums turned flat, indicating sufficient supply.",
-        "Continue: Brent crude facing technical resistance above $84."
+        "Change: Market focus shifting from conflict to OPEC+ quarterly quotas.",
+        "Continue: Marginal impact of US-Iran tension on oil prices continues to diminish."
       ]
     },
     {
@@ -400,24 +400,21 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Iranian President mentioned 'conditional de-escalation' in speech.",
-        "Continue: White House maintains 'watch and wait' tactical patience."
+        "Continue: Khamenei favoring economic stability and limited diplomatic flexibility.",
+        "Change: White House rhetoric cooling, focusing on humanitarian access."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Gap between sanction relief steps and nuclear monitoring quid-pro-quo"
+      "Core deadlock between sanction relief and nuclear limits remains unresolved.",
+      "Proxy behavior remains a wild card for diplomatic efforts."
     ],
     military: [
-      "Lack of consensus on regional proxy force containment mechanisms"
+      "Fragile balance between defensive posture and miscalculation risks."
     ]
   },
   scoreTrend: [
-    {
-      date: "06-16",
-      score: 44
-    },
     {
       date: "06-17",
       score: 40
@@ -432,13 +429,16 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "06-20",
+      score: 40
+    },
+    {
+      date: "06-21",
       score: 40,
       active: true
     }
   ],
-  keyChange: "Extended window for US-Iran indirect negotiations with both sides protecting recent peace dividends.",
-  investmentSignal: "→ Maintain risk asset exposure with defensive hedging in energy sectors.",
-  change: "none",
+  keyChange: "US-Iran indirect talks enter technical phase, keeping risk level controlled.",
+  investmentSignal: "→ Maintain risk asset positions; hedge energy volatility.",
   prevRiskScore: 40,
   webSources: [],
   webSearchQueries: []
@@ -449,7 +449,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "6月20日节点",
+    node406: "6月21日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -483,16 +483,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.101 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.102 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 40（持平）：美伊间接谈判窗口期延长，双方均表现出对既有和平红利的维护态度。",
-    bannerWarning: "→ 维持风险资产配置，适度对冲能源板块下行风险。",
-    deescalationIntent: "制裁缓解的实质性步骤与核监测的对价分歧",
-    structuralRisk: "航道流量基本正常，未受地缘局势显著干扰。",
-    contradictionNote: "制裁缓解的实质性步骤与核监测的对价分歧；地区代理人力量的约束机制尚未达成共识",
+    bannerSignal: "综合评分 40（持平）：美伊间接谈判进入技术细节阶段，冲突风险处于可控低位。",
+    bannerWarning: "→ 维持风险资产头寸，对冲能源波动风险。",
+    deescalationIntent: "伊朗要求解除核心制裁与美国要求停止核扩大的死结尚未完全解开。",
+    structuralRisk: "航道流量保持高位，无安全事故报告。",
+    contradictionNote: "伊朗要求解除核心制裁与美国要求停止核扩大的死结尚未完全解开。；防御性部署与误判风险之间的平衡极度脆弱。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -500,7 +500,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第112天",
+    dayCount: "第113天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -508,7 +508,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Jun 20 Node",
+    node406: "Jun 21 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -542,16 +542,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.101 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.102 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 40 (Flat): Extended window for US-Iran indirect negotiations with both sides protecting recent peace dividends.",
-    bannerWarning: "→ Maintain risk asset exposure with defensive hedging in energy sectors.",
-    deescalationIntent: "Gap between sanction relief steps and nuclear monitoring quid-pro-quo",
-    structuralRisk: "Channel flow normal without significant geopolitical interference.",
-    contradictionNote: "Gap between sanction relief steps and nuclear monitoring quid-pro-quo; Lack of consensus on regional proxy force containment mechanisms",
+    bannerSignal: "Composite 40 (Flat): US-Iran indirect talks enter technical phase, keeping risk level controlled.",
+    bannerWarning: "→ Maintain risk asset positions; hedge energy volatility.",
+    deescalationIntent: "Core deadlock between sanction relief and nuclear limits remains unresolved.",
+    structuralRisk: "Shipping volume remains high with no reported incidents.",
+    contradictionNote: "Core deadlock between sanction relief and nuclear limits remains unresolved.; Fragile balance between defensive posture and miscalculation risks.",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -559,7 +559,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 112",
+    dayCount: "Day 113",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
