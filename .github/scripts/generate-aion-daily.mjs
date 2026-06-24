@@ -187,8 +187,8 @@ function trailingSameScoreDays(historyArr, score) {
 function quantizeFactorScore(idx, raw) {
   const v = Math.max(1, Math.min(5, Number(raw)));
   if (!Number.isFinite(v)) return 3;
-  // Energy Shock allows 0.5 steps; other factors stay integer.
-  if (idx === 2) return Math.round(v * 2) / 2;
+  // Energy (2) and De-escalation (4) allow 0.5 steps for finer low-band scores (e.g. composite 30).
+  if (idx === 2 || idx === 4) return Math.round(v * 2) / 2;
   return Math.round(v);
 }
 
@@ -496,8 +496,11 @@ ACTIVE_GEMINI_MODEL = shouldEscalateModel ? GEMINI_ESCALATION_MODEL : GEMINI_MOD
 const isTodayLocked = lockedDatesSet.has(todayNy);
 const shouldRunSecondaryWebReview =
   !AION_USE_OPENAI_WEBSEARCH &&
-  staleScoreDays >= CONFIG.staleReviewDays &&
-  Boolean(OPENAI_API_KEY);
+  Boolean(OPENAI_API_KEY) &&
+  (
+    staleScoreDays >= CONFIG.staleReviewDays ||
+    (priorDayComposite <= 44 && prevFactorScores.every((x) => x === 2) && staleScoreDays >= 2)
+  );
 
 console.log(`Previous: ${prev.date} ${prevVersion}, latest.riskScore=${prev.riskScore}, D${prev.conflictDay}`);
 console.log(`Prior calendar day ${yesterdayIso} composite (for 较上期): ${priorDayComposite}`);
@@ -630,16 +633,23 @@ ${REPORT_MARKDOWN_ZH_SPEC}
 
 ### 5. ${factorNamesZh[4]}
 - 1 = 正式和平协议签署或全面停火生效
+- 1.5 = 临时停火/框架性协议已签署或进入执行，实质降级但未终局
 - 2 = 实质性谈判进展，双方释放善意信号
 - 3 = 谈判渠道存在但进展有限，停火脆弱
 - 4 = 谈判停滞或破裂风险高，双方立场强硬
 - 5 = 完全无谈判渠道，双方拒绝对话
 
+### 低分档（综合分 20–40）——局势缓和时必须敢用
+- **综合分没有 40 分下限**；公式为 round(avg(五维) × 20)，理论区间 **20–100**。
+- **40 分 = 五维全部 2 分**；若局势已明显缓和，**禁止**五维偷懒全填 2——须按 rubric 将至少 **2 个维度** 降至 **1 或 1.5**（如军事无新交火、海峡通行恢复、谈判临时协议等）。
+- 参考锚点（勿机械照搬，须有证据）：综合 **36** ≈ 五维合计 9；**30** ≈ 合计 7.5（例 [2,2,1,1,1.5]）；**24** ≈ 合计 6。
+- 第 3 项「能源」与第 5 项「降级/谈判」可用 **0.5 档**；其余维度用整数 1–5。
+
 ### 评分纪律与交叉验证（必须遵守）
 - 每个因子的 **evidence** 必须写清：依据的事实、以及**媒体/机构名称**（至少列出 Google 搜索接地用到的来源）。
 - **sourceVerification** 字段只能是 \`confirmed\`、\`partial\`、\`unverified\`（含义与界面中文一致：**已证实 / 部分证实 / 未证实**）：
   - \`confirmed\`（已证实）：对「同一条实质性信息」已通过 Google 搜索接地找到 **至少两家相互独立的一级权威来源**，且事实表述一致（时间、主体、核心结论不矛盾）。**两家须为不同媒体机构**（例如 AP + Reuters；同一通讯社两篇不同稿件不算，除非另一条为白宫/UN/外交部等**官方一手声明**）。一级权威来源示例：AP、Reuters、AFP、BBC、NYT、WSJ、Financial Times、Al Jazeera English、Washington Post、政府/军方/外交部官网、联合国官方发布。社交媒体、论坛、匿名爆料、内容农场不得作为权威来源。
-  - \`partial\`（部分证实）：仅有一家一级权威 + 一家次要来源互证不足，或两家一级但表述**部分**一致、关键细节未对齐；**脚本会将该因子分数强制与昨日持平**（不因部分互证上调/下调），evidence 首句须点明「部分证实：」及缺口。
+  - \`partial\`（部分证实）：仅有一家一级权威 + 一家次要来源互证不足，或两家一级但表述**部分**一致、关键细节未对齐；**脚本规则**：相对昨日**下调**风险（分数降低）且 |Δ|≤1 时可保留；**上调**风险或 |Δ|>1 时与昨日持平。evidence 首句须点明「部分证实：」及缺口。
   - \`unverified\`（未证实）：**仅一条**权威来源，或第二来源与第一条明显矛盾，或无法互证；**脚本强制该因子分数与昨日持平**，evidence 首句须写「未证实：」说明。
 - **能源冲击（第 3 项）**：与普通因子相同的互证要求——须 **两家相互独立的一级权威** 对「**油价区间 / 趋势** 与 rubric 档位判断」表述一致（允许区间略有出入但**档位一致**），方可标 \`confirmed\` 并相对昨日改分；evidence 必须包含接地 **区间依据 + URL**。若仅单一行情来源、或区间无法互证，标 \`partial\` / \`unverified\`，脚本将与昨日持平。
 - **Justification 措辞**：每个因子 **description / evidence** 中承担论证的首句须为 **可核查的事实陈述 + 机构名**；**禁止**在句首或关键断言处使用模糊词：**「可能」「或许」「据传」「据称」「或」**（不确定时改为「公开报道显示…」并列出具体来源）。
@@ -658,7 +668,7 @@ ${REPORT_MARKDOWN_ZH_SPEC}
 - keyStats[1] 评分变化: 今日 riskScore 与 **昨日收盘综合分 ${priorDayComposite}** 的差值（如 ↑3 或 ↓2 或 持平）；脚本以此为准
 - keyStats 恰好 4 项，顺序：冲突天数、评分变化、油价、霍尔木兹。每项 unit 非空；**keyStats[2] 油价**：value **仅** **WTI/Brent 两段子区间**（见油价专节）；**unit** 中文固定 \`参考\`、英文固定 \`Ref.\`；脚本只统一 unit。**dataEn.keyStats[2].value 全英文数字与符号**，勿混入中文趋势词
 - keyStats[3] 霍尔木兹：**value** 为航道通行强度摘要（如「严重受限」）；**unit** 固定为「通行状态」。勿用「-」或仅百分比作主行（脚本会将空值/- 兜底为「严重受限」+「通行状态」）
-- riskFactors 恰好 5 项，顺序：${factorNamesZh.join("、")}。weight 一律 0.2。除第3项可 0.5 递进外其余用整数。riskScore = round(avg(scores) × 20)
+- riskFactors 恰好 5 项，顺序：${factorNamesZh.join("、")}。weight 一律 0.2。第3项与第5项可用 0.5 档，其余用整数。riskScore = round(avg(scores) × 20)，**可低于 40**
 - 每个 riskFactor 必须包含 **sourceVerification**（confirmed / partial / unverified），规则见上文「交叉验证」
 - riskFactors 的 prev 字段必须等于前一天对应因子的 score
 - events 1–5 条。verification 只能是 confirmed/partial/single。highlight/critical 不需要时设 false
@@ -1127,6 +1137,25 @@ let finalFactors = medianFactors.map((med, i) => {
   return med;
 });
 
+// 低分粘滞：ensemble 中位数五维全 2（综合≈40）时，若候选中有更低且合理的向量则采之，避免「缓和局势却卡 40」
+if (
+  !isTodayLocked &&
+  priorDayComposite <= 48 &&
+  finalFactors.every((f) => f === 2) &&
+  allFactorSets.length > 1
+) {
+  let best = null;
+  for (const set of allFactorSets) {
+    const q = set.map((sc, i) => quantizeFactorScore(i, sc ?? 3));
+    const sum = q.reduce((a, b) => a + b, 0);
+    if (!best || sum < best.sum) best = { factors: q, sum };
+  }
+  if (best && best.sum < 10) {
+    finalFactors = best.factors;
+    console.warn(`Low-band plateau: median all-2 → using lower candidate factors=[${finalFactors.join(",")}] (sum=${best.sum})`);
+  }
+}
+
 // Pick content source closest to median total (before dual-source policy clamp)
 const medianTotal = finalFactors.reduce((a, b) => a + b, 0);
 let payload = validResults[0].parsed;
@@ -1164,6 +1193,10 @@ finalFactors = finalFactors.map((sc, i) => {
   const isConfirmed = legacy === "confirmed";
   if (isConfirmed) return sc;
   const prev = prevFactorScores[i];
+  // 缓和/降级：部分证实时允许单档下调（不必等 confirmed，避免卡 40）
+  if (legacy === "partial" && sc < prev && Math.abs(sc - prev) <= 1) {
+    return sc;
+  }
   if (legacy === "partial" && staleScoreDays >= 5 && Math.abs(sc - prev) <= 1) {
     return sc;
   }
