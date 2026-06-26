@@ -65,12 +65,12 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-06-25",
-  version: "v2.106",
+  date: "2026-06-26",
+  version: "v2.107",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D117",
+      value: "D118",
       unit: "2月28日起",
       color: "#ff851b"
     },
@@ -82,14 +82,14 @@ export const DATA_ZH: DashboardData = {
     },
     {
       label: "油价",
-      value: "WTI $69.15–$71.30 · Brent $72.40–$73.50",
+      value: "WTI $72–75 · Brent $72–75",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "霍尔木兹",
-      value: "逐步恢复",
+      value: "部分受限",
       unit: "通行状态",
       color: "#ffdc00"
     }
@@ -100,25 +100,25 @@ export const DATA_ZH: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "停火备忘录签署后，区域大规模交火停止，转向战后清理。",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "unverified"
     },
     {
       name: "霍尔木兹航运扰动",
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "联合国撤离计划启动，滞留商船开始有序离开。",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "unverified"
     },
     {
       name: "能源冲击",
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "油价跳水至战前水平，战争溢价大幅缩减。",
+      description: "",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -127,7 +127,7 @@ export const DATA_ZH: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "大国通过多边协议约束冲突，介入方式转为外交监控。",
+      description: "",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -136,25 +136,58 @@ export const DATA_ZH: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "伊斯兰堡备忘录（MOU）确立了长期降级的路线图。",
+      description: "",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
   riskScore: 40,
-  change: "down",
   warPhase: {
-    level: "谈判窗口期",
-    targetLevel: "缓和态势",
+    level: "危机升级期",
+    targetLevel: "结构性紧张",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "停火备忘录进入60天执行窗口",
-      "国际力量介入霍尔木兹扫雷工作",
-      "外交层面转入细节行政博弈"
+      "谈判机制建立",
+      "霍尔木兹通行仍受扰动",
+      "能源市场回稳但不稳定"
     ],
     note: "监测用途，不构成投资建议。"
   },
+  events: [
+    {
+      id: "EVT-01",
+      title: "美伊谈判达成“路线图”",
+      description: "卡塔尔与巴基斯坦斡旋下，美伊在瑞士达成60天达成最终协议的“路线图”，并设立霍尔木兹海峡沟通机制。",
+      verification: "confirmed",
+      timestamp: "2026-06-22",
+      significance: ""
+    },
+    {
+      id: "EVT-02",
+      title: "伊朗革命卫队击中商船",
+      description: "伊朗革命卫队攻击一艘新加坡籍商船，船桥受损，挑战美伊恢复霍尔木兹通行的努力。",
+      verification: "single",
+      timestamp: "2026-06-25",
+      significance: ""
+    },
+    {
+      id: "EVT-03",
+      title: "特朗普宣称“伊朗战争结束”",
+      description: "特朗普在国家广场集会上宣称伊朗战争“结束”，但和平前景仍不明。",
+      verification: "single",
+      timestamp: "2026-06-24",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "伊朗加强国内镇压",
+      description: "尽管与美达成谅解，伊朗继续执行政治抗议者处决与逮捕，联合国人权高专与国际特赦组织批评其镇压升级。",
+      verification: "single",
+      timestamp: "2026-06-25",
+      significance: ""
+    }
+  ],
   situations: [
     {
       title: "军事行动",
@@ -162,7 +195,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：停火备忘录签署后，区域大规模交火停止，转向战后清理。"
+        "变化：详见风险因子。"
       ]
     },
     {
@@ -171,7 +204,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：联合国撤离计划启动，滞留商船开始有序离开。"
+        "变化：详见风险因子。"
       ]
     },
     {
@@ -180,7 +213,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：油价跳水至战前水平，战争溢价大幅缩减。"
+        "变化：详见风险因子。"
       ]
     },
     {
@@ -189,23 +222,19 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：大国通过多边协议约束冲突，介入方式转为外交监控。"
+        "变化：详见风险因子。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美方追求航道国际化与伊朗追求地区主导权的细节对冲。"
+      "谈判取得“路线图”进展，但伊朗国内镇压升级，政治信号矛盾。"
     ],
     military: [
-      "残余水雷威胁与各方海军扫雷区域重叠引发的战术摩擦。"
+      "霍尔木兹通行机制建立，但革命卫队仍攻击商船，军事与航运信号不一致。"
     ]
   },
   scoreTrend: [
-    {
-      date: "06-21",
-      score: 40
-    },
     {
       date: "06-22",
       score: 40
@@ -220,95 +249,29 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "06-25",
+      score: 40
+    },
+    {
+      date: "06-26",
       score: 40,
       active: true
     }
   ],
-  keyChange: "美伊签署伊斯兰堡备忘录，油价由于避险情绪退潮出现单日大幅暴跌，局势确立进入实质性降级轨道。",
-  investmentSignal: "→ 减持能源对冲，增加风险资产关注。",
+  keyChange: "霍尔木兹通行仍受扰动，谈判虽进展但不稳",
+  investmentSignal: "→ 防御方向：建议防御性配置，关注能源与航运风险资产",
+  change: "up",
   prevRiskScore: 40,
-  events: [
-    {
-      id: "EVT-AUTO-01",
-      title: "停火备忘录签署后，区域大规模交火停止，转向战后清理",
-      description: "停火备忘录签署后，区域大规模交火停止，转向战后清理。",
-      verification: "single",
-      timestamp: "2026-06-25（当日公开报道）",
-      significance: ""
-    },
-    {
-      id: "EVT-AUTO-02",
-      title: "联合国撤离计划启动，滞留商船开始有序离开",
-      description: "联合国撤离计划启动，滞留商船开始有序离开。",
-      verification: "single",
-      timestamp: "2026-06-25（当日公开报道）",
-      significance: ""
-    }
-  ],
-  webSources: [
-    {
-      title: "insurancejournal.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG6pLzKDuLApk772QPs0tpsaouB7epuA_ik4X4OBJnEZWc9LW3Y4O4dUIuZDqdQxgY9eq6akXOJSN8_A6X6v8lCHU4oXoJD04NDO7oWBSmK6ZqljYdf2PhRvacpgbKaG3ZYtq_OfGcVU_GDuEc2u3WzYh4fxmGw9CQwDMHE60yU"
-    },
-    {
-      title: "arabcenterdc.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHLaycJrX589IO5_NCRmRIkB9psgDvlwUBAVxjcfdvPuWNqkiw6xoqyJOb5HFTO9l0EGCT6qAfhdjssRbI7EJw9TIkwHW7pNGuqktDV2prh7NxebUh_1W-YHmAMFwVGRSu8kndHVie0wupXVdODfH3G7MkGnzJtU8fJ8QmeWXAQL7Exb3TF3CIl0dCZi2iPiex3G9yJX4NJpO64vH-OyRyg6p2zOODiYt9C1wmxzzZV6kfTubfRT2THBKXHgQ=="
-    },
-    {
-      title: "wikipedia.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEk7sQMl4K16ZOBhIfWcYZnMWhXeynK8fFEKDrGSwoTlGsWWr-BucSxmlFqoM4oZRT83hQ8ySt5oM9KcqKWE9X4XYapUWsDnp6oRbuGR458YAUdUqsZ4wRJmlM_pKvwAs5_WcEHRp9O5dhE_LVAMoHS"
-    },
-    {
-      title: "businesstimes.com.sg",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGLAG2ZR9q6yyXPBwULMG7OBrHZ5NWoufH8CsCN8yRPMiBTjpn_0ayGqYgUzWQSE3fqXneaOzekeMy-0kVqSDLY8022jkvu5E5PyfWlJWHHqKha-Zw-6Lcna4hDMxAlOh8Vv_sanQrnvaYtqZiK9xieQTw3fXZIe09Yw8_No_oXnJbUeuFiGSm8RpFErT3grsRoNv0p3RGhYDoF6ehcar5m"
-    },
-    {
-      title: "timesofisrael.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGksYM5YdKmquWaMSnSLtWB6Ll8aoeROkrgeAxaHcav6zCPMKwrPa9vjxNP2OWGJiVmA_fKQkVMnXnLAzj3v9pwjmgWpH8GPXmGA-zmWTagqM64ob1Ach6sg2-22NMD9Ka-i3sRNyk9kTj51WfK1GIhcxsg3D3d0El41hoj3ibEGpjvmemdKNlhhlhQHI_c8NVcwKvaN0ab8fFpzIqumUTC"
-    },
-    {
-      title: "gulfnews.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGE5p2TcKTUp9C_-gvwYi919cZygEfm55P7wRa8Oah8kMy1X1TOoM6V9a7HM5HrkiSdfF8QyES-twN9VAset1K5Kiq_kXkbxLkQP64CKIcqMu9ALE0Kq01HN6_rVDlMHLf9feLwKd8ud2EOqTLLx52wsPzyT6K51oEwriL1ifRYg0PeJw8yvWQnhZItmSOf3_ZHL-ucM9rIkwXIeeJu2sScGJr1GIfCG4puW-Ou1hfjbgwUeBmm1dcKcQn8"
-    },
-    {
-      title: "news.az",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFlRiVAuW-H199Pdd1fv1_cFAMPgcjq8tL5dKfXjydVsfEQR2zvplVtykmQO1MeVtHmrbKOZ8RKNeaMeWJgibm4z028ldPe6dKVffMu6-t4u5w-TPn00iNjxBRnLzew30Ly-7rrBZZxevOSLqUFExgajRIktqW7N6I4kTGVfTYr"
-    },
-    {
-      title: "schwab.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHwA55eLOzxhxwUDFXKAnO2zGIyjMOmqQdDC5QOm4u34dkvdUDFuY2x6En0utJhudF_HhpVIlAMQHfe0o7mDaiLzr5_ujRHiCg7D5Z7zUYLTX5CTosUhazxj8vncXzAZCG3dBBfFzQA59WjGhtyhX3ntw=="
-    },
-    {
-      title: "iranintl.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEQPaqUbpQEBk3Yy5JOTXLQU22AveN3EyXbUUq2fdf0tfT4vXj3k58nAPL0C1NCLmJ4Zc_DAzOuYshJZzka__aYPqueGP-46t8ucQ-x8tYFBeEMDvalcwjymJpHMmvh"
-    },
-    {
-      title: "aljazeera.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE1Vag_yMAmyFd642eUgX-8iRRbsGE1P5QkBPtRTj_HXsrZaWkUq_gaUCURRWwNJWwWtoDKzLPYgOBCoTwpPmN6cvQSkpwYjP0de5f1ygfw7TtYri_x16B_Vwkc89X7KFUOzn7oLUUHp-gi8Mx4sNvBb1rfPxDbTpOWD-jEAxsLvAjaHon9k-tpHdTz1MwpOPcNBHZaW9R8D93FLIU="
-    },
-    {
-      title: "jpost.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHl0JLBwAZ9cwaQkDvJX1KgTQBXfIWmgKkDSk4wJNmPjKrtB9Qpi4BM50kDQOHHbr-wC6Zz0N9bDzqJqZLz3ouSxU9lddDI0S5jIK996Ev_h-l84IHA_E3KktqPmqKZmEh21B7xqPFijCf_WB__U-ILuNLY0z-nN6XBXurNB4ETxw=="
-    },
-    {
-      title: "foxnews.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXbBKiLNcdrlSYDCScP9UN-awqHHLvh28ff1D4jdkVaZtKerLkqI7uw_D7RIMeWqIk9LL0drfhyql4PJ1imAaUy3Tpt_egzCFIDK8tSe5I8ZcrQsDiiqXS2IHhEXHq3zgv6gPpqH731-xeNoSrV8-lQJ_q38A7U6eZTm1vRTg6k2JHohcvFRRwR3xBHmczBPN_M2yKS4lQkBM--WM2"
-    }
-  ],
-  webSearchQueries: [
-    "WTI Brent oil price range June 25 2024 Reuters Bloomberg",
-    "US Iran relations official statements June 25 2024",
-    "Hormuz Strait shipping status June 25 2024"
-  ]
+  webSources: [],
+  webSearchQueries: []
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-06-25",
-  version: "v2.106",
+  date: "2026-06-26",
+  version: "v2.107",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D117",
+      value: "D118",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
@@ -320,14 +283,14 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Oil",
-      value: "WTI $69.15–$71.30 · Brent $72.40–$73.50",
+      value: "WTI $72–75 · Brent $72–75",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
-      value: "Recovering",
+      value: "Partially restricted",
       unit: "Transit Status",
       color: "#ffdc00"
     }
@@ -338,25 +301,25 @@ export const DATA_EN: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "The ceasefire framework is holding; focus shifts to demining and post-war stability.",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "unverified"
     },
     {
       name: "Hormuz Disruption",
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "UN evacuation scheme is active, significantly boosting vessel confidence.",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "unverified"
     },
     {
       name: "Energy Shock",
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "Oil prices have plummeted back to pre-war levels as supply fears evaporate.",
+      description: "",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -365,7 +328,7 @@ export const DATA_EN: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "Direct intervention has transitioned from military posturing to diplomatic monitoring.",
+      description: "",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -374,25 +337,58 @@ export const DATA_EN: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "The Islamabad MOU marks the most significant progress since the conflict began.",
+      description: "",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
   riskScore: 40,
-  change: "down",
   warPhase: {
-    level: "Negotiation Window",
-    targetLevel: "Easing Posture",
+    level: "Escalation Phase",
+    targetLevel: "Structural Tension",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Islamabad MOU enters 60-day implementation period",
-      "International demining efforts active in Hormuz",
-      "Diplomatic focus shifts to administrative and verification details"
+      "Negotiation mechanism established",
+      "Hormuz transit still disrupted",
+      "Energy market stabilizing but fragile"
     ],
     note: "For monitoring only; not investment advice."
   },
+  events: [
+    {
+      id: "EVT-01",
+      title: "US‑Iran agree on “road map”",
+      description: "Under mediation by Qatar and Pakistan, US and Iran in Switzerland agreed on a 60‑day road map toward a final deal and set up a Hormuz communication mechanism.",
+      verification: "confirmed",
+      timestamp: "2026-06-22",
+      significance: ""
+    },
+    {
+      id: "EVT-02",
+      title: "Iran Revolutionary Guard hits merchant ship",
+      description: "Iran’s Revolutionary Guard attacked a Singapore‑flagged merchant vessel, damaging its bridge, challenging efforts to reopen Hormuz transit.",
+      verification: "single",
+      timestamp: "2026-06-25",
+      significance: ""
+    },
+    {
+      id: "EVT-03",
+      title: "Trump declares “Iran war over”",
+      description: "At a rally on the National Mall, Trump declared the Iran war “done,” though peace outlook remains uncertain.",
+      verification: "single",
+      timestamp: "2026-06-24",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "Iran intensifies internal crackdown",
+      description: "Despite reaching understanding with US, Iran continues executing and arresting protesters; UN and Amnesty criticize escalation.",
+      verification: "single",
+      timestamp: "2026-06-25",
+      significance: ""
+    }
+  ],
   situations: [
     {
       title: "Military Action",
@@ -400,7 +396,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: The ceasefire framework is holding; focus shifts to demining and post-war stability."
+        "Change: See risk factors."
       ]
     },
     {
@@ -409,7 +405,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: UN evacuation scheme is active, significantly boosting vessel confidence."
+        "Change: See risk factors."
       ]
     },
     {
@@ -418,7 +414,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Oil prices have plummeted back to pre-war levels as supply fears evaporate."
+        "Change: See risk factors."
       ]
     },
     {
@@ -427,23 +423,19 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Direct intervention has transitioned from military posturing to diplomatic monitoring."
+        "Change: See risk factors."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Clash between US vision of open waterways and Iranian push for regional administrative influence."
+      "Negotiation roadmap achieved, but Iran’s internal crackdown escalates, signaling political contradiction."
     ],
     military: [
-      "Tactical friction during demining coordination between western and local navies."
+      "Hormuz communication mechanism established, yet Revolutionary Guard attacks ship, military‑shipping signals conflict."
     ]
   },
   scoreTrend: [
-    {
-      date: "06-21",
-      score: 40
-    },
     {
       date: "06-22",
       score: 40
@@ -458,86 +450,20 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "06-25",
+      score: 40
+    },
+    {
+      date: "06-26",
       score: 40,
       active: true
     }
   ],
-  keyChange: "The signing of the Islamabad MOU led to a crash in oil prices as risk premiums vanished, marking a structural de-escalation.",
-  investmentSignal: "→ Reduce energy hedges, increase focus on risk assets.",
+  keyChange: "Hormuz transit still disrupted despite negotiation progress",
+  investmentSignal: "→ Defensive stance: recommend defensive positioning, focus on energy and shipping risk assets",
+  change: "up",
   prevRiskScore: 40,
-  events: [
-    {
-      id: "EVT-AUTO-01",
-      title: "The ceasefire framework is holding",
-      description: "The ceasefire framework is holding; focus shifts to demining and post-war stability.",
-      verification: "single",
-      timestamp: "2026-06-25 (same-day reporting)",
-      significance: ""
-    },
-    {
-      id: "EVT-AUTO-02",
-      title: "UN evacuation scheme is active, significantly boosting vessel confidence",
-      description: "UN evacuation scheme is active, significantly boosting vessel confidence.",
-      verification: "single",
-      timestamp: "2026-06-25 (same-day reporting)",
-      significance: ""
-    }
-  ],
-  webSources: [
-    {
-      title: "insurancejournal.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG6pLzKDuLApk772QPs0tpsaouB7epuA_ik4X4OBJnEZWc9LW3Y4O4dUIuZDqdQxgY9eq6akXOJSN8_A6X6v8lCHU4oXoJD04NDO7oWBSmK6ZqljYdf2PhRvacpgbKaG3ZYtq_OfGcVU_GDuEc2u3WzYh4fxmGw9CQwDMHE60yU"
-    },
-    {
-      title: "arabcenterdc.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHLaycJrX589IO5_NCRmRIkB9psgDvlwUBAVxjcfdvPuWNqkiw6xoqyJOb5HFTO9l0EGCT6qAfhdjssRbI7EJw9TIkwHW7pNGuqktDV2prh7NxebUh_1W-YHmAMFwVGRSu8kndHVie0wupXVdODfH3G7MkGnzJtU8fJ8QmeWXAQL7Exb3TF3CIl0dCZi2iPiex3G9yJX4NJpO64vH-OyRyg6p2zOODiYt9C1wmxzzZV6kfTubfRT2THBKXHgQ=="
-    },
-    {
-      title: "wikipedia.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEk7sQMl4K16ZOBhIfWcYZnMWhXeynK8fFEKDrGSwoTlGsWWr-BucSxmlFqoM4oZRT83hQ8ySt5oM9KcqKWE9X4XYapUWsDnp6oRbuGR458YAUdUqsZ4wRJmlM_pKvwAs5_WcEHRp9O5dhE_LVAMoHS"
-    },
-    {
-      title: "businesstimes.com.sg",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGLAG2ZR9q6yyXPBwULMG7OBrHZ5NWoufH8CsCN8yRPMiBTjpn_0ayGqYgUzWQSE3fqXneaOzekeMy-0kVqSDLY8022jkvu5E5PyfWlJWHHqKha-Zw-6Lcna4hDMxAlOh8Vv_sanQrnvaYtqZiK9xieQTw3fXZIe09Yw8_No_oXnJbUeuFiGSm8RpFErT3grsRoNv0p3RGhYDoF6ehcar5m"
-    },
-    {
-      title: "timesofisrael.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGksYM5YdKmquWaMSnSLtWB6Ll8aoeROkrgeAxaHcav6zCPMKwrPa9vjxNP2OWGJiVmA_fKQkVMnXnLAzj3v9pwjmgWpH8GPXmGA-zmWTagqM64ob1Ach6sg2-22NMD9Ka-i3sRNyk9kTj51WfK1GIhcxsg3D3d0El41hoj3ibEGpjvmemdKNlhhlhQHI_c8NVcwKvaN0ab8fFpzIqumUTC"
-    },
-    {
-      title: "gulfnews.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGE5p2TcKTUp9C_-gvwYi919cZygEfm55P7wRa8Oah8kMy1X1TOoM6V9a7HM5HrkiSdfF8QyES-twN9VAset1K5Kiq_kXkbxLkQP64CKIcqMu9ALE0Kq01HN6_rVDlMHLf9feLwKd8ud2EOqTLLx52wsPzyT6K51oEwriL1ifRYg0PeJw8yvWQnhZItmSOf3_ZHL-ucM9rIkwXIeeJu2sScGJr1GIfCG4puW-Ou1hfjbgwUeBmm1dcKcQn8"
-    },
-    {
-      title: "news.az",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFlRiVAuW-H199Pdd1fv1_cFAMPgcjq8tL5dKfXjydVsfEQR2zvplVtykmQO1MeVtHmrbKOZ8RKNeaMeWJgibm4z028ldPe6dKVffMu6-t4u5w-TPn00iNjxBRnLzew30Ly-7rrBZZxevOSLqUFExgajRIktqW7N6I4kTGVfTYr"
-    },
-    {
-      title: "schwab.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHwA55eLOzxhxwUDFXKAnO2zGIyjMOmqQdDC5QOm4u34dkvdUDFuY2x6En0utJhudF_HhpVIlAMQHfe0o7mDaiLzr5_ujRHiCg7D5Z7zUYLTX5CTosUhazxj8vncXzAZCG3dBBfFzQA59WjGhtyhX3ntw=="
-    },
-    {
-      title: "iranintl.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEQPaqUbpQEBk3Yy5JOTXLQU22AveN3EyXbUUq2fdf0tfT4vXj3k58nAPL0C1NCLmJ4Zc_DAzOuYshJZzka__aYPqueGP-46t8ucQ-x8tYFBeEMDvalcwjymJpHMmvh"
-    },
-    {
-      title: "aljazeera.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE1Vag_yMAmyFd642eUgX-8iRRbsGE1P5QkBPtRTj_HXsrZaWkUq_gaUCURRWwNJWwWtoDKzLPYgOBCoTwpPmN6cvQSkpwYjP0de5f1ygfw7TtYri_x16B_Vwkc89X7KFUOzn7oLUUHp-gi8Mx4sNvBb1rfPxDbTpOWD-jEAxsLvAjaHon9k-tpHdTz1MwpOPcNBHZaW9R8D93FLIU="
-    },
-    {
-      title: "jpost.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHl0JLBwAZ9cwaQkDvJX1KgTQBXfIWmgKkDSk4wJNmPjKrtB9Qpi4BM50kDQOHHbr-wC6Zz0N9bDzqJqZLz3ouSxU9lddDI0S5jIK996Ev_h-l84IHA_E3KktqPmqKZmEh21B7xqPFijCf_WB__U-ILuNLY0z-nN6XBXurNB4ETxw=="
-    },
-    {
-      title: "foxnews.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXbBKiLNcdrlSYDCScP9UN-awqHHLvh28ff1D4jdkVaZtKerLkqI7uw_D7RIMeWqIk9LL0drfhyql4PJ1imAaUy3Tpt_egzCFIDK8tSe5I8ZcrQsDiiqXS2IHhEXHq3zgv6gPpqH731-xeNoSrV8-lQJ_q38A7U6eZTm1vRTg6k2JHohcvFRRwR3xBHmczBPN_M2yKS4lQkBM--WM2"
-    }
-  ],
-  webSearchQueries: [
-    "WTI Brent oil price range June 25 2024 Reuters Bloomberg",
-    "US Iran relations official statements June 25 2024",
-    "Hormuz Strait shipping status June 25 2024"
-  ]
+  webSources: [],
+  webSearchQueries: []
 };
 
 export const TRANSLATIONS = {
@@ -545,7 +471,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "6月25日节点",
+    node406: "6月26日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -579,16 +505,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.106 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.107 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 40（持平）：美伊签署伊斯兰堡备忘录，油价由于避险情绪退潮出现单日大幅暴跌，局势确立进入实质性降级轨道。",
-    bannerWarning: "→ 减持能源对冲，增加风险资产关注。",
-    deescalationIntent: "美方追求航道国际化与伊朗追求地区主导权的细节对冲。",
-    structuralRisk: "联合国撤离计划启动，滞留商船开始有序离开。",
-    contradictionNote: "美方追求航道国际化与伊朗追求地区主导权的细节对冲。；残余水雷威胁与各方海军扫雷区域重叠引发的战术摩擦。",
+    bannerSignal: "综合评分 40（持平）：霍尔木兹通行仍受扰动，谈判虽进展但不稳",
+    bannerWarning: "→ 防御方向：建议防御性配置，关注能源与航运风险资产",
+    deescalationIntent: "谈判取得“路线图”进展，但伊朗国内镇压升级，政治信号矛盾。",
+    structuralRisk: "咽喉与航运条件仍影响流量。",
+    contradictionNote: "谈判取得“路线图”进展，但伊朗国内镇压升级，政治信号矛盾。；霍尔木兹通行机制建立，但革命卫队仍攻击商船，军事与航运信号不一致。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -596,7 +522,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第117天",
+    dayCount: "第118天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -604,7 +530,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Jun 25 Node",
+    node406: "Jun 26 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -638,16 +564,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.106 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.107 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 40 (Flat): The signing of the Islamabad MOU led to a crash in oil prices as risk premiums vanished, marking a structural de-escalation.",
-    bannerWarning: "→ Reduce energy hedges, increase focus on risk assets.",
-    deescalationIntent: "Clash between US vision of open waterways and Iranian push for regional adminis…",
-    structuralRisk: "UN evacuation scheme is active, significantly boosting vessel confidence.",
-    contradictionNote: "Clash between US vision of open waterways and Iranian push for regional administrative influence.; Tactical friction during demining coordination between weste…",
+    bannerSignal: "Composite 40 (Flat): Hormuz transit still disrupted despite negotiation progress",
+    bannerWarning: "→ Defensive stance: recommend defensive positioning, focus on energy and shipping risk assets",
+    deescalationIntent: "Negotiation roadmap achieved, but Iran’s internal crackdown escalates, signalin…",
+    structuralRisk: "Chokepoint conditions still matter.",
+    contradictionNote: "Negotiation roadmap achieved, but Iran’s internal crackdown escalates, signaling political contradiction.; Hormuz communication mechanism established, yet Revo…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -655,7 +581,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 117",
+    dayCount: "Day 118",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
