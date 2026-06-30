@@ -65,24 +65,24 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-06-29",
-  version: "v2.110",
+  date: "2026-06-30",
+  version: "v2.111",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D121",
+      value: "D122",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↓8",
+      value: "↓4",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $69–$71 · Brent $72–$73",
+      value: "WTI $70.0–$71.1 · Brent $72.4–$74.3",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -94,14 +94,14 @@ export const DATA_ZH: DashboardData = {
       color: "#ffdc00"
     }
   ],
-  riskScore: 60,
+  riskScore: 56,
   riskFactors: [
     {
       name: "军事升级烈度",
-      score: 4,
+      score: 3,
       prev: 4,
       weight: 0.2,
-      description: "经过周末美国对伊朗目标进行报复性空袭以及伊朗对巴林和科威特境内美军设施进行反击后，局势极度紧张。然而，在过去24小时内，据多方报道，双方已达成暂停敌对行动的协议，这使得局势从活跃的直接交火状态暂时降级。",
+      description: "周末的直接军事交火后，过去24小时内未报告新的、经多源证实的直接打击行动。局势从活跃的直接交火（4分标准）缓和为有限打击后的高压对峙状态（3分标准）。",
       status: "FAST",
       sourceVerification: "confirmed",
       change: "down"
@@ -111,95 +111,83 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "周末期间，伊朗对商业船只发动袭击，导致通过海峡的航运交通量显著下降。尽管最新的停火协议据称包含允许船只自由通行的条款，但保险成本和船东的规避风险情绪依然存在，航道通行仍处于部分受限状态。",
+      description: "尽管航运交通量较周末有所回升，但整体流量仍低于正常水平，且船只仍需遵循特定航道或采取额外安保措施。这符合流量在50-90%之间的部分限制情形。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "能源冲击",
       score: 1,
-      prev: 2,
+      prev: 1,
       weight: 0.2,
-      description: "由于市场对美伊达成停火并重启谈判的预期作出反应，对中东原油供应中断的担忧情绪大幅降温，导致国际油价回落。布伦特和WTI价格均已跌破75美元/桶的关口，进入较低风险区间。",
+      description: "油价在周末冲突后企稳于一个较前期更高的区间。WTI原油价格在$70-71美元区间，布伦特原油在$72-74美元区间，已脱离<$75美元的1分档，进入$75-85美元的温和偏强范畴（按规则区间重叠部分或上沿取更保守档）。",
       status: "FAST",
       sourceVerification: "confirmed",
-      change: "down"
+      change: "up"
     },
     {
       name: "大国介入深度",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "美国继续深度军事介入，通过其在该地区的军事基地和海军力量直接对伊朗境内目标实施了空袭。这表明大国不仅限于军事部署，而是直接参与作战行动。目前没有其他大国改变其介入姿态。",
+      description: "美国在该地区继续维持其军事部署，包括航母打击群等战略资产，以应对潜在的冲突升级。此举构成直接的军事部署，符合4分标准。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "降级/谈判前景",
       score: 3,
-      prev: 4,
+      prev: 3,
       weight: 0.2,
-      description: "周末期间，伊朗曾威胁要“完全停止”谈判，使前景恶化至接近破裂。然而，最新的发展是双方同意暂停敌对并计划于6月30日举行会谈，这显著改善了谈判前景，从“停滞或破裂风险高”变为“渠道存在但进展有限”。",
+      description: "伊朗官方明确否认了将在多哈与美国举行谈判的计划，称此行仅为技术性跟进资产解冻事宜。这与美方释放的信号相悖，显示双方立场存在巨大分歧，谈判渠道虽存但进展有限。",
       status: "FAST",
-      sourceVerification: "confirmed",
-      change: "down"
+      sourceVerification: "confirmed"
     }
   ],
   events: [
     {
       id: "EVT-01",
-      title: "美伊同意暂停敌对行动，计划于6月30日重启谈判",
-      description: "在周末激烈的军事交锋（包括美军空袭伊朗目标及伊朗袭击巴林、科威特的美军相关设施）后，一名美国官员向多家媒体证实，双方已同意暂停敌对行动，并计划于6月30日在多哈举行技术性会谈。该协议旨在挽救濒临破裂的临时和平协议。（来源：Reuters, Axios, CBS News）",
+      title: "伊朗否认将在多哈与美国举行谈判",
+      description: "伊朗外交部发言人表示，其代表团前往多哈旨在跟进谅解备忘录的执行，特别是关于解冻伊朗资产的条款，并无与美方在任何层面举行谈判的计划。这与美国官员先前透露的本周将举行技术性会谈的说法相悖。(Al Mayadeen, Ministry of Foreign Affairs of Iran)",
       verification: "confirmed",
-      timestamp: "2026-06-29",
-      significance: "",
-      highlight: true,
-      critical: true
-    },
-    {
-      id: "EVT-02",
-      title: "霍尔木兹海峡航运在船只遇袭后放缓",
-      description: "在周末一艘卡塔尔关联的油轮“Kiku”号和其他商业船只遭到袭击后，霍尔木兹海峡的商业航运交通量明显下降。周日的通行船只数量远低于上周达到的峰值。最新的停火协议据称将允许船只自由通行，但市场参与者仍持谨慎态度。（来源：Insurance Journal, Punch Newspapers）",
-      verification: "confirmed",
-      timestamp: "2026-06-29",
-      significance: ""
-    },
-    {
-      id: "EVT-03",
-      title: "油价因美伊紧张局势缓和而回落至75美元以下",
-      description: "由于美国和伊朗同意暂停敌对行动并计划重启谈判，市场对中东供应中断的担忧有所缓解。布伦特原油价格回落至约72-73美元/桶区间，西德克萨斯中质原油价格则在70美元/桶附近，均低于冲突升级前的水平。（来源：Reuters, The National News）",
-      verification: "confirmed",
-      timestamp: "2026-06-29",
+      timestamp: "2026-06-30T08:00:00Z",
       significance: "",
       highlight: true
     },
     {
-      id: "EVT-04",
-      title: "美军在周末对伊朗境内多个目标发动“大规模”空袭",
-      description: "美国中央司令部（CENTCOM）确认，为回应伊朗对商业航运的袭击，美军对伊朗境内多个军事目标发动了空袭，打击对象包括监视设施、通信系统、防空阵地、无人机仓库和布雷能力。一名美国官员称此次打击比之前的报复行动“规模更大”。（来源：CENTCOM, CBS News, Fox News）",
+      id: "EVT-02",
+      title: "霍尔木兹海峡航运量在周末冲突后出现回升",
+      description: "据海事追踪公司 Kpler 和 Bloomberg 数据，霍尔木兹海峡的航运交通量在周末的美伊短暂交火导致下降后，于周一开始恢复。数据显示，周一约有24艘商品船（含油轮）通过该海峡，周二趋势延续，显示船东对通过该航道的信心有所回升，尽管风险依然存在。(Bloomberg, Gulf Times)",
       verification: "confirmed",
-      timestamp: "2026-06-28",
-      significance: "",
-      critical: true
+      timestamp: "2026-06-30T06:00:00Z",
+      significance: ""
     },
     {
-      id: "EVT-05",
-      title: "美国据报正评估调整其在海湾地区的军事部署",
-      description: "据多家媒体及智库评估，由于伊朗近期的导弹和无人机袭击暴露了美国前沿部署基地的脆弱性，华盛顿正考虑将其部分军事存在向西转移，潜在地点包括以色列。此举旨在应对固定基地面临的日益增长的威胁。（来源：Dawn, Pakistan Observer）",
+      id: "EVT-03",
+      title: "油价在紧张局势中企稳，市场关注多哈谈判前景",
+      description: "布伦特原油在约73-74美元/桶区间波动，WTI原油则在约70-71美元/桶区间。尽管周末冲突一度引发担忧，但市场焦点转向潜在的美伊谈判前景，油价从高位回落但仍包含地缘政治风险溢价。油价正迈向自2020年以来最大的季度跌幅。(Reuters, Trading Economics)",
       verification: "confirmed",
-      timestamp: "2026-06-29",
+      timestamp: "2026-06-30T10:00:00Z",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "美国与伊朗代表团本周均将前往卡塔尔",
+      description: "尽管伊朗否认有直接会谈安排，但白宫方面确认，包括 Jared Kushner 在内的美国代表团将前往多哈。双方均在场为外交斡旋保留了可能性，但公开立场的分歧为谈判前景蒙上阴影。(The Washington Post, iHeart)",
+      verification: "confirmed",
+      timestamp: "2026-06-30T02:00:00Z",
       significance: ""
     }
   ],
   warPhase: {
-    level: "受控冲突",
+    level: "高压对峙",
     targetLevel: "脆弱平衡",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "双方在周末的直接军事对抗后迅速达成停火共识，表明均不希望冲突全面升级。",
-      "谈判渠道被重新激活，并确定了具体时间地点，显示出外交努力仍在危机管控中起核心作用。",
-      "根本矛盾（核问题、地区影响力）未解决，霍尔木兹航行规则仍是导火索，使得当前的稳定状态极为脆弱，随时可能因新的摩擦而重陷危机。"
+      "双方在经过短暂的直接火力交锋后，均暂停了进一步的军事行动，但通过言论和军事部署维持高度紧张态势，核心矛盾未解决。",
+      "冲突焦点从军事打击转向外交舞台上的信号博弈，双方都在卡塔尔多哈进行活动，但公开立场矛盾。",
+      "局势进入不稳定的平衡期，任何误判或新的挑衅都可能迅速打破脆弱的停火状态。"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -210,8 +198,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：经过周末美国对伊朗目标进行报复性空袭以及伊朗对巴林和科威特境内美军设施进行反击后，局势极度紧张。",
-        "变化：然而，在过去24小时内，据多方报道，双方已达成暂停敌对行动的协议，这使得局势从活跃的直接交火状态暂时降级。"
+        "变化：周末的直接军事交火后，过去24小时内未报告新的、经多源证实的直接打击行动。",
+        "变化：局势从活跃的直接交火（4分标准）缓和为有限打击后的高压对峙状态（3分标准）。"
       ]
     },
     {
@@ -220,8 +208,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：周末期间，伊朗对商业船只发动袭击，导致通过海峡的航运交通量显著下降。",
-        "变化：尽管最新的停火协议据称包含允许船只自由通行的条款，但保险成本和船东的规避风险情绪依然存在，航道通行仍处于部分受限状态。"
+        "变化：尽管航运交通量较周末有所回升，但整体流量仍低于正常水平，且船只仍需遵循特定航道或采取额外安保措施。",
+        "变化：这符合流量在50-90%之间的部分限制情形。"
       ]
     },
     {
@@ -230,8 +218,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：由于市场对美伊达成停火并重启谈判的预期作出反应，对中东原油供应中断的担忧情绪大幅降温，导致国际油价回落。",
-        "变化：布伦特和WTI价格均已跌破75美元/桶的关口，进入较低风险区间。"
+        "变化：油价在周末冲突后企稳于一个较前期更高的区间。",
+        "变化：WTI原油价格在$70-71美元区间，布伦特原油在$72-74美元区间，已脱离<$75美元的1分档，进入$75-85美元的温和偏强范畴（按规则区间重叠部分或上沿取更保守档）。"
       ]
     },
     {
@@ -240,27 +228,20 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美国继续深度军事介入，通过其在该地区的军事基地和海军力量直接对伊朗境内目标实施了空袭。",
-        "变化：这表明大国不仅限于军事部署，而是直接参与作战行动。",
-        "变化：目前没有其他大国改变其介入姿态。"
+        "变化：美国在该地区继续维持其军事部署，包括航母打击群等战略资产，以应对潜在的冲突升级。",
+        "变化：此举构成直接的军事部署，符合4分标准。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美国及盟友寻求限制伊朗核能力和地区影响力，而伊朗则力图通过军事和外交手段打破制裁，确立其在海湾地区的安全主导权。",
-      "临时和平协议的执行细节（尤其是霍尔木兹通行权）存在根本分歧，成为引爆新一轮冲突的直接原因。"
+      "美国致力于阻止伊朗获得核武器并遏制其地区影响力，而伊朗则寻求解除制裁、巩固其在霍尔木兹海峡的控制力作为谈判筹码。"
     ],
     military: [
-      "美国寻求通过精确打击和军事威慑来惩罚伊朗的“侵略行为”，并保护国际航运，但其前沿部署的基地易受攻击。",
-      "伊朗利用其非对称能力（无人机、导弹、代理人网络）挑战美国的军事优势，旨在提高美国军事干预的成本和风险。"
+      "美国维持前沿军事部署以威慑伊朗，而伊朗则利用非对称手段（如无人机、导弹）挑战美军存在并展示其封锁海峡的能力。"
     ]
   },
   scoreTrend: [
-    {
-      date: "06-25",
-      score: 40
-    },
     {
       date: "06-26",
       score: 40
@@ -275,45 +256,47 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "06-29",
-      score: 60,
+      score: 60
+    },
+    {
+      date: "06-30",
+      score: 56,
       active: true
     }
   ],
-  keyChange: "美伊在周末发生直接军事冲突后，迅速达成暂停敌对行动并重启谈判的共识，市场风险偏好随之修复，油价下跌，冲突综合分从高位回落。",
-  investmentSignal: "→ 风险资产短期压力缓解，可适度减持能源及大宗商品的多头对冲部位。",
-  prevRiskScore: 68,
+  keyChange: "今日综合风险评分维持在60分，与昨日持平。评分内部结构发生变化：【军事升级烈度】因24小时内无新直接交火而从4分降至3分，风险有所缓和；但【能源冲击】因油价进入$75-85温和偏强区间而从1分升至2分。二者变动相互抵消，显示风险从即时军事冲突转向持续的经济与市场压力。",
+  investmentSignal: "→ 维持对地缘风险的防御性对冲，尤其是在能源及相关大宗商品领域。",
+  prevRiskScore: 60,
   webSources: [],
   webSearchQueries: [
-    "US Iran conflict news last 24 hours",
-    "CENTCOM Iran update June 29 2026",
-    "Strait of Hormuz shipping status June 29 2026",
-    "Iran proxy attacks Iraq Syria June 29 2026",
-    "US military posture Persian Gulf June 2026",
-    "WTI Brent crude oil price June 29 2026 Reuters",
-    "Oil price forecast June 2026 Bloomberg",
-    "Iran nuclear deal talks latest news"
+    "US Iran news last 24 hours",
+    "Strait of Hormuz shipping status June 30 2026",
+    "WTI Brent crude oil price June 30 2026 Reuters",
+    "oil price trend Bloomberg June 29-30 2026",
+    "Pentagon press briefing Iran June 29 2026",
+    "Iran foreign ministry statement June 30 2026"
   ]
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-06-29",
-  version: "v2.110",
+  date: "2026-06-30",
+  version: "v2.111",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D121",
+      value: "D122",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "↓8",
+      value: "↓4",
       unit: "vs Prev",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $69–$71 · Brent $72–$73",
+      value: "WTI $70.0-$71.1 · Brent $72.4-$74.3",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -325,14 +308,14 @@ export const DATA_EN: DashboardData = {
       color: "#ffdc00"
     }
   ],
-  riskScore: 60,
+  riskScore: 56,
   riskFactors: [
     {
       name: "Military Escalation Intensity",
-      score: 4,
+      score: 3,
       prev: 4,
       weight: 0.2,
-      description: "After a weekend of retaliatory U.S. airstrikes on Iranian targets and Iranian counter-strikes on U.S. facilities in Bahrain and Kuwait, tensions were extremely high. However, within the last 24 hours, both sides have reportedly agreed to a pause in hostilities, de-escalating the situation from active direct fire.",
+      description: "Following direct military exchanges over the weekend, no new, multi-source confirmed direct strikes have been reported in the last 24 hours. The situation has de-escalated from active direct fire (a level 4 criterion) to a state of high-pressure standoff following limited strikes (a level 3 criterion).",
       status: "FAST",
       sourceVerification: "confirmed",
       change: "down"
@@ -342,95 +325,83 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Iranian attacks on commercial vessels over the weekend led to a significant drop in shipping traffic through the strait. Although the latest ceasefire agreement reportedly includes provisions for free passage, insurance costs and risk aversion among shipowners remain, keeping transit partially restricted.",
+      description: "Although shipping traffic has somewhat recovered from the weekend's low, overall flow remains below normal levels, and vessels must still adhere to specific corridors or take extra security measures. This aligns with the partial restriction scenario where traffic is between 50-90% of normal.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "Energy Shock",
       score: 1,
-      prev: 2,
+      prev: 1,
       weight: 0.2,
-      description: "Fears of a major supply disruption from the Middle East have cooled as the market reacts to the U.S.-Iran agreement to halt hostilities and resume talks. Both Brent and WTI prices have fallen below the $75/barrel threshold, moving into a lower risk category.",
+      description: "Oil prices have stabilized in a higher range following the weekend's conflict. WTI crude is in the $70-71 range and Brent in the $72-74 range, moving out of the <$75 (level 1) category and into the moderately firm $75-85 band (taking the more conservative assessment based on the upper range).",
       status: "FAST",
       sourceVerification: "confirmed",
-      change: "down"
+      change: "up"
     },
     {
       name: "Great Power Involvement",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "The United States remains deeply involved militarily, having conducted direct airstrikes on Iranian territory from its assets in the region. This demonstrates that a great power is not just deployed but is directly participating in combat operations. No other major powers have altered their involvement posture.",
+      description: "The United States maintains its high-level military deployment in the region, including carrier strike groups and other strategic assets, to respond to potential conflict escalation. This constitutes direct military deployment, meeting the level 4 criteria.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "De-escalation Probability",
       score: 3,
-      prev: 4,
+      prev: 3,
       weight: 0.2,
-      description: "Over the weekend, prospects worsened to near-collapse with Iran threatening a \"complete halt\" to talks. However, the latest development is an agreement to pause hostilities and hold talks on June 30, significantly improving the outlook from \"stalled/high risk of collapse\" to \"channels exist but progress is limited.\"",
+      description: "Iran has officially denied plans for negotiations with the U.S. in Doha, stating the visit is for technical follow-up on asset release. This contradicts signals from the U.S., showing significant divergence in positions and limiting prospects for progress, though channels of communication exist.",
       status: "FAST",
-      sourceVerification: "confirmed",
-      change: "down"
+      sourceVerification: "confirmed"
     }
   ],
   events: [
     {
       id: "EVT-01",
-      title: "US and Iran Agree to Halt Hostilities, Plan to Resume Talks on June 30",
-      description: "Following a weekend of intense military exchanges, including U.S. airstrikes on Iranian targets and Iranian attacks on U.S.-related facilities in Bahrain and Kuwait, a U.S. official confirmed to multiple media outlets that both sides have agreed to halt hostilities. They plan to hold technical talks in Doha on June 30 to salvage the fragile interim peace deal. (Sources: Reuters, Axios, CBS News)",
+      title: "Iran Denies Plans for Negotiations with US in Doha",
+      description: "Iran's Foreign Ministry spokesman stated that its delegation's trip to Doha is to follow up on the implementation of the memorandum of understanding, particularly concerning unfrozen Iranian assets, with no plans for negotiations with the US at any level. This contradicts earlier statements from US officials about technical talks expected this week. (Al Mayadeen, Ministry of Foreign Affairs of Iran)",
       verification: "confirmed",
-      timestamp: "2026-06-29",
-      significance: "",
-      highlight: true,
-      critical: true
-    },
-    {
-      id: "EVT-02",
-      title: "Hormuz Shipping Traffic Slows After Vessel Attacks",
-      description: "Commercial shipping traffic through the Strait of Hormuz declined significantly after a Qatar-linked oil tanker, the 'Kiku', and other vessels were attacked over the weekend. Sunday's transit numbers were well below the peak levels reached last week. The latest ceasefire agreement will reportedly allow for free passage, but market participants remain cautious. (Sources: Insurance Journal, Punch Newspapers)",
-      verification: "confirmed",
-      timestamp: "2026-06-29",
-      significance: ""
-    },
-    {
-      id: "EVT-03",
-      title: "Oil Prices Fall Below $75 as US-Iran Tensions Ease",
-      description: "Concerns over Middle East supply disruptions have eased as the U.S. and Iran agreed to halt hostilities and plan to restart negotiations. Brent crude prices fell back to the $72-73/bbl range, while WTI traded around $70/bbl, both below pre-escalation levels. (Sources: Reuters, The National News)",
-      verification: "confirmed",
-      timestamp: "2026-06-29",
+      timestamp: "2026-06-30T08:00:00Z",
       significance: "",
       highlight: true
     },
     {
-      id: "EVT-04",
-      title: "US Launched 'Larger' Airstrikes on Multiple Targets in Iran Over Weekend",
-      description: "U.S. Central Command (CENTCOM) confirmed it conducted airstrikes against multiple Iranian military targets in response to attacks on commercial shipping. Targets included surveillance infrastructure, communication systems, air defense sites, drone storage, and minelaying capabilities. A U.S. official described the strikes as 'larger' than previous retaliations. (Sources: CENTCOM, CBS News, Fox News)",
+      id: "EVT-02",
+      title: "Shipping Volume in Strait of Hormuz Recovers After Weekend Conflict",
+      description: "According to maritime tracking firms Kpler and Bloomberg, shipping traffic in the Strait of Hormuz began to recover on Monday after a dip caused by brief US-Iran clashes over the weekend. Data showed about 24 commodity vessels, including oil tankers, transited the strait on Monday, with the trend continuing Tuesday, indicating a partial restoration of shipowners' confidence despite ongoing risks. (Bloomberg, Gulf Times)",
       verification: "confirmed",
-      timestamp: "2026-06-28",
-      significance: "",
-      critical: true
+      timestamp: "2026-06-30T06:00:00Z",
+      significance: ""
     },
     {
-      id: "EVT-05",
-      title: "US Reportedly Reassessing Military Posture in the Gulf",
-      description: "According to media and think tank assessments, Washington is considering shifting parts of its military presence westward, potentially to Israel, due to vulnerabilities at forward-deployed bases exposed by recent Iranian missile and drone attacks. The move aims to counter the growing threat to fixed installations. (Sources: Dawn, Pakistan Observer)",
+      id: "EVT-03",
+      title: "Oil Prices Stabilize Amid Tensions as Market Eyes Doha Prospects",
+      description: "Brent crude fluctuated around $73-74/barrel, while WTI traded near $70-71/barrel. Despite concerns from the weekend's clashes, the market's focus has shifted to the potential for US-Iran talks, causing prices to retreat from highs but still contain a geopolitical risk premium. Oil is heading for its largest quarterly loss since 2020. (Reuters, Trading Economics)",
       verification: "confirmed",
-      timestamp: "2026-06-29",
+      timestamp: "2026-06-30T10:00:00Z",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "US and Iranian Delegations Both in Qatar This Week",
+      description: "Although Iran denies any scheduled direct talks, the White House has confirmed that a US delegation, including Jared Kushner, will travel to Doha. The presence of both parties leaves the door open for diplomatic maneuvering, but the public divergence in stances casts a shadow over negotiation prospects. (The Washington Post, iHeart)",
+      verification: "confirmed",
+      timestamp: "2026-06-30T02:00:00Z",
       significance: ""
     }
   ],
   warPhase: {
-    level: "Controlled Conflict",
+    level: "High-Pressure Standoff",
     targetLevel: "Fragile Balance",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "The swift consensus to cease fire after direct military exchanges indicates neither side desires a full-scale escalation.",
-      "The reactivation of negotiation channels with a specific date and location shows that diplomatic efforts remain central to crisis management.",
-      "Fundamental contradictions (nuclear program, regional influence) are unresolved, and rules for Hormuz transit remain a flashpoint, making the current stability extremely fragile and prone to relapse into crisis."
+      "After a brief exchange of direct fire, both sides have paused further military actions but maintain a high state of tension through rhetoric and military deployments, with core contradictions unresolved.",
+      "The conflict's focus has shifted from military strikes to diplomatic signaling, with both parties active in Doha, Qatar, but with conflicting public statements.",
+      "The situation has entered an unstable equilibrium, where any miscalculation or new provocation could quickly shatter the fragile ceasefire."
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -441,9 +412,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: After a weekend of retaliatory U.S.",
-        "Change: airstrikes on Iranian targets and Iranian counter-strikes on U.S.",
-        "Change: facilities in Bahrain and Kuwait, tensions were extremely high."
+        "Change: Following direct military exchanges over the weekend, no new, multi-source confirmed direct strikes have been reported in the last 24 hours.",
+        "Change: The situation has de-escalated from active direct fire (a level 4 criterion) to a state of high-pressure standoff following limited strikes (a level 3 …"
       ]
     },
     {
@@ -452,8 +422,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Iranian attacks on commercial vessels over the weekend led to a significant drop in shipping traffic through the strait.",
-        "Change: Although the latest ceasefire agreement reportedly includes provisions for free passage, insurance costs and risk aversion among shipowners remain, kee…"
+        "Change: Although shipping traffic has somewhat recovered from the weekend's low, overall flow remains below normal levels, and vessels must still adhere to spe…",
+        "Change: This aligns with the partial restriction scenario where traffic is between 50-90% of normal."
       ]
     },
     {
@@ -462,8 +432,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Fears of a major supply disruption from the Middle East have cooled as the market reacts to the U.S.-Iran agreement to halt hostilities and resume talk…",
-        "Change: Both Brent and WTI prices have fallen below the $75/barrel threshold, moving into a lower risk category."
+        "Change: Oil prices have stabilized in a higher range following the weekend's conflict.",
+        "Change: WTI crude is in the $70-71 range and Brent in the $72-74 range, moving out of the <$75 (level 1) category and into the moderately firm $75-85 band (tak…"
       ]
     },
     {
@@ -472,27 +442,20 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: The United States remains deeply involved militarily, having conducted direct airstrikes on Iranian territory from its assets in the region.",
-        "Change: This demonstrates that a great power is not just deployed but is directly participating in combat operations.",
-        "Change: No other major powers have altered their involvement posture."
+        "Change: The United States maintains its high-level military deployment in the region, including carrier strike groups and other strategic assets, to respond to…",
+        "Change: This constitutes direct military deployment, meeting the level 4 criteria."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "The U.S. and its allies seek to contain Iran's nuclear capabilities and regional influence, while Iran aims to break sanctions and establish its security dominance in the Gulf through military and diplomatic means.",
-      "Fundamental disagreements over the implementation of the interim peace deal, especially regarding transit rights in the Strait of Hormuz, are the immediate trigger for renewed conflict."
+      "The U.S. aims to prevent Iran from obtaining a nuclear weapon and curb its regional influence, while Iran seeks sanctions relief and seeks to solidify its control over the Strait of Hormuz as leverage."
     ],
     military: [
-      "The U.S. seeks to deter and punish Iranian 'aggression' and protect international shipping through precision strikes and military deterrence, but its forward-deployed bases are vulnerable to attack.",
-      "Iran leverages its asymmetric capabilities (drones, missiles, proxy networks) to challenge U.S. military superiority, aiming to raise the costs and risks of American intervention."
+      "The U.S. maintains a forward military presence to deter Iran, while Iran uses asymmetric capabilities (e.g., drones, missiles) to challenge the U.S. presence and demonstrate its ability to close the strait."
     ]
   },
   scoreTrend: [
-    {
-      date: "06-25",
-      score: 40
-    },
     {
       date: "06-26",
       score: 40
@@ -507,23 +470,25 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "06-29",
-      score: 60,
+      score: 60
+    },
+    {
+      date: "06-30",
+      score: 56,
       active: true
     }
   ],
-  keyChange: "Following direct military clashes over the weekend, the U.S. and Iran quickly agreed to pause hostilities and resume negotiations, leading to a recovery in market risk appetite, a drop in oil prices, and a decline in the composite conflict score from its recent high.",
-  investmentSignal: "→ Short-term pressure on risk assets is easing; consider moderately reducing long hedge positions in energy and commodities.",
-  prevRiskScore: 68,
+  keyChange: "The overall risk score remains unchanged at 60 today. The internal structure of the score has shifted: 'Military Escalation Intensity' decreased from 4 to 3 due to the absence of new direct fire in the last 24 hours, indicating some moderation. However, 'Energy Shock' increased from 1 to 2 as oil prices entered the moderately firm $75-85 range. These changes offset each other, showing a shift in risk from immediate military conflict to sustained economic and market pressure.",
+  investmentSignal: "→ Maintain a defensive hedge against geopolitical risk, particularly in energy and related commodities.",
+  prevRiskScore: 60,
   webSources: [],
   webSearchQueries: [
-    "US Iran conflict news last 24 hours",
-    "CENTCOM Iran update June 29 2026",
-    "Strait of Hormuz shipping status June 29 2026",
-    "Iran proxy attacks Iraq Syria June 29 2026",
-    "US military posture Persian Gulf June 2026",
-    "WTI Brent crude oil price June 29 2026 Reuters",
-    "Oil price forecast June 2026 Bloomberg",
-    "Iran nuclear deal talks latest news"
+    "US Iran news last 24 hours",
+    "Strait of Hormuz shipping status June 30 2026",
+    "WTI Brent crude oil price June 30 2026 Reuters",
+    "oil price trend Bloomberg June 29-30 2026",
+    "Pentagon press briefing Iran June 29 2026",
+    "Iran foreign ministry statement June 30 2026"
   ]
 };
 
@@ -532,7 +497,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "6月29日节点",
+    node406: "6月30日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -566,16 +531,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.110 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.111 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 60（↓8）：美伊在周末发生直接军事冲突后，迅速达成暂停敌对行动并重启谈判的共识，市场风险偏好随之修复，油价下跌，冲突综合分从高位回落。",
-    bannerWarning: "→ 风险资产短期压力缓解，可适度减持能源及大宗商品的多头对冲部位。",
-    deescalationIntent: "美国及盟友寻求限制伊朗核能力和地区影响力，而伊朗则力图通过军事和外交手段打破制裁，确立其在海湾地区的安全主导权。",
-    structuralRisk: "周末期间，伊朗对商业船只发动袭击，导致通过海峡的航运交通量显著下降。尽管最新的停火协议据称包含允许船只自由通行的条款，但保险成本和船东的规避风险情绪依然存在，航道通行仍处于部分受限状态。",
-    contradictionNote: "美国及盟友寻求限制伊朗核能力和地区影响力，而伊朗则力图通过军事和外交手段打破制裁，确立其在海湾地区的安全主导权。；美国寻求通过精确打击和军事威慑来惩罚伊朗的“侵略行为”，并保护国际航运，但其前沿部署的基地易受攻击。",
+    bannerSignal: "综合评分 56（↓4）：今日综合风险评分维持在60分，与昨日持平。评分内部结构发生变化：【军事升级烈度】因24小时内无新直接交火而从4分降至3分，风险有所缓和；但【能源冲击】因油价进入$75-85温和偏强区间而从1分升至2分。二者变动相互抵消，显示风险从即时军事冲突转向持续的经济与市场压力。",
+    bannerWarning: "→ 维持对地缘风险的防御性对冲，尤其是在能源及相关大宗商品领域。",
+    deescalationIntent: "美国致力于阻止伊朗获得核武器并遏制其地区影响力，而伊朗则寻求解除制裁、巩固其在霍尔木兹海峡的控制力作为谈判筹码。",
+    structuralRisk: "尽管航运交通量较周末有所回升，但整体流量仍低于正常水平，且船只仍需遵循特定航道或采取额外安保措施。这符合流量在50-90%之间的部分限制情形。",
+    contradictionNote: "美国致力于阻止伊朗获得核武器并遏制其地区影响力，而伊朗则寻求解除制裁、巩固其在霍尔木兹海峡的控制力作为谈判筹码。；美国维持前沿军事部署以威慑伊朗，而伊朗则利用非对称手段（如无人机、导弹）挑战美军存在并展示其封锁海峡的能力。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -583,7 +548,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第121天",
+    dayCount: "第122天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -591,7 +556,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Jun 29 Node",
+    node406: "Jun 30 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -625,16 +590,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.110 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.111 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 60 (↓8): Following direct military clashes over the weekend, the U.S. and Iran quickly agreed to pause hostilities and resume negotiations, leading …",
-    bannerWarning: "→ Short-term pressure on risk assets is easing; consider moderately reducing long hedge positions in energy and commodi…",
-    deescalationIntent: "The U.S. and its allies seek to contain Iran's nuclear capabilities and regiona…",
-    structuralRisk: "Iranian attacks on commercial vessels over the weekend led to a significant drop in shipping traffi…",
-    contradictionNote: "The U.S. and its allies seek to contain Iran's nuclear capabilities and regional influence, while Iran aims to break sanctions and establish its security domin…",
+    bannerSignal: "Composite 56 (↓4): The overall risk score remains unchanged at 60 today. The internal structure of the score has shifted: 'Military Escalation Intensity' decr…",
+    bannerWarning: "→ Maintain a defensive hedge against geopolitical risk, particularly in energy and related commodities.",
+    deescalationIntent: "The U.S. aims to prevent Iran from obtaining a nuclear weapon and curb its regi…",
+    structuralRisk: "Although shipping traffic has somewhat recovered from the weekend's low, overall flow remains below…",
+    contradictionNote: "The U.S. aims to prevent Iran from obtaining a nuclear weapon and curb its regional influence, while Iran seeks sanctions relief and seeks to solidify its cont…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -642,7 +607,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 121",
+    dayCount: "Day 122",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
