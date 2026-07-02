@@ -1,17 +1,17 @@
 {
   "version": 2,
   "latest": {
-    "date": "2026-07-01",
-    "appVersion": "v2.112",
-    "riskScore": 60,
-    "prevRiskScore": 56,
-    "conflictDay": 123,
+    "date": "2026-07-02",
+    "appVersion": "v2.113",
+    "riskScore": 56,
+    "prevRiskScore": 60,
+    "conflictDay": 124,
     "factorScores": [
       3,
       4,
       1,
       4,
-      3
+      2
     ],
     "generationMode": "live"
   },
@@ -371,6 +371,10 @@
     {
       "date": "2026-07-01",
       "score": 60
+    },
+    {
+      "date": "2026-07-02",
+      "score": 56
     }
   ]
 }
