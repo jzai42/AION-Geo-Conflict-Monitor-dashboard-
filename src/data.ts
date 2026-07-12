@@ -65,71 +65,72 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-07-11",
-  version: "v2.122",
+  date: "2026-07-12",
+  version: "v2.123",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D133",
+      value: "D134",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↓2",
+      value: "↑8",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $71–77 · Brent $75–77",
+      value: "WTI $71–$73 · Brent $75–$77",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "霍尔木兹",
-      value: "严重受限",
+      value: "完全封锁",
       unit: "通行状态",
       color: "#ffdc00"
     }
   ],
-  riskScore: 72,
+  riskScore: 80,
   riskFactors: [
     {
       name: "军事升级烈度",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "虽然美国暂停了为期两天的报复性空袭，但此前发生了针对约170个目标的大规模直接军事打击，以及伊朗对美国盟友的报复性攻击。局势仍处于直接交火的边缘。",
+      description: "美国对伊朗本土发动大规模空袭（打击约140个目标），而伊朗则首次对多个邻国（卡塔尔、巴林等）的美国军事基地进行直接导弹与无人机报复。双方交火从有限报复升级为多战线、大规模的直接对抗。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "霍尔木兹航运扰动",
-      score: 4,
+      score: 5,
       prev: 4,
       weight: 0.2,
-      description: "霍尔木兹海峡的商业航运交通量急剧下降，接近停滞。关闭应答器的“黑暗运输”比例显著增加，主要的国际海事组织建议船只规避该水域。",
+      description: "伊朗伊斯兰革命卫队（IRGC）在袭击数艘商船后，正式宣布关闭霍尔木兹海峡，“直至美国停止干预”。此举导致全球最关键的石油运输通道商业航运完全停滞。",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "up"
     },
     {
       name: "能源冲击",
-      score: 2,
-      prev: 2.5,
+      score: 3,
+      prev: 2,
       weight: 0.2,
-      description: "由于美伊同意恢复谈判，市场对全面冲突的担忧有所缓解，油价从本周高点回落。布伦特原油价格稳定在76美元左右，WTI在71-72美元区间，价格波动但主体落在温和区间。",
+      description: "尽管上周五收盘油价仍处于75-85美元区间的下沿，但霍尔木兹海峡的确认关闭是极端看涨事件，对全球五分之一的石油供应构成直接威胁，显著加剧了供应中断的担忧，将价格推向更高风险区间。",
       status: "FAST",
       sourceVerification: "confirmed",
-      change: "down"
+      change: "up"
     },
     {
       name: "大国介入深度",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "美国军方直接参与了对伊朗境内目标的空袭行动，这是直接的军事部署和作战参与。该行动是对伊朗袭击国际航运的回应，标志着大国军事介入的深化。",
+      description: "美国通过中央司令部（CENTCOM）直接对伊朗主权领土内的军事目标进行了计划性和大规模的打击，而非通过代理人或仅限于海上拦截。这维持了极高水平的直接军事介入。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -138,63 +139,64 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "尽管双方同意在阿曼恢复间接会谈，但美国总统公开宣布停火协议“结束”，使得谈判前景极其脆弱和不确定。双方立场依然强硬，谈判破裂的风险非常高。",
+      description: "大规模的直接军事交火已经彻底破坏了此前脆弱的谈判势头。双方的行动（美军大规模空袭、伊朗关闭海峡并袭击美军基地）表明其立场极为强硬，外交解决的窗口基本关闭，谈判已停滞。",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
   events: [
     {
-      id: "evt-01-711",
-      title: "美伊同意在阿曼恢复谈判，但特朗普称停火已“结束”",
-      description: "尽管美国总统特朗普公开表示停火协议“结束”，但据多家媒体证实，美伊双方代表团已于周六前往阿曼，通过调解人继续谈判。此前，伊朗私下向美方表示，其在霍尔木兹海峡对商船的袭击是试图破坏谈判的“错误”强硬派所为。(Sources: CBS News, Fox News, Axios)",
+      id: "EVT-01",
+      title: "伊朗宣布关闭霍尔木兹海峡，美伊爆发新一轮直接军事打击",
+      description: "伊朗伊斯兰革命卫队（IRGC）在袭击一艘塞浦路斯籍集装箱船后，宣布“直至另行通知”关闭霍尔木兹海峡。作为回应，美国中央司令部（CENTCOM）确认对伊朗境内约140个军事目标发动了本周第三轮大规模空袭。伊朗随后向包括卡塔尔、巴林在内的多个美国在地区内的军事基地发射了导弹和无人机。 (Sources: Reuters, AP, AFP, US CENTCOM)",
       verification: "confirmed",
-      timestamp: "2026-07-11T05:00:00Z",
+      timestamp: "2026-07-12T05:00:00Z",
       significance: "",
-      highlight: true
+      highlight: true,
+      critical: true
     },
     {
-      id: "evt-02-711",
-      title: "美国暂停对伊朗的报复性空袭",
-      description: "在对约170个伊朗军事目标进行了为期两天的报复性打击后，美国暂停了其军事行动。此轮打击旨在回应伊朗此前对霍尔木兹海峡商业船只的袭击。局势暂时从直接军事对抗中缓和。(Sources: Fox News, PBS)",
+      id: "EVT-02",
+      title: "美国确认打击140个伊朗军事目标作为报复",
+      description: "美国中央司令部发表声明，确认其部队打击了约140个伊朗军事目标，包括导弹和无人机站点、海军设施、弹药库和沿海监视系统。此轮打击是为回应伊朗袭击在霍尔木兹海峡航行的M/V GFS Galaxy号商业船只。 (Sources: US CENTCOM, Washington Post, BBC)",
       verification: "confirmed",
-      timestamp: "2026-07-11T02:00:00Z",
+      timestamp: "2026-07-12T02:00:00Z",
       significance: ""
     },
     {
-      id: "evt-03-711",
-      title: "霍尔木兹海峡航运仍接近停滞",
-      description: "根据海事分析公司Windward的数据，商业航运交通量已连续三天下降，与几天前相比急剧减少。所谓的“黑暗运输”（船只关闭应答器）比例升至近40%。联合国国际海事组织（IMO）建议船只避开该海峡。(Sources: Caliber.Az, UN News)",
+      id: "EVT-03",
+      title: "伊朗对美国在多个海湾国家的基地发动报复性袭击",
+      description: "在美国对伊朗境内目标进行打击后，伊朗革命卫队宣布对位于卡塔尔、巴林、科威特和阿联酋的美国及其盟友军事设施发动了导弹和无人机袭击。卡塔尔和阿联酋均报告启动了防空系统进行拦截。 (Sources: Al Jazeera English, Reuters, The Independent)",
       verification: "confirmed",
-      timestamp: "2026-07-11T08:00:00Z",
+      timestamp: "2026-07-12T06:30:00Z",
       significance: ""
     },
     {
-      id: "evt-04-711",
-      title: "美国对与伊朗最高领袖相关的金融家实施新制裁",
-      description: "美国财政部周五宣布，对一名被控为伊朗最高领袖管理资产的金融家以及多家据称协助受制裁伊朗银行转移资金的兑换行实施新制裁。财政部称，此举是对伊朗在霍尔木兹海峡发动袭击的回应。(Sources: Fox News, U.S. Department of the Treasury)",
+      id: "EVT-04",
+      title: "霍尔木兹航运完全中断，多艘船只遭袭或改变航线",
+      description: "继伊朗袭击M/V GFS Galaxy号并导致一名船员失踪后，伊朗革命卫队宣称又袭击了第二艘船只。英国海事贸易行动组织(UKMTO)报告了相关事件，并确认有船员被救起。伊朗官方声明称，在“美国停止干预”前，海峡将保持关闭。 (Sources: UKMTO, CBS News, Investing.com)",
       verification: "confirmed",
-      timestamp: "2026-07-10T18:00:00Z",
+      timestamp: "2026-07-12T03:00:00Z",
       significance: ""
     },
     {
-      id: "evt-05-711",
-      title: "油价从周高点回落，但供应风险持续",
-      description: "由于美伊同意恢复谈判，油价在周五从近期高点回落。然而，由于霍尔木兹海峡的航运中断仍在持续，全球能源供应风险依然存在，使价格保持在较高水平。布伦特原油交易价格约为76美元/桶，WTI约为71-72美元/桶。(Sources: Trading Economics, CME Group)",
+      id: "EVT-05",
+      title: "油价在冲突升级前保持区间震荡，但面临巨大上行压力",
+      description: "在上周五（7月10日）收盘时，由于对美伊可能通过谈判缓和局势的期望，油价小幅回落。布伦特原油收于约76美元/桶，WTI原油收于约71-72美元/桶区间。然而，周末霍尔木兹海峡的关闭和军事行动的急剧升级，已为新一周开盘带来极端的上行风险。 (Sources: Reuters, Bloomberg, Trading Economics)",
       verification: "confirmed",
-      timestamp: "2026-07-10T21:00:00Z",
+      timestamp: "2026-07-11T21:00:00Z",
       significance: ""
     }
   ],
   warPhase: {
-    level: "危机升级期",
-    targetLevel: "脆弱平衡",
+    level: "霍尔木兹危机",
+    targetLevel: "升级顶点",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "美伊在直接军事打击后重返谈判桌，但停火协议已被公开撕毁，局势从高强度冲突暂时回落至高度不确定的升级边缘状态。",
-      "虽然停火宣告结束，但双方迅速同意恢复间接谈判，显示出控制局势的意愿，但缺乏互信基础。",
-      "当前阶段是军事威慑与外交试探的危险混合。任何误判或强硬派的破坏行动都可能导致冲突螺旋式升级。市场正在消化矛盾的信号。"
+      "冲突焦点集中于全球能源大动脉——霍尔木兹海峡的控制权，伊朗选择将其武器化。",
+      "美伊双方均采取了“升级换取优势”的策略，直接军事对抗的规模和范围显著扩大。",
+      "地区盟友被迫卷入，伊朗对多国美军基地的打击可能引发更广泛的地区冲突。"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -205,8 +207,9 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美国暂停了为期两天的对伊朗的报复性空袭，结束了近期的直接军事交火周期。",
-        "延续：尽管空袭暂停，但双方的军事部署和戒备等级依然很高，区域军事紧张局势未得到根本缓解。"
+        "变化：美军对伊朗境内发动大规模、多目标的空袭，旨在削弱其军事能力。",
+        "变化：伊朗首次对多个海湾国家境内的美军基地发动直接、公开的导弹和无人机攻击。",
+        "延续：美军在海湾地区保持强大的海军和空军部署，包括两个航母战斗群。"
       ]
     },
     {
@@ -215,7 +218,9 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：霍尔木兹海峡的商业航运仍处于“严重受限”状态，通行量远低于正常水平，航运保险成本高昂。"
+        "变化：伊朗官方宣布无限期关闭霍尔木兹海峡，商业航运完全停止，这是冲突爆发以来最严重的升级。",
+        "变化：伊朗革命卫队证实袭击了至少两艘商业船只，导致人员伤亡和船只受损。",
+        "延续：美国及其盟友的海军在该地区高度戒备，但未能阻止伊朗的封锁行动。"
       ]
     },
     {
@@ -224,8 +229,9 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：油价因美伊重启谈判的消息而从周内高点回落，风险溢价有所收窄。",
-        "延续：由于霍尔木兹海峡的物理中断依然存在，对全球原油供应的担忧持续为油价提供底部支撑。"
+        "变化：霍尔木兹海峡的关闭构成重大的实际供应中断，而非仅仅是风险溢价，全球能源安全面临直接威胁。",
+        "延续：尽管上周五收盘价尚稳，但市场普遍预期本周开盘后油价将出现剧烈跳涨。",
+        "延续：主要消费国（如中国）和国际能源署（IEA）面临启动战略石油储备的压力。"
       ]
     },
     {
@@ -234,26 +240,21 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美伊双方同意在阿曼恢复由调解人参与的谈判，这是一个关键的降级信号。",
-        "延续：美国总统公开表示停火协议“结束”，这种强硬措辞与重返谈判桌的行为形成矛盾，反映出其“极限施压”与外交并行的策略。"
+        "变化：外交斡旋努力（如阿曼、卡塔尔的调解）因军事行动的急剧升级而基本宣告失败。",
+        "变化：双方领导层的公开言论充满敌意，美国防长称“伊朗做出了错误选择，现在他们要付出代价”，而伊朗则誓言报复。",
+        "延续：美方坚持要求伊朗公开保证海峡开放，而伊朗则将关闭海峡作为反制美国压力的核心筹码，双方核心诉求完全对立。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美国试图通过“军事打击+外交谈判”的双重压力，迫使伊朗在霍尔木兹海峡通行权和核问题上做出实质性让步。",
-      "伊朗则试图通过展示其封锁海峡的能力来换取制裁减免和安全保障，同时利用内部强硬派的行动作为谈判筹码。"
+      "美国要求伊朗彻底放弃对霍尔木兹海峡的控制并停止所有“恶意活动”，以此作为谈判前提；而伊朗则将控制海峡视为其在不对称博弈中对抗美国制裁和军事压力的根本筹码。"
     ],
     military: [
-      "美国旨在通过精确打击削弱伊朗封锁海峡的军事能力，同时避免引发需要大规模地面部队介入的全面战争。",
-      "伊朗及其代理人则利用非对称战术（无人机、导弹、快艇）挑战美国及其盟友在海湾地区的军事主导地位，并制造不可预测的升级风险。"
+      "美国试图通过精确、大规模的“惩罚性”打击来迫使伊朗让步，但伊朗的回应是将冲突扩大化，直接攻击美国在整个地区的军事基地，挑战美国的地区军事主导地位。"
     ]
   },
   scoreTrend: [
-    {
-      date: "07-07",
-      score: 62
-    },
     {
       date: "07-08",
       score: 64
@@ -268,90 +269,97 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "07-11",
-      score: 72,
+      score: 72
+    },
+    {
+      date: "07-12",
+      score: 80,
       active: true
     }
   ],
-  keyChange: "美伊在直接军事交火后迅速同意重返谈判桌，市场风险偏好有所修复，但停火协议的公开破裂使局势根基极不稳定。",
-  investmentSignal: "→ 维持对风险资产的防御性配置，地缘政治风险溢价仍处高位，但直接冲突的短期降温为市场提供喘息窗口。",
-  prevRiskScore: 74,
+  keyChange: "冲突急剧升级至“霍尔木兹危机”阶段，伊朗官方宣布关闭海峡并与美国展开大规模直接军事交火，综合风险评分跃升至80分。",
+  investmentSignal: "→ 增持能源与大宗商品以对冲地缘风险，风险资产面临显著压力。",
+  prevRiskScore: 72,
   webSources: [],
   webSearchQueries: [
-    "WTI crude price July 2026",
-    "Brent crude price July 2026",
-    "US Iran conflict news last 24 hours",
-    "Iran military activity July 2026",
-    "Strait of Hormuz shipping status July 2026",
-    "Iran nuclear talks progress July 2026"
+    "US Iran relations latest news",
+    "Iran military activity Strait of Hormuz",
+    "US CENTCOM Iran statements",
+    "Iran nuclear deal talks news",
+    "WTI Brent crude oil price today Reuters",
+    "oil prices July 12 2026 Bloomberg",
+    "Iran proxy groups activity middle east",
+    "US naval presence Persian Gulf"
   ]
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-07-11",
-  version: "v2.122",
+  date: "2026-07-12",
+  version: "v2.123",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D133",
+      value: "D134",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "↓2",
+      value: "↑8",
       unit: "vs Prev",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $71–77 · Brent $75–77",
+      value: "WTI $71–$73 · Brent $75–$77",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
-      value: "Severely Restricted",
+      value: "Completely Blocked",
       unit: "Transit Status",
       color: "#ffdc00"
     }
   ],
-  riskScore: 72,
+  riskScore: 80,
   riskFactors: [
     {
       name: "Military Escalation Intensity",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Although the U.S. has paused its two-day retaliatory airstrikes, the preceding period saw large-scale direct military strikes targeting ~170 sites and retaliatory attacks by Iran on U.S. allies. The situation remains on the brink of direct confrontation.",
+      description: "The U.S. launched large-scale airstrikes against approximately 140 targets on Iranian soil, while Iran retaliated for the first time with direct missile and drone attacks on U.S. military bases in multiple neighboring countries (Qatar, Bahrain). The hostilities have escalated from limited retaliation to large-scale, multi-front direct confrontation.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "Hormuz Disruption",
-      score: 4,
+      score: 5,
       prev: 4,
       weight: 0.2,
-      description: "Commercial shipping traffic in the Strait of Hormuz has plummeted and is near a standstill. The proportion of 'dark transits' with transponders off has increased significantly, and major international maritime bodies advise vessels to avoid the area.",
+      description: "Iran's Islamic Revolutionary Guard Corps (IRGC) officially announced the closure of the Strait of Hormuz 'until U.S. interference ends' after attacking several commercial vessels. This action has brought commercial shipping in the world's most critical oil chokepoint to a complete halt.",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "confirmed",
+      change: "up"
     },
     {
       name: "Energy Shock",
-      score: 2,
-      prev: 2.5,
+      score: 3,
+      prev: 2,
       weight: 0.2,
-      description: "Oil prices have retreated from weekly highs as market concerns over a full-blown conflict eased with the agreement to resume talks. Brent crude stabilized around $76/bbl, and WTI in the $71-72 range, with prices volatile but primarily within a moderate band.",
+      description: "Although oil prices closed at the lower end of the $75-85 range last Friday, the confirmed closure of the Strait of Hormuz is an extremely bullish event, posing a direct threat to a fifth of the world's oil supply. This has significantly heightened concerns of supply disruption, pushing prices toward a higher risk band.",
       status: "FAST",
       sourceVerification: "confirmed",
-      change: "down"
+      change: "up"
     },
     {
       name: "Great Power Involvement",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "The U.S. military was directly involved in airstrikes against targets within Iran, which constitutes direct military deployment and combat participation. The operation was a response to Iranian attacks on international shipping, marking a deep level of great power military intervention.",
+      description: "The U.S., through its Central Command (CENTCOM), has directly conducted planned, large-scale strikes on military targets within Iran's sovereign territory, rather than through proxies or limited to maritime interdictions. This maintains a very high level of direct military intervention.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -360,63 +368,64 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Although both sides have agreed to resume indirect talks in Oman, the U.S. President's public declaration that the ceasefire is 'OVER' makes the prospect for negotiations extremely fragile and uncertain. The risk of talks collapsing is very high.",
+      description: "The large-scale direct military exchange has completely undermined the fragile momentum for negotiations. The actions of both sides (massive US airstrikes, Iran's closure of the strait and attacks on US bases) indicate extremely hardline stances, effectively closing the window for a diplomatic solution and stalling talks.",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
   events: [
     {
-      id: "evt-01-711",
-      title: "US and Iran agree to resume talks in Oman, but Trump says ceasefire is 'OVER'",
-      description: "Despite U.S. President Trump's public declaration that the ceasefire agreement is 'OVER,' delegations from both nations traveled to Oman on Saturday to continue negotiations via mediators, according to multiple confirmed reports. Iran had previously conveyed privately to the U.S. that its attacks on commercial ships in the Strait of Hormuz were the work of 'errant' hardliners attempting to sabotage talks. (Sources: CBS News, Fox News, Axios)",
+      id: "EVT-01",
+      title: "Iran Announces Closure of Strait of Hormuz, New Round of Direct US-Iran Military Strikes Erupts",
+      description: "Iran's Islamic Revolutionary Guard Corps (IRGC) announced the closure of the Strait of Hormuz 'until further notice' after attacking a Cyprus-flagged container ship. In response, U.S. Central Command (CENTCOM) confirmed it launched a third round of large-scale airstrikes this week against ~140 military targets in Iran. Iran subsequently launched missiles and drones at multiple U.S. military bases in the region, including in Qatar and Bahrain. (Sources: Reuters, AP, AFP, US CENTCOM)",
       verification: "confirmed",
-      timestamp: "2026-07-11T05:00:00Z",
+      timestamp: "2026-07-12T05:00:00Z",
       significance: "",
-      highlight: true
+      highlight: true,
+      critical: true
     },
     {
-      id: "evt-02-711",
-      title: "U.S. pauses retaliatory airstrikes against Iran",
-      description: "After a two-day retaliatory campaign targeting approximately 170 Iranian military sites, the United States has paused its military operations. The strikes were a response to prior Iranian attacks on commercial vessels in the Strait of Hormuz. The situation has temporarily de-escalated from direct military confrontation. (Sources: Fox News, PBS)",
+      id: "EVT-02",
+      title: "U.S. Confirms Striking 140 Iranian Military Targets in Retaliation",
+      description: "U.S. Central Command issued a statement confirming its forces struck approximately 140 Iranian military targets, including missile and drone sites, naval capabilities, ammunition storage facilities, and coastal surveillance systems. The strikes were in response to the Iranian attack on the M/V GFS Galaxy commercial vessel in the Strait of Hormuz. (Sources: US CENTCOM, Washington Post, BBC)",
       verification: "confirmed",
-      timestamp: "2026-07-11T02:00:00Z",
+      timestamp: "2026-07-12T02:00:00Z",
       significance: ""
     },
     {
-      id: "evt-03-711",
-      title: "Shipping in Strait of Hormuz remains near a standstill",
-      description: "According to maritime analytics firm Windward, commercial shipping traffic has declined for a third consecutive day, dropping sharply compared to just days earlier. The proportion of so-called 'dark transits' (vessels with transponders off) has risen to nearly 40%. The UN's International Maritime Organization (IMO) has advised vessels to avoid the strait. (Sources: Caliber.Az, UN News)",
+      id: "EVT-03",
+      title: "Iran Launches Retaliatory Attacks on U.S. Bases in Multiple Gulf Countries",
+      description: "Following U.S. strikes on targets inside Iran, the IRGC announced it launched missile and drone attacks against U.S. and allied military facilities in Qatar, Bahrain, Kuwait, and the UAE. Both Qatar and the UAE reported activating air defense systems to intercept the attacks. (Sources: Al Jazeera English, Reuters, The Independent)",
       verification: "confirmed",
-      timestamp: "2026-07-11T08:00:00Z",
+      timestamp: "2026-07-12T06:30:00Z",
       significance: ""
     },
     {
-      id: "evt-04-711",
-      title: "U.S. imposes new sanctions on financier tied to Iran's Supreme Leader",
-      description: "The U.S. Treasury Department announced new sanctions on Friday targeting a financier accused of managing assets for Iran's Supreme Leader, as well as exchange houses alleged to have moved funds for sanctioned Iranian banks. Treasury stated the action was in response to Iran's attacks in the Strait of Hormuz. (Sources: Fox News, U.S. Department of the Treasury)",
+      id: "EVT-04",
+      title: "Hormuz Shipping Comes to a Complete Halt Amid Vessel Attacks",
+      description: "Following the Iranian attack on the M/V GFS Galaxy, which left one crew member missing, the IRGC claimed to have struck a second vessel. The UK Maritime Trade Operations (UKMTO) reported related incidents and confirmed crew members were rescued. An official Iranian statement said the strait will remain closed until 'U.S. interference ends.' (Sources: UKMTO, CBS News, Investing.com)",
       verification: "confirmed",
-      timestamp: "2026-07-10T18:00:00Z",
+      timestamp: "2026-07-12T03:00:00Z",
       significance: ""
     },
     {
-      id: "evt-05-711",
-      title: "Oil prices retreat from weekly highs, but supply risks persist",
-      description: "Oil prices pulled back from recent highs on Friday as the U.S. and Iran agreed to resume talks. However, global energy supply risks remain due to the ongoing shipping disruptions in the Strait of Hormuz, keeping prices elevated. Brent crude traded around $76/barrel, with WTI around $71-72/barrel. (Sources: Trading Economics, CME Group)",
+      id: "EVT-05",
+      title: "Oil Prices Range-Bound Before Escalation, But Face Extreme Upward Pressure",
+      description: "At Friday's close (July 10), oil prices had slightly retreated on hopes of de-escalation through talks. Brent crude settled around $76/barrel, with WTI in the $71-72/barrel range. However, the weekend's closure of the Strait of Hormuz and the sharp military escalation have created extreme upside risk for the new week's open. (Sources: Reuters, Bloomberg, Trading Economics)",
       verification: "confirmed",
-      timestamp: "2026-07-10T21:00:00Z",
+      timestamp: "2026-07-11T21:00:00Z",
       significance: ""
     }
   ],
   warPhase: {
-    level: "Escalation Phase",
-    targetLevel: "Fragile Balance",
+    level: "Chokepoint Crisis",
+    targetLevel: "Escalation Peak",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Following direct military strikes, the U.S. and Iran are returning to the negotiating table, but the ceasefire agreement has been publicly renounced, moving the situation from high-intensity conflict back to a highly uncertain escalatory edge.",
-      "Although the ceasefire is declared over, the swift agreement to resume indirect talks shows a will to control the situation, but it lacks a foundation of mutual trust.",
-      "The current phase is a dangerous mix of military deterrence and diplomatic probing. Any miscalculation or sabotage by hardliners could lead to a conflict spiral. Markets are digesting contradictory signals."
+      "The conflict's focus has shifted to the control of the global energy artery, the Strait of Hormuz, which Iran has chosen to weaponize.",
+      "Both the U.S. and Iran have adopted 'escalate-to-gain-advantage' strategies, significantly expanding the scale and scope of direct military confrontation.",
+      "Regional allies are being forcibly drawn in, as Iranian strikes on U.S. bases in multiple countries risk triggering a wider regional conflict."
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -427,8 +436,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: The U.S. has paused its two-day retaliatory airstrikes against Iran, ending the immediate cycle of direct military fire.",
-        "Continue: Despite the pause in strikes, military deployments and alert levels for both sides remain high, and underlying regional military tension is not funda…"
+        "Change: U.S. forces conducted large-scale, multi-target airstrikes inside Iran aimed at degrading its military capabilities.",
+        "Change: Iran, for the first time, launched direct and overt missile and drone attacks against U.S. bases in several Gulf Arab states.",
+        "Continue: The U.S. maintains a robust naval and air presence in the Gulf region, including two aircraft carrier strike groups."
       ]
     },
     {
@@ -437,7 +447,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Commercial shipping through the Strait of Hormuz remains 'severely restricted,' with transit volumes far below normal levels and insurance costs high."
+        "Change: Iran officially announced an indefinite closure of the Strait of Hormuz, bringing commercial shipping to a complete halt, marking the most severe escal…",
+        "Change: The IRGC confirmed attacks on at least two commercial vessels, resulting in casualties and damage.",
+        "Continue: The navies of the U.S. and its allies are on high alert in the region but have been unable to prevent Iran's blockade."
       ]
     },
     {
@@ -446,8 +458,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Oil prices have retreated from intra-week highs on news of renewed U.S.-Iran talks, with the risk premium narrowing.",
-        "Continue: Concerns over global crude supply, stemming from the physical disruption in the Strait of Hormuz, continue to provide a floor for oil prices."
+        "Change: The closure of the Strait of Hormuz constitutes a major actual supply disruption, not just a risk premium, posing a direct threat to global energy secu…",
+        "Continue: Although prices were stable at Friday's close, the market widely anticipates a sharp spike in oil prices at the weekly open.",
+        "Continue: Major consuming nations (like China) and the International Energy Agency (IEA) are under pressure to activate strategic petroleum reserves."
       ]
     },
     {
@@ -456,26 +469,21 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: The U.S. and Iran have agreed to resume talks in Oman with mediators, a key de-escalatory signal.",
-        "Continue: The U.S. President's public statement that the ceasefire is 'over' creates a contradictory signal, reflecting a strategy of parallel 'maximum pressur…"
+        "Change: Diplomatic mediation efforts (e.g., by Oman and Qatar) have largely failed due to the sharp military escalation.",
+        "Change: Public rhetoric from leaders on both sides is hostile, with the U.S. Secretary of Defense stating 'Iran made a poor choice. Now they pay,' while Iran v…",
+        "Continue: The U.S. demands a public guarantee from Iran for the strait's openness, while Iran uses its closure as the primary leverage against U.S. pressure, i…"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "The U.S. is attempting to use dual pressure from 'military strikes + diplomatic talks' to force Iran into making substantial concessions on Hormuz transit rights and its nuclear program.",
-      "Iran seeks to leverage its capability to close the strait to gain sanctions relief and security guarantees, while using the actions of internal hardliners as bargaining chips."
+      "The U.S. demands Iran completely relinquish control over the Strait of Hormuz and cease all 'malign activities' as a precondition for talks, whereas Iran views its control of the strait as its fundamental leverage against U.S. sanctions and military pressure in an asymmetric conflict."
     ],
     military: [
-      "The U.S. aims to degrade Iran's military capacity to blockade the strait through precision strikes while avoiding a full-scale war requiring large ground forces.",
-      "Iran and its proxies use asymmetric tactics (drones, missiles, fast boats) to challenge U.S. and allied military dominance in the Gulf and create unpredictable escalation risks."
+      "The U.S. attempts to force Iranian concessions through precise, large-scale 'punitive' strikes, but Iran's response is to widen the conflict by directly attacking U.S. military assets across the region, challenging U.S. regional military dominance."
     ]
   },
   scoreTrend: [
-    {
-      date: "07-07",
-      score: 62
-    },
     {
       date: "07-08",
       score: 64
@@ -490,21 +498,27 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "07-11",
-      score: 72,
+      score: 72
+    },
+    {
+      date: "07-12",
+      score: 80,
       active: true
     }
   ],
-  keyChange: "A swift agreement to return to the negotiating table after direct military exchanges has improved market risk sentiment, but the public collapse of the ceasefire agreement leaves the situation fundamentally unstable.",
-  investmentSignal: "→ Maintain a defensive posture on risk assets; the geopolitical risk premium remains high, but the short-term cooling of direct conflict offers a breathing window for the market.",
-  prevRiskScore: 74,
+  keyChange: "The conflict has sharply escalated into a 'Chokepoint Crisis,' with Iran officially closing the Strait of Hormuz and engaging in large-scale direct military exchanges with the U.S., pushing the composite risk score to 80.",
+  investmentSignal: "→ Increase holdings in energy and commodities to hedge geopolitical risk; risk assets face significant pressure.",
+  prevRiskScore: 72,
   webSources: [],
   webSearchQueries: [
-    "WTI crude price July 2026",
-    "Brent crude price July 2026",
-    "US Iran conflict news last 24 hours",
-    "Iran military activity July 2026",
-    "Strait of Hormuz shipping status July 2026",
-    "Iran nuclear talks progress July 2026"
+    "US Iran relations latest news",
+    "Iran military activity Strait of Hormuz",
+    "US CENTCOM Iran statements",
+    "Iran nuclear deal talks news",
+    "WTI Brent crude oil price today Reuters",
+    "oil prices July 12 2026 Bloomberg",
+    "Iran proxy groups activity middle east",
+    "US naval presence Persian Gulf"
   ]
 };
 
@@ -513,7 +527,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "7月11日节点",
+    node406: "7月12日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -547,16 +561,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.122 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.123 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 72（↓2）：美伊在直接军事交火后迅速同意重返谈判桌，市场风险偏好有所修复，但停火协议的公开破裂使局势根基极不稳定。",
-    bannerWarning: "→ 维持对风险资产的防御性配置，地缘政治风险溢价仍处高位，但直接冲突的短期降温为市场提供喘息窗口。",
-    deescalationIntent: "美国试图通过“军事打击+外交谈判”的双重压力，迫使伊朗在霍尔木兹海峡通行权和核问题上做出实质性让步。",
-    structuralRisk: "霍尔木兹海峡的商业航运交通量急剧下降，接近停滞。关闭应答器的“黑暗运输”比例显著增加，主要的国际海事组织建议船只规避该水域。",
-    contradictionNote: "美国试图通过“军事打击+外交谈判”的双重压力，迫使伊朗在霍尔木兹海峡通行权和核问题上做出实质性让步。；美国旨在通过精确打击削弱伊朗封锁海峡的军事能力，同时避免引发需要大规模地面部队介入的全面战争。",
+    bannerSignal: "综合评分 80（↑8）：冲突急剧升级至“霍尔木兹危机”阶段，伊朗官方宣布关闭海峡并与美国展开大规模直接军事交火，综合风险评分跃升至80分。",
+    bannerWarning: "→ 增持能源与大宗商品以对冲地缘风险，风险资产面临显著压力。",
+    deescalationIntent: "美国要求伊朗彻底放弃对霍尔木兹海峡的控制并停止所有“恶意活动”，以此作为谈判前提；而伊朗则将控制海峡视为其在不对称博弈中对抗美国制裁和军事压力的根本筹码。",
+    structuralRisk: "伊朗伊斯兰革命卫队（IRGC）在袭击数艘商船后，正式宣布关闭霍尔木兹海峡，“直至美国停止干预”。此举导致全球最关键的石油运输通道商业航运完全停滞。",
+    contradictionNote: "美国要求伊朗彻底放弃对霍尔木兹海峡的控制并停止所有“恶意活动”，以此作为谈判前提；而伊朗则将控制海峡视为其在不对称博弈中对抗美国制裁和军事压力的根本筹码。；美国试图通过精确、大规模的“惩罚性”打击来迫使伊朗让步，但伊朗的回应是将冲突扩大化，直接攻击美国在整个地区的军事基地，挑战美国的地区军事主导地位。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -564,7 +578,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第133天",
+    dayCount: "第134天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -572,7 +586,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Jul 11 Node",
+    node406: "Jul 12 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -606,16 +620,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.122 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.123 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 72 (↓2): A swift agreement to return to the negotiating table after direct military exchanges has improved market risk sentiment, but the public col…",
-    bannerWarning: "→ Maintain a defensive posture on risk assets; the geopolitical risk premium remains high, but the short-term cooling o…",
-    deescalationIntent: "The U.S. is attempting to use dual pressure from 'military strikes + diplomatic…",
-    structuralRisk: "Commercial shipping traffic in the Strait of Hormuz has plummeted and is near a standstill. The pro…",
-    contradictionNote: "The U.S. is attempting to use dual pressure from 'military strikes + diplomatic talks' to force Iran into making substantial concessions on Hormuz transit righ…",
+    bannerSignal: "Composite 80 (↑8): The conflict has sharply escalated into a 'Chokepoint Crisis,' with Iran officially closing the Strait of Hormuz and engaging in large-scal…",
+    bannerWarning: "→ Increase holdings in energy and commodities to hedge geopolitical risk; risk assets face significant pressure.",
+    deescalationIntent: "The U.S. demands Iran completely relinquish control over the Strait of Hormuz a…",
+    structuralRisk: "Iran's Islamic Revolutionary Guard Corps (IRGC) officially announced the closure of the Strait of H…",
+    contradictionNote: "The U.S. demands Iran completely relinquish control over the Strait of Hormuz and cease all 'malign activities' as a precondition for talks, whereas Iran views…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -623,7 +637,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 133",
+    dayCount: "Day 134",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
