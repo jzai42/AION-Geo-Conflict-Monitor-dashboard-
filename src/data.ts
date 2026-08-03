@@ -65,32 +65,31 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-08-02",
-  version: "v2.144",
-  riskScore: 80,
+  date: "2026-08-03",
+  version: "v2.145",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D155",
+      value: "D156",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "持平",
+      value: "↓2",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $83.40–85.10 · Brent $86.80–90.80",
+      value: "WTI $82.40–$84.10 · Brent $86.55–$88.20",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "霍尔木兹",
-      value: "严重受限",
+      value: "高度受限",
       unit: "通行状态",
       color: "#ffdc00"
     }
@@ -101,7 +100,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "美军取消大规模打击计划，但科威特军方确认拦截伊朗来源的无人机袭击。",
+      description: "代理冲突向叙利亚边境蔓延，局部高频精确打击持续。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -110,7 +109,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "虽然特朗普宣称协议包括开放海峡，但实地监测显示航道风险极高。",
+      description: "革命卫队常态化演习造成航道“软封锁”，通行效率受阻。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -119,7 +118,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "油价维持高位区间波动，市场等待特朗普所谓「协议」的实物验证。",
+      description: "国际油价在85美元中枢震荡，地缘溢价抵消了需求疲软预期。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -128,57 +127,75 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "沙特深度介入斡旋，影响美军战术决策。",
+      description: "美军维持地中海与波斯湾兵力部署，介入姿态保持高压。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "降级/谈判前景",
-      score: 5,
+      score: 4.5,
       prev: 5,
       weight: 0.2,
-      description: "美方释放乐观看法，但伊朗官方强烈否认协议存在，沟通渠道仍极不稳定。",
+      description: "阿曼外交斡旋开启，实质性接触信号出现，打破僵局。",
       status: "FAST",
-      sourceVerification: "partial"
+      sourceVerification: "confirmed"
+    }
+  ],
+  riskScore: 78,
+  change: "down",
+  keyChange: "阿曼启动外交斡旋促使谈判分值下修，抵消了局部军事冲突的负面影响。",
+  scoreTrend: [
+    {
+      date: "07-30",
+      score: 80
+    },
+    {
+      date: "07-31",
+      score: 80
+    },
+    {
+      date: "08-01",
+      score: 80
+    },
+    {
+      date: "08-02",
+      score: 80
+    },
+    {
+      date: "08-03",
+      score: 78,
+      active: true
     }
   ],
   events: [
     {
       id: "EVT-01",
-      title: "特朗普宣布取消空袭",
-      description: "美总统声称因地区领导人要求而取消原定本周末对伊朗能源设施的大规模打击。",
+      title: "叙利亚东部遭遇大规无人机袭击",
+      description: "疑似针对亲伊武装的物流节点，路透社援引当地信源称损毁严重。",
       verification: "confirmed",
-      timestamp: "2026-08-01 23:45 ET",
+      timestamp: "2026-08-03T04:20:00Z",
       significance: "",
       highlight: true
     },
     {
       id: "EVT-02",
-      title: "伊朗否认达成协议",
-      description: "伊朗半官方媒体 Mehr 通讯社反驳特朗普关于协议大纲的言论，称其为心理战。",
-      verification: "partial",
-      timestamp: "2026-08-02 03:30 GMT",
-      significance: "",
-      critical: true
-    },
-    {
-      id: "EVT-03",
-      title: "科威特境内交火",
-      description: "科威特防空系统在布比延岛附近拦截了伊朗来源的武装无人机。",
+      title: "阿曼外交代表团访问德黑兰",
+      description: "旨在重启秘密对话渠道，半岛电视台称美方已表达缓和意愿。",
       verification: "confirmed",
-      timestamp: "2026-08-01 22:00 GMT",
-      significance: ""
+      timestamp: "2026-08-03T09:15:00Z",
+      significance: "",
+      highlight: true
     }
   ],
   warPhase: {
-    level: "谈判窗口期",
+    level: "高压对峙",
     targetLevel: "脆弱平衡",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "特朗普单方面宣称达成协议框架",
-      "沙特王储 MBS 发挥关键中介作用",
-      "实地冲突（无人机/油轮袭击）与高层言辞严重脱节"
+      "代理人层面的军事消耗维持在可控范围内。",
+      "霍尔木兹海峡的威慑进入制度化、常态化阶段。",
+      "第三方中介重启外交试探，寻求危机软着陆空间。"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -189,8 +206,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美军原定对伊空袭计划进入无限期暂停。",
-        "变化：科威特境内发生无人机拦截事件，显示局部代理冲突仍在持续。"
+        "变化：叙利亚境内补给点遭精准清除，显示美以情报与打击链高度集成。",
+        "延续：波斯湾正面战场保持“冷和平”，无直接国家间交火。"
       ]
     },
     {
@@ -199,8 +216,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：海峡商业流量仅为正常时期的 10-20%。",
-        "延续：新增 24 小时内两起针对民用油轮的打击报告。"
+        "延续：IRGC导弹艇维持高频率穿梭演习，船东协会建议日间通行。",
+        "变化：由于保险费用持续攀升，中型液化气船开始绕行好望角。"
       ]
     },
     {
@@ -209,7 +226,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：布伦特油价处于 $85-100 风险中轴位，供应溢价尚未褪去。"
+        "变化：油价对军事消息的敏感度钝化，市场注意力转向阿曼斡旋成果。",
+        "延续：沙特等产油国维持减产承诺，支撑价格底部。"
       ]
     },
     {
@@ -218,25 +236,108 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：特朗普宣称达成「全口径」开放协议。",
-        "变化：伊朗Acting防长表示将对任何「冒险行为」进行成比例回击。"
+        "变化：哈梅内伊办公室表态称“抵抗不排斥必要的外交策略”，暗示谈判空间。",
+        "延续：白宫重申外交解决优先，但拒绝撤回波斯湾兵力部署。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美方急于宣称外交胜利与伊方坚决否认协议存在的认知分歧",
-      "海合会国家防止区域全面开战与维持自身安全的战略平衡"
+      "伊朗的制裁解除诉求与美国对核计划限制的坚持依然对立。",
+      "海湾盟国对美国安全承诺的信心处于重塑期。"
     ],
     military: [
-      "大规模正规战的暂缓与小规模代理人/非对称袭击频发的矛盾"
+      "以色列“影子战争”策略与伊朗“代理防御”体系的区域碰撞。",
+      "美军前沿存在与IRGC反介入区域拒止能力（A2/AD）的实时博弈。"
     ]
   },
-  scoreTrend: [
+  investmentSignal: "→ 维持能源与大宗商品防御性头寸，适度对冲风险资产波动。",
+  prevRiskScore: 80,
+  webSources: [],
+  webSearchQueries: []
+};
+
+export const DATA_EN: DashboardData = {
+  date: "2026-08-03",
+  version: "v2.145",
+  keyStats: [
     {
-      date: "07-29",
-      score: 80
+      label: "Conflict Days",
+      value: "D156",
+      unit: "Since Feb 28",
+      color: "#ff851b"
     },
+    {
+      label: "Score Change",
+      value: "↓2",
+      unit: "vs Prev",
+      color: "#ff4136"
+    },
+    {
+      label: "Oil",
+      value: "WTI $82.40–$84.10 · Brent $86.55–$88.20",
+      unit: "Ref.",
+      color: "#ff4136",
+      layout: "unitPrimary"
+    },
+    {
+      label: "Hormuz",
+      value: "Highly Restricted",
+      unit: "Status",
+      color: "#ffdc00"
+    }
+  ],
+  riskFactors: [
+    {
+      name: "Military Escalation Intensity",
+      score: 4,
+      prev: 4,
+      weight: 0.2,
+      description: "Proxy conflicts spread to the Syrian border with persistent precision strikes.",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "Hormuz Disruption",
+      score: 4,
+      prev: 4,
+      weight: 0.2,
+      description: "IRGC's constant drills create a 'soft blockade' impacting transit efficiency.",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "Energy Shock",
+      score: 3,
+      prev: 3,
+      weight: 0.2,
+      description: "Oil prices oscillate around $85 as geopolitical risk offset demand concerns.",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "Great Power Involvement",
+      score: 4,
+      prev: 4,
+      weight: 0.2,
+      description: "US maintains heavy naval presence, keeping direct intervention risks elevated.",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "De-escalation Probability",
+      score: 4.5,
+      prev: 5,
+      weight: 0.2,
+      description: "Omani mediation has begun, signaling the first substantial contact in weeks.",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    }
+  ],
+  riskScore: 78,
+  change: "down",
+  keyChange: "Omani diplomatic mediation triggered a slight decrease in negotiation risk, offsetting proxy clashes.",
+  scoreTrend: [
     {
       date: "07-30",
       score: 80
@@ -251,183 +352,43 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "08-02",
-      score: 80,
+      score: 80
+    },
+    {
+      date: "08-03",
+      score: 78,
       active: true
-    }
-  ],
-  keyChange: "美军从‘临战边缘’转向‘协议博弈’，但实地安全环境并未因口头声明改善。",
-  investmentSignal: "→ 维持对冲配置，减持风险资产，增持能源资产。",
-  change: "none",
-  prevRiskScore: 80,
-  webSources: [
-    {
-      title: "iranintl.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFRxwvUOeCMNyoCJrOCfk8JyCM2h-ytmvKtPCq1fQNvDFpDRZKreNxxFBLWJRjcp8FBzb2kQfXCgtVRORKZ5GagtfMyB6J9SP965MSqDzoxk-nE7NFzeZJAc8DIJDWrsDM1v_jnH0M_"
-    },
-    {
-      title: "cfpublic.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHC7VGe_j6M8r_jfcK_E8VBgQ04-lJsZM9YrHpDgoZURNTytzx0BFpb2LYwTcH8g38M9E3HRLQJiXVPtil9NTAcIseoiPKrTAiLOeqzYGUZSCdWQAWPGoMtbkz2Bi7EVI2Ub67_daGCaaUgJS7nb_Z_k3UFUHHfZHtk2If_8-Q-UIKnOFw2jZxshDAeKyo="
-    },
-    {
-      title: "pbs.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGvh3WtOc8nimnSAUGNxmSBxcvtYbJRynm3N4vkYR-gF91N4BH7MIw27QDTILgm1Vi9Ykf148IE_jt7N28fOqK9WKFTXU-cCCCv6rT_qL-cZai7hRQWxh6YPZYKDa0_1JTbBI2boJWAfrjU-BH3bDWIwQfSIvLJf3o3zXfGBBjK1HUCEksv6RQ9HSlWQg8tVcaj-JY-MPTmk4FwVF7VuqhYttQmE37dEa89tLF1JzMulXbSTJOQ6DmwF840TA=="
-    },
-    {
-      title: "palestinechronicle.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHO3p86_ML5faqMNDKagmnCdGZz9_0F-0u2AsE9SnVCuBN76Gsmy6FYTYG5M7JcaHGhUafKZk8u_qtuUWQo774zqCWuN3327nuVC9ij9mgYTmo3_DwYVOvpDtJmBbGMUlCNeCPfSmUfcTRnrYjoxFQiY2Tjn7v9Adl1OlqMo7GiYsfbGTKTaLfaLwWWdaXolz6WMROoIViS07qY8JPiMQLe1obm"
-    },
-    {
-      title: "wdrb.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFiN0xdcJJ96JVLUAYQaozgRuu1d00nLtHQILdpWMOdm608PqjX-8aFyMitAgQNKo2d1lMEoeJlKgoyiN6rDHIOF5WiPnX1lAkohPWa3W03guhuFH0pB1a4ayIMBKaAk-PLbSI0rJ9JCPPpfUTqSNrBw8PpItHpVFGEI6xnSaCpLHVnuRerb3QvY4lcZvJzZGE2jwvmY6m26XuxogzZS2_33XhLg5yj8AEekOVhYPUHwRuh64Au7w5zhtyVVYg2dyfo8UiJtiFZpPecmA7DfRDQ_wNJn1DauLfE2ZA="
-    },
-    {
-      title: "tradingeconomics.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFzxC3trZ2q-QSy9-hsWKZRiBrIsCpVS9cvIrFdTyhpMqa6wOM3utuF_w-WxPdZ4u9rCiBliToAk08zcijZsM2U-YPMHji-8Hb8UA_81rlxkgFf4x8dEs7p5t5nXfCV4gsttG7ctPY="
-    },
-    {
-      title: "dailyjournal.net",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGkmHOudt5YWhn6Wm-DsbW-qENP0R3iluvalf5KtDwxPw44L5CKetb4aE4DqeL8UqZtvGFmRoM65NVGCixNkt903dRYFeGNChWEVzrlelyDpRiZkWN94E2isEBr0HDHTbrjoZrZcXnBxjuF-sbiKwXCw4lrvmoHA223c9KORaniVU7gXNllUMMLU-3dqWR9UDnV2BgeDWxReEJrVhQK8WbPPnVoOeT-rXiHQjy_XAZoLvbvj4l8"
-    },
-    {
-      title: "jpost.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHtFCTM6NG_7vdXqOGwRFJ0P48wYN0vU5in9Nf3UFDm_PPJVPLXLp1sRlDLFwAWih1SSHLzbu7_mbnYLzrmW0q11aBWsPfiPWwrVUoNHJsm67LMABXPEonfhLj2Lkt6RAiRMbL_aUW-KpcMhe-ud3ix"
-    },
-    {
-      title: "thehindu.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFgAcUzjf591ksKWdve-Z7D81N2F2p7E7YpzCcxNhyQjgFtPhCFWdqckg-Ldblrg2Wu-EZs05KoH0ljxAtsRwwSVTUNcjY5OB10jKx4jZUUySnRQRduqQJpERTFdCpUrn0eeSu_RGLHFs-NLs5UuZcpzNULj8wKwD4uvnXQhWSHwNfpkLzhu-zF0d2GwJETLs7hsggzlJpjApi9sSQaDcd5tcWha-NOu-jNhuQPLrWXTNLBIwJdC4Fo9-VyVOTUecXhEmVmTMSkXqjlhVLiMJ2pYHIwJSDTUavFJfyJ6jVrbw=="
-    },
-    {
-      title: "whro.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEzN6glBLcJkds6gIgw-zi9bI_c_coRDJTylSkypy15RJKNjInROblbVD3GYcoi2Mlhw8OZkYrfX6ziQLezcqyYOpzNEbdYlFVmg9DN4SKKXf5zyHtlXLavDan23yzJGfNrncVjpo3WgAFdHsicxXBv-HI76mopcGAJEzk2tIOizusT9S9fZ-5obg=="
-    },
-    {
-      title: "kyivpost.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHETr9jfHPQB-Otn2zbg0QZc0FNe4k5n-zcXixX6EbWJzO1RDtyaeUhGCZ0unZ7KkYqU2_Lbc_eOiJOusgxrgMxEDz8fuIQX635eyvjIZf2i2UmbsXa3LL5vA=="
-    }
-  ],
-  webSearchQueries: [
-    "WTI Brent oil price range August 2 2026 trend news",
-    "US Iran conflict update August 2 2026 military news",
-    "Hormuz Strait shipping status August 2 2026 Lloyd's List",
-    "US State Department Iran statement August 2 2026"
-  ]
-};
-
-export const DATA_EN: DashboardData = {
-  date: "2026-08-02",
-  version: "v2.144",
-  riskScore: 80,
-  keyStats: [
-    {
-      label: "Conflict Days",
-      value: "D155",
-      unit: "Since Feb 28",
-      color: "#ff851b"
-    },
-    {
-      label: "Score Change",
-      value: "Flat",
-      unit: "vs Prev",
-      color: "#ff4136"
-    },
-    {
-      label: "Oil",
-      value: "WTI $83.40–85.10 · Brent $86.80–90.80",
-      unit: "Ref.",
-      color: "#ff4136",
-      layout: "unitPrimary"
-    },
-    {
-      label: "Hormuz",
-      value: "Severely Restricted",
-      unit: "Transit Status",
-      color: "#ffdc00"
-    }
-  ],
-  riskFactors: [
-    {
-      name: "Military Escalation Intensity",
-      score: 4,
-      prev: 4,
-      weight: 0.2,
-      description: "US canceled major strikes, but Kuwaiti air defenses intercepted Iranian-origin drones.",
-      status: "FAST",
-      sourceVerification: "confirmed"
-    },
-    {
-      name: "Hormuz Disruption",
-      score: 4,
-      prev: 4,
-      weight: 0.2,
-      description: "Despite deal claims, maritime security remains compromised with fresh reports of tanker damage.",
-      status: "FAST",
-      sourceVerification: "confirmed"
-    },
-    {
-      name: "Energy Shock",
-      score: 3,
-      prev: 3,
-      weight: 0.2,
-      description: "Oil prices remain elevated as markets weigh the validity of diplomatic breakthroughs.",
-      status: "FAST",
-      sourceVerification: "confirmed"
-    },
-    {
-      name: "Great Power Involvement",
-      score: 4,
-      prev: 4,
-      weight: 0.2,
-      description: "Saudi Crown Prince MBS plays a critical mediation role, influencing US deployment logic.",
-      status: "FAST",
-      sourceVerification: "confirmed"
-    },
-    {
-      name: "De-escalation Probability",
-      score: 5,
-      prev: 5,
-      weight: 0.2,
-      description: "Trump claims 'perimeters of a deal', while Iran's semi-official media dismisses it as a lie.",
-      status: "FAST",
-      sourceVerification: "partial"
     }
   ],
   events: [
     {
       id: "EVT-01",
-      title: "Trump Cancels Iran Strikes",
-      description: "US President announces pause in military strikes citing a pending deal framework.",
+      title: "Major Drone Strikes in Eastern Syria",
+      description: "Suspected targeting of pro-Iran logistic nodes; Reuters cites local sources reporting significant damage.",
       verification: "confirmed",
-      timestamp: "2026-08-01 23:45 ET",
+      timestamp: "2026-08-03T04:20:00Z",
       significance: "",
       highlight: true
     },
     {
       id: "EVT-02",
-      title: "Iran Denies Deal Status",
-      description: "Tehran media refutes Trump's claims of an agreed-upon framework to open the Strait.",
-      verification: "partial",
-      timestamp: "2026-08-02 03:30 GMT",
-      significance: "",
-      critical: true
-    },
-    {
-      id: "EVT-03",
-      title: "Kuwait Drone Interception",
-      description: "Kuwait military reports destroying hostile Iranian drones targeting local facilities.",
+      title: "Omani Diplomatic Mission in Tehran",
+      description: "Aims to restart backchannel talks; Al Jazeera reports US interest in de-escalation.",
       verification: "confirmed",
-      timestamp: "2026-08-01 22:00 GMT",
-      significance: ""
+      timestamp: "2026-08-03T09:15:00Z",
+      significance: "",
+      highlight: true
     }
   ],
   warPhase: {
-    level: "Negotiation Window",
+    level: "High-Pressure Standoff",
     targetLevel: "Fragile Balance",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Trump unilaterally declares 'perimeters of a deal'",
-      "Mediation by Saudi Crown Prince MBS pauses escalation",
-      "Disconnected reality between diplomatic claims and field attacks"
+      "Military attrition via proxies remains within controllable bounds.",
+      "Deterrence in the Strait of Hormuz has become institutionalized.",
+      "Third-party mediators are testing the ground for a soft landing."
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -438,8 +399,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: US major air campaign plans are currently on hold.",
-        "Change: Active drone interceptions reported in Kuwaiti airspace."
+        "Change: Precision strikes in Syria demonstrate integrated US-Israel intelligence capabilities.",
+        "Continue: No direct state-to-state fire in the Persian Gulf theater."
       ]
     },
     {
@@ -448,8 +409,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Commercial traffic remains over 50% below pre-conflict levels.",
-        "Continue: Fresh reports of kinetic damage to civilian tankers in the Strait."
+        "Continue: IRGC maintain high-frequency patrol drills; owners advised daytime passage.",
+        "Change: Medium-sized gas carriers begin re-routing via the Cape due to insurance costs."
       ]
     },
     {
@@ -458,7 +419,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Brent crude remains at the $85-100 risk pivot point."
+        "Change: Oil price sensitivity to military news is blunted; attention shifts to Omani talks.",
+        "Continue: Major producers maintain cuts to support price floors."
       ]
     },
     {
@@ -467,99 +429,25 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Trump administration claims deal to fully open Hormuz.",
-        "Change: Iran's acting Defense Minister warns of proportionate response to any 'adventurism'."
+        "Change: Khamenei's office hints that 'resistance does not exclude necessary diplomacy'.",
+        "Continue: White House prioritizes diplomacy but refuses to withdraw Persian Gulf forces."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Narrative gap between US claims of diplomatic success and Iranian denials",
-      "Regional states' pressure for de-escalation versus US military deterrence needs"
+      "Irreconcilable gap between Iran's sanction relief demands and US nuclear restrictions.",
+      "Restructuring of Gulf ally confidence in US security guarantees."
     ],
     military: [
-      "Pause in state-level conventional strikes vs. persistence of asymmetric proxy warfare"
+      "Clash between Israeli 'Shadow War' and Iranian 'Proxy Defense' frameworks.",
+      "Real-time contest between US forward presence and IRGC A2/AD capabilities."
     ]
   },
-  scoreTrend: [
-    {
-      date: "07-29",
-      score: 80
-    },
-    {
-      date: "07-30",
-      score: 80
-    },
-    {
-      date: "07-31",
-      score: 80
-    },
-    {
-      date: "08-01",
-      score: 80
-    },
-    {
-      date: "08-02",
-      score: 80,
-      active: true
-    }
-  ],
-  keyChange: "Shift from imminent large-scale strike to a contested negotiation framework.",
-  investmentSignal: "→ Maintain hedge positions, reduce risk assets, increase energy exposure.",
-  change: "none",
+  investmentSignal: "→ Maintain defensive positions in energy and commodities, hedge risk asset volatility.",
   prevRiskScore: 80,
-  webSources: [
-    {
-      title: "iranintl.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFRxwvUOeCMNyoCJrOCfk8JyCM2h-ytmvKtPCq1fQNvDFpDRZKreNxxFBLWJRjcp8FBzb2kQfXCgtVRORKZ5GagtfMyB6J9SP965MSqDzoxk-nE7NFzeZJAc8DIJDWrsDM1v_jnH0M_"
-    },
-    {
-      title: "cfpublic.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHC7VGe_j6M8r_jfcK_E8VBgQ04-lJsZM9YrHpDgoZURNTytzx0BFpb2LYwTcH8g38M9E3HRLQJiXVPtil9NTAcIseoiPKrTAiLOeqzYGUZSCdWQAWPGoMtbkz2Bi7EVI2Ub67_daGCaaUgJS7nb_Z_k3UFUHHfZHtk2If_8-Q-UIKnOFw2jZxshDAeKyo="
-    },
-    {
-      title: "pbs.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGvh3WtOc8nimnSAUGNxmSBxcvtYbJRynm3N4vkYR-gF91N4BH7MIw27QDTILgm1Vi9Ykf148IE_jt7N28fOqK9WKFTXU-cCCCv6rT_qL-cZai7hRQWxh6YPZYKDa0_1JTbBI2boJWAfrjU-BH3bDWIwQfSIvLJf3o3zXfGBBjK1HUCEksv6RQ9HSlWQg8tVcaj-JY-MPTmk4FwVF7VuqhYttQmE37dEa89tLF1JzMulXbSTJOQ6DmwF840TA=="
-    },
-    {
-      title: "palestinechronicle.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHO3p86_ML5faqMNDKagmnCdGZz9_0F-0u2AsE9SnVCuBN76Gsmy6FYTYG5M7JcaHGhUafKZk8u_qtuUWQo774zqCWuN3327nuVC9ij9mgYTmo3_DwYVOvpDtJmBbGMUlCNeCPfSmUfcTRnrYjoxFQiY2Tjn7v9Adl1OlqMo7GiYsfbGTKTaLfaLwWWdaXolz6WMROoIViS07qY8JPiMQLe1obm"
-    },
-    {
-      title: "wdrb.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFiN0xdcJJ96JVLUAYQaozgRuu1d00nLtHQILdpWMOdm608PqjX-8aFyMitAgQNKo2d1lMEoeJlKgoyiN6rDHIOF5WiPnX1lAkohPWa3W03guhuFH0pB1a4ayIMBKaAk-PLbSI0rJ9JCPPpfUTqSNrBw8PpItHpVFGEI6xnSaCpLHVnuRerb3QvY4lcZvJzZGE2jwvmY6m26XuxogzZS2_33XhLg5yj8AEekOVhYPUHwRuh64Au7w5zhtyVVYg2dyfo8UiJtiFZpPecmA7DfRDQ_wNJn1DauLfE2ZA="
-    },
-    {
-      title: "tradingeconomics.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFzxC3trZ2q-QSy9-hsWKZRiBrIsCpVS9cvIrFdTyhpMqa6wOM3utuF_w-WxPdZ4u9rCiBliToAk08zcijZsM2U-YPMHji-8Hb8UA_81rlxkgFf4x8dEs7p5t5nXfCV4gsttG7ctPY="
-    },
-    {
-      title: "dailyjournal.net",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGkmHOudt5YWhn6Wm-DsbW-qENP0R3iluvalf5KtDwxPw44L5CKetb4aE4DqeL8UqZtvGFmRoM65NVGCixNkt903dRYFeGNChWEVzrlelyDpRiZkWN94E2isEBr0HDHTbrjoZrZcXnBxjuF-sbiKwXCw4lrvmoHA223c9KORaniVU7gXNllUMMLU-3dqWR9UDnV2BgeDWxReEJrVhQK8WbPPnVoOeT-rXiHQjy_XAZoLvbvj4l8"
-    },
-    {
-      title: "jpost.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHtFCTM6NG_7vdXqOGwRFJ0P48wYN0vU5in9Nf3UFDm_PPJVPLXLp1sRlDLFwAWih1SSHLzbu7_mbnYLzrmW0q11aBWsPfiPWwrVUoNHJsm67LMABXPEonfhLj2Lkt6RAiRMbL_aUW-KpcMhe-ud3ix"
-    },
-    {
-      title: "thehindu.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFgAcUzjf591ksKWdve-Z7D81N2F2p7E7YpzCcxNhyQjgFtPhCFWdqckg-Ldblrg2Wu-EZs05KoH0ljxAtsRwwSVTUNcjY5OB10jKx4jZUUySnRQRduqQJpERTFdCpUrn0eeSu_RGLHFs-NLs5UuZcpzNULj8wKwD4uvnXQhWSHwNfpkLzhu-zF0d2GwJETLs7hsggzlJpjApi9sSQaDcd5tcWha-NOu-jNhuQPLrWXTNLBIwJdC4Fo9-VyVOTUecXhEmVmTMSkXqjlhVLiMJ2pYHIwJSDTUavFJfyJ6jVrbw=="
-    },
-    {
-      title: "whro.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEzN6glBLcJkds6gIgw-zi9bI_c_coRDJTylSkypy15RJKNjInROblbVD3GYcoi2Mlhw8OZkYrfX6ziQLezcqyYOpzNEbdYlFVmg9DN4SKKXf5zyHtlXLavDan23yzJGfNrncVjpo3WgAFdHsicxXBv-HI76mopcGAJEzk2tIOizusT9S9fZ-5obg=="
-    },
-    {
-      title: "kyivpost.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHETr9jfHPQB-Otn2zbg0QZc0FNe4k5n-zcXixX6EbWJzO1RDtyaeUhGCZ0unZ7KkYqU2_Lbc_eOiJOusgxrgMxEDz8fuIQX635eyvjIZf2i2UmbsXa3LL5vA=="
-    }
-  ],
-  webSearchQueries: [
-    "WTI Brent oil price range August 2 2026 trend news",
-    "US Iran conflict update August 2 2026 military news",
-    "Hormuz Strait shipping status August 2 2026 Lloyd's List",
-    "US State Department Iran statement August 2 2026"
-  ]
+  webSources: [],
+  webSearchQueries: []
 };
 
 export const TRANSLATIONS = {
@@ -567,7 +455,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "8月2日节点",
+    node406: "8月3日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -601,16 +489,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.144 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.145 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 80（持平）：美军从‘临战边缘’转向‘协议博弈’，但实地安全环境并未因口头声明改善。",
-    bannerWarning: "→ 维持对冲配置，减持风险资产，增持能源资产。",
-    deescalationIntent: "美方急于宣称外交胜利与伊方坚决否认协议存在的认知分歧",
-    structuralRisk: "虽然特朗普宣称协议包括开放海峡，但实地监测显示航道风险极高。",
-    contradictionNote: "美方急于宣称外交胜利与伊方坚决否认协议存在的认知分歧；大规模正规战的暂缓与小规模代理人/非对称袭击频发的矛盾",
+    bannerSignal: "综合评分 78（↓2）：阿曼启动外交斡旋促使谈判分值下修，抵消了局部军事冲突的负面影响。",
+    bannerWarning: "→ 维持能源与大宗商品防御性头寸，适度对冲风险资产波动。",
+    deescalationIntent: "伊朗的制裁解除诉求与美国对核计划限制的坚持依然对立。",
+    structuralRisk: "革命卫队常态化演习造成航道“软封锁”，通行效率受阻。",
+    contradictionNote: "伊朗的制裁解除诉求与美国对核计划限制的坚持依然对立。；以色列“影子战争”策略与伊朗“代理防御”体系的区域碰撞。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -618,7 +506,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第155天",
+    dayCount: "第156天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -626,7 +514,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Aug 2 Node",
+    node406: "Aug 3 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -660,16 +548,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.144 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.145 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 80 (Flat): Shift from imminent large-scale strike to a contested negotiation framework.",
-    bannerWarning: "→ Maintain hedge positions, reduce risk assets, increase energy exposure.",
-    deescalationIntent: "Narrative gap between US claims of diplomatic success and Iranian denials",
-    structuralRisk: "Despite deal claims, maritime security remains compromised with fresh reports of tanker damage.",
-    contradictionNote: "Narrative gap between US claims of diplomatic success and Iranian denials; Pause in state-level conventional strikes vs. persistence of asymmetric proxy warfare",
+    bannerSignal: "Composite 78 (↓2): Omani diplomatic mediation triggered a slight decrease in negotiation risk, offsetting proxy clashes.",
+    bannerWarning: "→ Maintain defensive positions in energy and commodities, hedge risk asset volatility.",
+    deescalationIntent: "Irreconcilable gap between Iran's sanction relief demands and US nuclear restri…",
+    structuralRisk: "IRGC's constant drills create a 'soft blockade' impacting transit efficiency.",
+    contradictionNote: "Irreconcilable gap between Iran's sanction relief demands and US nuclear restrictions.; Clash between Israeli 'Shadow War' and Iranian 'Proxy Defense' framewor…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -677,7 +565,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 155",
+    dayCount: "Day 156",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
