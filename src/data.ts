@@ -65,25 +65,24 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-08-08",
-  version: "v2.150",
-  riskScore: 70,
+  date: "2026-08-09",
+  version: "v2.151",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D161",
+      value: "D162",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↓2",
+      value: "持平",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $76.20–$78.50 · Brent $81.80–$83.10",
+      value: "WTI $81.96–$86.16 · Brent $83.24–$84.40",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -101,7 +100,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "美军维持对伊朗港口的动态封锁，前线交火烈度因谈判进入窗口期而有所放缓。",
+      description: "多线代理人战争活跃，胡塞武装攻击致数十人死亡，美军持续空袭反制。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -110,7 +109,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "海峡流量维持极低水平，商业航运仍以非美系小型船舶试探通行为主。",
+      description: "伊朗明确表示海峡复航需以美方撤军及补偿为前提，实质封锁持续。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -119,7 +118,7 @@ export const DATA_ZH: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "油价因降温预期回落，目前处于温和偏强波动区间。",
+      description: "油价在 $80 附近盘整，供应担忧被全球需求放缓叙事部分对冲。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -128,117 +127,22 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "美国通过行政命令维持封锁，地区盟友（沙、土、巴）加强防御协作。",
+      description: "美方直接进行军事部署与打击，并寻求沙特、土耳其等地区盟友加强防御协作。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "降级/谈判前景",
       score: 3.5,
-      prev: 4,
+      prev: 3.5,
       weight: 0.2,
-      description: "阿曼斡旋方案获得双方原则性认同，协议框架已现，但细节执行仍具高度脆弱性。",
+      description: "虽然阿曼中介渠道未断，但伊朗提出的新条件（全面补偿、撤军）导致谈判僵局。",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
-  events: [
-    {
-      id: "EVT-01",
-      title: "美伊霍尔木兹协议谈判取得实质进展",
-      description: "特朗普表示重新开放海峡的协议即将达成，或涉及 60 天临时通行期，美方要求以此换取伊方停止对盟友攻击。",
-      verification: "confirmed",
-      timestamp: "2026-08-07 22:00",
-      significance: "",
-      highlight: true,
-      critical: true
-    },
-    {
-      id: "EVT-02",
-      title: "海峡通行量维持常态 4% 水平",
-      description: "尽管谈判乐观，但物理封锁现状未改，船舶追踪数据显示 8 月 7 日仅有极少量散货船通过。",
-      verification: "confirmed",
-      timestamp: "2026-08-07 15:00",
-      significance: ""
-    },
-    {
-      id: "EVT-03",
-      title: "伊朗警告支持美国的外交行动者",
-      description: "伊朗革命卫队警告地区内协助美方封锁的国家将面临后续报复，显示内部仍有强硬派阻力。",
-      verification: "single",
-      timestamp: "2026-08-07 07:18",
-      significance: ""
-    }
-  ],
-  warPhase: {
-    level: "高压对峙",
-    targetLevel: "脆弱平衡",
-    title: "美伊地缘风险监测",
-    subTitle: "基于公开报道综合研判",
-    points: [
-      "从单纯军事打击转向「以打促谈」的政治博弈阶段",
-      "霍尔木兹海峡的控制权成为伊朗换取解除封锁的核心筹码",
-      "大国介入力度已达峰值，进入成本管控与风险对冲期"
-    ],
-    note: "监测用途，不构成投资建议。"
-  },
-  situations: [
-    {
-      title: "军事行动",
-      icon: "Military",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "延续：美国海军维持对伊朗南部关键港口的远海阻绝",
-        "延续：伊朗代理武装在伊拉克、叙利亚方向维持低烈度战术试探"
-      ]
-    },
-    {
-      title: "航运 / 霍尔木兹",
-      icon: "Shipping",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "变化：谈判框架提出建立「阿曼-伊朗联合监管航道」，允许特定非美商船通行",
-        "延续：保险巨头维持该区域极高战争险溢价，拒绝承保美资油轮"
-      ]
-    },
-    {
-      title: "能源市场",
-      icon: "Energy",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "变化：现货溢价因停火预期开始收窄，中资炼厂采购需求维持观望",
-        "延续：全球成品油库存受供应阻断影响持续低位运行"
-      ]
-    },
-    {
-      title: "领导层信号",
-      icon: "Leadership",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "变化：美财长贝森特称停火协议可能在 30-60 小时内获得重大进展",
-        "延续：伊朗议会强调协议必须包含解除针对石油出口的核心制裁"
-      ]
-    }
-  ],
-  coreContradiction: {
-    political: [
-      "特朗普政府急于在中期选举前平抑油价与通胀压力",
-      "伊朗领导层在 सुप्रीम领袖去世后的权力平稳过渡需求与民族主义强硬立场的平衡"
-    ],
-    military: [
-      "美军区域封锁的极高维持成本与对伊战略压榨效能的边际递减",
-      "伊朗封锁霍尔木兹海峡带来的战略收益与潜在毁灭性报复之间的博弈"
-    ]
-  },
+  riskScore: 70,
   scoreTrend: [
-    {
-      date: "08-04",
-      score: 74
-    },
     {
       date: "08-05",
       score: 72
@@ -253,54 +157,150 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "08-08",
+      score: 70
+    },
+    {
+      date: "08-09",
       score: 70,
       active: true
     }
   ],
-  keyChange: "谈判窗口实质开启，综合风险分出现台阶式下降。",
-  investmentSignal: "→ 维持能源对冲防御，减持短期高风险地缘溢价仓位，关注风险资产波动弹性。",
-  change: "down",
-  prevRiskScore: 72,
+  warPhase: {
+    level: "高压对峙",
+    targetLevel: "脆弱平衡",
+    title: "美伊地缘风险监测",
+    subTitle: "基于公开报道综合研判",
+    points: [
+      "伊朗将海峡开放权作为外交筹码进行「打包要价」。",
+      "美国军事威慑已进入常态化周期，双方目前克制大规模地面直接对抗。",
+      "地区盟友（沙特/土耳其）开始寻求独立的安全保障协议。"
+    ],
+    note: "监测用途，不构成投资建议。"
+  },
+  events: [
+    {
+      id: "EVT-01",
+      title: "伊朗开出海峡复航「极高价」",
+      description: "伊朗最高国家安全委员会声明要求美国支付战争赔偿并取消封锁作为复航前提（AP）。",
+      verification: "confirmed",
+      timestamp: "2026-08-09",
+      significance: "",
+      critical: true
+    },
+    {
+      id: "EVT-02",
+      title: "胡塞武装大规模袭击也门政府军",
+      description: "袭击造成至少 58 人死亡，加剧了区域代理冲突的残酷性（CBS News）。",
+      verification: "single",
+      timestamp: "2026-08-07",
+      significance: ""
+    }
+  ],
+  situations: [
+    {
+      title: "军事行动",
+      icon: "Military",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "延续：美军 CVN 77 打击群维持高频夜间飞行任务，确保对波斯湾出口的威慑。",
+        "延续：伊拉克什叶派民兵在伊朗协调下继续对沙特边境进行侦察施压。"
+      ]
+    },
+    {
+      title: "航运 / 霍尔木兹",
+      icon: "Shipping",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "变化：伊朗将复航谈判从单纯的技术安全议题提升为「全面战争结算」政治议题。",
+        "延续：商业班轮绝大多数仍绕行好望角，海峡通行强度维持低位。"
+      ]
+    },
+    {
+      title: "能源市场",
+      icon: "Energy",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "延续：布伦特原油在 $83-84 区间企稳，市场对短期内战争扩大化持观望态度。",
+        "变化：交易商开始计价海峡封锁可能延续至年底的长期成本。"
+      ]
+    },
+    {
+      title: "领导层信号",
+      icon: "Leadership",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "变化：伊朗强硬派指挥官 Zolghadr 走向前台，信号显示德黑兰短期无退让意愿。",
+        "延续：美白宫强调「所有选项均在桌面」，但近期无进一步地面增兵计划。"
+      ]
+    }
+  ],
+  coreContradiction: {
+    political: [
+      "伊朗的全面赔偿要求与美方「无条件复航」目标的根本对立。",
+      "中东盟友对美国长期安全承诺的信任赤字。"
+    ],
+    military: [
+      "区域内不断上升的代理人伤亡与美伊直接冲突红线之间的博弈。"
+    ]
+  },
+  keyChange: "伊朗提出「纠正行为」最后通牒，标志着谈判从求同存异转向极限对峙。",
+  investmentSignal: "→ 维持 风险资产 防御 姿态，增持 能源 对冲。",
+  change: "none",
+  prevRiskScore: 70,
   webSources: [
     {
+      title: "eia.gov",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEBVJ2G8vSZW8nGMG9pZEkj4brW3H-RL2wU-UPickShI7Ar2HEeDE22lmEGFzgSbvX0xgUHr-YG9Gbj4ZCbVTnt8StDGiR3boZcOIrTT73j6pLigbwb81ET3Z6_b25VHhGiMqDYqN0="
+    },
+    {
       title: "investing.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFue-VX8hq448SStzLMspaTFpstvKoAvxFdP8jiXOMxIDI_yZu79Zud1ZlZnhMEq2QobbGbruJT1HJ_TjCyG5oRkGb_0kKzLDYtv2sJ8k0c9YdiuyiQJIjjX__2oAKBq98K2SScLmbeLHYVkfTlctPWfMYJR_Jx8n5urbIgLsBO"
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHsOECKnJjIw8KW70mxu1WE9xk7VrRqvrWB_DL29eJoiG0DwojVtBAaL970EPDmE0S0EG-X-RgUUP9A8CqTuvd6sE7E6XA9iU-P24UnCvtsKe4hQ5iDGkeoCnF5zCSE76XhhvUZmAhIb1AhkqgiNPSNMMTcmA=="
+    },
+    {
+      title: "centcom.mil",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH8cY4RmrCGoBGHOvV7PgDekNK6ZUX6DxQAXwOrcD89PQzPD23KRmNHASwSXruAcwSNMuKXwQ9B-nDyjb0-8ci_O_-KjSA_xWKQ8kyZ4Q=="
+    },
+    {
+      title: "cbsnews.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEr6dnH7gg5o6GYvsd1oRbGu2__VwCkjSWo3MegqohyTiSEC6MWpICmv6fKQ4JDyx7URLTNhPifcvqhbiQvvHhX-U7Bukc9Orp5x2ZKTBMgAN8WbyYSaE9cKZrRf6Ih06ciXO4zgedNsQJZ8TtzBZRDmTMmWNikYjiHmhecVzC1TLxQ"
     }
   ],
   webSearchQueries: [
-    "WTI Brent oil price range August 8 2024 trend Reuters Bloomberg",
-    "US Iran conflict update August 8 2024 Pentagon statement IRGC",
-    "Hormuz Strait shipping status August 8 2024 AP AFP"
+    "WTI Brent oil price range August 9 2024",
+    "US Iran relations news August 9 2024 official statements"
   ]
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-08-08",
-  version: "v2.150",
-  riskScore: 70,
+  date: "2026-08-09",
+  version: "v2.151",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D161",
+      value: "D162",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "↓2",
+      value: "Flat",
       unit: "vs Prev",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $76.20–$78.50 · Brent $81.80–$83.10",
+      value: "WTI $81.96–$86.16 · Brent $83.24–$84.40",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
-      value: "Severe Restriction",
+      value: "Severely Restricted",
       unit: "Status",
       color: "#ffdc00"
     }
@@ -311,7 +311,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "US maintains blockade of Iranian ports; fire intensity has slowed as a diplomatic window opens.",
+      description: "High proxy activity with heavy casualties; sustained US airstrikes in response to militia movements.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -320,7 +320,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Passage remains at critical lows; commercial traffic is experimental and limited to non-US ships.",
+      description: "Iran officially links reopening to strategic demands, effectively prolonging the blockade.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -329,7 +329,7 @@ export const DATA_EN: DashboardData = {
       score: 2,
       prev: 2,
       weight: 0.2,
-      description: "Oil prices have retreated due to cooling expectations, currently in a moderate-strong range.",
+      description: "Prices remain in the $75-85 range; market is balanced between supply fears and global demand outlook.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -338,117 +338,22 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "US maintains carrier groups and blockade; regional allies bolster collective defense.",
+      description: "Direct US military engagement in interception and strikes; regional powers seek collective defense.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "De-escalation Probability",
       score: 3.5,
-      prev: 4,
+      prev: 3.5,
       weight: 0.2,
-      description: "Oman-brokered framework agreed in principle; however, execution details remain fragile.",
+      description: "Negotiation channels exist but are stalled by Iranian demands for war reparations.",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
-  events: [
-    {
-      id: "EVT-01",
-      title: "Substantial Progress in US-Iran Hormuz Negotiations",
-      description: "President Trump states a deal to reopen the strait is nearing completion, involving a possible 60-day transit window.",
-      verification: "confirmed",
-      timestamp: "2026-08-07 22:00",
-      significance: "",
-      highlight: true,
-      critical: true
-    },
-    {
-      id: "EVT-02",
-      title: "Hormuz Traffic Persists at 4% of Normal Levels",
-      description: "Physical blockage continues despite diplomatic optimism; only 8 vessels tracked transiting on August 7.",
-      verification: "confirmed",
-      timestamp: "2026-08-07 15:00",
-      significance: ""
-    },
-    {
-      id: "EVT-03",
-      title: "IRGC Warns Regional Supporters of US Actions",
-      description: "The IRGC warns countries aiding the blockade will face consequences, indicating internal hardline resistance.",
-      verification: "single",
-      timestamp: "2026-08-07 07:18",
-      significance: ""
-    }
-  ],
-  warPhase: {
-    level: "High-Pressure Standoff",
-    targetLevel: "Fragile Balance",
-    title: "US–Iran geo-risk snapshot",
-    subTitle: "Synthesized from public sources",
-    points: [
-      "Shift from military strikes to a 'strike-to-negotiate' political phase",
-      "Control of the Strait of Hormuz is Iran's primary leverage to lift the blockade",
-      "Global powers reach peak involvement, shifting to risk hedging and cost management"
-    ],
-    note: "For monitoring only; not investment advice."
-  },
-  situations: [
-    {
-      title: "Military Action",
-      icon: "Military",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "Continue: US Navy maintains deep-sea interdiction of critical Iranian ports",
-        "Continue: Iranian proxies in Iraq/Syria maintain low-intensity tactical probes"
-      ]
-    },
-    {
-      title: "Shipping / Hormuz",
-      icon: "Shipping",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "Change: Framework proposes an 'Oman-Iran Joint Corridor' for specific commercial transit",
-        "Continue: Insurers maintain extreme war risk premiums and refuse US-linked tankers"
-      ]
-    },
-    {
-      title: "Energy Market",
-      icon: "Energy",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "Change: Spot premiums narrowing as ceasefire hopes rise; refineries remain cautious",
-        "Continue: Global product stocks remain at historical lows due to supply disruptions"
-      ]
-    },
-    {
-      title: "Leadership Signals",
-      icon: "Leadership",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "Change: US Treasury Sec Bessent hints at a breakthrough within 30-60 hours",
-        "Continue: Iranian Majlis insists any deal must lift core oil export sanctions"
-      ]
-    }
-  ],
-  coreContradiction: {
-    political: [
-      "Trump administration urgency to stabilize oil/inflation before midterms",
-      "Iranian leadership's need for stability post-succession vs. hardline nationalism"
-    ],
-    military: [
-      "Sustainability costs of the US blockade vs. diminishing strategic returns",
-      "Iran's leverage in Hormuz vs. the risk of a devastating kinetic response"
-    ]
-  },
+  riskScore: 70,
   scoreTrend: [
-    {
-      date: "08-04",
-      score: 74
-    },
     {
       date: "08-05",
       score: 72
@@ -463,24 +368,121 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "08-08",
+      score: 70
+    },
+    {
+      date: "08-09",
       score: 70,
       active: true
     }
   ],
-  keyChange: "Substantial negotiation window opens, leading to the first significant score drop in recent days.",
-  investmentSignal: "→ Maintain energy hedges, reduce short-term high-risk geopolitical premium positions, watch risk asset elasticity.",
-  change: "down",
-  prevRiskScore: 72,
+  warPhase: {
+    level: "High-Pressure Standoff",
+    targetLevel: "Fragile Balance",
+    title: "US–Iran geo-risk snapshot",
+    subTitle: "Synthesized from public sources",
+    points: [
+      "Iran utilizes maritime transit as a high-stakes diplomatic ransom.",
+      "US deterrence maintains a high operational tempo without significant troop expansion.",
+      "Regional allies are shifting toward autonomous security arrangements."
+    ],
+    note: "For monitoring only; not investment advice."
+  },
+  events: [
+    {
+      id: "EVT-01",
+      title: "Iran Issues 'Correct Behavior' Ultimatum",
+      description: "Supreme National Security Council demands war reparations and US withdrawal for Hormuz reopening (AP).",
+      verification: "confirmed",
+      timestamp: "2026-08-09",
+      significance: "",
+      critical: true
+    },
+    {
+      id: "EVT-02",
+      title: "Houthi Missile Attack on Yemen Forces",
+      description: "At least 58 killed in escalation of proxy warfare (CBS News).",
+      verification: "single",
+      timestamp: "2026-08-07",
+      significance: ""
+    }
+  ],
+  situations: [
+    {
+      title: "Military Action",
+      icon: "Military",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "Continue: US George H.W. Bush carrier group maintains night operations in the Arabian Sea.",
+        "Continue: Iranian-backed militias in Iraq conduct surveillance maneuvers near Saudi borders."
+      ]
+    },
+    {
+      title: "Shipping / Hormuz",
+      icon: "Shipping",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "Change: Iran pivots reopening talks from technical safety to broad political settlement demands.",
+        "Continue: Global shipping liners continue to divert around the Cape of Good Hope."
+      ]
+    },
+    {
+      title: "Energy Market",
+      icon: "Energy",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "Continue: Brent crude stabilizes in the $83-84 range as traders wait for next geopolitical signals.",
+        "Change: Market participants begin pricing in a 'long-term closure' scenario for the Strait."
+      ]
+    },
+    {
+      title: "Leadership Signals",
+      icon: "Leadership",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "Change: IRGC commander Zolghadr takes lead in SNSC, signaling a shift toward a hardline stance.",
+        "Continue: White House explores 'all options' while avoiding direct ground invasion."
+      ]
+    }
+  ],
+  coreContradiction: {
+    political: [
+      "Incompatibility between Iranian reparation demands and US unconditional transit goals.",
+      "Deepening trust deficit between US and its regional security partners."
+    ],
+    military: [
+      "Escalating proxy body counts testing the 'red line' of direct US-Iran confrontation."
+    ]
+  },
+  keyChange: "Iran's ultimatum marks a shift from tactical negotiation to structural deadlock.",
+  investmentSignal: "→ Maintain Defensive posture in risk assets, Overweight Energy hedges.",
+  change: "none",
+  prevRiskScore: 70,
   webSources: [
     {
+      title: "eia.gov",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEBVJ2G8vSZW8nGMG9pZEkj4brW3H-RL2wU-UPickShI7Ar2HEeDE22lmEGFzgSbvX0xgUHr-YG9Gbj4ZCbVTnt8StDGiR3boZcOIrTT73j6pLigbwb81ET3Z6_b25VHhGiMqDYqN0="
+    },
+    {
       title: "investing.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFue-VX8hq448SStzLMspaTFpstvKoAvxFdP8jiXOMxIDI_yZu79Zud1ZlZnhMEq2QobbGbruJT1HJ_TjCyG5oRkGb_0kKzLDYtv2sJ8k0c9YdiuyiQJIjjX__2oAKBq98K2SScLmbeLHYVkfTlctPWfMYJR_Jx8n5urbIgLsBO"
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHsOECKnJjIw8KW70mxu1WE9xk7VrRqvrWB_DL29eJoiG0DwojVtBAaL970EPDmE0S0EG-X-RgUUP9A8CqTuvd6sE7E6XA9iU-P24UnCvtsKe4hQ5iDGkeoCnF5zCSE76XhhvUZmAhIb1AhkqgiNPSNMMTcmA=="
+    },
+    {
+      title: "centcom.mil",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH8cY4RmrCGoBGHOvV7PgDekNK6ZUX6DxQAXwOrcD89PQzPD23KRmNHASwSXruAcwSNMuKXwQ9B-nDyjb0-8ci_O_-KjSA_xWKQ8kyZ4Q=="
+    },
+    {
+      title: "cbsnews.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEr6dnH7gg5o6GYvsd1oRbGu2__VwCkjSWo3MegqohyTiSEC6MWpICmv6fKQ4JDyx7URLTNhPifcvqhbiQvvHhX-U7Bukc9Orp5x2ZKTBMgAN8WbyYSaE9cKZrRf6Ih06ciXO4zgedNsQJZ8TtzBZRDmTMmWNikYjiHmhecVzC1TLxQ"
     }
   ],
   webSearchQueries: [
-    "WTI Brent oil price range August 8 2024 trend Reuters Bloomberg",
-    "US Iran conflict update August 8 2024 Pentagon statement IRGC",
-    "Hormuz Strait shipping status August 8 2024 AP AFP"
+    "WTI Brent oil price range August 9 2024",
+    "US Iran relations news August 9 2024 official statements"
   ]
 };
 
@@ -489,7 +491,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "8月8日节点",
+    node406: "8月9日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -523,16 +525,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.150 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.151 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 70（↓2）：谈判窗口实质开启，综合风险分出现台阶式下降。",
-    bannerWarning: "→ 维持能源对冲防御，减持短期高风险地缘溢价仓位，关注风险资产波动弹性。",
-    deescalationIntent: "特朗普政府急于在中期选举前平抑油价与通胀压力",
-    structuralRisk: "海峡流量维持极低水平，商业航运仍以非美系小型船舶试探通行为主。",
-    contradictionNote: "特朗普政府急于在中期选举前平抑油价与通胀压力；美军区域封锁的极高维持成本与对伊战略压榨效能的边际递减",
+    bannerSignal: "综合评分 70（持平）：伊朗提出「纠正行为」最后通牒，标志着谈判从求同存异转向极限对峙。",
+    bannerWarning: "→ 维持 风险资产 防御 姿态，增持 能源 对冲。",
+    deescalationIntent: "伊朗的全面赔偿要求与美方「无条件复航」目标的根本对立。",
+    structuralRisk: "伊朗明确表示海峡复航需以美方撤军及补偿为前提，实质封锁持续。",
+    contradictionNote: "伊朗的全面赔偿要求与美方「无条件复航」目标的根本对立。；区域内不断上升的代理人伤亡与美伊直接冲突红线之间的博弈。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -540,7 +542,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第161天",
+    dayCount: "第162天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -548,7 +550,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Aug 8 Node",
+    node406: "Aug 9 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -582,16 +584,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.150 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.151 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 70 (↓2): Substantial negotiation window opens, leading to the first significant score drop in recent days.",
-    bannerWarning: "→ Maintain energy hedges, reduce short-term high-risk geopolitical premium positions, watch risk asset elasticity.",
-    deescalationIntent: "Trump administration urgency to stabilize oil/inflation before midterms",
-    structuralRisk: "Passage remains at critical lows; commercial traffic is experimental and limited to non-US ships.",
-    contradictionNote: "Trump administration urgency to stabilize oil/inflation before midterms; Sustainability costs of the US blockade vs. diminishing strategic returns",
+    bannerSignal: "Composite 70 (Flat): Iran's ultimatum marks a shift from tactical negotiation to structural deadlock.",
+    bannerWarning: "→ Maintain Defensive posture in risk assets, Overweight Energy hedges.",
+    deescalationIntent: "Incompatibility between Iranian reparation demands and US unconditional transit…",
+    structuralRisk: "Iran officially links reopening to strategic demands, effectively prolonging the blockade.",
+    contradictionNote: "Incompatibility between Iranian reparation demands and US unconditional transit goals.; Escalating proxy body counts testing the 'red line' of direct US-Iran c…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -599,7 +601,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 161",
+    dayCount: "Day 162",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
