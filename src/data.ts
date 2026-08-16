@@ -65,72 +65,26 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-08-15",
-  version: "v2.158",
+  date: "2026-08-16",
+  version: "v2.159",
   riskScore: 76,
-  riskFactors: [
-    {
-      name: "军事升级烈度",
-      score: 4,
-      prev: 4,
-      weight: 0.2,
-      description: "美军增派隐身战机且伊朗部署反舰系统，双方在一线接触区的战备水平显著提高。",
-      status: "FAST",
-      sourceVerification: "confirmed"
-    },
-    {
-      name: "霍尔木兹航运扰动",
-      score: 4,
-      prev: 4,
-      weight: 0.2,
-      description: "航道出现实质性干扰，船舶通行面临伊方物理性搜检，航道流量受限。",
-      status: "FAST",
-      sourceVerification: "confirmed"
-    },
-    {
-      name: "能源冲击",
-      score: 3,
-      prev: 3,
-      weight: 0.2,
-      description: "原油价格重回高位区间，市场正在定价航道封锁可能带来的供应中断风险。",
-      status: "FAST",
-      sourceVerification: "confirmed"
-    },
-    {
-      name: "大国介入深度",
-      score: 4,
-      prev: 4,
-      weight: 0.2,
-      description: "美军直接军事部署力度加大，该区域已成为大国博弈的直接前线。",
-      status: "FAST",
-      sourceVerification: "confirmed"
-    },
-    {
-      name: "降级/谈判前景",
-      score: 4,
-      prev: 3.5,
-      weight: 0.2,
-      description: "双方立场极度僵硬，短期内无任何实质性停火或缓和接触迹象。",
-      status: "FAST",
-      sourceVerification: "confirmed"
-    }
-  ],
+  change: "none",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D168",
+      value: "D169",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↑2",
+      value: "持平",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $88–$90 · Brent $92–$94",
+      value: "WTI $81.50–$84.20 · Brent $87.50–$89.50",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -142,35 +96,82 @@ export const DATA_ZH: DashboardData = {
       color: "#ffdc00"
     }
   ],
+  riskFactors: [
+    {
+      name: "军事升级烈度",
+      score: 4,
+      prev: 4,
+      weight: 0.2,
+      description: "美军航母战斗群轮换及针对阿联酋商业目标的袭击增加。",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "霍尔木兹航运扰动",
+      score: 4,
+      prev: 4,
+      weight: 0.2,
+      description: "伊朗宣称对海峡拥有完全控制权，商业通行面临物理打击威胁。",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "能源冲击",
+      score: 3,
+      prev: 3,
+      weight: 0.2,
+      description: "Brent油价在$85-100区间徘徊，EIA上调预期显示长期供应紧张。",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "大国介入深度",
+      score: 4,
+      prev: 4,
+      weight: 0.2,
+      description: "美国维持无限期海上封锁，大国军事存在处于冷战后最高水平。",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "降级/谈判前景",
+      score: 4,
+      prev: 4,
+      weight: 0.2,
+      description: "外交渠道停滞，解封条件与黎巴嫩/加沙战事深度挂钩。",
+      status: "FAST",
+      sourceVerification: "partial"
+    }
+  ],
   events: [
     {
       id: "EVT-01",
-      title: "美军增派F-22至中东",
-      description: "旨在强化对伊朗可能的军事报复威慑，美军在中东的空优配置达到近半年最高水平。",
+      title: "ADNOC货轮在海峡遭袭",
+      description: "阿联酋官方确认ADNOC船只周五晚遭袭，无伤亡，但证实了航道内针对能源基建的定点打击风险。",
       verification: "confirmed",
-      timestamp: "2026-08-15 02:40",
+      timestamp: "2026-08-15",
       significance: "",
       highlight: true
     },
     {
       id: "EVT-02",
-      title: "伊朗实施航道“搜检”",
-      description: "伊斯兰革命卫队在霍尔木兹海域临时扣留商船进行检查，导致航行延误与溢价。",
+      title: "IRGC宣布海峡处于“关闭状态”",
+      description: "伊朗卫队司令称德黑兰已实现对海峡的绝对监控，且目前任何未经许可的船只均无法通过。",
       verification: "confirmed",
-      timestamp: "2026-08-15 05:15",
+      timestamp: "2026-08-14",
       significance: "",
       critical: true
     }
   ],
   warPhase: {
-    level: "危机升级期",
-    targetLevel: "结构性紧张",
+    level: "高压对峙",
+    targetLevel: "脆弱平衡",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "从零星代理冲突转为主权国家层面的战术威慑对峙",
-      "霍尔木兹海峡的控制权博弈从口头演变为低烈度物理干预",
-      "全球能源市场重回“冲突定价”模式"
+      "商业航运目标的常态化打击风险",
+      "美军长期封锁导致的兵力与心理极限测试",
+      "多区域冲突（黎巴嫩、叙利亚）与海峡问题的强耦合"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -181,8 +182,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美军F-22机群抵达，针对伊朗沿岸目标的监控力度升级。",
-        "变化：伊朗在南部分部前移了其自主研制的“努尔”反舰导弹系统。"
+        "变化：美军启动航母大队战略轮换，派遣乔治·华盛顿号部署中东。",
+        "延续：代理人武装维持对驻叙美军基地的低频袭扰。"
       ]
     },
     {
@@ -191,8 +192,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：搜检频率增加。Lloyd's List报告称过去24小时内有3起非正常干扰事件。",
-        "延续：主要航商（Maersk/MSC）维持避险航线建议。"
+        "变化：阿联酋商业船舶遇袭，证实攻击面已向第三方能源物流扩散。",
+        "延续：海峡商业航道处于实质性半瘫痪状态。"
       ]
     },
     {
@@ -201,8 +202,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：布伦特原油突破92美元阻力位，短期看涨期权持仓量大幅增加。",
-        "延续：美国战略石油储备（SPR）补充计划因价格过高面临暂缓。"
+        "延续：地缘溢价支撑Brent价格在$85-90区间稳固。",
+        "变化：市场开始计入“无限期封锁”导致的长期结构性赤字。"
       ]
     },
     {
@@ -211,26 +212,21 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：伊朗总统发表公开讲话称“主权完整不容侵犯”，暗示报复行动仍在计划中。",
-        "延续：美国国务院维持对伊朗外交接触的暂停状态。"
+        "变化：伊朗将解封与黎巴嫩停火挂钩，展现出进攻性的外交筹码。",
+        "延续：美方坚守 blockade-first 策略，拒绝单方面让步。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美国必须维护海峡通行自由以保护盟友利益",
-      "伊朗将封锁航道视为反制制裁与军事压力的最终筹码"
+      "伊朗要求全区域停火与美方坚持通过封锁施压的根本矛盾。",
+      "第三方中立调解渠道因先决条件过高而失效。"
     ],
     military: [
-      "低烈度摩擦与全面误判导致战争的风险并存",
-      "防区外打击能力与近岸饱和攻击手段的相互制衡"
+      "航道封锁的物理有效性与美方护航力量长期部署疲劳的矛盾。"
     ]
   },
   scoreTrend: [
-    {
-      date: "08-11",
-      score: 74
-    },
     {
       date: "08-12",
       score: 74
@@ -245,29 +241,102 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "08-15",
+      score: 76
+    },
+    {
+      date: "08-16",
       score: 76,
       active: true
     }
   ],
-  keyChange: "美军大规模增兵与伊朗实质性干扰海峡通行引发的风险共振。",
-  investmentSignal: "→ 增持能源对冲与大宗商品防御头寸，对跨区域风险资产进行减持处理。",
-  change: "up",
-  prevRiskScore: 74,
-  webSources: [],
-  webSearchQueries: []
+  keyChange: "ADNOC船舶遭袭标志着海峡安全风险从言语威胁转向物理常态化攻击。",
+  investmentSignal: "→ 防御：维持能源与黄金避险部位，防御海峡封锁导致的物理供应中断风险。",
+  prevRiskScore: 76,
+  webSources: [
+    {
+      title: "chinadailyhk.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEshkAZzaNd74RiewLe0rasx2n4FF-i54uc9qu7M9pKUPE-FkiLorOWLaYVCBWDqv0gOVmg1PGfuubBMem8wlCXhOaEn3ckGRb98MZgpxI01lzS3d6kiWVIUsLqNd1p-pdFsL2z"
+    },
+    {
+      title: "caspiannews.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFRhEWpCa31_PBhNHM5vaGAdoBRzynEW1kLVNQEeEx3jfyWxyoHwMnnpzFnp2chcu1wfbSV1g9W6_iMFxNh6VBB5GyP1-uhW0VXwsuExPWu9ZsHf09BCsWYSfcTKC4ITELXvC8lZk4O00gk04_VU8QHmjq7oS0ljpR-spyCG6eBNo2jFhEOwwiy4IB3AA4_xeujrVpDhuG9YQ8="
+    },
+    {
+      title: "tasnimnews.ir",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGKkyglTjvdcQfddbhZl4gzk33uabIxb855pOmIOwEpMyAe7Sn3tfPmmfI3g71DFfxW3Pgd71SmNVkJBi1dIMSM0PP0fMhDxGkj_I88o8tIeEmUB2gYvJXlTNpPIRSzARMFMn_TMW-aX5tED9j78E9YjJVnJmRNuKMrJMI0kkF7A65eY71X8NkpI-KDmWo3sY5ZXuYLY7yi"
+    },
+    {
+      title: "keranews.org",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF-lL2vH7abaV7tRDzU_smVTXFmYby6eg1cYdAspF5oFiivzoameo3QWR3ioNFb4RHKXJ4zuazK4knmBEmbRnbUPgnSevcMEjx6sKHK6Q-WoAV492-5zVfHjGJF1ajV9Us4o6OhuYy-cDv6Ybb4SwWp4lvb2OCw4bgcwYN5u-I-DZmN89oPlvis0Uu1QhVq8QLokSnBzfKr0FL0n6dDMdbdskplQMDRzqIhOzqS"
+    },
+    {
+      title: "facebook.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF-xufWrw9Kpm7BZjr9-sUjsLn-aJXeIlKHKi99GDSQoETuGkTSV1P70QMSghNIq_Ub3v0Mk-9zl3QMbq9Ou8hlKpidaVya_xE_8tGa98r7x9vpvqn-Kl8seLqRNUwd7K0w_ZNdzgNkSJmQYFfUq-OMpfagjQVQQGTdEOZIEekBr004EwA1X_6aViqkGrhi8E1rxwvd8DKgiVuLTDUEGYr4cFFl5ZkGE45vhvdo4GDpgDkCONUXojXQYSChJfBIiH3gaMA52sHflw=="
+    },
+    {
+      title: "latimes.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFH0hwDjOGd3QBcN8JSSwUYWPJaI2W5oNE5aMQJ1whnVMr7ItmM68MHWaNRuBPjC4j09g4myexu_Dq9PrMzaMsyqz_gBVYOS7n5rKxJ_18vyWtGKIPe6rYAD9rUA1eNKTLjduLpDuVmMlc9HwEthON-9uZzet-1Jf738g90A9TBg-2_Wof-lN0_D_DSybJ18EWlKytf4Z1P2rFbTNRmLHEE1hdzOKBG07LyiB_biYcd6bep"
+    },
+    {
+      title: "cdispatch.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFW4DTgAZrL121JFZqEoVvvTd_a_mKSF0wJiVyuux0z1pHSWknXsxjkeRvUaqo_pJDMGxXamjbfNf8W_7SVphqgOtSBpDkllJ8sx7u5-csUynmpAsnFUqvHz5xfybsWpDo-rVXTdeNf6Sjv168p33QQB-1hzAbLToS2q2CDLAkpaHIUJ6LomPdDyIn6vchxgTmGqH8T-9q2ksArSEH2Hfz6-ddaPQpY4gdqNSupdw=="
+    },
+    {
+      title: "cbsnews.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGFZUc7MwrcuAUq0ANJ5BPGT2mlA5N0wukhrtn-atoTd8mJevJ2x2KlNEO5f81-UgoxoJTT3qe121OPjl1rkr497Ytbg5s69m4NbXo17c_V73mxbNbd3pHh8czpLR5qqVMOgEGOHlTYSEYLFmj7eoHUNCigIL5dLw2QcD83JGfAdUt6XYAjjCSOqqs3TGwqPp_C93SIJoakPycr0BbX4VPEdeTPXV4="
+    },
+    {
+      title: "cbsnews.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE1U0OWSSckMFchvbcxAdycXYd6SNUNHwrEp4GFB_djtLMlfLf9FCCTUwe4NIXJrKX3QdtbgxE6fVNa0wnOIFhzn56Dbyp7j2pNzkXqVe5Ng9VhMDUWJ75QeX1ylIQNPOmRLijav2sb4NCo0G4TBD5DfrT_sT6O84Ok1N7q6jYNZK4xSdKNzVETSHR3xW6DH6jcbPRdDOOHySKjOjsCcYhmLdN1gw=="
+    }
+  ],
+  webSearchQueries: [
+    "WTI Brent crude oil price range trend August 16 2026",
+    "US Iran military conflict news August 16 2026 Strait of Hormuz carrier deployment",
+    "IRGC naval exercise Strait of Hormuz August 16 2026",
+    "US base Al-Tanf Syria attack August 16 2026"
+  ]
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-08-15",
-  version: "v2.158",
+  date: "2026-08-16",
+  version: "v2.159",
   riskScore: 76,
+  change: "none",
+  keyStats: [
+    {
+      label: "Conflict Days",
+      value: "D169",
+      unit: "Since Feb 28",
+      color: "#ff851b"
+    },
+    {
+      label: "Score Change",
+      value: "Flat",
+      unit: "vs Prev",
+      color: "#ff4136"
+    },
+    {
+      label: "Oil",
+      value: "WTI $81.50–$84.20 · Brent $87.50–$89.50",
+      unit: "Ref.",
+      color: "#ff4136",
+      layout: "unitPrimary"
+    },
+    {
+      label: "Hormuz",
+      value: "Serious Restriction",
+      unit: "Transit Status",
+      color: "#ffdc00"
+    }
+  ],
   riskFactors: [
     {
       name: "Military Escalation Intensity",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "US deployment of F-22s and Iran's missile movement signify high tactical readiness.",
+      description: "US carrier rotation and physical attacks on energy vessels underscore high-intensity standoff.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -276,7 +345,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Substantial interference in the strait with IRGC implementing physical inspections.",
+      description: "Iran claims total control; transit severely restricted by both blockade and physical threat.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -285,7 +354,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Oil prices are re-pricing supply disruption risks amid strait tensions.",
+      description: "Brent stays in $85-100 range with significant supply concerns projected by EIA.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -294,76 +363,49 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "US military deployment levels have moved beyond routine presence to direct deterrence.",
+      description: "Indefinite US blockade supported by multi-carrier deployments and regional alliances.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "De-escalation Probability",
       score: 4,
-      prev: 3.5,
+      prev: 4,
       weight: 0.2,
-      description: "Communication channels are virtually paralyzed with no signals of de-escalation.",
+      description: "Diplomatic deadlock as Iran ties de-escalation to broader regional conflicts.",
       status: "FAST",
-      sourceVerification: "confirmed"
-    }
-  ],
-  keyStats: [
-    {
-      label: "Conflict Days",
-      value: "D168",
-      unit: "Since Feb 28",
-      color: "#ff851b"
-    },
-    {
-      label: "Score Change",
-      value: "↑2",
-      unit: "vs Prev",
-      color: "#ff4136"
-    },
-    {
-      label: "Oil",
-      value: "WTI $88–$90 · Brent $92–$94",
-      unit: "Ref.",
-      color: "#ff4136",
-      layout: "unitPrimary"
-    },
-    {
-      label: "Hormuz",
-      value: "Severe Restriction",
-      unit: "Status",
-      color: "#ffdc00"
+      sourceVerification: "partial"
     }
   ],
   events: [
     {
       id: "EVT-01",
-      title: "US Deploys F-22s to Middle East",
-      description: "Deployment aimed at deterring potential Iranian retaliation, reaching highest air superiority levels in months.",
+      title: "ADNOC Tanker Attacked in Strait",
+      description: "UAE confirms an ADNOC vessel was struck Friday evening; no casualties reported, but physical risks to third-party shipping verified.",
       verification: "confirmed",
-      timestamp: "2026-08-15 02:40",
+      timestamp: "2026-08-15",
       significance: "",
       highlight: true
     },
     {
       id: "EVT-02",
-      title: "Iran Conducts Strait Inspections",
-      description: "IRGC Navy briefly detained commercial vessels for inspection, causing transit delays.",
+      title: "IRGC Declares Strait 'Closed'",
+      description: "Iranian naval commander asserts full control over all movements, declaring the strategic waterway effectively shut.",
       verification: "confirmed",
-      timestamp: "2026-08-15 05:15",
+      timestamp: "2026-08-14",
       significance: "",
       critical: true
     }
   ],
   warPhase: {
-    level: "Escalation Phase",
-    targetLevel: "Structural Tension",
+    level: "High-Pressure Standoff",
+    targetLevel: "Fragile Balance",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Transition from proxy harassment to state-level tactical deterrence",
-      "Strait control shifting from rhetoric to low-intensity physical intervention",
-      "Global energy markets return to 'conflict pricing' mode"
+      "Targeting of commercial energy infrastructure",
+      "Stress test of US naval rotation and crew resilience",
+      "Deep coupling between Hormuz transit and regional fronts"
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -374,8 +416,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: US F-22 squadrons arrived, intensifying surveillance over Iranian coastal targets.",
-        "Change: Iran forward-deployed Noor anti-ship missile systems in its southern districts."
+        "Change: US Navy initiates strategic rotation with USS George Washington deploying to Mideast.",
+        "Continue: Low-frequency proxy harassment of US assets in Syria persists."
       ]
     },
     {
@@ -384,8 +426,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Inspection frequency increased; Lloyd's List reports 3 interference incidents in 24h.",
-        "Continue: Major liners (Maersk/MSC) maintain rerouting advisories."
+        "Change: Attacks expanded to UAE energy vessels, verifying transit risk for regional neutrals.",
+        "Continue: Strait transit remains at historical lows under dual pressure."
       ]
     },
     {
@@ -394,8 +436,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Brent broke $92 resistance; call option volumes surged for short-term hedges.",
-        "Continue: US SPR replenishment plans paused due to high market prices."
+        "Continue: Geopolitical premium maintains Brent support between $85-90.",
+        "Change: Markets pricing in structural deficits from indefinite blockade."
       ]
     },
     {
@@ -404,26 +446,21 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Iranian President stated 'sovereignty is non-negotiable,' hinting at planned retaliation.",
-        "Continue: US State Department maintains suspension of diplomatic outreach to Tehran."
+        "Change: Iran demands Lebanon ceasefire as a precondition for de-escalation.",
+        "Continue: US maintains 'no-concession' blockade stance."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "US must ensure freedom of navigation to protect ally interests",
-      "Iran views strait control as its ultimate leverage against sanctions"
+      "Clash between Iran's regional linkage strategy and US maximum pressure blockade.",
+      "Collapse of mediation due to high entry barriers for talks."
     ],
     military: [
-      "Risk of war from low-intensity friction and total miscalculation",
-      "Balancing standoff strike capabilities with near-shore saturation tactics"
+      "Sustainability of naval blockade versus the growing fatigue of long-term maritime deployments."
     ]
   },
   scoreTrend: [
-    {
-      date: "08-11",
-      score: 74
-    },
     {
       date: "08-12",
       score: 74
@@ -438,16 +475,61 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "08-15",
+      score: 76
+    },
+    {
+      date: "08-16",
       score: 76,
       active: true
     }
   ],
-  keyChange: "Resonance of risk from US troop surge and Iran's physical interference with strait transit.",
-  investmentSignal: "→ Increase energy hedges and commodity defensive positions; reduce exposure to cross-regional risk assets.",
-  change: "up",
-  prevRiskScore: 74,
-  webSources: [],
-  webSearchQueries: []
+  keyChange: "Attack on ADNOC vessels signals a shift from rhetorical threats to verified physical targeting of neutral energy logistics.",
+  investmentSignal: "→ Defensive: Maintain energy and safe-haven exposure to hedge against physical supply chain disruptions.",
+  prevRiskScore: 76,
+  webSources: [
+    {
+      title: "chinadailyhk.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEshkAZzaNd74RiewLe0rasx2n4FF-i54uc9qu7M9pKUPE-FkiLorOWLaYVCBWDqv0gOVmg1PGfuubBMem8wlCXhOaEn3ckGRb98MZgpxI01lzS3d6kiWVIUsLqNd1p-pdFsL2z"
+    },
+    {
+      title: "caspiannews.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFRhEWpCa31_PBhNHM5vaGAdoBRzynEW1kLVNQEeEx3jfyWxyoHwMnnpzFnp2chcu1wfbSV1g9W6_iMFxNh6VBB5GyP1-uhW0VXwsuExPWu9ZsHf09BCsWYSfcTKC4ITELXvC8lZk4O00gk04_VU8QHmjq7oS0ljpR-spyCG6eBNo2jFhEOwwiy4IB3AA4_xeujrVpDhuG9YQ8="
+    },
+    {
+      title: "tasnimnews.ir",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGKkyglTjvdcQfddbhZl4gzk33uabIxb855pOmIOwEpMyAe7Sn3tfPmmfI3g71DFfxW3Pgd71SmNVkJBi1dIMSM0PP0fMhDxGkj_I88o8tIeEmUB2gYvJXlTNpPIRSzARMFMn_TMW-aX5tED9j78E9YjJVnJmRNuKMrJMI0kkF7A65eY71X8NkpI-KDmWo3sY5ZXuYLY7yi"
+    },
+    {
+      title: "keranews.org",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF-lL2vH7abaV7tRDzU_smVTXFmYby6eg1cYdAspF5oFiivzoameo3QWR3ioNFb4RHKXJ4zuazK4knmBEmbRnbUPgnSevcMEjx6sKHK6Q-WoAV492-5zVfHjGJF1ajV9Us4o6OhuYy-cDv6Ybb4SwWp4lvb2OCw4bgcwYN5u-I-DZmN89oPlvis0Uu1QhVq8QLokSnBzfKr0FL0n6dDMdbdskplQMDRzqIhOzqS"
+    },
+    {
+      title: "facebook.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF-xufWrw9Kpm7BZjr9-sUjsLn-aJXeIlKHKi99GDSQoETuGkTSV1P70QMSghNIq_Ub3v0Mk-9zl3QMbq9Ou8hlKpidaVya_xE_8tGa98r7x9vpvqn-Kl8seLqRNUwd7K0w_ZNdzgNkSJmQYFfUq-OMpfagjQVQQGTdEOZIEekBr004EwA1X_6aViqkGrhi8E1rxwvd8DKgiVuLTDUEGYr4cFFl5ZkGE45vhvdo4GDpgDkCONUXojXQYSChJfBIiH3gaMA52sHflw=="
+    },
+    {
+      title: "latimes.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFH0hwDjOGd3QBcN8JSSwUYWPJaI2W5oNE5aMQJ1whnVMr7ItmM68MHWaNRuBPjC4j09g4myexu_Dq9PrMzaMsyqz_gBVYOS7n5rKxJ_18vyWtGKIPe6rYAD9rUA1eNKTLjduLpDuVmMlc9HwEthON-9uZzet-1Jf738g90A9TBg-2_Wof-lN0_D_DSybJ18EWlKytf4Z1P2rFbTNRmLHEE1hdzOKBG07LyiB_biYcd6bep"
+    },
+    {
+      title: "cdispatch.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFW4DTgAZrL121JFZqEoVvvTd_a_mKSF0wJiVyuux0z1pHSWknXsxjkeRvUaqo_pJDMGxXamjbfNf8W_7SVphqgOtSBpDkllJ8sx7u5-csUynmpAsnFUqvHz5xfybsWpDo-rVXTdeNf6Sjv168p33QQB-1hzAbLToS2q2CDLAkpaHIUJ6LomPdDyIn6vchxgTmGqH8T-9q2ksArSEH2Hfz6-ddaPQpY4gdqNSupdw=="
+    },
+    {
+      title: "cbsnews.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGFZUc7MwrcuAUq0ANJ5BPGT2mlA5N0wukhrtn-atoTd8mJevJ2x2KlNEO5f81-UgoxoJTT3qe121OPjl1rkr497Ytbg5s69m4NbXo17c_V73mxbNbd3pHh8czpLR5qqVMOgEGOHlTYSEYLFmj7eoHUNCigIL5dLw2QcD83JGfAdUt6XYAjjCSOqqs3TGwqPp_C93SIJoakPycr0BbX4VPEdeTPXV4="
+    },
+    {
+      title: "cbsnews.com",
+      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE1U0OWSSckMFchvbcxAdycXYd6SNUNHwrEp4GFB_djtLMlfLf9FCCTUwe4NIXJrKX3QdtbgxE6fVNa0wnOIFhzn56Dbyp7j2pNzkXqVe5Ng9VhMDUWJ75QeX1ylIQNPOmRLijav2sb4NCo0G4TBD5DfrT_sT6O84Ok1N7q6jYNZK4xSdKNzVETSHR3xW6DH6jcbPRdDOOHySKjOjsCcYhmLdN1gw=="
+    }
+  ],
+  webSearchQueries: [
+    "WTI Brent crude oil price range trend August 16 2026",
+    "US Iran military conflict news August 16 2026 Strait of Hormuz carrier deployment",
+    "IRGC naval exercise Strait of Hormuz August 16 2026",
+    "US base Al-Tanf Syria attack August 16 2026"
+  ]
 };
 
 export const TRANSLATIONS = {
@@ -455,7 +537,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "8月15日节点",
+    node406: "8月16日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -489,16 +571,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.158 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.159 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 76（↑2）：美军大规模增兵与伊朗实质性干扰海峡通行引发的风险共振。",
-    bannerWarning: "→ 增持能源对冲与大宗商品防御头寸，对跨区域风险资产进行减持处理。",
-    deescalationIntent: "美国必须维护海峡通行自由以保护盟友利益",
-    structuralRisk: "航道出现实质性干扰，船舶通行面临伊方物理性搜检，航道流量受限。",
-    contradictionNote: "美国必须维护海峡通行自由以保护盟友利益；低烈度摩擦与全面误判导致战争的风险并存",
+    bannerSignal: "综合评分 76（持平）：ADNOC船舶遭袭标志着海峡安全风险从言语威胁转向物理常态化攻击。",
+    bannerWarning: "→ 防御：维持能源与黄金避险部位，防御海峡封锁导致的物理供应中断风险。",
+    deescalationIntent: "伊朗要求全区域停火与美方坚持通过封锁施压的根本矛盾。",
+    structuralRisk: "伊朗宣称对海峡拥有完全控制权，商业通行面临物理打击威胁。",
+    contradictionNote: "伊朗要求全区域停火与美方坚持通过封锁施压的根本矛盾。；航道封锁的物理有效性与美方护航力量长期部署疲劳的矛盾。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -506,7 +588,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第168天",
+    dayCount: "第169天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -514,7 +596,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Aug 15 Node",
+    node406: "Aug 16 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -548,16 +630,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.158 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.159 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 76 (↑2): Resonance of risk from US troop surge and Iran's physical interference with strait transit.",
-    bannerWarning: "→ Increase energy hedges and commodity defensive positions; reduce exposure to cross-regional risk assets.",
-    deescalationIntent: "US must ensure freedom of navigation to protect ally interests",
-    structuralRisk: "Substantial interference in the strait with IRGC implementing physical inspections.",
-    contradictionNote: "US must ensure freedom of navigation to protect ally interests; Risk of war from low-intensity friction and total miscalculation",
+    bannerSignal: "Composite 76 (Flat): Attack on ADNOC vessels signals a shift from rhetorical threats to verified physical targeting of neutral energy logistics.",
+    bannerWarning: "→ Defensive: Maintain energy and safe-haven exposure to hedge against physical supply chain disruptions.",
+    deescalationIntent: "Clash between Iran's regional linkage strategy and US maximum pressure blockade.",
+    structuralRisk: "Iran claims total control; transit severely restricted by both blockade and physical threat.",
+    contradictionNote: "Clash between Iran's regional linkage strategy and US maximum pressure blockade.; Sustainability of naval blockade versus the growing fatigue of long-term mari…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -565,7 +647,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 168",
+    dayCount: "Day 169",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
