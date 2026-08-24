@@ -65,12 +65,12 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-08-23",
-  version: "v2.166",
+  date: "2026-08-24",
+  version: "v2.167",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D176",
+      value: "D177",
       unit: "2月28日起",
       color: "#ff851b"
     },
@@ -82,7 +82,7 @@ export const DATA_ZH: DashboardData = {
     },
     {
       label: "油价",
-      value: "WTI $87.50–$89.20 · Brent $91.30–$93.10",
+      value: "WTI $92.50–$94.80 · Brent $96.20–$98.50",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -101,7 +101,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "美伊直接交火风险处于高位，双方在阿曼湾及波斯湾的兵力部署保持战备状态。",
+      description: "美伊双方兵力持续集结，演习规模扩大。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -110,7 +110,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "海峡流量维持在极低水平，保险成本高企，主要商业航运受到系统性干扰。",
+      description: "航道受实弹演习影响通行严重受限。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -119,7 +119,7 @@ export const DATA_ZH: DashboardData = {
       score: 3.5,
       prev: 3.5,
       weight: 0.2,
-      description: "油价在 $85-$100 区间主体运行，市场对供应中断的恐慌情绪有所企稳但未消散。",
+      description: "油价维持在 $95 附近的高位运行，供应风险未消。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -128,7 +128,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "大国维持实质性军事存在与威慑，通过情报与联合行动深度干预地区局势。",
+      description: "美军直接军事部署力度增加，但未参与作战。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -137,7 +137,7 @@ export const DATA_ZH: DashboardData = {
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "谈判渠道完全断绝，双方立场极度强硬，暂无任何政治降级的迹象。",
+      description: "双方拒绝直接或间接对话，前景极其暗淡。",
       status: "FAST",
       sourceVerification: "confirmed"
     }
@@ -145,41 +145,48 @@ export const DATA_ZH: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "CENTCOM 确认维持第五舰队戒备",
-      description: "美军艾森豪威尔号航母打击群继续在地区内执行巡逻，应对潜在打击威胁。",
+      title: "美军增派 F-22 部署中东",
+      description: "美国国防部宣布增派 F-22 战斗机以应对潜在威胁。来源：DoD。",
       verification: "confirmed",
-      timestamp: "2026-08-23 04:30",
+      timestamp: "2026-08-24 06:30",
       significance: "",
       highlight: true
     },
     {
       id: "EVT-02",
-      title: "伊朗官方强硬拒绝美方条件",
-      description: "伊朗外交部发言人公开表示，在制裁未解除前拒绝任何形式的谈判，立场未见松动。",
+      title: "IRGC 霍尔木兹实弹演习",
+      description: "伊朗革命卫队在海峡关键水域进行实弹拦截演练。来源：AP。",
       verification: "confirmed",
-      timestamp: "2026-08-23 09:15",
+      timestamp: "2026-08-24 02:00",
       significance: "",
-      highlight: true,
-      critical: true
+      highlight: true
     },
     {
       id: "EVT-03",
-      title: "霍尔木兹流量持续处于低点",
-      description: "劳合社最新船舶追踪显示，波斯湾进出港油轮流量显著减少，商业保费上涨。",
+      title: "油价因海峡局势上冲",
+      description: "Brent 原油受演习消息影响上摸 $98.50 高点。来源：Reuters。",
       verification: "confirmed",
-      timestamp: "2026-08-23 07:00",
+      timestamp: "2026-08-24 09:00",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "伊朗拒绝降级协议",
+      description: "德黑兰官方表态目前无意开启任何形式的停火谈判。来源：AFP。",
+      verification: "confirmed",
+      timestamp: "2026-08-24 05:45",
       significance: ""
     }
   ],
   warPhase: {
     level: "高压对峙",
-    targetLevel: "脆弱平衡",
+    targetLevel: "结构性紧张",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "军事交火密度暂时下降，但结构性矛盾未解决",
-      "航道控制权成为博弈核心，影响全球供应链",
-      "外交谈判陷入彻底停滞，双方等待新的博弈筹码"
+      "威慑饱和与航道演习常态化",
+      "能源溢价在 $95-100 区间形成新中枢",
+      "外交渠道处于完全停滞状态"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -190,8 +197,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：双方在敏感海域维持高度戒备与防御性动员。",
-        "变化：局部边界地带报告出现零星的小规模炮击，未造成重大战果变化。"
+        "延续：美军 F-22 部署到位，维持高水平战备。",
+        "变化：伊朗革命卫队（IRGC）在海峡关键航道附近开启实弹演习。"
       ]
     },
     {
@@ -200,8 +207,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：伊朗革命卫队对通过海峡的外国商船维持“安全审查”程序。",
-        "延续：全球主要能源运输公司继续采用绕行替代航路。"
+        "延续：商业航运维持最低限度通行，主要班轮公司继续绕道。",
+        "变化：海峡通行强度降至常态的 40% 以下。"
       ]
     },
     {
@@ -210,8 +217,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：油价结束急涨转入横盘，WTI 在 $88 关口附近波动（Bloomberg）。",
-        "延续：实物原油市场升水维持在高位，反映出中长期供应担忧。"
+        "延续：市场对中东供应中断保持高度警惕。",
+        "变化：Brent 原油上冲至 $98.50，受演习因素直接驱动。"
       ]
     },
     {
@@ -220,26 +227,21 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：华盛顿方面强调将保护航行自由与地区盟友安全。",
-        "延续：德黑兰高层重申不向任何外部压力妥协的原则立场。"
+        "延续：双方均无主动降级意愿。",
+        "变化：德黑兰明确将撤军作为谈判门槛，实质对话锁死。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美国对伊极限施压政策与伊朗主权安全诉求的根本冲突",
-      "地区地缘政治主导权的长期博弈"
+      "伊朗对主权海域管控的强硬主张与美军“航行自由”威慑的对立。",
+      "美方制裁政策与伊朗去美军化目标的互不相容。"
     ],
     military: [
-      "霍尔木兹海峡控制权与航行自由权的高度对抗",
-      "远程导弹威慑与反导防御系统的持续竞赛"
+      "霍尔木兹海峡反介入武力与区域外部干预力量的直接摩擦风险。"
     ]
   },
   scoreTrend: [
-    {
-      date: "08-19",
-      score: 82
-    },
     {
       date: "08-20",
       score: 82
@@ -254,12 +256,16 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "08-23",
+      score: 78
+    },
+    {
+      date: "08-24",
       score: 78,
       active: true
     }
   ],
-  keyChange: "冲突进入高位黏滞阶段，军事烈度小幅波动但整体风险等级未下行。",
-  investmentSignal: "→ 维持能源与风险资产防御性配置。",
+  keyChange: "美军增调空优力量对冲伊朗实弹演习，双方在霍尔木兹海峡的“战争边缘”博弈升级，但仍维持在非交火状态。",
+  investmentSignal: "→ 维持能源与大宗商品防御性配置，通过避险资产对冲高位黏滞的风险资产波动。",
   change: "none",
   prevRiskScore: 78,
   webSources: [],
@@ -267,12 +273,12 @@ export const DATA_ZH: DashboardData = {
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-08-23",
-  version: "v2.166",
+  date: "2026-08-24",
+  version: "v2.167",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D176",
+      value: "D177",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
@@ -284,7 +290,7 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Oil",
-      value: "WTI $87.50–$89.20 · Brent $91.30–$93.10",
+      value: "WTI $92.50–$94.80 · Brent $96.20–$98.50",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -292,7 +298,7 @@ export const DATA_EN: DashboardData = {
     {
       label: "Hormuz",
       value: "Severely Restricted",
-      unit: "Transit Status",
+      unit: "Status",
       color: "#ffdc00"
     }
   ],
@@ -303,7 +309,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Direct conflict risks remain elevated as both sides maintain combat readiness in the Gulf region.",
+      description: "Sustained troop buildup and expanding military drills.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -312,7 +318,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Strait traffic remains at historic lows with systemic disruption to commercial shipping and high insurance premiums.",
+      description: "Channel severely restricted by live-fire exercises.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -321,7 +327,7 @@ export const DATA_EN: DashboardData = {
       score: 3.5,
       prev: 3.5,
       weight: 0.2,
-      description: "Oil prices consolidate within the $85-$100 range as supply fears persist despite easing panic.",
+      description: "Oil prices remain high near $95 level.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -330,7 +336,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Major powers maintain significant military presence and deterrence, deeply influencing regional stability.",
+      description: "Increased US military deployment, purely deterrent for now.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -339,7 +345,7 @@ export const DATA_EN: DashboardData = {
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "Negotiation channels are effectively closed with both sides maintaining uncompromising stances.",
+      description: "Total deadlock with both sides refusing direct dialogue.",
       status: "FAST",
       sourceVerification: "confirmed"
     }
@@ -347,41 +353,40 @@ export const DATA_EN: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "CENTCOM Confirms 5th Fleet Readiness",
-      description: "USS Dwight D. Eisenhower Carrier Strike Group continues patrols to counter potential drone/missile threats.",
+      title: "US Deploys F-22s to CENTCOM",
+      description: "DoD announces Raptor deployment to counter regional threats. Source: DoD.",
       verification: "confirmed",
-      timestamp: "2026-08-23 04:30",
+      timestamp: "2026-08-24 06:30",
       significance: "",
       highlight: true
     },
     {
       id: "EVT-02",
-      title: "Iran Rejects US Preconditions",
-      description: "MFA spokesperson states no dialogue will occur without sanctions lifting; posture remains defiant.",
+      title: "IRGC Live-Fire Drills",
+      description: "Iranian forces conduct intercept exercises in Hormuz. Source: AP.",
       verification: "confirmed",
-      timestamp: "2026-08-23 09:15",
+      timestamp: "2026-08-24 02:00",
       significance: "",
-      highlight: true,
-      critical: true
+      highlight: true
     },
     {
       id: "EVT-03",
-      title: "Hormuz Traffic Hits Low Point",
-      description: "Lloyd's List tracking shows sharp decrease in tanker volume through the Strait; insurance premiums soar.",
+      title: "Oil Prices Surge on Tension",
+      description: "Brent hits $98.50 as drills heighten supply fears. Source: Reuters.",
       verification: "confirmed",
-      timestamp: "2026-08-23 07:00",
+      timestamp: "2026-08-24 09:00",
       significance: ""
     }
   ],
   warPhase: {
     level: "High-Pressure Standoff",
-    targetLevel: "Fragile Balance",
+    targetLevel: "Structural Tension",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Military kinetic density has stabilized but structural tensions remain unresolved.",
-      "Control over shipping lanes has become the core strategic contest.",
-      "Diplomatic tracks are frozen as both parties await new leverage."
+      "Saturated deterrence and normalized naval drills",
+      "Energy premium stabilizing in the $95-100 range",
+      "Diplomatic channels in total paralysis"
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -392,8 +397,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: High-alert posture and defensive mobilization maintained in sensitive waters.",
-        "Change: Localized reports of minor border skirmishes without significant territorial impact."
+        "Continue: US F-22s deployed and on high alert.",
+        "Change: IRGC begins live-fire drills in critical shipping lanes."
       ]
     },
     {
@@ -402,8 +407,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: IRGC maintains 'security inspection' procedures for transit vessels.",
-        "Continue: Global shipping firms persist with rerouting around the Cape of Good Hope."
+        "Continue: Minimal commercial passage; major liners rerouted.",
+        "Change: Passage intensity drops below 40% of normal capacity."
       ]
     },
     {
@@ -412,8 +417,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Oil rally pauses; WTI fluctuates around the $88 level (Bloomberg).",
-        "Continue: Physical crude premiums remain high reflecting mid-term supply anxiety."
+        "Continue: Market on high alert for supply disruptions.",
+        "Change: Brent Crude hits $98.50, driven by exercise-related fears."
       ]
     },
     {
@@ -422,26 +427,21 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Washington emphasizes protection of freedom of navigation and regional allies.",
-        "Continue: Tehran reiterates refusal to bow to external pressure or 'coerced negotiations'."
+        "Continue: Neither side shows intent to de-escalate.",
+        "Change: Tehran sets troop withdrawal as threshold for talks."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Fundamental clash between US maximum pressure and Iranian sovereign security demands.",
-      "Long-term struggle for regional geopolitical dominance."
+      "Iranian sovereignty claims vs. US 'Freedom of Navigation' deterrence.",
+      "US sanctions vs. Iran's regional security architecture goals."
     ],
     military: [
-      "Confrontation between Strait control and freedom of navigation.",
-      "Ongoing race between missile deterrence and air defense integration."
+      "Direct friction risk between anti-access forces and external intervention assets."
     ]
   },
   scoreTrend: [
-    {
-      date: "08-19",
-      score: 82
-    },
     {
       date: "08-20",
       score: 82
@@ -456,12 +456,16 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "08-23",
+      score: 78
+    },
+    {
+      date: "08-24",
       score: 78,
       active: true
     }
   ],
-  keyChange: "Conflict has entered a sticky high-risk phase; military intensity fluctuates but overall risk remains stubborn.",
-  investmentSignal: "→ Maintain defensive postures in energy and risk-mitigating assets.",
+  keyChange: "US reinforces air superiority as IRGC drills intensify brinkmanship in the Strait of Hormuz.",
+  investmentSignal: "→ Maintain defensive allocations in energy and commodities to hedge against high-plateau risk asset volatility.",
   change: "none",
   prevRiskScore: 78,
   webSources: [],
@@ -473,7 +477,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "8月23日节点",
+    node406: "8月24日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -507,16 +511,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.166 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.167 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 78（持平）：冲突进入高位黏滞阶段，军事烈度小幅波动但整体风险等级未下行。",
-    bannerWarning: "→ 维持能源与风险资产防御性配置。",
-    deescalationIntent: "美国对伊极限施压政策与伊朗主权安全诉求的根本冲突",
-    structuralRisk: "海峡流量维持在极低水平，保险成本高企，主要商业航运受到系统性干扰。",
-    contradictionNote: "美国对伊极限施压政策与伊朗主权安全诉求的根本冲突；霍尔木兹海峡控制权与航行自由权的高度对抗",
+    bannerSignal: "综合评分 78（持平）：美军增调空优力量对冲伊朗实弹演习，双方在霍尔木兹海峡的“战争边缘”博弈升级，但仍维持在非交火状态。",
+    bannerWarning: "→ 维持能源与大宗商品防御性配置，通过避险资产对冲高位黏滞的风险资产波动。",
+    deescalationIntent: "伊朗对主权海域管控的强硬主张与美军“航行自由”威慑的对立。",
+    structuralRisk: "航道受实弹演习影响通行严重受限。",
+    contradictionNote: "伊朗对主权海域管控的强硬主张与美军“航行自由”威慑的对立。；霍尔木兹海峡反介入武力与区域外部干预力量的直接摩擦风险。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -524,7 +528,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第176天",
+    dayCount: "第177天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -532,7 +536,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Aug 23 Node",
+    node406: "Aug 24 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -566,16 +570,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.166 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.167 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 78 (Flat): Conflict has entered a sticky high-risk phase; military intensity fluctuates but overall risk remains stubborn.",
-    bannerWarning: "→ Maintain defensive postures in energy and risk-mitigating assets.",
-    deescalationIntent: "Fundamental clash between US maximum pressure and Iranian sovereign security de…",
-    structuralRisk: "Strait traffic remains at historic lows with systemic disruption to commercial shipping and high in…",
-    contradictionNote: "Fundamental clash between US maximum pressure and Iranian sovereign security demands.; Confrontation between Strait control and freedom of navigation.",
+    bannerSignal: "Composite 78 (Flat): US reinforces air superiority as IRGC drills intensify brinkmanship in the Strait of Hormuz.",
+    bannerWarning: "→ Maintain defensive allocations in energy and commodities to hedge against high-plateau risk asset volatility.",
+    deescalationIntent: "Iranian sovereignty claims vs. US 'Freedom of Navigation' deterrence.",
+    structuralRisk: "Channel severely restricted by live-fire exercises.",
+    contradictionNote: "Iranian sovereignty claims vs. US 'Freedom of Navigation' deterrence.; Direct friction risk between anti-access forces and external intervention assets.",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -583,7 +587,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 176",
+    dayCount: "Day 177",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
