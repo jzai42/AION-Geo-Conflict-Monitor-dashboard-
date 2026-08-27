@@ -1,17 +1,17 @@
 {
   "version": 2,
   "latest": {
-    "date": "2026-08-26",
-    "appVersion": "v2.169",
-    "riskScore": 78,
+    "date": "2026-08-27",
+    "appVersion": "v2.170",
+    "riskScore": 76,
     "prevRiskScore": 78,
-    "conflictDay": 179,
+    "conflictDay": 180,
     "factorScores": [
       4,
       4,
       3.5,
       3,
-      5
+      4.5
     ],
     "generationMode": "live"
   },
@@ -28,10 +28,6 @@
     "2026-05-23"
   ],
   "history": [
-    {
-      "date": "2026-04-28",
-      "score": 80
-    },
     {
       "date": "2026-04-29",
       "score": 80
@@ -507,6 +503,10 @@
     {
       "date": "2026-08-26",
       "score": 78
+    },
+    {
+      "date": "2026-08-27",
+      "score": 76
     }
   ]
 }
