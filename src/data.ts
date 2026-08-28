@@ -65,14 +65,13 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-08-27",
-  version: "v2.170",
-  riskScore: 76,
-  change: "none",
+  date: "2026-08-28",
+  version: "v2.171",
+  riskScore: 74,
   keyStats: [
     {
       label: "冲突天数",
-      value: "D180",
+      value: "D181",
       unit: "2月28日起",
       color: "#ff851b"
     },
@@ -84,7 +83,7 @@ export const DATA_ZH: DashboardData = {
     },
     {
       label: "油价",
-      value: "WTI $81.5–$83.5 · Brent $85.5–$87.5",
+      value: "WTI $82.20–$84.50 · Brent $86.50–$88.40",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -102,7 +101,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "美军在 CENTCOM 辖区维持包括俄亥俄级核潜艇在内的高压部署。",
+      description: "代理冲突持续，海域直接交火处于间歇期。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -111,16 +110,16 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "主要商业班轮因伊朗方面威胁及美方捕获行动持续避开该海域。",
+      description: "流量仍受严重限制，保险成本未见回落。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "能源冲击",
-      score: 3.5,
+      score: 3,
       prev: 3.5,
       weight: 0.2,
-      description: "油价回落至 $85 附近，但地缘溢价因封锁预期依然存在。",
+      description: "油价中枢小幅下行，市场定价反映出对需求端的担忧。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -129,16 +128,16 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "冲突已导致美国驻欧防御库存被挪用，引发北约盟友安全忧虑。",
+      description: "美方维持区域震慑，外部大国处于观察期。",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "partial"
     },
     {
       name: "降级/谈判前景",
       score: 4.5,
-      prev: 5,
+      prev: 4.5,
       weight: 0.2,
-      description: "美方公开拒绝当前谈判，双方均无妥协迹象。",
+      description: "虽有第三方调解，但核心利益分歧巨大，突破性进展可能性低。",
       status: "FAST",
       sourceVerification: "confirmed"
     }
@@ -146,28 +145,19 @@ export const DATA_ZH: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "美军欧洲导弹库存预警",
-      description: "美联社报道美驻欧战备库存因支援美伊战争陷入「极度危险」状态，削弱北约对俄威慑力。",
+      title: "卡塔尔提交海上安全框架草案",
+      description: "多哈当局正努力在美伊之间建立一个针对民用航运的安全「绿灯」机制，试图隔离冲突对物流的影响。",
       verification: "confirmed",
-      timestamp: "2026-08-27",
+      timestamp: "2026-08-28",
       significance: "",
       highlight: true
     },
     {
       id: "EVT-02",
-      title: "白宫明确拒绝和谈",
-      description: "总统发言人重申对伊极限施压立场，否认近期存在外交接触的可能性。",
+      title: "伊拉克西部民兵据点遭空袭",
+      description: "多枚导弹击中亲伊武装的无人机仓库，虽无组织宣称负责，但加剧了区域紧张。",
       verification: "confirmed",
-      timestamp: "2026-08-27",
-      significance: "",
-      critical: true
-    },
-    {
-      id: "EVT-03",
-      title: "卡塔尔外交调停开启",
-      description: "卡塔尔首相计划访问德黑兰，尝试缓解霍尔木兹海峡的海上对峙。",
-      verification: "confirmed",
-      timestamp: "2026-08-27",
+      timestamp: "2026-08-28",
       significance: ""
     }
   ],
@@ -177,9 +167,9 @@ export const DATA_ZH: DashboardData = {
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "美军转向防御性消耗战姿态",
-      "外交谈判处于完全真空期",
-      "海事法律战成为新角力场"
+      "代理冲突取代直接对抗成为主要消耗手段",
+      "霍尔木兹海峡维持长期非正式封锁状态",
+      "能源溢价从「恐慌驱动」向「结构性溢价」转型"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -190,8 +180,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：佐治亚号核潜艇在波斯湾外围维持精确打击威慑。",
-        "变化：因弹药库存压力，美军空袭频次出现阶段性下调。"
+        "延续：伊拉克与叙利亚境内的代理人骚扰射击频繁。",
+        "延续：美军拦截了多架试图穿越红海的单向攻击无人机。"
       ]
     },
     {
@@ -200,8 +190,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：海峡通行维持许可制，实际流量不足战前五成。",
-        "变化：美国司法部启动针对伊朗油轮的财产化拍卖程序。"
+        "延续：海峡主要通航道仍受限，通行需提前数日预约护航。",
+        "变化：24小时内未发生商船被扣押的新突发事件。"
       ]
     },
     {
@@ -210,8 +200,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：全球库存仍处于防御性积累周期。",
-        "变化：Brent 油价自昨日高位回落至 $85-$87 均衡带。"
+        "变化：原油多头头寸部分平仓，地缘溢价回落至每桶$10以内。",
+        "延续：美国战略储备补库节奏维持放缓。"
       ]
     },
     {
@@ -220,26 +210,22 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：特朗普政府维持「不谈判、不妥协」的铁腕叙事。",
-        "变化：伊朗外交部表现出愿意接受第三方（卡塔尔）非正式调解的姿态。"
+        "变化：伊朗外交部措辞从积极进攻转向「战略防御」。",
+        "延续：美方维持制裁力度，暂无豁免政策释放。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美国极限施压与伊朗生存底线的零和博弈",
-      "白宫内政需求与中东战局持久化的矛盾"
+      "伊朗要求全面解除制裁与美方要求停止代理人攻击的死结",
+      "区域内盟友对美方保护承诺的持久性存疑"
     ],
     military: [
-      "前线高弹药消耗与全球防御体系库存亏空的冲突",
-      "反导系统覆盖范围与伊朗无人机蜂群打击的成本差"
+      "不对称作战手段（无人机/快艇）对传统大型舰艇编队的持续压力",
+      "代理人自主行动可能引发的主权国家非预期卷入"
     ]
   },
   scoreTrend: [
-    {
-      date: "08-23",
-      score: 78
-    },
     {
       date: "08-24",
       score: 78
@@ -254,87 +240,30 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "08-27",
-      score: 76,
+      score: 76
+    },
+    {
+      date: "08-28",
+      score: 74,
       active: true
     }
   ],
-  keyChange: "美欧防务库存危机凸显，战争外溢效应从能源转向全球安全架构脆弱性。",
-  investmentSignal: "→ 维持能源防御仓位，减持受库存缺口影响的欧洲风险资产，增加防务板块对冲。",
-  prevRiskScore: 78,
-  webSources: [
-    {
-      title: "pbs.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEmk5FpbLRH2CBrale6egHoO1upAHixH37N2u22j_I_72d15ISZoPNoFyZ2EU1Ca_UVNlPdf9jHivl8W1_ulKFfNa5X_tMtOt_i8OkQGmyioo1UqLImCICQ_5FXezOFbX_4EQ_lgadCyOWP5odL1nEGD2MCRU73z1e4kIcpoTKvcd2XOiLN5PqmTv0uZvwezR7R1Vtg6RjqC1KjHI7eKYEpf0mP3SGhYf0HB0GN"
-    },
-    {
-      title: "investing.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFgvP0-thZa--ytsyIzuAj80b6DmSV0rKac3MdCrk-HbnOUBLi-wrLNUfArHvPqrDXOX_rOwB1pF4PKgxnUlc3i1uzl_bPFAbt9NkWXR4kDHrBBV-g4bkbmzKEeu_VwbLdRWVL5aLWsdjPyi15tKF1h65r03NM="
-    },
-    {
-      title: "businessinsider.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGRhzAqWCQ7JwyGgFwVu0Zoqajr0LZ2qrODBjimjYebGNAGLS21pq1Fwd0GU4DzbG7LYLmriX7ZCXtau9FC9Pf2R-KDL88AOC6C0sot4r-q2jUkX57psiAIZa5VNgDqMxz-PJDHeHmp1VG6L28vN5PX9nboEav68xvQnOkh2-F6Iuy6WxTV8_0hWdsxC-qIGPFYDJkF-VqcSUsQMg=="
-    },
-    {
-      title: "facebook.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE71IaGyq-Vtx0W7nEjbNvAwhqmSBr-Y3pk-YJ-72-GONzPilEzl5VdlqkIbCnK2KqDXTS5AsE-yW6gy5TxibVKRB4TsoBxMn4dFUmIgFvGLQ2xrsNEjjhs-yuXDyKvleVdx4j4XhbonekDzpv2dQEc1pVhdFE4Hq5S-RiLaOp9Uql6nFqufThLIpKwhPNoE9BkMwFzbV5QPBEBa3oxxO24B-NDC8y77qLD4gMf6TpNnsELZ1qF-RxzCg=="
-    },
-    {
-      title: "2news.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHeYKKzB-QqGQl0jav104nFRS0WZJB3K_NL7zZNZj14gMgd-v63MOihv0y9H1ewkvVQxsCeQblH13QcSxCowTWyk_tf9-lP_r5un3zuDZe8qpYw8-jvvuCKpUb3TFoe1UTmb9QRhJmaY2r96_Z7f-TeLOTWoNhIA5KEot2_wjGJ1HMaofnB9y923UwcnfiGzW3XHcnDfZZE2tUzQ18jc91mGICQzZxdzuSiqE2nCUEsd9e7asxL6mxWmozQAQh6oIbeWbp-2QEG5-NI6Zu4Ar0Snoul5M1ecaYd0WeTIdWJnBNjCZYGk459"
-    },
-    {
-      title: "investing.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFf3qgfhHpgQn_iZQIo_-L1y35tITlgUug5TH0vshRV61lA8x2fpqGvpIufnoQ2FrVgFRKLE2VATAvmYScB5MlPKw_rxG2336wUcyg4M2Q_kf7XtJACPv5daY5AcrXHo3d_0e-m129lT_uO68Bn1rGfXEarXLf2PCr_avPGtS7w"
-    },
-    {
-      title: "wikipedia.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEpK6Gb3UOn-68Nx45V4gpc8eOYcHW5O2F-SHqIX9OA1KaXAaDxZo4SG5hzAzEs2ywR1DFPsl4HTuwDyfb3NegirRWR34uO-jOOL3-IhF9-29ho3WQ9c-1KYpoVWdag1o81aRRDXqbX4YU4"
-    },
-    {
-      title: "businessinsider.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHZfUFEQq0GCV2chU7BrXSZBsx_j7i2-QuDVYbkNJN9wpW3HHSyDknxDqyHovu9lhI4nCKyqg97XbqdV89iteIzx31dKVXukXIOWxlBICCmJpTvM-QajakTLkZbK0fg1fO_CAZSSIATkXZ-81SkLFron67OEjeHRXODag=="
-    },
-    {
-      title: "zona-militar.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG-zIa99s8LX7WDjDJNm24RNn4OcBBzwWDMDu8cP5vq2okGyetZmvINCsPRlhe2MabjeO_v7p19v4QKl-q73KLuDICp3HRTAR0wj3bNNPWB5srTiyNaE5vQvZ4oBm9K41QSxll80_szTPpLj6PdZc65LSUvuY6ZkEge-m4I3j65A3eXTOlpDvhxlxBZ4bfb_8lB9aNCO3e-XbwJ44y4-s37MXW0-QP20fF-0tFTmbPrAdxh-WuSe4XThkCgaizV1fwIOVW_Ltl7aVLuQZd0TUuEKrmrSeqghmFOSVECVVzd-vSgAremNCQQBW46se6x5zdv6cDmLzB6xIhfHnt_KIBRcRM6Qbe9cdfhxRtCzkrbDGTro6Y="
-    },
-    {
-      title: "forbes.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGbFwT1oqZMnTyPTQCkT4bGvafspctCJBLOhF1Ehoa3OvcheUDOREtfW_NciWaTLxhW9oHuzBbRaHBieMA_NWYObIdsHHbZBHK5Vy9JfCS2uLUAdVmGstgrjIxXW-TLTnBjw4oQ9ks0NZf2-Mnf8snn"
-    },
-    {
-      title: "fdd.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE0tH8iNpAtK2K8mZLj2YvIVbIi_v8aUKbWhAUg7vqDYY8cCMBpHQtE9l0MxLiMH6Y9XgvR-nbtfNyXfblx6G6ZDVs14AThWOgSqSYUDpyauC2JdNMg_nI2Qn4_ops4_0mO8V1R33Wa32c="
-    },
-    {
-      title: "tradingeconomics.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF3Dx7c1dncCm8WYkVq28bwf_WVLUxhK6CuGgG7FQWNf9Bn2PelIRmhtbKw5JTw-8dJYCfA30Y-93z8QsNAbRXSHnEaBIdqH7I_BQiKvlK9DHKn28LzLbzYSbvBISm5ANPT9h_D_1t2URfVBQk="
-    },
-    {
-      title: "middle-east-online.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFh4Hy_ryIxatVwJJIpUXA0qis8QAgdPs75wY4kb0wOZfLFhwuXpgBqtzhoujBzRMCDDnpAQhME357u_SXf0yzXHg7xh8qdYze557T3IxM-BcWQkMq62EUM_r0KGYy2Knb3FuDm_BjZz3v6OU0sDmeW6z_MfpmhsArWadApi1TrKpyHRPPLaWoWeFnXh0yU4z9VbQ=="
-    },
-    {
-      title: "signalscv.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH5_DaZMwqCWj4TCpa-WsHhe6Hs3Ou1PMXtlDmPED7jjWLoCaQuvBFvCl0kcUfZq8ZytEI_Y7RXHSttXVFblBxmyk6ety4SqQtp8VyZujTDM6z0QpxxhWwvhOtBmzl2ISJOs0N5f_sxnyYGXlv7Xfa-WTyKF5euvdKA0cjKDXYSMqihIZTDnDo="
-    }
-  ],
-  webSearchQueries: [
-    "WTI Brent oil price range August 27 2024 trends Bloomberg Reuters",
-    "US Iran conflict latest news August 27 2024 AP Reuters Pentagon",
-    "USS Georgia deployment Middle East August 2024 confirmed"
-  ]
+  keyChange: "能源溢价收缩带动综合风险指数缓步下行",
+  investmentSignal: "→ 维持防御部位，对冲能源风险资产。",
+  change: "down",
+  prevRiskScore: 76,
+  webSources: [],
+  webSearchQueries: []
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-08-27",
-  version: "v2.170",
-  riskScore: 76,
-  change: "none",
+  date: "2026-08-28",
+  version: "v2.171",
+  riskScore: 74,
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D180",
+      value: "D181",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
@@ -346,14 +275,14 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Oil",
-      value: "WTI $81.5–$83.5 · Brent $85.5–$87.5",
+      value: "WTI $82.20–$84.50 · Brent $86.50–$88.40",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
-      value: "Severe Restriction",
+      value: "Severely Restricted",
       unit: "Status",
       color: "#ffdc00"
     }
@@ -364,7 +293,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "High-pressure deployment of SSGN assets persists in CENTCOM AOR.",
+      description: "Proxy conflicts persist while direct naval engagement is in an intermittent phase.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -373,16 +302,16 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Commercial traffic remains depressed as maritime legal warfare intensifies.",
+      description: "Traffic remains severely restricted; insurance costs show no sign of retreat.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "Energy Shock",
-      score: 3.5,
+      score: 3,
       prev: 3.5,
       weight: 0.2,
-      description: "Oil prices stabilized near $85 as supply fears are balanced by inventory adjustments.",
+      description: "Oil prices drift lower as market pricing reflects demand-side concerns.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -391,16 +320,16 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "US defense stocks in Europe reach critical lows due to Middle East war reallocation.",
+      description: "US maintains regional deterrence; other major powers remain in an observation period.",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "partial"
     },
     {
       name: "De-escalation Probability",
       score: 4.5,
-      prev: 5,
+      prev: 4.5,
       weight: 0.2,
-      description: "Direct negotiation channels remain non-existent; stances hardened on both sides.",
+      description: "Mediators active but core interests remain deadlocked; high risk of breakdown.",
       status: "FAST",
       sourceVerification: "confirmed"
     }
@@ -408,28 +337,19 @@ export const DATA_EN: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "European Missile Stock Alert",
-      description: "AP reports US Patriot stocks in Europe at 'beyond critical' levels due to Iran war drainage.",
+      title: "Qatar Proposes Maritime Safety Framework",
+      description: "Doha is attempting to establish a 'Green Light' mechanism for civilian shipping to insulate logistics from conflict.",
       verification: "confirmed",
-      timestamp: "2026-08-27",
+      timestamp: "2026-08-28",
       significance: "",
       highlight: true
     },
     {
       id: "EVT-02",
-      title: "WH Rejects Peace Talks",
-      description: "Press Secretary confirms zero active negotiations with Tehran, maintaining maximum pressure.",
+      title: "Air Strikes on Militia Hubs in Western Iraq",
+      description: "Missiles hit drone storage facilities of Iran-aligned groups, exacerbating regional tensions despite no claims of responsibility.",
       verification: "confirmed",
-      timestamp: "2026-08-27",
-      significance: "",
-      critical: true
-    },
-    {
-      id: "EVT-03",
-      title: "Qatari Mediation Launched",
-      description: "Qatari PM to visit Tehran to discuss potential maritime de-escalation solutions.",
-      verification: "confirmed",
-      timestamp: "2026-08-27",
+      timestamp: "2026-08-28",
       significance: ""
     }
   ],
@@ -439,9 +359,9 @@ export const DATA_EN: DashboardData = {
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Pivot to defensive resource-attrition model",
-      "Complete diplomatic vacuum in official channels",
-      "Emergence of maritime legal warfare as key front"
+      "Proxy conflict replaces direct confrontation as the primary tool of attrition",
+      "Informal blockade of Hormuz becomes a structural long-term reality",
+      "Energy premium shifts from panic-driven to structural risk pricing"
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -452,8 +372,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: USS Georgia maintains Tomahawk deterrence in Persian Gulf periphery.",
-        "Change: Tactical shift to munitions conservation as global inventories tighten."
+        "Continue: Frequent proxy harassment in Iraq and Syria.",
+        "Continue: US forces intercepted OWA drones targeting Red Sea transit."
       ]
     },
     {
@@ -462,8 +382,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Strait transit restricted to <50% of pre-war volume.",
-        "Change: DOJ activates civil-war era prizes act to auction seized tankers."
+        "Continue: Primary shipping lanes remain restricted; escort booking required.",
+        "Change: No new vessel seizures reported in the last 24 hours."
       ]
     },
     {
@@ -472,8 +392,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Market pricing in long-term blockade structural risks.",
-        "Change: Brent prices retreat to $85-$87 range following global inventory recalibration."
+        "Change: Long positions unwinding as geopolitical premium drops below $10/bbl.",
+        "Continue: US SPR replenishment remains at a slow pace."
       ]
     },
     {
@@ -482,26 +402,22 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Trump administration maintains zero-compromise rhetoric.",
-        "Change: Tehran signals willingness for informal mediation via Doha."
+        "Change: Iranian MoFA shifts rhetoric from offensive to 'strategic defense'.",
+        "Continue: US sanctions remain firm with no signs of waivers."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Zero-sum game between US pressure and Iranian regime survival",
-      "Conflict between US domestic optics and the reality of a protracted war"
+      "Deadlock between Iranian demands for sanction relief and US demands to end proxy attacks.",
+      "Allied doubts regarding the longevity of US security commitments."
     ],
     military: [
-      "High front-line consumption vs global defensive architecture depletion",
-      "Cost asymmetry between anti-missile interceptors and UAV swarm tactics"
+      "Asymmetric threats (drones/fast boats) pressuring traditional carrier strike groups.",
+      "Risk of unintentional escalation via autonomous proxy actions."
     ]
   },
   scoreTrend: [
-    {
-      date: "08-23",
-      score: 78
-    },
     {
       date: "08-24",
       score: 78
@@ -516,76 +432,20 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "08-27",
-      score: 76,
+      score: 76
+    },
+    {
+      date: "08-28",
+      score: 74,
       active: true
     }
   ],
-  keyChange: "US-Europe defense inventory crisis highlights the war's spillover from energy to global security architecture.",
-  investmentSignal: "→ Maintain energy defensive positions, reduce exposure to European risk assets affected by inventory gaps.",
-  prevRiskScore: 78,
-  webSources: [
-    {
-      title: "pbs.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEmk5FpbLRH2CBrale6egHoO1upAHixH37N2u22j_I_72d15ISZoPNoFyZ2EU1Ca_UVNlPdf9jHivl8W1_ulKFfNa5X_tMtOt_i8OkQGmyioo1UqLImCICQ_5FXezOFbX_4EQ_lgadCyOWP5odL1nEGD2MCRU73z1e4kIcpoTKvcd2XOiLN5PqmTv0uZvwezR7R1Vtg6RjqC1KjHI7eKYEpf0mP3SGhYf0HB0GN"
-    },
-    {
-      title: "investing.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFgvP0-thZa--ytsyIzuAj80b6DmSV0rKac3MdCrk-HbnOUBLi-wrLNUfArHvPqrDXOX_rOwB1pF4PKgxnUlc3i1uzl_bPFAbt9NkWXR4kDHrBBV-g4bkbmzKEeu_VwbLdRWVL5aLWsdjPyi15tKF1h65r03NM="
-    },
-    {
-      title: "businessinsider.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGRhzAqWCQ7JwyGgFwVu0Zoqajr0LZ2qrODBjimjYebGNAGLS21pq1Fwd0GU4DzbG7LYLmriX7ZCXtau9FC9Pf2R-KDL88AOC6C0sot4r-q2jUkX57psiAIZa5VNgDqMxz-PJDHeHmp1VG6L28vN5PX9nboEav68xvQnOkh2-F6Iuy6WxTV8_0hWdsxC-qIGPFYDJkF-VqcSUsQMg=="
-    },
-    {
-      title: "facebook.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE71IaGyq-Vtx0W7nEjbNvAwhqmSBr-Y3pk-YJ-72-GONzPilEzl5VdlqkIbCnK2KqDXTS5AsE-yW6gy5TxibVKRB4TsoBxMn4dFUmIgFvGLQ2xrsNEjjhs-yuXDyKvleVdx4j4XhbonekDzpv2dQEc1pVhdFE4Hq5S-RiLaOp9Uql6nFqufThLIpKwhPNoE9BkMwFzbV5QPBEBa3oxxO24B-NDC8y77qLD4gMf6TpNnsELZ1qF-RxzCg=="
-    },
-    {
-      title: "2news.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHeYKKzB-QqGQl0jav104nFRS0WZJB3K_NL7zZNZj14gMgd-v63MOihv0y9H1ewkvVQxsCeQblH13QcSxCowTWyk_tf9-lP_r5un3zuDZe8qpYw8-jvvuCKpUb3TFoe1UTmb9QRhJmaY2r96_Z7f-TeLOTWoNhIA5KEot2_wjGJ1HMaofnB9y923UwcnfiGzW3XHcnDfZZE2tUzQ18jc91mGICQzZxdzuSiqE2nCUEsd9e7asxL6mxWmozQAQh6oIbeWbp-2QEG5-NI6Zu4Ar0Snoul5M1ecaYd0WeTIdWJnBNjCZYGk459"
-    },
-    {
-      title: "investing.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFf3qgfhHpgQn_iZQIo_-L1y35tITlgUug5TH0vshRV61lA8x2fpqGvpIufnoQ2FrVgFRKLE2VATAvmYScB5MlPKw_rxG2336wUcyg4M2Q_kf7XtJACPv5daY5AcrXHo3d_0e-m129lT_uO68Bn1rGfXEarXLf2PCr_avPGtS7w"
-    },
-    {
-      title: "wikipedia.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEpK6Gb3UOn-68Nx45V4gpc8eOYcHW5O2F-SHqIX9OA1KaXAaDxZo4SG5hzAzEs2ywR1DFPsl4HTuwDyfb3NegirRWR34uO-jOOL3-IhF9-29ho3WQ9c-1KYpoVWdag1o81aRRDXqbX4YU4"
-    },
-    {
-      title: "businessinsider.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHZfUFEQq0GCV2chU7BrXSZBsx_j7i2-QuDVYbkNJN9wpW3HHSyDknxDqyHovu9lhI4nCKyqg97XbqdV89iteIzx31dKVXukXIOWxlBICCmJpTvM-QajakTLkZbK0fg1fO_CAZSSIATkXZ-81SkLFron67OEjeHRXODag=="
-    },
-    {
-      title: "zona-militar.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG-zIa99s8LX7WDjDJNm24RNn4OcBBzwWDMDu8cP5vq2okGyetZmvINCsPRlhe2MabjeO_v7p19v4QKl-q73KLuDICp3HRTAR0wj3bNNPWB5srTiyNaE5vQvZ4oBm9K41QSxll80_szTPpLj6PdZc65LSUvuY6ZkEge-m4I3j65A3eXTOlpDvhxlxBZ4bfb_8lB9aNCO3e-XbwJ44y4-s37MXW0-QP20fF-0tFTmbPrAdxh-WuSe4XThkCgaizV1fwIOVW_Ltl7aVLuQZd0TUuEKrmrSeqghmFOSVECVVzd-vSgAremNCQQBW46se6x5zdv6cDmLzB6xIhfHnt_KIBRcRM6Qbe9cdfhxRtCzkrbDGTro6Y="
-    },
-    {
-      title: "forbes.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGbFwT1oqZMnTyPTQCkT4bGvafspctCJBLOhF1Ehoa3OvcheUDOREtfW_NciWaTLxhW9oHuzBbRaHBieMA_NWYObIdsHHbZBHK5Vy9JfCS2uLUAdVmGstgrjIxXW-TLTnBjw4oQ9ks0NZf2-Mnf8snn"
-    },
-    {
-      title: "fdd.org",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE0tH8iNpAtK2K8mZLj2YvIVbIi_v8aUKbWhAUg7vqDYY8cCMBpHQtE9l0MxLiMH6Y9XgvR-nbtfNyXfblx6G6ZDVs14AThWOgSqSYUDpyauC2JdNMg_nI2Qn4_ops4_0mO8V1R33Wa32c="
-    },
-    {
-      title: "tradingeconomics.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF3Dx7c1dncCm8WYkVq28bwf_WVLUxhK6CuGgG7FQWNf9Bn2PelIRmhtbKw5JTw-8dJYCfA30Y-93z8QsNAbRXSHnEaBIdqH7I_BQiKvlK9DHKn28LzLbzYSbvBISm5ANPT9h_D_1t2URfVBQk="
-    },
-    {
-      title: "middle-east-online.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFh4Hy_ryIxatVwJJIpUXA0qis8QAgdPs75wY4kb0wOZfLFhwuXpgBqtzhoujBzRMCDDnpAQhME357u_SXf0yzXHg7xh8qdYze557T3IxM-BcWQkMq62EUM_r0KGYy2Knb3FuDm_BjZz3v6OU0sDmeW6z_MfpmhsArWadApi1TrKpyHRPPLaWoWeFnXh0yU4z9VbQ=="
-    },
-    {
-      title: "signalscv.com",
-      uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH5_DaZMwqCWj4TCpa-WsHhe6Hs3Ou1PMXtlDmPED7jjWLoCaQuvBFvCl0kcUfZq8ZytEI_Y7RXHSttXVFblBxmyk6ety4SqQtp8VyZujTDM6z0QpxxhWwvhOtBmzl2ISJOs0N5f_sxnyYGXlv7Xfa-WTyKF5euvdKA0cjKDXYSMqihIZTDnDo="
-    }
-  ],
-  webSearchQueries: [
-    "WTI Brent oil price range August 27 2024 trends Bloomberg Reuters",
-    "US Iran conflict latest news August 27 2024 AP Reuters Pentagon",
-    "USS Georgia deployment Middle East August 2024 confirmed"
-  ]
+  keyChange: "Energy premium contraction drives a slow descent in the composite risk index.",
+  investmentSignal: "→ Maintain defensive posture, hedge energy exposure.",
+  change: "down",
+  prevRiskScore: 76,
+  webSources: [],
+  webSearchQueries: []
 };
 
 export const TRANSLATIONS = {
@@ -593,7 +453,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "8月27日节点",
+    node406: "8月28日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -627,16 +487,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.170 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.171 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 76（↓2）：美欧防务库存危机凸显，战争外溢效应从能源转向全球安全架构脆弱性。",
-    bannerWarning: "→ 维持能源防御仓位，减持受库存缺口影响的欧洲风险资产，增加防务板块对冲。",
-    deescalationIntent: "美国极限施压与伊朗生存底线的零和博弈",
-    structuralRisk: "主要商业班轮因伊朗方面威胁及美方捕获行动持续避开该海域。",
-    contradictionNote: "美国极限施压与伊朗生存底线的零和博弈；前线高弹药消耗与全球防御体系库存亏空的冲突",
+    bannerSignal: "综合评分 74（↓2）：能源溢价收缩带动综合风险指数缓步下行",
+    bannerWarning: "→ 维持防御部位，对冲能源风险资产。",
+    deescalationIntent: "伊朗要求全面解除制裁与美方要求停止代理人攻击的死结",
+    structuralRisk: "流量仍受严重限制，保险成本未见回落。",
+    contradictionNote: "伊朗要求全面解除制裁与美方要求停止代理人攻击的死结；不对称作战手段（无人机/快艇）对传统大型舰艇编队的持续压力",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -644,7 +504,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第180天",
+    dayCount: "第181天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -652,7 +512,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Aug 27 Node",
+    node406: "Aug 28 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -686,16 +546,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.170 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.171 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 76 (↓2): US-Europe defense inventory crisis highlights the war's spillover from energy to global security architecture.",
-    bannerWarning: "→ Maintain energy defensive positions, reduce exposure to European risk assets affected by inventory gaps.",
-    deescalationIntent: "Zero-sum game between US pressure and Iranian regime survival",
-    structuralRisk: "Commercial traffic remains depressed as maritime legal warfare intensifies.",
-    contradictionNote: "Zero-sum game between US pressure and Iranian regime survival; High front-line consumption vs global defensive architecture depletion",
+    bannerSignal: "Composite 74 (↓2): Energy premium contraction drives a slow descent in the composite risk index.",
+    bannerWarning: "→ Maintain defensive posture, hedge energy exposure.",
+    deescalationIntent: "Deadlock between Iranian demands for sanction relief and US demands to end prox…",
+    structuralRisk: "Traffic remains severely restricted; insurance costs show no sign of retreat.",
+    contradictionNote: "Deadlock between Iranian demands for sanction relief and US demands to end proxy attacks.; Asymmetric threats (drones/fast boats) pressuring traditional carrie…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -703,7 +563,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 180",
+    dayCount: "Day 181",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
