@@ -65,24 +65,24 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-09-09",
-  version: "v2.183",
+  date: "2026-09-10",
+  version: "v2.184",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D193",
+      value: "D194",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↑2",
+      value: "↑4",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $94–$95 · Brent $99–$101",
+      value: "WTI $95-97 · Brent $101-103",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -94,14 +94,14 @@ export const DATA_ZH: DashboardData = {
       color: "#ffdc00"
     }
   ],
-  riskScore: 84,
+  riskScore: 88,
   riskFactors: [
     {
       name: "军事升级烈度",
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "美伊双方正在进行直接、多域的军事交火，包括摧毁对方国家主权资产（油轮）和使用弹道导弹攻击对方军事基地，符合重大军事行动标准。",
+      description: "伊朗对美国在第三国（约旦）的军事基地发动直接弹道导弹攻击，并成功造成美方装备损失，表明冲突已进入无限制的直接军事对抗层面。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -110,7 +110,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "海峡通行量维持在个位数，远低于正常水平的50%，主要航运公司已暂停通行，构成严重受限。",
+      description: "通过霍尔木兹海峡的商业航运流量持续处于极低水平，远低于近期平均值，表明该关键水道的商业通行已基本停滞。伊朗威胁扩大禁航区进一步恶化了局势。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -119,7 +119,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "布伦特原油价格已突破100美元，WTI逼近95美元，价格区间进入危机带，由供应中断恐慌驱动。",
+      description: "直接军事冲突的加剧导致市场对供应的担忧急剧升温，布伦特原油价格稳定在100美元/桶以上，并持续上行，完全符合危机驱动的油价模式。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -128,16 +128,16 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "美国直接参与针对伊朗国家资产的军事打击行动，并遭受伊朗直接的弹道导弹攻击，构成直接军事部署与作战。",
+      description: "美国军方（中央司令部）直接参与并指挥了对伊朗油轮等目标的军事打击，并防御伊朗的导弹攻击，构成大国直接参与作战行动。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "降级/谈判前景",
-      score: 4,
-      prev: 3.5,
+      score: 5,
+      prev: 4,
       weight: 0.2,
-      description: "双方陷入公开的军事报复循环，外交渠道停滞，立场极其强硬，谈判破裂风险极高。",
+      description: "国际原子能机构理事会投票决定将伊朗核问题提交至联合国安理会，标志着通过国际组织进行斡旋的关键外交渠道已经关闭，双方立场完全强硬化。",
       status: "FAST",
       sourceVerification: "confirmed",
       change: "up"
@@ -145,47 +145,47 @@ export const DATA_ZH: DashboardData = {
   ],
   events: [
     {
-      id: "e1",
-      title: "美国摧毁五艘伊朗油轮，作为对伊朗袭击美军舰的回应",
-      description: "美国中央司令部（CENTCOM）于9月8日晚间证实，其部队摧毁了五艘伊朗伊斯兰革命卫队（IRGC）的油轮。此次行动是对伊朗近期使用弹道导弹两次未遂袭击一艘美国军舰的直接报复。此举标志着双方直接军事对抗的显著升级。",
+      id: "evt-20260910-1",
+      title: "伊朗导弹袭击约旦境内美军基地并造成损失",
+      description: "伊朗向约旦境内驻有美军的穆瓦法克·萨尔蒂空军基地发射了弹道导弹。据美国官员向福克斯新闻等媒体透露，袭击对多架美国军机造成了损害，包括一架A-10攻击机和数架F-15战斗机。约旦军方表示拦截了大部分来袭导弹。",
       verification: "confirmed",
-      timestamp: "2026-09-09T03:00:00Z",
+      timestamp: "2026-09-10T05:00:00Z",
       significance: "",
       highlight: true,
       critical: true
     },
     {
-      id: "e2",
-      title: "伊朗发射弹道导弹袭击约旦境内美军基地作为报复",
-      description: "作为对美国击沉其油轮的报复，伊朗伊斯兰革命卫队（IRGC）向约旦境内托管美军的穆瓦法克·萨尔提空军基地发射了约20枚弹道导弹。约旦军方表示成功拦截了其中18枚，其余落在无人区，未造成美方人员伤亡。美国官员称此次袭击“无效”。",
+      id: "evt-20260910-2",
+      title: "布伦特原油价格突破102美元/桶",
+      description: "由于美国与伊朗之间的军事行动持续升级，市场对中东地区原油供应中断的担忧加剧，推动国际油价继续上涨。布伦特原油期货价格攀升至102美元/桶以上，创下数月新高。",
       verification: "confirmed",
-      timestamp: "2026-09-09T06:00:00Z",
+      timestamp: "2026-09-10T08:00:00Z",
       significance: "",
       highlight: true
     },
     {
-      id: "e3",
-      title: "布伦特原油价格六周来首次突破100美元/桶",
-      description: "由于美伊在霍尔木兹海峡周边的军事行动急剧升级，市场对原油供应中断的担忧加剧，国际基准布伦特原油价格自7月下旬以来首次突破100美元/桶的心理关口。WTI原油也逼近95美元/桶。",
+      id: "evt-20260910-3",
+      title: "国际原子能机构将伊朗核问题提交至联合国安理会",
+      description: "国际原子能机构（IAEA）理事会投票决定，因伊朗在核问题上“不遵守”规定，将其问题提交至联合国安理会。此举是近二十年来首次，标志着通过IAEA渠道解决问题的外交努力严重受挫。伊朗谴责该决议，称其为美国施压的结果。",
       verification: "confirmed",
-      timestamp: "2026-09-09T07:30:00Z",
+      timestamp: "2026-09-09T20:00:00Z",
       significance: "",
       highlight: true
     },
     {
-      id: "e4",
-      title: "霍尔木兹海峡航运量持续低迷，伊朗威胁扩大袭击范围",
-      description: "根据路透社援引的航运数据显示，9月8日仅有6艘商船通过霍尔木兹海峡，远低于冲突前约85艘的日均水平，航道实际上处于中断状态。同时，伊朗警告在科威特和巴林港口附近的所有油轮船员立即离船，暗示可能将其作为目标。",
+      id: "evt-20260910-4",
+      title: "霍尔木兹海峡航运量持续处于极低水平",
+      description: "根据路透社援引的航运追踪数据，9月9日通过霍尔木兹海峡的商业船只仅有7艘，远低于本已受压制的10日平均水平（约14艘）。航运持续受到严重限制，伊朗同时宣布计划扩大海峡外的“禁航区”。",
       verification: "confirmed",
-      timestamp: "2026-09-09T05:00:00Z",
+      timestamp: "2026-09-10T07:30:00Z",
       significance: ""
     },
     {
-      id: "e5",
-      title: "美国否认伊朗关于击中其军舰的说法",
-      description: "针对伊朗伊斯兰革命卫队声称其袭击并“重创”了两艘美国军舰的说法，美国中央司令部（CENTCOM）在社交媒体上公开予以否认，称该说法“完全错误”，没有美国海军军舰被击中。",
+      id: "evt-20260910-5",
+      title: "美军否认战舰受损，确认持续打击伊朗油轮",
+      description: "针对伊朗伊斯兰革命卫队宣称重创美国战舰的说法，美国中央司令部（CENTCOM）发布声明予以否认，称之为“完全虚假”。CENTCOM同时确认，美军在过去一周内已摧毁10艘伊朗油轮，作为对伊朗袭击美舰企图的回应。",
       verification: "confirmed",
-      timestamp: "2026-09-09T09:00:00Z",
+      timestamp: "2026-09-09T22:00:00Z",
       significance: ""
     }
   ],
@@ -195,9 +195,9 @@ export const DATA_ZH: DashboardData = {
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "美伊双方的直接军事打击行动已经常态化并进入报复升级循环，冲突地域从海上扩大至第三方国家（约旦）。",
-      "此前旨在降级的《伊斯兰堡备忘录》已完全失效，双方均无意愿返回谈判桌，而是通过武力展示决心。",
-      "局势已从受控冲突完全转变为公开、直接的军事对抗。尽管攻击具有“报复性”而非“全面入侵”，但误判风险极高，任何一方的重大战术成功或失败都可能导致冲突烈度失控。"
+      "美伊双方正在进行直接、多战线的军事交火，包括海上舰船对抗与陆上基地打击。",
+      "伊朗首次使用弹道导弹打击并命中第三国境内的美军资产，标志着冲突地域和烈度的重大升级。",
+      "所有关键外交渠道（IAEA）均已关闭，局势进入纯粹的军事逻辑驱动阶段，无任何有效的降级机制。"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -208,9 +208,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美军主动摧毁伊朗5艘油轮，标志着打击目标从军事设施扩展至经济命脉资产。",
-        "变化：伊朗首次使用弹道导弹对约旦境内的美军基地进行报复性打击，显示其打击范围和意愿都在扩大。",
-        "延续：双方在霍尔木兹海峡地区的军事对峙持续，但直接交火频率和烈度显著上升。"
+        "变化：伊朗对美国在第三国（约旦）的军事基地发动直接弹道导弹攻击，并成功造成美方装备损失，表明冲突已进入无限制的直接军事对抗层面。"
       ]
     },
     {
@@ -219,8 +217,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：霍尔木兹海峡的商业航运交通量依然极端低下，接近于事实上的关闭状态。",
-        "变化：伊朗公开警告在科威特和巴林港口停靠的油轮，将威胁范围从海峡内部扩大到周边的海湾合作委员会国家港口。"
+        "变化：通过霍尔木兹海峡的商业航运流量持续处于极低水平，远低于近期平均值，表明该关键水道的商业通行已基本停滞。",
+        "变化：伊朗威胁扩大禁航区进一步恶化了局势。"
       ]
     },
     {
@@ -229,8 +227,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：布伦特原油价格突破100美元/桶的关键心理价位，市场已将严重的供应中断风险计入价格。",
-        "延续：能源价格波动性持续高企，完全由地缘政治冲突主导。"
+        "变化：直接军事冲突的加剧导致市场对供应的担忧急剧升温，布伦特原油价格稳定在100美元/桶以上，并持续上行，完全符合危机驱动的油价模式。"
       ]
     },
     {
@@ -239,26 +236,19 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：双方完全通过军事行动和强硬声明进行沟通，未见任何寻求外交途径降温的官方表态。",
-        "延续：美国中央司令部与伊朗国家媒体成为信息战的主要平台，双方就战果发布相互矛盾的声明。"
+        "变化：美国军方（中央司令部）直接参与并指挥了对伊朗油轮等目标的军事打击，并防御伊朗的导弹攻击，构成大国直接参与作战行动。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美国旨在通过军事压力彻底遏制伊朗的地区影响力并迫使其在核问题上让步，而伊朗则力图通过强硬反击打破封锁并确立其在海湾地区的主导地位。",
-      "双方均缺乏有效的国内政治空间来寻求妥协，导致强硬政策成为唯一选择。"
+      "美国旨在通过“极限经济压力”和军事打击彻底削弱伊朗的地区影响力及核能力，而伊朗则试图通过不对称军事行动打破封锁并迫使美国付出高昂代价。"
     ],
     military: [
-      "美国寻求利用其技术和海空优势进行精确打击以最小化己方伤亡，而伊朗则利用其非对称能力（导弹、无人机、代理人网络）试图对美方及其盟友造成不可接受的损失。",
-      "冲突从代理人战争和有限摩擦升级为直接的国家间军事对抗，增加了误判和失控扩大的风险。"
+      "美国利用其海空军优势执行对伊朗港口的封锁并打击伊朗海上资产，而伊朗则利用弹道导弹、无人机和代理人网络攻击美军基地和航运，试图形成非对称威慑。"
     ]
   },
   scoreTrend: [
-    {
-      date: "09-05",
-      score: 70
-    },
     {
       date: "09-06",
       score: 70
@@ -273,44 +263,47 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "09-09",
-      score: 84,
+      score: 84
+    },
+    {
+      date: "09-10",
+      score: 88,
       active: true
     }
   ],
-  keyChange: "美伊陷入直接的军事报复循环，美国摧毁伊朗油轮，伊朗则以弹道导弹攻击美军基地作为回应，推动油价突破100美元，冲突进入新的危险阶段。",
-  investmentSignal: "→ 增持能源与大宗商品多头头寸，同时通过VIX或黄金等工具对冲整体风险资产的下行风险。",
-  prevRiskScore: 82,
+  investmentSignal: "→ 风险敞口维持高度防御姿态，地缘溢价驱动能源与大宗商品对冲需求。",
+  prevRiskScore: 84,
+  keyChange: "24h要点：详见事件与因子。",
   webSources: [],
   webSearchQueries: [
-    "US Iran tensions last 24 hours",
-    "Strait of Hormuz shipping status September 9 2026",
-    "Iran military activity September 2026",
-    "US military deployment Middle East September 2026",
-    "WTI Brent oil price September 9 2026 Reuters",
-    "Brent crude price range Bloomberg September 9 2026",
-    "US Iran diplomatic talks September 2026"
+    "WTI Brent crude oil price September 10 2026 range trend",
+    "US Iran conflict update September 10 2026",
+    "Strait of Hormuz shipping status September 10 2026 latest news",
+    "US military posture CENTCOM Iran September 10 2026",
+    "Iran diplomatic statements September 10 2026",
+    "US sanctions on Iran update September 2026"
   ]
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-09-09",
-  version: "v2.183",
+  date: "2026-09-10",
+  version: "v2.184",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D193",
+      value: "D194",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "↑2",
+      value: "↑4",
       unit: "vs Prev",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $94–$95 · Brent $99–$101",
+      value: "WTI $95-97 · Brent $101-103",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -318,18 +311,18 @@ export const DATA_EN: DashboardData = {
     {
       label: "Hormuz",
       value: "Severely Restricted",
-      unit: "Transit Status",
+      unit: "Traffic Status",
       color: "#ffdc00"
     }
   ],
-  riskScore: 84,
+  riskScore: 88,
   riskFactors: [
     {
       name: "Military Escalation Intensity",
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "The U.S. and Iran are engaged in direct, multi-domain military exchanges, including destruction of the other's sovereign state assets (oil tankers) and using ballistic missiles to attack military bases, meeting the criteria for major military action.",
+      description: "Iran's direct ballistic missile attack on a U.S. military base in a third country (Jordan), which successfully caused damage to U.S. assets, indicates the conflict has entered a phase of unrestricted direct military confrontation.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -338,7 +331,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Strait transit volume remains in the single digits, far below the 50% threshold of normal traffic. Major shipping lines have suspended passage, constituting a severe restriction.",
+      description: "Commercial shipping traffic through the Strait of Hormuz remains at extremely low levels, far below recent averages, indicating commercial transit has nearly halted. Iran's threat to expand its no-go zone exacerbates the situation.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -347,7 +340,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Brent crude has breached $100 and WTI is approaching $95, pushing the price range into the crisis band, driven by fears of supply disruption.",
+      description: "The intensification of direct military conflict has led to a sharp increase in market fears over supply, with Brent crude prices stabilizing above $100/bbl and continuing to rise, fitting a crisis-driven oil price pattern.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -356,16 +349,16 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "The U.S. is directly participating in military strikes against Iranian state assets and is being directly targeted by Iranian ballistic missiles, constituting direct military deployment and combat operations.",
+      description: "The U.S. military (via CENTCOM) is directly participating in and commanding military strikes against Iranian targets such as oil tankers, and defending against Iranian missile attacks, constituting direct great power participation in combat operations.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "De-escalation Probability",
-      score: 4,
-      prev: 3.5,
+      score: 5,
+      prev: 4,
       weight: 0.2,
-      description: "Both sides are locked in a public cycle of military retaliation. Diplomatic channels are stalled, stances are extremely hawkish, and the risk of negotiation collapse is very high.",
+      description: "The IAEA Board of Governors voted to refer Iran's nuclear file to the UN Security Council, marking the closure of a key diplomatic channel for mediation through international organizations, with both sides adopting fully hardened stances.",
       status: "FAST",
       sourceVerification: "confirmed",
       change: "up"
@@ -373,47 +366,47 @@ export const DATA_EN: DashboardData = {
   ],
   events: [
     {
-      id: "e1",
-      title: "U.S. destroys five Iranian oil tankers in response to attacks on Navy warship",
-      description: "U.S. Central Command (CENTCOM) confirmed on the evening of Sep 8 that its forces destroyed five oil tankers belonging to Iran's Islamic Revolutionary Guard Corps (IRGC). The action was a direct retaliation for two recent unsuccessful ballistic missile attacks by Iran on a U.S. warship, marking a significant escalation in direct military confrontation.",
+      id: "evt-20260910-1",
+      title: "Iranian Missiles Strike U.S. Base in Jordan, Causing Damage",
+      description: "Iran launched ballistic missiles at Muwaffaq Salti Air Base in Jordan, which hosts U.S. forces. According to U.S. officials speaking to outlets like Fox News, the attack damaged several U.S. military aircraft, including an A-10 and multiple F-15s. The Jordanian military reported intercepting most of the incoming missiles.",
       verification: "confirmed",
-      timestamp: "2026-09-09T03:00:00Z",
+      timestamp: "2026-09-10T05:00:00Z",
       significance: "",
       highlight: true,
       critical: true
     },
     {
-      id: "e2",
-      title: "Iran retaliates with ballistic missile strike on U.S. base in Jordan",
-      description: "In retaliation for the U.S. sinking of its oil tankers, Iran's IRGC launched approximately 20 ballistic missiles at the Muwaffaq Salti Air Base in Jordan, which hosts U.S. forces. The Jordanian military stated it successfully intercepted 18 missiles, with the remainder landing in unpopulated areas, causing no U.S. casualties. U.S. officials described the attack as 'ineffective'.",
+      id: "evt-20260910-2",
+      title: "Brent Crude Oil Price Surpasses $102 per Barrel",
+      description: "Amid escalating military actions between the U.S. and Iran, market concerns over Middle East oil supply disruptions have intensified, driving international oil prices higher. Brent crude futures climbed above $102 per barrel, reaching a multi-month high.",
       verification: "confirmed",
-      timestamp: "2026-09-09T06:00:00Z",
+      timestamp: "2026-09-10T08:00:00Z",
       significance: "",
       highlight: true
     },
     {
-      id: "e3",
-      title: "Brent crude oil price surpasses $100/barrel for the first time in six weeks",
-      description: "Driven by heightened fears of supply disruption amid the sharp escalation of military actions between the U.S. and Iran around the Strait of Hormuz, the international benchmark Brent crude price breached the psychological $100 per barrel mark for the first time since late July. WTI crude also neared $95 per barrel.",
+      id: "evt-20260910-3",
+      title: "IAEA Refers Iran's Nuclear File to UN Security Council",
+      description: "The International Atomic Energy Agency (IAEA) board voted to refer Iran to the UN Security Council for its nuclear \"non-compliance.\" The move, the first in nearly two decades, marks a major setback for diplomatic efforts through the IAEA channel. Iran condemned the resolution as a result of U.S. pressure.",
       verification: "confirmed",
-      timestamp: "2026-09-09T07:30:00Z",
+      timestamp: "2026-09-09T20:00:00Z",
       significance: "",
       highlight: true
     },
     {
-      id: "e4",
-      title: "Hormuz shipping traffic remains minimal as Iran threatens to expand attacks",
-      description: "According to shipping data cited by Reuters, only 6 commercial vessels transited the Strait of Hormuz on Sep 8, far below the pre-conflict daily average of ~85, indicating the waterway is effectively shut down. Concurrently, Iran warned all tanker crews near Kuwaiti and Bahraini ports to immediately abandon their vessels, suggesting they could be targeted.",
+      id: "evt-20260910-4",
+      title: "Shipping Traffic in Strait of Hormuz Remains at Extremely Low Levels",
+      description: "According to shipping tracker data cited by Reuters, only seven commercial vessels transited the Strait of Hormuz on Sept. 9, far below the already suppressed 10-day average of about 14. Shipping remains severely restricted as Iran announces plans to expand its maritime \"no-go zone.\"",
       verification: "confirmed",
-      timestamp: "2026-09-09T05:00:00Z",
+      timestamp: "2026-09-10T07:30:00Z",
       significance: ""
     },
     {
-      id: "e5",
-      title: "U.S. denies Iranian claims of hitting its warships",
-      description: "In response to claims by Iran's IRGC that it had attacked and 'inflicted heavy damage' on two U.S. warships, U.S. Central Command (CENTCOM) publicly refuted the statement on social media, calling it 'completely FALSE' and asserting that no U.S. Navy warship was struck.",
+      id: "evt-20260910-5",
+      title: "U.S. Military Denies Warship Damage, Confirms Continued Strikes on Iranian Tankers",
+      description: "In response to claims by Iran's IRGC of having heavily damaged U.S. warships, U.S. Central Command (CENTCOM) issued a statement denying the claims as \"completely FALSE.\" CENTCOM also confirmed that U.S. forces have destroyed 10 Iranian tankers over the past week in response to attempted attacks on U.S. vessels.",
       verification: "confirmed",
-      timestamp: "2026-09-09T09:00:00Z",
+      timestamp: "2026-09-09T22:00:00Z",
       significance: ""
     }
   ],
@@ -423,9 +416,9 @@ export const DATA_EN: DashboardData = {
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Direct military strikes between the U.S. and Iran have become normalized and entered a retaliatory cycle, with the conflict's geography expanding from sea to third-party nations (Jordan).",
-      "The previous 'Islamabad Memorandum' aimed at de-escalation is now completely defunct, with neither side showing willingness to return to negotiations, instead demonstrating resolve through force.",
-      "The situation has fully transitioned from a controlled conflict to an open, direct military confrontation. Although attacks are 'retaliatory' rather than a 'full-scale invasion,' the risk of miscalculation is extremely high, and any major tactical success or failure by either side could lead to an uncontrolled escalation."
+      "U.S. and Iranian forces are engaged in direct, multi-front military exchanges, including naval confrontations and strikes on land-based assets.",
+      "Iran's first use of ballistic missiles to successfully strike U.S. assets in a third country marks a major escalation in the conflict's geography and intensity.",
+      "All key diplomatic channels (IAEA) have closed, leaving the situation driven purely by military logic with no effective de-escalation mechanisms."
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -436,9 +429,9 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: The U.S. proactively destroyed 5 Iranian oil tankers, expanding its targeting from military facilities to economic lifeline assets.",
-        "Change: Iran used ballistic missiles for the first time to conduct a retaliatory strike against a U.S. base in Jordan, showing an expansion in both strike rang…",
-        "Continue: Military standoff in the Strait of Hormuz region persists, but the frequency and intensity of direct fire have significantly increased."
+        "Change: Iran's direct ballistic missile attack on a U.S.",
+        "Change: military base in a third country (Jordan), which successfully caused damage to U.S.",
+        "Change: assets, indicates the conflict has entered a phase of unrestricted direct military confrontation."
       ]
     },
     {
@@ -447,8 +440,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Commercial shipping traffic through the Strait of Hormuz remains at extremely low levels, nearing a de facto closure.",
-        "Change: Iran issued a public warning to tankers docked in Kuwaiti and Bahraini ports, expanding its threat envelope from within the strait to neighboring GCC s…"
+        "Change: Commercial shipping traffic through the Strait of Hormuz remains at extremely low levels, far below recent averages, indicating commercial transit has …",
+        "Change: Iran's threat to expand its no-go zone exacerbates the situation."
       ]
     },
     {
@@ -457,8 +450,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Brent crude broke the key psychological level of $100/barrel, indicating the market has priced in a significant risk of supply disruption.",
-        "Continue: Energy price volatility remains high and is entirely driven by the geopolitical conflict."
+        "Change: The intensification of direct military conflict has led to a sharp increase in market fears over supply, with Brent crude prices stabilizing above $100…"
       ]
     },
     {
@@ -467,26 +459,20 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Both sides are communicating exclusively through military actions and hardline statements, with no official indications of seeking diplomatic off-ram…",
-        "Continue: U.S. CENTCOM and Iranian state media serve as primary platforms for information warfare, releasing conflicting statements on battle damage assessment…"
+        "Change: The U.S.",
+        "Change: military (via CENTCOM) is directly participating in and commanding military strikes against Iranian targets such as oil tankers, and defending against …"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "The U.S. aims to use military pressure to completely contain Iran's regional influence and force concessions on its nuclear program, while Iran seeks to break the blockade through forceful counter-attacks and establish its dominance in the Gulf.",
-      "Both sides lack effective domestic political space to seek compromise, making hawkish policies the only viable option."
+      "The U.S. aims to cripple Iran's regional influence and nuclear capabilities through 'maximum economic pressure' and military strikes, while Iran seeks to break the blockade and impose high costs on the U.S. through asymmetric military actions."
     ],
     military: [
-      "The U.S. seeks to leverage its technological and air/sea superiority for precision strikes to minimize its own casualties, whereas Iran utilizes its asymmetric capabilities (missiles, drones, proxy networks) to attempt to inflict unacceptable costs on the U.S. and its allies.",
-      "The conflict has escalated from a proxy war and limited skirmishes to direct state-on-state military confrontation, increasing the risk of miscalculation and uncontrolled expansion."
+      "The U.S. is leveraging its naval and air superiority to enforce a blockade on Iranian ports and strike Iranian maritime assets, while Iran uses its ballistic missiles, drones, and proxy networks to attack U.S. bases and shipping, attempting to create an asymmetric deterrent."
     ]
   },
   scoreTrend: [
-    {
-      date: "09-05",
-      score: 70
-    },
     {
       date: "09-06",
       score: 70
@@ -501,22 +487,25 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "09-09",
-      score: 84,
+      score: 84
+    },
+    {
+      date: "09-10",
+      score: 88,
       active: true
     }
   ],
-  keyChange: "The U.S. and Iran are caught in a direct military retaliatory cycle, with the U.S. destroying Iranian tankers and Iran responding with a ballistic missile attack on a U.S. base, pushing oil past $100 and entering a new, dangerous phase of conflict.",
-  investmentSignal: "→ Increase long positions in energy and commodities, while hedging downside risk in broad risk assets via instruments like the VIX or gold.",
-  prevRiskScore: 82,
+  investmentSignal: "→ Maintain a highly defensive risk posture; geopolitical premiums drive hedging demand in energy and commodities.",
+  prevRiskScore: 84,
+  keyChange: "24h: See events and factors.",
   webSources: [],
   webSearchQueries: [
-    "US Iran tensions last 24 hours",
-    "Strait of Hormuz shipping status September 9 2026",
-    "Iran military activity September 2026",
-    "US military deployment Middle East September 2026",
-    "WTI Brent oil price September 9 2026 Reuters",
-    "Brent crude price range Bloomberg September 9 2026",
-    "US Iran diplomatic talks September 2026"
+    "WTI Brent crude oil price September 10 2026 range trend",
+    "US Iran conflict update September 10 2026",
+    "Strait of Hormuz shipping status September 10 2026 latest news",
+    "US military posture CENTCOM Iran September 10 2026",
+    "Iran diplomatic statements September 10 2026",
+    "US sanctions on Iran update September 2026"
   ]
 };
 
@@ -525,7 +514,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "9月9日节点",
+    node406: "9月10日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -559,16 +548,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.183 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.184 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 84（↑2）：美伊陷入直接的军事报复循环，美国摧毁伊朗油轮，伊朗则以弹道导弹攻击美军基地作为回应，推动油价突破100美元，冲突进入新的危险阶段。",
-    bannerWarning: "→ 增持能源与大宗商品多头头寸，同时通过VIX或黄金等工具对冲整体风险资产的下行风险。",
-    deescalationIntent: "美国旨在通过军事压力彻底遏制伊朗的地区影响力并迫使其在核问题上让步，而伊朗则力图通过强硬反击打破封锁并确立其在海湾地区的主导地位。",
-    structuralRisk: "海峡通行量维持在个位数，远低于正常水平的50%，主要航运公司已暂停通行，构成严重受限。",
-    contradictionNote: "美国旨在通过军事压力彻底遏制伊朗的地区影响力并迫使其在核问题上让步，而伊朗则力图通过强硬反击打破封锁并确立其在海湾地区的主导地位。；美国寻求利用其技术和海空优势进行精确打击以最小化己方伤亡，而伊朗则利用其非对称能力（导弹、无人机、代理人网络）试图对美方及其盟友造成不可接受的损失。",
+    bannerSignal: "综合评分 88（↑4）：24h要点：详见事件与因子。",
+    bannerWarning: "→ 风险敞口维持高度防御姿态，地缘溢价驱动能源与大宗商品对冲需求。",
+    deescalationIntent: "美国旨在通过“极限经济压力”和军事打击彻底削弱伊朗的地区影响力及核能力，而伊朗则试图通过不对称军事行动打破封锁并迫使美国付出高昂代价。",
+    structuralRisk: "通过霍尔木兹海峡的商业航运流量持续处于极低水平，远低于近期平均值，表明该关键水道的商业通行已基本停滞。伊朗威胁扩大禁航区进一步恶化了局势。",
+    contradictionNote: "美国旨在通过“极限经济压力”和军事打击彻底削弱伊朗的地区影响力及核能力，而伊朗则试图通过不对称军事行动打破封锁并迫使美国付出高昂代价。；美国利用其海空军优势执行对伊朗港口的封锁并打击伊朗海上资产，而伊朗则利用弹道导弹、无人机和代理人网络攻击美军基地和航运，试图形成非对称威慑。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -576,7 +565,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第193天",
+    dayCount: "第194天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -584,7 +573,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Sep 9 Node",
+    node406: "Sep 10 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -618,16 +607,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.183 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.184 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 84 (↑2): The U.S. and Iran are caught in a direct military retaliatory cycle, with the U.S. destroying Iranian tankers and Iran responding with a ba…",
-    bannerWarning: "→ Increase long positions in energy and commodities, while hedging downside risk in broad risk assets via instruments l…",
-    deescalationIntent: "The U.S. aims to use military pressure to completely contain Iran's regional in…",
-    structuralRisk: "Strait transit volume remains in the single digits, far below the 50% threshold of normal traffic. …",
-    contradictionNote: "The U.S. aims to use military pressure to completely contain Iran's regional influence and force concessions on its nuclear program, while Iran seeks to break …",
+    bannerSignal: "Composite 88 (↑4): 24h: See events and factors.",
+    bannerWarning: "→ Maintain a highly defensive risk posture; geopolitical premiums drive hedging demand in energy and commodities.",
+    deescalationIntent: "The U.S. aims to cripple Iran's regional influence and nuclear capabilities thr…",
+    structuralRisk: "Commercial shipping traffic through the Strait of Hormuz remains at extremely low levels, far below…",
+    contradictionNote: "The U.S. aims to cripple Iran's regional influence and nuclear capabilities through 'maximum economic pressure' and military strikes, while Iran seeks to break…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -635,7 +624,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 193",
+    dayCount: "Day 194",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
