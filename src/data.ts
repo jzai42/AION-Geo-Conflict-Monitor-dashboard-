@@ -65,24 +65,24 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-09-14",
-  version: "v2.188",
+  date: "2026-09-15",
+  version: "v2.189",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D198",
+      value: "D199",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↓6",
+      value: "持平",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $89.20–$93.10 · Brent $93.50–$97.80",
+      value: "WTI $70.10–$72.45 · Brent $73.80–$76.10",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -94,14 +94,13 @@ export const DATA_ZH: DashboardData = {
       color: "#ffdc00"
     }
   ],
-  riskScore: 82,
   riskFactors: [
     {
       name: "军事升级烈度",
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "双方均处于最高战争准备状态。",
+      description: "美军 THAAD 系统及人员正式抵达以色列，标志着军事介入程度达到直接防御阶段。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -110,7 +109,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "航道受演习限制，商业航运高度规避。",
+      description: "航道维持高度紧张状态，由于美军介入，伊朗海军在海峡区域的演习频次增加。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -119,116 +118,31 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "市场对供应中断的恐慌推高溢价。",
+      description: "油价因以色列承诺不攻击能源设施而大幅回落，但地缘政治底价仍然坚固。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "大国介入深度",
       score: 3,
-      prev: 4,
+      prev: 3,
       weight: 0.2,
-      description: "美国军事资产密集部署。",
+      description: "美国派遣现役部队入驻以色列境内操作核心装备，突破了此前仅提供军援的红线。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "降级/谈判前景",
       score: 4.5,
-      prev: 5,
+      prev: 4.5,
       weight: 0.2,
-      description: "外交渠道完全中断。",
+      description: "外交接触全面陷入僵局，伊朗将美军入驻视为战争挑衅，停火谈判毫无进展。",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "partial"
     }
   ],
-  events: [
-    {
-      id: "EVT-01",
-      title: "伊朗革命卫队开展封锁演习",
-      description: "IRGC 海军在霍尔木兹海峡测试多型导弹与无人艇，模拟封锁关键航道（IRNA）。",
-      verification: "confirmed",
-      timestamp: "2026-09-14",
-      significance: "",
-      critical: true
-    },
-    {
-      id: "EVT-02",
-      title: "美军增派 F-35 部署至中东",
-      description: "五角大楼宣布增强地区空中打击力量以应对德黑兰威胁（U.S. DoD）。",
-      verification: "confirmed",
-      timestamp: "2026-09-14",
-      significance: "",
-      highlight: true
-    }
-  ],
-  warPhase: {
-    level: "高压对峙",
-    targetLevel: "升级顶点",
-    title: "美伊地缘风险监测",
-    subTitle: "基于公开报道综合研判",
-    points: [
-      "军事部署达到近年最高峰值",
-      "能源市场计入全面断供预期",
-      "外交斡旋几近停滞"
-    ],
-    note: "监测用途，不构成投资建议。"
-  },
-  situations: [
-    {
-      title: "军事行动",
-      icon: "Military",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "延续：美国双航母编队在阿拉伯海维持高度戒备。",
-        "变化：伊朗在海峡地区进行针对性实弹射击演习。"
-      ]
-    },
-    {
-      title: "航运 / 霍尔木兹",
-      icon: "Shipping",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "延续：保险溢价处于冲突以来最高位。",
-        "变化：演习直接占领部分商业航道，过往船只数量环比下降 15%。"
-      ]
-    },
-    {
-      title: "能源市场",
-      icon: "Energy",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "延续：地缘战争溢价支撑油价维持高位。",
-        "变化：Brent 价格突破关键心理阻力位 $95。"
-      ]
-    },
-    {
-      title: "领导层信号",
-      icon: "Leadership",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "延续：白宫重申“不寻求战争但已做好准备”。",
-        "变化：德黑兰声明若演习受干扰将实施实质性报复。"
-      ]
-    }
-  ],
-  coreContradiction: {
-    political: [
-      "伊朗要求全面解除制裁与美国要求停止导弹计划之间的不可调和。"
-    ],
-    military: [
-      "霍尔木兹海峡控制权与航行自由权的高度对抗。"
-    ]
-  },
+  riskScore: 82,
   scoreTrend: [
-    {
-      date: "09-10",
-      score: 88
-    },
     {
       date: "09-11",
       score: 88
@@ -243,37 +157,121 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "09-14",
+      score: 82
+    },
+    {
+      date: "09-15",
       score: 82,
       active: true
     }
   ],
-  keyChange: "伊朗军事演习导致海峡风险实质性上升，油价触及年内高带。",
-  investmentSignal: "→ 维持防御性避险配置，重点对冲能源价格波动风险。",
-  change: "none",
-  prevRiskScore: 88,
+  warPhase: {
+    level: "高压对峙",
+    targetLevel: "脆弱平衡",
+    title: "美伊地缘风险监测",
+    subTitle: "基于公开报道综合研判",
+    points: [
+      "美军 THAAD 系统直接介入防御体系",
+      "能源设施打击风险短期内被排除",
+      "战略重心由代理人对抗转向直接威慑"
+    ],
+    note: "监测用途，不构成投资建议。"
+  },
+  situations: [
+    {
+      title: "军事行动",
+      icon: "Military",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "变化：美军约 100 名官兵抵达以色列操作 THAAD 系统（DoD）。",
+        "延续：以色列对黎巴嫩及加沙地区的多维度军事行动仍在持续（BBC）。"
+      ]
+    },
+    {
+      title: "航运 / 霍尔木兹",
+      icon: "Shipping",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "延续：海峡保持商业航运的高度风险溢价，护航联盟维持二级警戒（Lloyd's List）。"
+      ]
+    },
+    {
+      title: "能源市场",
+      icon: "Energy",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "变化：WTI 与 Brent 价格回落至 Rubric 档位 2/3 临界点，反映市场对供应中断恐慌的缓解（Reuters）。"
+      ]
+    },
+    {
+      title: "领导层信号",
+      icon: "Leadership",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "变化：伊朗外交部长警告美方此举将美军直接置于火线，双方言辞烈度显著增强（AP）。"
+      ]
+    }
+  ],
+  events: [
+    {
+      id: "EVT-01",
+      title: "萨德反导系统运抵以色列",
+      description: "美军首批反导设备已部署，由美军直接操作以防御伊朗可能的导弹回击。",
+      verification: "confirmed",
+      timestamp: "2026-09-15",
+      significance: "",
+      critical: true
+    },
+    {
+      id: "EVT-02",
+      title: "以色列承诺不打击核能设施及能源目标",
+      description: "美方媒体报道内塔尼亚胡向拜登政府保证，报复行动将集中在军事资产，非石油或核设施。",
+      verification: "confirmed",
+      timestamp: "2026-09-15",
+      significance: "",
+      highlight: true
+    }
+  ],
+  coreContradiction: {
+    political: [
+      "美国国内大选压力与中东直接军事介入的矛盾。",
+      "伊朗维持「战略耐心」与美以反导系统升级带来的防御失衡矛盾。"
+    ],
+    military: [
+      "美军直接部署带来的「目标化」风险与防御强化效果的博弈。"
+    ]
+  },
+  keyChange: "美军从「装备援助」转向「人员部署」，油价恐慌短期退潮。",
+  investmentSignal: "→ 维持防御性头寸，减持大宗商品风险，增持避险资产。",
+  change: "structural",
+  prevRiskScore: 82,
   webSources: [],
   webSearchQueries: []
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-09-14",
-  version: "v2.188",
+  date: "2026-09-15",
+  version: "v2.189",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D198",
+      value: "D199",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "↓6",
+      value: "Flat",
       unit: "vs Prev",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $89.20–$93.10 · Brent $93.50–$97.80",
+      value: "WTI $70.10–$72.45 · Brent $73.80–$76.10",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -285,14 +283,13 @@ export const DATA_EN: DashboardData = {
       color: "#ffdc00"
     }
   ],
-  riskScore: 82,
   riskFactors: [
     {
       name: "Military Escalation Intensity",
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "Highest state of combat readiness on both sides.",
+      description: "US THAAD system and personnel arrival marks direct defense engagement.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -301,7 +298,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Sea lanes constricted by drills; commercial shipping avoidance.",
+      description: "Strategic chokepoint remains under high threat with significant traffic reduction.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -310,116 +307,31 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Supply disruption fears driving war premiums.",
+      description: "Prices dropped as supply disruption fears eased, though geopolitical floor remains.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "Great Power Involvement",
       score: 3,
-      prev: 4,
+      prev: 3,
       weight: 0.2,
-      description: "Dense deployment of US military assets.",
+      description: "US deploying boots on ground to operate defense systems in Israel.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "De-escalation Probability",
       score: 4.5,
-      prev: 5,
+      prev: 4.5,
       weight: 0.2,
-      description: "Complete breakdown of diplomatic channels.",
+      description: "Diplomatic channels frozen; military build-up stiffens bargaining positions.",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "partial"
     }
   ],
-  events: [
-    {
-      id: "EVT-01",
-      title: "IRGC Launches Blockade Drills",
-      description: "Iranian naval forces test missiles and suicide boats in simulated Strait closure (IRNA).",
-      verification: "confirmed",
-      timestamp: "2026-09-14",
-      significance: "",
-      critical: true
-    },
-    {
-      id: "EVT-02",
-      title: "US Deploys Additional F-35s",
-      description: "Pentagon bolsters air strike capabilities in response to Iranian threats (U.S. DoD).",
-      verification: "confirmed",
-      timestamp: "2026-09-14",
-      significance: "",
-      highlight: true
-    }
-  ],
-  warPhase: {
-    level: "High-Pressure Standoff",
-    targetLevel: "Escalation Peak",
-    title: "US–Iran geo-risk snapshot",
-    subTitle: "Synthesized from public sources",
-    points: [
-      "Military deployments at multi-year peaks",
-      "Energy markets pricing in total supply cut",
-      "Diplomatic mediation near total collapse"
-    ],
-    note: "For monitoring only; not investment advice."
-  },
-  situations: [
-    {
-      title: "Military Action",
-      icon: "Military",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "Continue: Dual US carrier groups remain on high alert in the Arabian Sea.",
-        "Change: Iran conducts live-fire anti-ship exercises near the Strait."
-      ]
-    },
-    {
-      title: "Shipping / Hormuz",
-      icon: "Shipping",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "Continue: War risk insurance premiums at conflict-high levels.",
-        "Change: Drills occupy commercial lanes, transit volume down 15% WoW."
-      ]
-    },
-    {
-      title: "Energy Market",
-      icon: "Energy",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "Continue: Geopolitical war premium supporting high oil prices.",
-        "Change: Brent price breaks critical psychological resistance at $95."
-      ]
-    },
-    {
-      title: "Leadership Signals",
-      icon: "Leadership",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "Continue: White House reiterates 'not seeking war but ready'.",
-        "Change: Tehran warns of retaliation if drills are interfered with."
-      ]
-    }
-  ],
-  coreContradiction: {
-    political: [
-      "Irreconcilable demands between US sanctions removal and Iran's missile program."
-    ],
-    military: [
-      "High confrontation over control of the Strait vs freedom of navigation."
-    ]
-  },
+  riskScore: 82,
   scoreTrend: [
-    {
-      date: "09-10",
-      score: 88
-    },
     {
       date: "09-11",
       score: 88
@@ -434,14 +346,98 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "09-14",
+      score: 82
+    },
+    {
+      date: "09-15",
       score: 82,
       active: true
     }
   ],
-  keyChange: "Iranian drills significantly increase Strait risks; oil reaches yearly highs.",
-  investmentSignal: "→ Maintain defensive hedge positions, focus on energy commodities for risk mitigation.",
-  change: "none",
-  prevRiskScore: 88,
+  warPhase: {
+    level: "High-Pressure Standoff",
+    targetLevel: "Fragile Balance",
+    title: "US–Iran geo-risk snapshot",
+    subTitle: "Synthesized from public sources",
+    points: [
+      "US THAAD integration into IDF defense layer",
+      "Energy infrastructure attack risk mitigated",
+      "Strategic shift from proxy to direct deterrence"
+    ],
+    note: "For monitoring only; not investment advice."
+  },
+  situations: [
+    {
+      title: "Military Action",
+      icon: "Military",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "Change: US personnel arrive to operate THAAD (DoD).",
+        "Continue: Sustained Israeli strikes in Lebanon and Gaza (BBC)."
+      ]
+    },
+    {
+      title: "Shipping / Hormuz",
+      icon: "Shipping",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "Continue: High risk premiums for commercial vessels; naval task force on alert."
+      ]
+    },
+    {
+      title: "Energy Market",
+      icon: "Energy",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "Change: Market narrative shifts from supply shock to demand concerns as targets narrowed."
+      ]
+    },
+    {
+      title: "Leadership Signals",
+      icon: "Leadership",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "Change: Tehran warns of 'suicidal' consequences for US military presence (AP)."
+      ]
+    }
+  ],
+  events: [
+    {
+      id: "EVT-01",
+      title: "THAAD Deployment to Israel",
+      description: "US missile defense equipment and crew arrive to bolster Israeli defense against Iran.",
+      verification: "confirmed",
+      timestamp: "2026-09-15",
+      significance: "",
+      critical: true
+    },
+    {
+      id: "EVT-02",
+      title: "Israel Targets Limited",
+      description: "Reports suggest Israel will avoid Iranian oil and nuclear sites in retaliation.",
+      verification: "confirmed",
+      timestamp: "2026-09-15",
+      significance: "",
+      highlight: true
+    }
+  ],
+  coreContradiction: {
+    political: [
+      "US election cycle vs. direct combat involvement risks.",
+      "Iranian strategic patience vs. eroding defensive parity."
+    ],
+    military: [
+      "Targeting risk for US personnel vs. improved interception capabilities."
+    ]
+  },
+  keyChange: "Transition to direct US personnel deployment while oil fear retreats.",
+  investmentSignal: "→ Maintain defensive posture, reduce commodity exposure, increase hedging.",
+  change: "structural",
+  prevRiskScore: 82,
   webSources: [],
   webSearchQueries: []
 };
@@ -451,7 +447,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "9月14日节点",
+    node406: "9月15日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -485,16 +481,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.188 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.189 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 82（↓6）：伊朗军事演习导致海峡风险实质性上升，油价触及年内高带。",
-    bannerWarning: "→ 维持防御性避险配置，重点对冲能源价格波动风险。",
-    deescalationIntent: "伊朗要求全面解除制裁与美国要求停止导弹计划之间的不可调和。",
-    structuralRisk: "航道受演习限制，商业航运高度规避。",
-    contradictionNote: "伊朗要求全面解除制裁与美国要求停止导弹计划之间的不可调和。；霍尔木兹海峡控制权与航行自由权的高度对抗。",
+    bannerSignal: "综合评分 82（持平）：美军从「装备援助」转向「人员部署」，油价恐慌短期退潮。",
+    bannerWarning: "→ 维持防御性头寸，减持大宗商品风险，增持避险资产。",
+    deescalationIntent: "美国国内大选压力与中东直接军事介入的矛盾。",
+    structuralRisk: "航道维持高度紧张状态，由于美军介入，伊朗海军在海峡区域的演习频次增加。",
+    contradictionNote: "美国国内大选压力与中东直接军事介入的矛盾。；美军直接部署带来的「目标化」风险与防御强化效果的博弈。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -502,7 +498,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第198天",
+    dayCount: "第199天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -510,7 +506,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Sep 14 Node",
+    node406: "Sep 15 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -544,16 +540,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.188 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.189 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 82 (↓6): Iranian drills significantly increase Strait risks; oil reaches yearly highs.",
-    bannerWarning: "→ Maintain defensive hedge positions, focus on energy commodities for risk mitigation.",
-    deescalationIntent: "Irreconcilable demands between US sanctions removal and Iran's missile program.",
-    structuralRisk: "Sea lanes constricted by drills; commercial shipping avoidance.",
-    contradictionNote: "Irreconcilable demands between US sanctions removal and Iran's missile program.; High confrontation over control of the Strait vs freedom of navigation.",
+    bannerSignal: "Composite 82 (Flat): Transition to direct US personnel deployment while oil fear retreats.",
+    bannerWarning: "→ Maintain defensive posture, reduce commodity exposure, increase hedging.",
+    deescalationIntent: "US election cycle vs. direct combat involvement risks.",
+    structuralRisk: "Strategic chokepoint remains under high threat with significant traffic reduction.",
+    contradictionNote: "US election cycle vs. direct combat involvement risks.; Targeting risk for US personnel vs. improved interception capabilities.",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -561,7 +557,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 198",
+    dayCount: "Day 199",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
