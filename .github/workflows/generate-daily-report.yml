@@ -88,8 +88,9 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-4.1-mini
           AION_ALLOW_FALLBACK: "0"
-          # Default off: production unchanged until Owner G2 sets Actions variable AION_OIL_FEED=shadow|on.
-          AION_OIL_FEED: ${{ vars.AION_OIL_FEED || 'off' }}
+          # Deterministic Yahoo CL=F/BZ=F overwrite for keyStats[2] (model narrative only).
+          # Override via repo Actions variable AION_OIL_FEED=off|shadow if needed.
+          AION_OIL_FEED: ${{ vars.AION_OIL_FEED || 'on' }}
         run: node .github/scripts/generate-aion-daily.mjs
 
       - name: Commit and push

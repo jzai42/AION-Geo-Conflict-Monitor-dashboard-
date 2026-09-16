@@ -82,7 +82,7 @@ export const DATA_ZH: DashboardData = {
     },
     {
       label: "油价",
-      value: "WTI $70.10–$72.45 · Brent $73.80–$76.10",
+      value: "WTI $103.76–$105.63 · Brent $107.18–$108.59",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -118,7 +118,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "油价因以色列承诺不攻击能源设施而大幅回落，但地缘政治底价仍然坚固。",
+      description: "WTI/Brent 站稳 $100+ 危机带（Yahoo CL=F/BZ=F 日内区间约 $104–$109）；沙特延布装船中断与货盘取消抬升供应溢价（Reuters 2026-09-15）。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -203,7 +203,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：WTI 与 Brent 价格回落至 Rubric 档位 2/3 临界点，反映市场对供应中断恐慌的缓解（Reuters）。"
+        "变化：WTI/Brent 收于约 $105.83 / $108.75，重回 Rubric 档位 4（$100–120 危机带）；延布装船中断推高供应溢价（Reuters/Yahoo）。"
       ]
     },
     {
@@ -245,7 +245,7 @@ export const DATA_ZH: DashboardData = {
       "美军直接部署带来的「目标化」风险与防御强化效果的博弈。"
     ]
   },
-  keyChange: "美军从「装备援助」转向「人员部署」，油价恐慌短期退潮。",
+  keyChange: "美军从「装备援助」转向「人员部署」；油价因延布中断重回 $100+ 危机带。",
   investmentSignal: "→ 维持防御性头寸，减持大宗商品风险，增持避险资产。",
   change: "structural",
   prevRiskScore: 82,
@@ -271,7 +271,7 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Oil",
-      value: "WTI $70.10–$72.45 · Brent $73.80–$76.10",
+      value: "WTI $103.76–$105.63 · Brent $107.18–$108.59",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -307,7 +307,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Prices dropped as supply disruption fears eased, though geopolitical floor remains.",
+      description: "WTI/Brent hold in the $100+ crisis band (Yahoo CL=F/BZ=F ~$104–$109); Yanbu loading halt and Saudi cargo cancellations lift supply premium (Reuters 2026-09-15).",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -392,7 +392,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Market narrative shifts from supply shock to demand concerns as targets narrowed."
+        "Change: WTI/Brent settle near $105.83 / $108.75, back in Rubric band 4 ($100–120); Yanbu loading halt lifts supply premium (Reuters/Yahoo)."
       ]
     },
     {
@@ -434,7 +434,7 @@ export const DATA_EN: DashboardData = {
       "Targeting risk for US personnel vs. improved interception capabilities."
     ]
   },
-  keyChange: "Transition to direct US personnel deployment while oil fear retreats.",
+  keyChange: "Transition to direct US personnel deployment; oil back in $100+ crisis band on Yanbu disruption.",
   investmentSignal: "→ Maintain defensive posture, reduce commodity exposure, increase hedging.",
   change: "structural",
   prevRiskScore: 82,
@@ -486,7 +486,7 @@ export const TRANSLATIONS = {
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 82（持平）：美军从「装备援助」转向「人员部署」，油价恐慌短期退潮。",
+    bannerSignal: "综合评分 82（持平）：美军从「装备援助」转向「人员部署」；油价因延布中断重回 $100+ 危机带。",
     bannerWarning: "→ 维持防御性头寸，减持大宗商品风险，增持避险资产。",
     deescalationIntent: "美国国内大选压力与中东直接军事介入的矛盾。",
     structuralRisk: "航道维持高度紧张状态，由于美军介入，伊朗海军在海峡区域的演习频次增加。",
@@ -545,7 +545,7 @@ export const TRANSLATIONS = {
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 82 (Flat): Transition to direct US personnel deployment while oil fear retreats.",
+    bannerSignal: "Composite 82 (Flat): Transition to direct US personnel deployment; oil back in $100+ crisis band on Yanbu disruption.",
     bannerWarning: "→ Maintain defensive posture, reduce commodity exposure, increase hedging.",
     deescalationIntent: "US election cycle vs. direct combat involvement risks.",
     structuralRisk: "Strategic chokepoint remains under high threat with significant traffic reduction.",

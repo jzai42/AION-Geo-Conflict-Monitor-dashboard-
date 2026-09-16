@@ -13,7 +13,18 @@
       3,
       4.5
     ],
-    "generationMode": "live"
+    "generationMode": "live",
+    "oilPrice": {
+      "wti": 104.71,
+      "brent": 108.2,
+      "wtiLow": 103.76,
+      "wtiHigh": 105.63,
+      "brentLow": 107.18,
+      "brentHigh": 108.59,
+      "keyStatValue": "WTI $103.76–$105.63 · Brent $107.18–$108.59",
+      "provider": "yahoo-chart",
+      "updatedAt": "2026-09-16T08:19:21.696Z"
+    }
   },
   "lockedDates": [
     "2026-04-22",
