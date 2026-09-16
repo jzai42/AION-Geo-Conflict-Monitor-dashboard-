@@ -26,6 +26,116 @@ export const ENERGY_RUBRIC_BANDS = Object.freeze([
 
 const OIL_URL_HINT = /oil|wti|brent|crude|petroleum|energy|reuters|bloomberg|wsj|ft\.com|cnbc/i;
 
+/** Narrative that claims oil/energy risk is easing (forbidden when price is in crisis band). */
+const OIL_EASING_NARRATIVE = Object.freeze([
+  /油价[^。；\n]{0,24}(回落|下跌|大跌|暴跌|降温|退潮|缓和)/,
+  /油价恐慌[^。；\n]{0,12}(退潮|缓解|消退)/,
+  /(供应|能源).{0,12}(恐慌|担忧).{0,12}(缓解|消退|降温)/,
+  /能源(设施)?(打击|攻击)?风险.{0,12}(排除|解除|缓解|下降)/,
+  /避险情绪.{0,8}(降温|回落)/,
+  /减持.{0,8}(大宗|能源|商品)/,
+  /reduce\s+(commodity|energy)\s+exposure/i,
+  /oil\s+(fear|panic).{0,16}(retreat|ease|eased|fade)/i,
+  /oil\s+prices?\s+(dropped|fell|fall|decline|declined|retreat|retreated|ease|eased)/i,
+  /energy\s+infrastructure\s+attack\s+risk\s+mitigated/i,
+  /supply\s+disruption\s+fears?\s+(eased|ease|faded)/i,
+  /prices?\s+dropped\s+as\s+supply/i,
+]);
+
+/** Narrative that claims oil is spiking / crisis (forbidden when price is soft <$85 mid). */
+const OIL_SPIKE_NARRATIVE = Object.freeze([
+  /油价[^。；\n]{0,24}(飙升|暴涨|急涨|站稳\s*\$?100|重回\s*\$?100)/,
+  /危机带/,
+  /panic\s+buying/i,
+  /oil\s+prices?\s+(surge|surged|spike|spiked|soar|soared)/i,
+  /\$100\+?\s*crisis\s+band/i,
+  /holds?\s+\$100\+/i,
+]);
+
+/**
+ * Collect narrative surfaces that must agree with the oil card direction.
+ * @returns {string}
+ */
+export function collectOilNarrativeCorpus({
+  keyChange,
+  investmentSignal,
+  warPhasePoints,
+  energyDescription,
+  energyEvidence,
+  situationEnergyPoints,
+  markdown,
+  extraTexts,
+} = {}) {
+  const bits = [];
+  const push = (x) => {
+    if (typeof x === "string" && x.trim()) bits.push(x.trim());
+  };
+  push(keyChange);
+  push(investmentSignal);
+  push(energyDescription);
+  push(energyEvidence);
+  push(markdown);
+  if (Array.isArray(warPhasePoints)) warPhasePoints.forEach(push);
+  if (Array.isArray(situationEnergyPoints)) situationEnergyPoints.forEach(push);
+  if (Array.isArray(extraTexts)) extraTexts.forEach(push);
+  return bits.join("\n");
+}
+
+/**
+ * Direction implied by oil mid/high bands:
+ *   firm = crisis/elevated (midBand ≥ 4 or highBand ≥ 4)
+ *   soft = subdued (midBand ≤ 2 and highBand ≤ 2)
+ *   mid  = otherwise
+ */
+export function oilPriceDirectionFromImplied(implied) {
+  if (!implied) return null;
+  const mid = implied.midBand;
+  const high = implied.highBand;
+  if (mid == null && high == null) return null;
+  if ((mid != null && mid >= 4) || (high != null && high >= 4)) return "firm";
+  if ((mid == null || mid <= 2) && (high == null || high <= 2)) return "soft";
+  return "mid";
+}
+
+/**
+ * Scan narrative for phrases that contradict the oil card direction.
+ * @returns {{ hardFail: boolean, hits: string[], reason: string|null }}
+ */
+export function oilNarrativeDirectionConflict(direction, corpus) {
+  const text = typeof corpus === "string" ? corpus : "";
+  if (!text.trim() || !direction || direction === "mid") {
+    return { hardFail: false, hits: [], reason: null };
+  }
+  const hits = [];
+  if (direction === "firm") {
+    for (const re of OIL_EASING_NARRATIVE) {
+      const m = text.match(re);
+      if (m) hits.push(`easing:${m[0].slice(0, 48)}`);
+    }
+    if (hits.length) {
+      return {
+        hardFail: true,
+        hits: hits.slice(0, 6),
+        reason: "narrative-easing-vs-firm-oil",
+      };
+    }
+  }
+  if (direction === "soft") {
+    for (const re of OIL_SPIKE_NARRATIVE) {
+      const m = text.match(re);
+      if (m) hits.push(`spike:${m[0].slice(0, 48)}`);
+    }
+    if (hits.length) {
+      return {
+        hardFail: true,
+        hits: hits.slice(0, 6),
+        reason: "narrative-spike-vs-soft-oil",
+      };
+    }
+  }
+  return { hardFail: false, hits: [], reason: null };
+}
+
 function asFinite(n) {
   const x = Number(n);
   return Number.isFinite(x) ? x : null;
@@ -241,6 +351,11 @@ export function evaluateOilQuality({
   energyEvidence,
   energyDescription,
   webSources,
+  keyChange,
+  investmentSignal,
+  warPhasePoints,
+  situationEnergyPoints,
+  narrativeCorpus,
 } = {}) {
   const reasons = [];
   const parsed = parseOilKeyStatValue(keyStatValue);
@@ -254,6 +369,21 @@ export function evaluateOilQuality({
   const oilUrls = collectOilSourceUrls({ energyEvidence, energyDescription, webSources, markdown });
   const hasOilSourceUrl = oilUrls.length > 0;
 
+  const corpus =
+    typeof narrativeCorpus === "string" && narrativeCorpus.trim()
+      ? narrativeCorpus
+      : collectOilNarrativeCorpus({
+          keyChange,
+          investmentSignal,
+          warPhasePoints,
+          energyDescription,
+          energyEvidence,
+          situationEnergyPoints,
+          markdown,
+        });
+  const oilDirection = oilPriceDirectionFromImplied(implied);
+  const narrativeConflict = oilNarrativeDirectionConflict(oilDirection, corpus);
+
   if (!parseOk) reasons.push("unparseable-oil-range");
   if (compatibility.hardFail) {
     reasons.push(
@@ -266,9 +396,14 @@ export function evaluateOilQuality({
   if (markdownMismatch) {
     reasons.push(`markdown-energy-score-mismatch: md=${markdownEnergyScore} json=${jsonScore}`);
   }
+  if (narrativeConflict.hardFail) {
+    reasons.push(
+      `${narrativeConflict.reason}: direction=${oilDirection}; hits=${narrativeConflict.hits.join("|")}`,
+    );
+  }
 
   let publish = "live";
-  if (compatibility.hardFail) publish = "abort";
+  if (compatibility.hardFail || narrativeConflict.hardFail) publish = "abort";
   else if (!parseOk || !hasOilSourceUrl || (parseOk && !compatibility.compatible)) publish = "degraded";
 
   return {
@@ -276,6 +411,8 @@ export function evaluateOilQuality({
     parseOk,
     implied,
     compatibility,
+    oilDirection,
+    narrativeConflict,
     markdownEnergyScore,
     markdownMismatch,
     hasOilSourceUrl,
@@ -312,6 +449,8 @@ export function oilQualityHistoryRecord(verdict) {
     combinedHigh: verdict.implied?.high ?? null,
     midBand: verdict.implied?.midBand ?? null,
     highBand: verdict.implied?.highBand ?? null,
+    oilDirection: verdict.oilDirection ?? null,
+    narrativeConflict: Boolean(verdict.narrativeConflict?.hardFail),
     hasOilSourceUrl: verdict.hasOilSourceUrl,
     markdownMismatch: verdict.markdownMismatch,
     reasons: verdict.reasons.slice(0, 8),

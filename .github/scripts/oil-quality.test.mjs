@@ -1,7 +1,4 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import {
   parseOilKeyStatValue,
   impliedEnergyBandFromUsd,
@@ -10,6 +7,9 @@ import {
   syncMarkdownEnergyScore,
   evaluateOilQuality,
   pickBetterOilVerdict,
+  oilPriceDirectionFromImplied,
+  oilNarrativeDirectionConflict,
+  collectOilNarrativeCorpus,
 } from "./oil-quality.mjs";
 
 const SNAPSHOT_2026_09_15 = "WTI $70.10–$72.45 · Brent $73.80–$76.10";
@@ -123,20 +123,92 @@ const SNAPSHOT_2026_09_15 = "WTI $70.10–$72.45 · Brent $73.80–$76.10";
   assert.equal(parseMarkdownEnergyScore(synced.markdown), 4);
 }
 
-// 7c) Live 2026-09-15 report file: markdown energy 3 vs data.ts energy 4 would have shipped.
+// 7c) Historical incident shape: $70s card + energy score 4 must abort (band gate).
+// Note: $70s implies direction=soft, so "easing" narrative alone is not the hardFail trigger here.
 {
-  const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
-  const md = readFileSync(path.join(repoRoot, "reports/daily/2026-09-15.md"), "utf8");
+  const md = `### 3）五维评分（AION）
+- **能源冲击：3** — 区间落入 $70–77 美元
+
+### 4）地缘冲突综合分
+`;
   assert.equal(parseMarkdownEnergyScore(md), 3);
   const v = evaluateOilQuality({
     keyStatValue: SNAPSHOT_2026_09_15,
     energyScore: 4,
     markdown: md,
     energyEvidence: "油价因以色列承诺不攻击能源设施而大幅回落",
+    keyChange: "美军部署；油价恐慌短期退潮",
+    investmentSignal: "→ 减持大宗商品风险",
+    warPhasePoints: ["能源设施打击风险短期内被排除"],
     webSources: [],
   });
   assert.equal(v.publish, "abort");
+  assert.equal(v.compatibility.hardFail, true);
   assert.equal(v.markdownMismatch, true);
+  assert.equal(v.oilDirection, "soft");
+}
+
+// 7d) Crisis oil ($100+) with easing narrative alone must abort even if energy score matches.
+{
+  const v = evaluateOilQuality({
+    keyStatValue: "WTI $104.20–$107.10 · Brent $107.80–$110.55",
+    energyScore: 4,
+    markdown: "### 3）五维评分\n- **能源冲击：4** — 危机带\n\n### 4）地缘冲突综合分\n",
+    energyEvidence: "Reuters settle https://www.reuters.com/markets/commodities/oil-2026-09-15",
+    keyChange: "Transition while oil fear retreats",
+    investmentSignal: "→ Reduce commodity exposure",
+    warPhasePoints: ["Energy infrastructure attack risk mitigated"],
+    webSources: [{ title: "Oil", uri: "https://www.reuters.com/business/energy/oil" }],
+  });
+  assert.equal(v.parseOk, true);
+  assert.equal(v.compatibility.hardFail, false);
+  assert.equal(v.narrativeConflict.hardFail, true);
+  assert.equal(v.publish, "abort");
+  assert.equal(v.oilDirection, "firm");
+}
+
+// 7e) Soft oil with spike narrative must abort.
+{
+  const v = evaluateOilQuality({
+    keyStatValue: "WTI $70.10–$72.45 · Brent $73.80–$76.10",
+    energyScore: 1,
+    markdown: "### 3）五维评分\n- **能源冲击：1** — 低位\n\n### 4）地缘冲突综合分\n",
+    energyEvidence: "print https://www.reuters.com/business/energy/oil",
+    keyChange: "Oil prices surged into $100+ crisis band",
+    investmentSignal: "→ Maintain energy defense",
+    webSources: [{ title: "Oil", uri: "https://www.reuters.com/business/energy/oil" }],
+  });
+  assert.equal(v.oilDirection, "soft");
+  assert.equal(v.narrativeConflict.hardFail, true);
+  assert.equal(v.publish, "abort");
+}
+
+// 7f) Crisis oil with aligned firm narrative → live.
+{
+  const v = evaluateOilQuality({
+    keyStatValue: "WTI $104.20–$107.10 · Brent $107.80–$110.55",
+    energyScore: 4,
+    markdown: "### 3）五维评分\n- **能源冲击：4** — 延布中断推升溢价\n\n### 4）地缘冲突综合分\n",
+    energyEvidence: "Yanbu halt https://www.reuters.com/markets/commodities/oil-2026-09-15",
+    keyChange: "Yanbu loadings halted; oil holds $100+ crisis band",
+    investmentSignal: "→ Maintain energy and safe-haven defense",
+    warPhasePoints: ["Yanbu export disruption lifts supply premium"],
+    webSources: [{ title: "Oil", uri: "https://www.reuters.com/business/energy/oil" }],
+  });
+  assert.equal(v.publish, "live");
+  assert.equal(v.narrativeConflict.hardFail, false);
+  assert.equal(oilPriceDirectionFromImplied(v.implied), "firm");
+}
+
+// 7g) Helper unit: corpus + conflict detection.
+{
+  const corpus = collectOilNarrativeCorpus({
+    keyChange: "油价恐慌短期退潮",
+    investmentSignal: "→ 减持大宗商品风险",
+  });
+  const conflict = oilNarrativeDirectionConflict("firm", corpus);
+  assert.equal(conflict.hardFail, true);
+  assert.ok(conflict.hits.length >= 1);
 }
 
 // 8) Prefer a live candidate over an aborting $70s/score-4 candidate.

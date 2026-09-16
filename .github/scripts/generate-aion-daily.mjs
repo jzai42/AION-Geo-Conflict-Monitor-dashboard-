@@ -605,6 +605,7 @@ const oilPromptBlock = `
 - **keyStats[2]**：**value** **仅** \`WTI $低–$高 · Brent $低–$高\`（半角 $，区间用 **–** 连接）；**趋势、叙事、补充说明写入 riskFactors[2] 的 evidence/description**，**不要**塞进 keyStats[2].value（仪表盘油价卡只突出价格区间）。**unit** 中文固定 \`参考\`、英文固定 \`Ref.\`（须与 dataEn 一致）；**脚本只统一 unit**；禁止空值、禁止与接地图无关的臆造区间。
 - **evidence**（riskFactors[2]）须含上述区间与趋势的**文字依据**，并附 **至少一条接地 URL**（可末句）。
 - **脚本硬校验（发布门禁）**：会解析 keyStats[2] 的 WTI/Brent 美元区间并对照上方能源 rubric。若区间中位落入 <$75 而能源分仍为 4（$100–120 危机带）等 **跨 ≥2 档**矛盾，任务 **失败**，不把该快照当作 clean live 写入 data.ts。无油价接地 URL 时能源项不得标 confirmed（降为 unverified / degraded-oil）。
+- **叙事方向门禁**：当油价区间落在危机带（约 $100+）时，**禁止**在 keyChange / investmentSignal / warPhase.points / 能源态势 中使用「油价回落、恐慌退潮、能源风险排除、减持大宗/能源」等缓和措辞；软油价档（约 <$85）则禁止「飙升/$100+ 危机带」类措辞。违规同样 **拒发**。
 - 若接地无法形成可信区间，keyStats[2] value 须诚实说明「搜索未获可靠现价」等，该因子 \`sourceVerification\` 标 \`unverified\`，分数不得相对昨日上调。${prevOilHint}${buildOilFactPromptBlock(oilResolution)}`;
 
 const oilUserHint = AION_OIL_FEED === "on"
@@ -959,7 +960,10 @@ function extractFactorScores(p) {
 function oilQualityFromResult(result, energyScore) {
   const p = result?.parsed;
   const zh = p?.dataZh || {};
+  const en = p?.dataEn || {};
   const rf = zh.riskFactors?.[2] || {};
+  const energySitZh = (zh.situations || []).find((s) => /能源|Energy/i.test(s?.title || ""))?.points;
+  const energySitEn = (en.situations || []).find((s) => /能源|Energy/i.test(s?.title || ""))?.points;
   return evaluateOilQuality({
     keyStatValue: zh.keyStats?.[2]?.value,
     energyScore,
@@ -967,6 +971,10 @@ function oilQualityFromResult(result, energyScore) {
     energyEvidence: rf.evidence || rf._evidence,
     energyDescription: rf.description,
     webSources: result?.grounding?.webSources,
+    keyChange: [zh.keyChange, en.keyChange].filter(Boolean).join("\n"),
+    investmentSignal: [zh.investmentSignal, en.investmentSignal].filter(Boolean).join("\n"),
+    warPhasePoints: [...(zh.warPhase?.points || []), ...(en.warPhase?.points || [])],
+    situationEnergyPoints: [...(energySitZh || []), ...(energySitEn || [])],
   });
 }
 

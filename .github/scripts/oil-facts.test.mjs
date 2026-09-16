@@ -182,13 +182,13 @@ function mockFetch(table, { fail } = {}) {
   assert.equal(abort.publish, "abort");
 }
 
-// 10) Prior from live data.ts snapshot (do not treat hand-editing 09-15 as the fix).
+// 10) Prior from live data.ts snapshot (must parse whatever card is currently shipped).
 {
   const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
   const src = readFileSync(path.join(repoRoot, "src/data.ts"), "utf8");
   const prior = parsePriorOilFromDataTs(src);
   assert.ok(prior, "parse data.ts oil card");
-  assert.equal(prior.keyStatValue, SNAPSHOT_2026_09_15);
+  assert.ok(prior.keyStatValue.startsWith("WTI $"), "canonical WTI card");
   assert.equal(prior.source, "data.ts");
   const facts = factsFromPrior(prior, new Error("HTTP 429"));
   assert.equal(facts.fromPrior, true);
