@@ -957,13 +957,17 @@ function extractFactorScores(p) {
   return (p?.dataZh?.riskFactors || []).map((f, i) => quantizeFactorScore(i, Number(f.score) || 3));
 }
 
+function asArray(v) {
+  return Array.isArray(v) ? v : [];
+}
+
 function oilQualityFromResult(result, energyScore) {
   const p = result?.parsed;
   const zh = p?.dataZh || {};
   const en = p?.dataEn || {};
   const rf = zh.riskFactors?.[2] || {};
-  const energySitZh = (zh.situations || []).find((s) => /能源|Energy/i.test(s?.title || ""))?.points;
-  const energySitEn = (en.situations || []).find((s) => /能源|Energy/i.test(s?.title || ""))?.points;
+  const energySitZh = asArray(zh.situations).find((s) => /能源|Energy/i.test(s?.title || ""))?.points;
+  const energySitEn = asArray(en.situations).find((s) => /能源|Energy/i.test(s?.title || ""))?.points;
   return evaluateOilQuality({
     keyStatValue: zh.keyStats?.[2]?.value,
     energyScore,
@@ -973,8 +977,8 @@ function oilQualityFromResult(result, energyScore) {
     webSources: result?.grounding?.webSources,
     keyChange: [zh.keyChange, en.keyChange].filter(Boolean).join("\n"),
     investmentSignal: [zh.investmentSignal, en.investmentSignal].filter(Boolean).join("\n"),
-    warPhasePoints: [...(zh.warPhase?.points || []), ...(en.warPhase?.points || [])],
-    situationEnergyPoints: [...(energySitZh || []), ...(energySitEn || [])],
+    warPhasePoints: [...asArray(zh.warPhase?.points), ...asArray(en.warPhase?.points)],
+    situationEnergyPoints: [...asArray(energySitZh), ...asArray(energySitEn)],
   });
 }
 
