@@ -100,7 +100,7 @@ export const DATA_ZH: DashboardData = {
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "美军 THAAD 系统及人员正式抵达以色列，标志着军事介入程度达到直接防御阶段。",
+      description: "美军继续以 THAAD 等体系直接参与以色列防空；CBO 报告称反导拦截弹库存显著消耗（Guardian/Military Times 2026-09-15）。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -109,7 +109,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "航道维持高度紧张状态，由于美军介入，伊朗海军在海峡区域的演习频次增加。",
+      description: "霍尔木兹商业通行仍严重受限；沙特东—西管道受袭后延布装船中断，海湾出口更多依赖替代路径（Reuters/Bloomberg）。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -127,7 +127,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美国派遣现役部队入驻以色列境内操作核心装备，突破了此前仅提供军援的红线。",
+      description: "美国在以色列方向维持反导操作与盟友协防角色；公开报道强调拦截弹库存与补给瓶颈（DoD IG/CBO）。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -171,9 +171,9 @@ export const DATA_ZH: DashboardData = {
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "美军 THAAD 系统直接介入防御体系",
-      "能源设施打击风险短期内被排除",
-      "战略重心由代理人对抗转向直接威慑"
+      "美军继续以反导体系直接协防以色列，拦截弹库存承压",
+      "沙特东—西管道/延布装船中断推升供应溢价，油价重回 $100+",
+      "战略重心仍在直接威慑与高风险航道管控"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -184,8 +184,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美军约 100 名官兵抵达以色列操作 THAAD 系统（DoD）。",
-        "延续：以色列对黎巴嫩及加沙地区的多维度军事行动仍在持续（BBC）。"
+        "变化：CBO 估算伊朗相关作战使美方反导拦截弹库存大幅消耗，重建或需数年（Guardian/Military Times）。",
+        "延续：美以反导协防与区域多线军事行动仍在持续（DoD/BBC）。"
       ]
     },
     {
@@ -194,7 +194,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：海峡保持商业航运的高度风险溢价，护航联盟维持二级警戒（Lloyd's List）。"
+        "延续：霍尔木兹商业通行仍严重受限；延布装船中断后沙特更多依赖海湾与 STS 替代出口（Reuters/Bloomberg）。"
       ]
     },
     {
@@ -219,8 +219,8 @@ export const DATA_ZH: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "萨德反导系统运抵以色列",
-      description: "美军首批反导设备已部署，由美军直接操作以防御伊朗可能的导弹回击。",
+      title: "CBO：美方反导拦截弹库存显著消耗",
+      description: "国会预算办公室估算伊朗相关作战成本约 380 亿美元，并消耗约一半至三分之二相关拦截弹库存，重建或需数年。来源：Guardian、Military Times（2026-09-15）。",
       verification: "confirmed",
       timestamp: "2026-09-15",
       significance: "",
@@ -228,8 +228,8 @@ export const DATA_ZH: DashboardData = {
     },
     {
       id: "EVT-02",
-      title: "以色列承诺不打击核能设施及能源目标",
-      description: "美方媒体报道内塔尼亚胡向拜登政府保证，报复行动将集中在军事资产，非石油或核设施。",
+      title: "沙特延布装船中断、部分对欧货盘取消",
+      description: "东—西管道受袭后延布装船暂停，沙特通知部分欧洲客户取消 9 月货盘，推高供应溢价；WTI/Brent 收于约 $105.83 / $108.75。来源：Reuters（2026-09-15）。",
       verification: "confirmed",
       timestamp: "2026-09-15",
       significance: "",
@@ -245,8 +245,8 @@ export const DATA_ZH: DashboardData = {
       "美军直接部署带来的「目标化」风险与防御强化效果的博弈。"
     ]
   },
-  keyChange: "美军从「装备援助」转向「人员部署」；油价因延布中断重回 $100+ 危机带。",
-  investmentSignal: "→ 维持防御性头寸，减持大宗商品风险，增持避险资产。",
+  keyChange: "反导库存消耗与延布出口中断叠加；油价站稳 $100+ 危机带，高压对峙延续。",
+  investmentSignal: "→ 维持能源与避险防御头寸，对冲霍尔木兹/红海出口中断风险。",
   change: "structural",
   prevRiskScore: 82,
   webSources: [],
@@ -289,7 +289,7 @@ export const DATA_EN: DashboardData = {
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "US THAAD system and personnel arrival marks direct defense engagement.",
+      description: "US continues direct missile-defense support for Israel via THAAD and related systems; CBO says interceptor stocks are heavily depleted (Guardian/Military Times 2026-09-15).",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -298,7 +298,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Strategic chokepoint remains under high threat with significant traffic reduction.",
+      description: "Hormuz commercial traffic remains severely restricted; after East-West pipeline damage, Yanbu loadings halted and Gulf exports lean on alternate routes (Reuters/Bloomberg).",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -316,7 +316,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "US deploying boots on ground to operate defense systems in Israel.",
+      description: "US maintains allied air-defense operations toward Israel; public reports stress interceptor shortfalls and resupply bottlenecks (DoD IG/CBO).",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -360,9 +360,9 @@ export const DATA_EN: DashboardData = {
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "US THAAD integration into IDF defense layer",
-      "Energy infrastructure attack risk mitigated",
-      "Strategic shift from proxy to direct deterrence"
+      "US missile-defense support for Israel continues; interceptor stocks under pressure",
+      "Yanbu loadings halted after East-West pipeline attack; oil holds $100+ crisis band",
+      "Strategy remains direct deterrence plus high-risk chokepoint management"
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -373,8 +373,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: US personnel arrive to operate THAAD (DoD).",
-        "Continue: Sustained Israeli strikes in Lebanon and Gaza (BBC)."
+        "Change: CBO estimates Iran-related ops heavily depleted US interceptor stocks; rebuild may take years (Guardian/Military Times).",
+        "Continue: US–Israel missile-defense cooperation and multi-front operations persist (DoD/BBC)."
       ]
     },
     {
@@ -383,7 +383,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: High risk premiums for commercial vessels; naval task force on alert."
+        "Continue: Hormuz traffic still severely restricted; after Yanbu halt, Saudi flows lean on Gulf/STS alternatives (Reuters/Bloomberg)."
       ]
     },
     {
@@ -408,8 +408,8 @@ export const DATA_EN: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "THAAD Deployment to Israel",
-      description: "US missile defense equipment and crew arrive to bolster Israeli defense against Iran.",
+      title: "CBO: US interceptor stocks heavily depleted",
+      description: "CBO puts Iran-related ops near $38bn and estimates one-half to two-thirds of key interceptor stocks used; rebuild may take years. Sources: Guardian, Military Times (2026-09-15).",
       verification: "confirmed",
       timestamp: "2026-09-15",
       significance: "",
@@ -417,8 +417,8 @@ export const DATA_EN: DashboardData = {
     },
     {
       id: "EVT-02",
-      title: "Israel Targets Limited",
-      description: "Reports suggest Israel will avoid Iranian oil and nuclear sites in retaliation.",
+      title: "Saudi Yanbu loadings halted; some Europe cargoes canceled",
+      description: "After East-West pipeline damage, Yanbu loadings paused and some September Europe cargoes canceled, lifting supply premium; WTI/Brent settle near $105.83 / $108.75. Source: Reuters (2026-09-15).",
       verification: "confirmed",
       timestamp: "2026-09-15",
       significance: "",
@@ -434,8 +434,8 @@ export const DATA_EN: DashboardData = {
       "Targeting risk for US personnel vs. improved interception capabilities."
     ]
   },
-  keyChange: "Transition to direct US personnel deployment; oil back in $100+ crisis band on Yanbu disruption.",
-  investmentSignal: "→ Maintain defensive posture, reduce commodity exposure, increase hedging.",
+  keyChange: "Interceptor stockpile stress plus Yanbu export disruption; oil holds $100+ crisis band under high-pressure standoff.",
+  investmentSignal: "→ Maintain energy and safe-haven defense; hedge Hormuz/Red Sea export-disruption risk.",
   change: "structural",
   prevRiskScore: 82,
   webSources: [],
@@ -486,11 +486,11 @@ export const TRANSLATIONS = {
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 82（持平）：美军从「装备援助」转向「人员部署」；油价因延布中断重回 $100+ 危机带。",
-    bannerWarning: "→ 维持防御性头寸，减持大宗商品风险，增持避险资产。",
-    deescalationIntent: "美国国内大选压力与中东直接军事介入的矛盾。",
-    structuralRisk: "航道维持高度紧张状态，由于美军介入，伊朗海军在海峡区域的演习频次增加。",
-    contradictionNote: "美国国内大选压力与中东直接军事介入的矛盾。；美军直接部署带来的「目标化」风险与防御强化效果的博弈。",
+    bannerSignal: "综合评分 82（持平）：反导库存消耗与延布出口中断叠加；油价站稳 $100+ 危机带，高压对峙延续。",
+    bannerWarning: "→ 维持能源与避险防御头寸，对冲霍尔木兹/红海出口中断风险。",
+    deescalationIntent: "美国国内政治周期与中东直接军事介入的矛盾。",
+    structuralRisk: "霍尔木兹商业通行仍严重受限；沙特东—西管道受袭后延布装船中断，海湾出口更多依赖替代路径（Reuters/Bloomberg）。",
+    contradictionNote: "美国国内政治周期与中东直接军事介入的矛盾。；美军协防带来的「目标化」风险与防御强化效果的博弈。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -545,11 +545,11 @@ export const TRANSLATIONS = {
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 82 (Flat): Transition to direct US personnel deployment; oil back in $100+ crisis band on Yanbu disruption.",
-    bannerWarning: "→ Maintain defensive posture, reduce commodity exposure, increase hedging.",
-    deescalationIntent: "US election cycle vs. direct combat involvement risks.",
-    structuralRisk: "Strategic chokepoint remains under high threat with significant traffic reduction.",
-    contradictionNote: "US election cycle vs. direct combat involvement risks.; Targeting risk for US personnel vs. improved interception capabilities.",
+    bannerSignal: "Composite 82 (Flat): Interceptor stockpile stress plus Yanbu export disruption; oil holds $100+ crisis band under high-pressure standoff.",
+    bannerWarning: "→ Maintain energy and safe-haven defense; hedge Hormuz/Red Sea export-disruption risk.",
+    deescalationIntent: "US political calendar vs. direct combat-involvement risks.",
+    structuralRisk: "Hormuz commercial traffic remains severely restricted; after East-West pipeline damage, Yanbu loadings halted and Gulf exports lean on alternate routes (Reuters/Bloomberg).",
+    contradictionNote: "US political calendar vs. direct combat-involvement risks.; Targeting risk for US personnel vs. improved interception capabilities.",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
