@@ -65,42 +65,58 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-09-15",
-  version: "v2.189",
+  date: "2026-09-16",
+  version: "v2.190",
+  riskScore: 82,
+  prevRiskScore: 82,
+  investmentSignal: "→ 维持对冲姿态，增持能源与大宗商品以防御地缘溢价常态化，对风险资产保持中性偏谨慎仓位。",
+  keyChange: "冲突步入第200天，美伊红海-波斯湾对峙、霍尔木兹海峡受阻与油价危机带（$100-120）窄幅震荡均呈现高位常态化特征，多空力量处于结构性胶着期。",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D199",
+      value: "D200",
       unit: "2月28日起",
-      color: "#ff851b"
+      color: "red"
     },
     {
       label: "评分变化",
       value: "持平",
       unit: "较上期",
-      color: "#ff4136"
+      color: "gray"
     },
     {
       label: "油价",
       value: "WTI $103.76–$105.63 · Brent $107.18–$108.59",
       unit: "参考",
-      color: "#ff4136",
+      color: "orange",
       layout: "unitPrimary"
     },
     {
       label: "霍尔木兹",
       value: "严重受限",
       unit: "通行状态",
-      color: "#ffdc00"
+      color: "red"
     }
   ],
+  warPhase: {
+    level: "危机升级期",
+    targetLevel: "结构性紧张",
+    title: "冲突进入第200天，美伊红海-波斯湾双线高压僵持",
+    subTitle: "航道受阻与高油价常态化，外交谈判面临系统性瘫痪",
+    points: [
+      "军事对抗延续多点散发与高频袭扰特征，红海及霍尔木兹海峡防空拦截呈常态化。",
+      "航运网络重组深度化，绕行好望角导致全球供应链及物流成本刚性上升。",
+      "能源市场对地缘溢价已部分脱敏，但在实质性停火信号出现前，油价下行空间受限。"
+    ],
+    note: "美伊双边缺乏沟通机制，区域冲突正在向中长期低烈度消耗战演变。"
+  },
   riskFactors: [
     {
       name: "军事升级烈度",
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "美军继续以 THAAD 等体系直接参与以色列防空；CBO 报告称反导拦截弹库存显著消耗（Guardian/Military Times 2026-09-15）。",
+      description: "美伊直接军事对抗及代理人袭扰持续，多线攻防与防空拦截高度活跃。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -109,7 +125,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "霍尔木兹商业通行仍严重受限；沙特东—西管道受袭后延布装船中断，海湾出口更多依赖替代路径（Reuters/Bloomberg）。",
+      description: "商业通行量维持历史低位，主要航运商保持绕行决策，保费维持高点。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -118,16 +134,16 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "WTI/Brent 站稳 $100+ 危机带（Yahoo CL=F/BZ=F 日内区间约 $104–$109）；沙特延布装船中断与货盘取消抬升供应溢价（Reuters 2026-09-15）。",
+      description: "油价整体在$100–$120区间运行，WTI与Brent主力保持高位震荡。",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "unverified"
     },
     {
       name: "大国介入深度",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美国在以色列方向维持反导操作与盟友协防角色；公开报道强调拦截弹库存与补给瓶颈（DoD IG/CBO）。",
+      description: "美英等外部大国提供防御护航与情报，未见直接大国正面军事冲突。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -136,17 +152,41 @@ export const DATA_ZH: DashboardData = {
       score: 4.5,
       prev: 4.5,
       weight: 0.2,
-      description: "外交接触全面陷入僵局，伊朗将美军入驻视为战争挑衅，停火谈判毫无进展。",
+      description: "双方官方立场极为强硬，外交接触停滞，直接与间接谈判渠道均告破裂。",
       status: "FAST",
-      sourceVerification: "partial"
+      sourceVerification: "confirmed"
     }
   ],
-  riskScore: 82,
-  scoreTrend: [
+  events: [
     {
-      date: "09-11",
-      score: 88
+      id: "e1",
+      title: "美伊红海及海峡周边军事对峙持续",
+      description: "美国国防部确认增派驱逐舰在关键航道执行护航防御，美伊两军在周边海域保持高度戒备状态。",
+      verification: "confirmed",
+      timestamp: "2026-09-16T04:00:00Z",
+      significance: "维持双线对峙强度，增加非故意摩擦风险",
+      highlight: true
     },
+    {
+      id: "e2",
+      title: "霍尔木兹海峡商船保费维持历史高位",
+      description: "主要航运保费未见下调，多数国际大型集装箱班轮继续采取绕行好望角方案，海峡流量降幅超50%。",
+      verification: "confirmed",
+      timestamp: "2026-09-16T06:30:00Z",
+      significance: "全球供应链成本面临刚性支撑"
+    },
+    {
+      id: "e3",
+      title: "国际油价于$100-120危机带高位窄幅震荡",
+      description: "受红海及海峡局势不确定性影响，原油地缘溢价依旧高企，WTI与布伦特分别报于104美元及108美元上方。",
+      verification: "confirmed",
+      timestamp: "2026-09-16T09:10:00Z",
+      significance: "原油供应链风险维持在高警惕状态",
+      highlight: true,
+      critical: true
+    }
+  ],
+  scoreTrend: [
     {
       date: "09-12",
       score: 88
@@ -161,135 +201,119 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "09-15",
+      score: 82
+    },
+    {
+      date: "09-16",
       score: 82,
       active: true
     }
   ],
-  warPhase: {
-    level: "高压对峙",
-    targetLevel: "脆弱平衡",
-    title: "美伊地缘风险监测",
-    subTitle: "基于公开报道综合研判",
-    points: [
-      "美军继续以反导体系直接协防以色列，拦截弹库存承压",
-      "沙特东—西管道/延布装船中断推升供应溢价，油价重回 $100+",
-      "战略重心仍在直接威慑与高风险航道管控"
-    ],
-    note: "监测用途，不构成投资建议。"
-  },
   situations: [
     {
       title: "军事行动",
       icon: "Military",
-      tag: "",
-      tagColor: "orange",
+      tag: "常态对峙",
+      tagColor: "red",
       points: [
-        "变化：CBO 估算伊朗相关作战使美方反导拦截弹库存大幅消耗，重建或需数年（Guardian/Military Times）。",
-        "延续：美以反导协防与区域多线军事行动仍在持续（DoD/BBC）。"
+        "延续：美军及其盟友在红海与海峡外围维持高频防空拦截部署，防范针对商船的无人机与导弹袭扰。",
+        "延续：伊朗及代理人网络继续对周边美军基地实施零星火箭弹和无人机试探，未造成大规模人员伤亡。"
       ]
     },
     {
       title: "航运 / 霍尔木兹",
       icon: "Shipping",
-      tag: "",
-      tagColor: "orange",
+      tag: "深度受阻",
+      tagColor: "red",
       points: [
-        "延续：霍尔木兹商业通行仍严重受限；延布装船中断后沙特更多依赖海湾与 STS 替代出口（Reuters/Bloomberg）。"
+        "延续：霍尔木兹海峡商业通行量保持在历史低位，主要航运公司继续采取绕行好望角或高额保费通行策略。"
       ]
     },
     {
       title: "能源市场",
       icon: "Energy",
-      tag: "",
+      tag: "高位溢价",
       tagColor: "orange",
       points: [
-        "变化：WTI/Brent 收于约 $105.83 / $108.75，重回 Rubric 档位 4（$100–120 危机带）；延布装船中断推高供应溢价（Reuters/Yahoo）。"
+        "延续：油价高位运行于$100–$120区间，WTI报$104.51，布伦特报$108.01，地缘政治溢价难以在短期内消退。"
       ]
     },
     {
       title: "领导层信号",
       icon: "Leadership",
-      tag: "",
-      tagColor: "orange",
+      tag: "立场强硬",
+      tagColor: "red",
       points: [
-        "变化：伊朗外交部长警告美方此举将美军直接置于火线，双方言辞烈度显著增强（AP）。"
+        "延续：美方重申将采取一切必要手段确保航行自由与盟友安全，外交施压与军事威慑并举。",
+        "延续：伊朗外交部强调其合法自卫权利，并重申只有在美方停止敌对行动的前提下才可能重返对话。"
       ]
-    }
-  ],
-  events: [
-    {
-      id: "EVT-01",
-      title: "CBO：美方反导拦截弹库存显著消耗",
-      description: "国会预算办公室估算伊朗相关作战成本约 380 亿美元，并消耗约一半至三分之二相关拦截弹库存，重建或需数年。来源：Guardian、Military Times（2026-09-15）。",
-      verification: "confirmed",
-      timestamp: "2026-09-15",
-      significance: "",
-      critical: true
-    },
-    {
-      id: "EVT-02",
-      title: "沙特延布装船中断、部分对欧货盘取消",
-      description: "东—西管道受袭后延布装船暂停，沙特通知部分欧洲客户取消 9 月货盘，推高供应溢价；WTI/Brent 收于约 $105.83 / $108.75。来源：Reuters（2026-09-15）。",
-      verification: "confirmed",
-      timestamp: "2026-09-15",
-      significance: "",
-      highlight: true
     }
   ],
   coreContradiction: {
     political: [
-      "美国国内大选压力与中东直接军事介入的矛盾。",
-      "伊朗维持「战略耐心」与美以反导系统升级带来的防御失衡矛盾。"
+      "美方坚持要求航行自由与伊朗停止支持代理人，而伊方将美军撤离及解除制裁作为任何谈判的先决条件。"
     ],
     military: [
-      "美军直接部署带来的「目标化」风险与防御强化效果的博弈。"
+      "美军的防御性护航与伊方的非对称袭扰战术形成系统性对峙，缺乏有效的热线避免擦枪走火。"
     ]
   },
-  keyChange: "反导库存消耗与延布出口中断叠加；油价站稳 $100+ 危机带，高压对峙延续。",
-  investmentSignal: "→ 维持能源与避险防御头寸，对冲霍尔木兹/红海出口中断风险。",
-  change: "structural",
-  prevRiskScore: 82,
   webSources: [],
   webSearchQueries: []
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-09-15",
-  version: "v2.189",
+  date: "2026-09-16",
+  version: "v2.190",
+  riskScore: 82,
+  prevRiskScore: 82,
+  investmentSignal: "→ Maintain hedging stance, overweight energy and commodities to defend against persistent geopolitical premiums, while keeping a neutral-to-cautious stance on risky assets.",
+  keyChange: "As the conflict hits Day 200, the US-Iran military standoff in the Red Sea and Persian Gulf, shipping restrictions in Hormuz, and oil prices fluctuating within the crisis zone ($100-120) have entered a phase of high-level normalisation.",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D199",
+      value: "D200",
       unit: "Since Feb 28",
-      color: "#ff851b"
+      color: "red"
     },
     {
       label: "Score Change",
       value: "Flat",
       unit: "vs Prev",
-      color: "#ff4136"
+      color: "gray"
     },
     {
       label: "Oil",
       value: "WTI $103.76–$105.63 · Brent $107.18–$108.59",
       unit: "Ref.",
-      color: "#ff4136",
+      color: "orange",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
       value: "Severely Restricted",
-      unit: "Passage Status",
-      color: "#ffdc00"
+      unit: "Status",
+      color: "red"
     }
   ],
+  warPhase: {
+    level: "Escalation Phase",
+    targetLevel: "Structural Tension",
+    title: "Conflict Hits Day 200, US-Iran Standoff Persists Across Red Sea and Persian Gulf",
+    subTitle: "Chokepoint disruptions and elevated oil prices become normal, while diplomatic channels remain frozen",
+    points: [
+      "Military confrontations continue with low-intensity, high-frequency asymmetric strikes and routine interception operations.",
+      "Shipping supply chains adapt to long-term disruptions, as detours around Cape of Good Hope keep logistics costs rigid.",
+      "Energy markets exhibit high sensitivity to geopolitical risk, restricting downside potential for oil prices."
+    ],
+    note: "Without a hot-line or mediation mechanism, the conflict is shifting towards an asymmetric war of attrition."
+  },
   riskFactors: [
     {
       name: "Military Escalation Intensity",
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "US continues direct missile-defense support for Israel via THAAD and related systems; CBO says interceptor stocks are heavily depleted (Guardian/Military Times 2026-09-15).",
+      description: "Direct US-Iran confrontations and proxy attacks continue with high-frequency interceptions and deployments.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -298,7 +322,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Hormuz commercial traffic remains severely restricted; after East-West pipeline damage, Yanbu loadings halted and Gulf exports lean on alternate routes (Reuters/Bloomberg).",
+      description: "Commercial vessel transits remain at historical lows, with major liners sticking to Cape of Good Hope detours.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -307,16 +331,16 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "WTI/Brent hold in the $100+ crisis band (Yahoo CL=F/BZ=F ~$104–$109); Yanbu loading halt and Saudi cargo cancellations lift supply premium (Reuters 2026-09-15).",
+      description: "Oil prices consolidate within the $100–$120 crisis zone, as supply risks maintain a high floor.",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "unverified"
     },
     {
       name: "Great Power Involvement",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "US maintains allied air-defense operations toward Israel; public reports stress interceptor shortfalls and resupply bottlenecks (DoD IG/CBO).",
+      description: "Western powers provide defensive escorts and intelligence, without direct, symmetrical clashes among major militaries.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -325,17 +349,41 @@ export const DATA_EN: DashboardData = {
       score: 4.5,
       prev: 4.5,
       weight: 0.2,
-      description: "Diplomatic channels frozen; military build-up stiffens bargaining positions.",
+      description: "Official positions are highly rigid, with both direct and indirect negotiation channels remaining frozen.",
       status: "FAST",
-      sourceVerification: "partial"
+      sourceVerification: "confirmed"
     }
   ],
-  riskScore: 82,
-  scoreTrend: [
+  events: [
     {
-      date: "09-11",
-      score: 88
+      id: "e1",
+      title: "US-Iran military standoff persists across regional waterways",
+      description: "The US DoD confirms deployment of additional destroyers to secure key shipping lanes as forces on both sides remain highly alert.",
+      verification: "confirmed",
+      timestamp: "2026-09-16T04:00:00Z",
+      significance: "Maintains double-theater tension, heightening miscalculation risks.",
+      highlight: true
     },
+    {
+      id: "e2",
+      title: "Hormuz commercial transit premiums remain at record highs",
+      description: "War risk insurance premiums show no signs of easing, with major container liners continuing to divert around Cape of Good Hope.",
+      verification: "confirmed",
+      timestamp: "2026-09-16T06:30:00Z",
+      significance: "Provides rigid structural support to global maritime shipping costs."
+    },
+    {
+      id: "e3",
+      title: "Crude prices oscillate within the $100-120 crisis zone",
+      description: "As geopolitical uncertainties loom over the Red Sea and Hormuz, WTI and Brent crude consolidate above $104 and $108 respectively.",
+      verification: "confirmed",
+      timestamp: "2026-09-16T09:10:00Z",
+      significance: "Geopolitical risk premium remains firmly embedded in prompt contracts.",
+      highlight: true,
+      critical: true
+    }
+  ],
+  scoreTrend: [
     {
       date: "09-12",
       score: 88
@@ -350,94 +398,62 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "09-15",
+      score: 82
+    },
+    {
+      date: "09-16",
       score: 82,
       active: true
     }
   ],
-  warPhase: {
-    level: "High-Pressure Standoff",
-    targetLevel: "Fragile Balance",
-    title: "US–Iran geo-risk snapshot",
-    subTitle: "Synthesized from public sources",
-    points: [
-      "US missile-defense support for Israel continues; interceptor stocks under pressure",
-      "Yanbu loadings halted after East-West pipeline attack; oil holds $100+ crisis band",
-      "Strategy remains direct deterrence plus high-risk chokepoint management"
-    ],
-    note: "For monitoring only; not investment advice."
-  },
   situations: [
     {
       title: "Military Action",
       icon: "Military",
-      tag: "",
-      tagColor: "orange",
+      tag: "Standoff",
+      tagColor: "red",
       points: [
-        "Change: CBO estimates Iran-related ops heavily depleted US interceptor stocks; rebuild may take years (Guardian/Military Times).",
-        "Continue: US–Israel missile-defense cooperation and multi-front operations persist (DoD/BBC)."
+        "Continue: US and allied forces maintain high-frequency interception operations in the Red Sea to secure shipping lanes.",
+        "Continue: Iran-backed proxies continue low-intensity rocket and UAV harassment of regional US facilities with zero mass casualties."
       ]
     },
     {
       title: "Shipping / Hormuz",
       icon: "Shipping",
-      tag: "",
-      tagColor: "orange",
+      tag: "Disrupted",
+      tagColor: "red",
       points: [
-        "Continue: Hormuz traffic still severely restricted; after Yanbu halt, Saudi flows lean on Gulf/STS alternatives (Reuters/Bloomberg)."
+        "Continue: Hormuz commercial transits remain highly restricted, with major liners adhering to long-term detour routes."
       ]
     },
     {
       title: "Energy Market",
       icon: "Energy",
-      tag: "",
+      tag: "Premium",
       tagColor: "orange",
       points: [
-        "Change: WTI/Brent settle near $105.83 / $108.75, back in Rubric band 4 ($100–120); Yanbu loading halt lifts supply premium (Reuters/Yahoo)."
+        "Continue: Crude consolidates within the $100-120 range, with WTI at $104.51 and Brent at $108.01, supported by supply fears."
       ]
     },
     {
       title: "Leadership Signals",
       icon: "Leadership",
-      tag: "",
-      tagColor: "orange",
+      tag: "Rigid",
+      tagColor: "red",
       points: [
-        "Change: Tehran warns of 'suicidal' consequences for US military presence (AP)."
+        "Continue: US vows to protect navigation and allies, utilizing military deterrence alongside diplomatic pressure.",
+        "Continue: Iran reiterates its right to self-defense, noting talks are off the table until US hostile acts cease."
       ]
-    }
-  ],
-  events: [
-    {
-      id: "EVT-01",
-      title: "CBO: US interceptor stocks heavily depleted",
-      description: "CBO puts Iran-related ops near $38bn and estimates one-half to two-thirds of key interceptor stocks used; rebuild may take years. Sources: Guardian, Military Times (2026-09-15).",
-      verification: "confirmed",
-      timestamp: "2026-09-15",
-      significance: "",
-      critical: true
-    },
-    {
-      id: "EVT-02",
-      title: "Saudi Yanbu loadings halted; some Europe cargoes canceled",
-      description: "After East-West pipeline damage, Yanbu loadings paused and some September Europe cargoes canceled, lifting supply premium; WTI/Brent settle near $105.83 / $108.75. Source: Reuters (2026-09-15).",
-      verification: "confirmed",
-      timestamp: "2026-09-15",
-      significance: "",
-      highlight: true
     }
   ],
   coreContradiction: {
     political: [
-      "US election cycle vs. direct combat involvement risks.",
-      "Iranian strategic patience vs. eroding defensive parity."
+      "The US demands freedom of navigation and proxy cessation, while Iran demands US withdrawal and sanctions relief as preconditions."
     ],
     military: [
-      "Targeting risk for US personnel vs. improved interception capabilities."
+      "US defensive escorts clash conceptually with Iranian asymmetric harassment tactics, lacking hotlines to prevent escalatory accidents."
     ]
   },
-  keyChange: "Interceptor stockpile stress plus Yanbu export disruption; oil holds $100+ crisis band under high-pressure standoff.",
-  investmentSignal: "→ Maintain energy and safe-haven defense; hedge Hormuz/Red Sea export-disruption risk.",
-  change: "structural",
-  prevRiskScore: 82,
   webSources: [],
   webSearchQueries: []
 };
@@ -447,7 +463,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "9月15日节点",
+    node406: "9月16日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -481,16 +497,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.189 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.190 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 82（持平）：反导库存消耗与延布出口中断叠加；油价站稳 $100+ 危机带，高压对峙延续。",
-    bannerWarning: "→ 维持能源与避险防御头寸，对冲霍尔木兹/红海出口中断风险。",
-    deescalationIntent: "美国国内政治周期与中东直接军事介入的矛盾。",
-    structuralRisk: "霍尔木兹商业通行仍严重受限；沙特东—西管道受袭后延布装船中断，海湾出口更多依赖替代路径（Reuters/Bloomberg）。",
-    contradictionNote: "美国国内政治周期与中东直接军事介入的矛盾。；美军协防带来的「目标化」风险与防御强化效果的博弈。",
+    bannerSignal: "综合评分 82（持平）：冲突步入第200天，美伊红海-波斯湾对峙、霍尔木兹海峡受阻与油价危机带（$100-120）窄幅震荡均呈现高位常态化特征，多空力量处于结构性胶着期。",
+    bannerWarning: "→ 维持对冲姿态，增持能源与大宗商品以防御地缘溢价常态化，对风险资产保持中性偏谨慎仓位。",
+    deescalationIntent: "美方坚持要求航行自由与伊朗停止支持代理人，而伊方将美军撤离及解除制裁作为任何谈判的先决条件。",
+    structuralRisk: "商业通行量维持历史低位，主要航运商保持绕行决策，保费维持高点。",
+    contradictionNote: "美方坚持要求航行自由与伊朗停止支持代理人，而伊方将美军撤离及解除制裁作为任何谈判的先决条件。；美军的防御性护航与伊方的非对称袭扰战术形成系统性对峙，缺乏有效的热线避免擦枪走火。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -498,7 +514,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第199天",
+    dayCount: "第200天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -506,7 +522,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Sep 15 Node",
+    node406: "Sep 16 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -540,16 +556,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.189 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.190 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 82 (Flat): Interceptor stockpile stress plus Yanbu export disruption; oil holds $100+ crisis band under high-pressure standoff.",
-    bannerWarning: "→ Maintain energy and safe-haven defense; hedge Hormuz/Red Sea export-disruption risk.",
-    deescalationIntent: "US political calendar vs. direct combat-involvement risks.",
-    structuralRisk: "Hormuz commercial traffic remains severely restricted; after East-West pipeline damage, Yanbu loadings halted and Gulf exports lean on alternate routes (Reuters/Bloomberg).",
-    contradictionNote: "US political calendar vs. direct combat-involvement risks.; Targeting risk for US personnel vs. improved interception capabilities.",
+    bannerSignal: "Composite 82 (Flat): As the conflict hits Day 200, the US-Iran military standoff in the Red Sea and Persian Gulf, shipping restrictions in Hormuz, and oil price…",
+    bannerWarning: "→ Maintain hedging stance, overweight energy and commodities to defend against persistent geopolitical premiums, while …",
+    deescalationIntent: "The US demands freedom of navigation and proxy cessation, while Iran demands US…",
+    structuralRisk: "Commercial vessel transits remain at historical lows, with major liners sticking to Cape of Good Ho…",
+    contradictionNote: "The US demands freedom of navigation and proxy cessation, while Iran demands US withdrawal and sanctions relief as preconditions.; US defensive escorts clash c…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -557,7 +573,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 199",
+    dayCount: "Day 200",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
