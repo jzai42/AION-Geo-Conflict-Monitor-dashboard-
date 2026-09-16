@@ -37,8 +37,8 @@ const AION_ALLOW_FALLBACK = /^(1|true|yes)$/i.test(process.env.AION_ALLOW_FALLBA
 const AION_USE_OPENAI_WEBSEARCH = /^(1|true|yes)$/i.test(process.env.AION_USE_OPENAI_WEBSEARCH || "");
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || "";
 /** 默认：Gemini 3 Flash Preview（text）；可按需设 gemini-3.1-flash-lite-preview 或 gemini-3.1-pro-preview */
-const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-3-flash-preview";
-const GEMINI_ESCALATION_MODEL = process.env.GEMINI_ESCALATION_MODEL || "gemini-2.5-pro";
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash";
+const GEMINI_ESCALATION_MODEL = process.env.GEMINI_ESCALATION_MODEL || "gemini-3.1-pro-preview";
 const MODEL_ESCALATION_DELTA_THRESHOLD = Math.max(1, Number.parseInt(process.env.MODEL_ESCALATION_DELTA_THRESHOLD || "8", 10) || 8);
 let ACTIVE_GEMINI_MODEL = GEMINI_MODEL;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
@@ -535,7 +535,7 @@ try {
 const oilResolution = await resolveOilFactsForRun({
   mode: AION_OIL_FEED,
   priorFromStore: parsePriorOilFromStore(store),
-  priorFromDataTs,
+  priorFromDataTs: priorOilFromDataTs,
 });
 const oilFacts = oilResolution.facts;
 console.log(`Oil: ${summarizeOilResolution(oilResolution)}`);
