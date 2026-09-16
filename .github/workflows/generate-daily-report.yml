@@ -63,6 +63,10 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Oil-price quality unit tests
+        if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
+        run: node .github/scripts/oil-quality.test.mjs
+
       - name: Install dependencies
         if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
         run: npm ci

@@ -14,6 +14,7 @@
     "clean": "rm -rf dist",
     "clean:pdf": "node scripts/clean-generated-pdfs.mjs",
     "lint": "tsc --noEmit",
+    "test:oil-quality": "node .github/scripts/oil-quality.test.mjs",
     "verify:pdf": "node scripts/verify-pdf-api.mjs",
     "verify:pdf:full": "VERIFY_PDF_FULL=1 node scripts/verify-pdf-api.mjs",
     "docker:build": "docker build -t aion-pdf-api .",

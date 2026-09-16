@@ -1,0 +1,22 @@
+# Fast, secret-free check so oil/energy inconsistency cannot land unnoticed.
+name: Oil quality unit tests
+
+on:
+  pull_request:
+  push:
+    paths:
+      - ".github/scripts/oil-quality.mjs"
+      - ".github/scripts/oil-quality.test.mjs"
+      - ".github/scripts/generate-aion-daily.mjs"
+      - ".github/workflows/oil-quality.yml"
+
+jobs:
+  oil-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Run oil-price quality assertions
+        run: node .github/scripts/oil-quality.test.mjs

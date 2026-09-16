@@ -2,6 +2,14 @@ import "dotenv/config";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { GoogleGenAI } from "@google/genai";
+import {
+  evaluateOilQuality,
+  oilQualityHistoryRecord,
+  parseMarkdownEnergyScore,
+  pickBetterOilVerdict,
+  summarizeOilQuality,
+  syncMarkdownEnergyScore,
+} from "./oil-quality.mjs";
 
 // ── CONFIG ─────────────────────────────────────────────────────────
 const CONFIG = {
@@ -569,6 +577,7 @@ const oilPromptBlock = `
 - **黑天鹅 / 闪崩闪涨**：若新闻显示短时跳变、区间极宽或报价分歧大，在 evidence 明确写出**不确定性**，仍以**区间上沿或更保守的一侧**对照下方 rubric 给分，避免假装精确到「唯一现价」。
 - **keyStats[2]**：**value** **仅** \`WTI $低–$高 · Brent $低–$高\`（半角 $，区间用 **–** 连接）；**趋势、叙事、补充说明写入 riskFactors[2] 的 evidence/description**，**不要**塞进 keyStats[2].value（仪表盘油价卡只突出价格区间）。**unit** 中文固定 \`参考\`、英文固定 \`Ref.\`（须与 dataEn 一致）；**脚本只统一 unit**；禁止空值、禁止与接地图无关的臆造区间。
 - **evidence**（riskFactors[2]）须含上述区间与趋势的**文字依据**，并附 **至少一条接地 URL**（可末句）。
+- **脚本硬校验（发布门禁）**：会解析 keyStats[2] 的 WTI/Brent 美元区间并对照上方能源 rubric。若区间中位落入 <$75 而能源分仍为 4（$100–120 危机带）等 **跨 ≥2 档**矛盾，任务 **失败**，不把该快照当作 clean live 写入 data.ts。无油价接地 URL 时能源项不得标 confirmed（降为 unverified / degraded-oil）。
 - 若接地无法形成可信区间，keyStats[2] value 须诚实说明「搜索未获可靠现价」等，该因子 \`sourceVerification\` 标 \`unverified\`，分数不得相对昨日上调。${prevOilHint}`;
 
 const systemPrompt = `${AION_USE_OPENAI_WEBSEARCH ? "【数据源】本任务使用 OpenAI API 内置 **web_search** 检索公开网页；下文「Google 搜索接地」请理解为等价的联网检索义务。\n\n" : ""}[System Role]
@@ -916,6 +925,48 @@ function extractFactorScores(p) {
   return (p?.dataZh?.riskFactors || []).map((f, i) => quantizeFactorScore(i, Number(f.score) || 3));
 }
 
+function oilQualityFromResult(result, energyScore) {
+  const p = result?.parsed;
+  const zh = p?.dataZh || {};
+  const rf = zh.riskFactors?.[2] || {};
+  return evaluateOilQuality({
+    keyStatValue: zh.keyStats?.[2]?.value,
+    energyScore,
+    markdown: p?.reportMarkdownZh,
+    energyEvidence: rf.evidence || rf._evidence,
+    energyDescription: rf.description,
+    webSources: result?.grounding?.webSources,
+  });
+}
+
+function selectResultByOilQuality(results, energyScore, current) {
+  let best = current;
+  let bestVerdict = oilQualityFromResult(current, energyScore);
+  for (const r of results || []) {
+    if (!r?.parsed) continue;
+    const v = oilQualityFromResult(r, energyScore);
+    if (pickBetterOilVerdict(bestVerdict, v) === "challenger") {
+      best = r;
+      bestVerdict = v;
+    }
+  }
+  return { result: best, verdict: bestVerdict };
+}
+
+function degradeEnergyVerification(payload, reason) {
+  let changed = false;
+  for (const lang of ["dataZh", "dataEn"]) {
+    const rf = payload?.[lang]?.riskFactors?.[2];
+    if (rf && rf.sourceVerification === "confirmed") {
+      rf.sourceVerification = "unverified";
+      changed = true;
+    }
+  }
+  if (changed) {
+    console.warn(`Oil quality: energy sourceVerification=unverified (${reason})`);
+  }
+}
+
 function buildFallbackPayload(todayIso) {
   const fallbackFactors = CANONICAL.zh.riskFactorNames.map((name, i) => ({
     name,
@@ -1185,6 +1236,18 @@ if (
   console.log(`Stale high: blended factors with secondary adjudication → [${finalFactors.join(",")}]`);
 }
 
+// Prefer a candidate with parseable, grounded oil before sourceVerification clamp.
+{
+  const energyGuess = extractFactorScores(payload)[2];
+  const picked = selectResultByOilQuality(validResults, energyGuess, { parsed: payload, grounding: winningGrounding });
+  payload = picked.result.parsed;
+  winningGrounding = picked.result.grounding || winningGrounding;
+  if (!picked.verdict.hasOilSourceUrl || !picked.verdict.parseOk) {
+    degradeEnergyVerification(payload, picked.verdict.reasons.join(";") || "ungrounded-oil");
+  }
+  console.log(`  ${summarizeOilQuality(picked.verdict)} (pre-clamp)`);
+}
+
 // 仅「已证实」(confirmed) 允许相对昨日保留 ensemble 分数；部分证实/未证实 → 与昨日持平
 const rfSv = payload?.dataZh?.riskFactors || [];
 finalFactors = finalFactors.map((sc, i) => {
@@ -1231,6 +1294,46 @@ if (Math.abs(adjustedFinalRiskScore - priorDayComposite) > 20) {
 }
 console.log(`Final: factors=[${adjustedFinalFactors.join(",")}] riskScore=${adjustedFinalRiskScore} (priorDay=${priorDayComposite}, Δ=${adjustedFinalRiskScore - priorDayComposite})`);
 
+// Oil vs shipped energy score: abort inconsistent $70s-vs-score-4 style bands before history/data.ts write.
+let oilQualityVerdict = oilQualityFromResult({ parsed: payload, grounding: winningGrounding }, adjustedFinalFactors[2]);
+{
+  const energyScore = adjustedFinalFactors[2];
+  const picked = selectResultByOilQuality(
+    validResults,
+    energyScore,
+    { parsed: payload, grounding: winningGrounding },
+  );
+  payload = picked.result.parsed;
+  winningGrounding = picked.result.grounding || winningGrounding;
+  oilQualityVerdict = picked.verdict;
+  console.log(`  ${summarizeOilQuality(oilQualityVerdict)} (vs shipped energy=${energyScore})`);
+
+  if (oilQualityVerdict.hardFail && generationMode !== "fallback") {
+    await mkdir(PATHS.reports, { recursive: true });
+    await writeFile(
+      path.join(PATHS.reports, `${todayNy}.oil-quality-fail.json`),
+      JSON.stringify({ energyScore, verdict: oilQualityVerdict, keyStats: payload?.dataZh?.keyStats?.[2] }, null, 2),
+      "utf8",
+    );
+    throw new Error(
+      `Oil quality hard-fail: refusing clean live publish. ${summarizeOilQuality(oilQualityVerdict)}`,
+    );
+  }
+
+  if (oilQualityVerdict.publish === "degraded" && generationMode === "live") {
+    generationMode = "degraded-oil";
+  }
+  if (!oilQualityVerdict.hasOilSourceUrl || !oilQualityVerdict.parseOk) {
+    degradeEnergyVerification(payload, oilQualityVerdict.reasons.join(";") || "ungrounded-oil");
+  }
+}
+
+const syncedMd = syncMarkdownEnergyScore(payload.reportMarkdownZh, adjustedFinalFactors[2]);
+if (syncedMd.changed) {
+  console.warn(`Oil quality: synced reportMarkdownZh energy score ${syncedMd.previous} → ${adjustedFinalFactors[2]}`);
+  payload.reportMarkdownZh = syncedMd.markdown;
+}
+
 // Override factor scores in payload
 for (const lang of ["dataZh", "dataEn"]) {
   (payload[lang]?.riskFactors || []).forEach((f, i) => { f.score = adjustedFinalFactors[i]; });
@@ -1248,6 +1351,7 @@ store.latest = {
   conflictDay: correctConflictDay,
   factorScores: [...adjustedFinalFactors],
   generationMode,
+  oilQuality: oilQualityHistoryRecord(oilQualityVerdict),
 };
 store.version = 2;
 store.lockedDates = normalizeLockedDates(store.lockedDates);
@@ -1538,6 +1642,18 @@ function validate(d, label) {
 
 validate(zh, "dataZh");
 validate(en, "dataEn");
+{
+  const mdEnergy = parseMarkdownEnergyScore(payload.reportMarkdownZh);
+  const jsonEnergy = zh.riskFactors?.[2]?.score;
+  if (mdEnergy != null && jsonEnergy != null && mdEnergy !== jsonEnergy) {
+    const retry = syncMarkdownEnergyScore(payload.reportMarkdownZh, jsonEnergy);
+    payload.reportMarkdownZh = retry.markdown;
+    const md2 = parseMarkdownEnergyScore(payload.reportMarkdownZh);
+    if (md2 != null && md2 !== jsonEnergy) {
+      throw new Error(`reportMarkdownZh energy score ${md2} != dataZh.riskFactors[2].score ${jsonEnergy}`);
+    }
+  }
+}
 console.log("Validation passed.");
 
 // Log & strip evidence

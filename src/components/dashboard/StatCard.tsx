@@ -5,7 +5,9 @@
 
 import { StatCardFitLine } from "./StatCardFitLine";
 
-/** 油价卡：拆出 WTI / Brent 两段（忽略后续趋势词） */
+/** 油价卡：拆出 WTI / Brent 两段（忽略后续趋势词）。
+ * 仪表盘展示的是产品口径的价格区间（不是单一结算价，也不是 UI 色值 bug）；
+ * 区间 vs 能源冲击档位由日更流水线校验，本组件不按油价改 color。 */
 function oilPriceSplitParts(raw: string): { wti: string; brent: string } | null {
   const parts = raw
     .split(/\s*·\s*/)
