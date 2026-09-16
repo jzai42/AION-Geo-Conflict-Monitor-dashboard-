@@ -10,6 +10,16 @@ import {
   summarizeOilQuality,
   syncMarkdownEnergyScore,
 } from "./oil-quality.mjs";
+import {
+  applyOilFactsToPayload,
+  buildOilFactPromptBlock,
+  oilFactsToHistoryRecord,
+  parseOilFeedMode,
+  parsePriorOilFromDataTs,
+  parsePriorOilFromStore,
+  resolveOilFactsForRun,
+  summarizeOilResolution,
+} from "./oil-facts.mjs";
 
 // ── CONFIG ─────────────────────────────────────────────────────────
 const CONFIG = {
@@ -514,11 +524,28 @@ console.log(`Previous: ${prev.date} ${prevVersion}, latest.riskScore=${prev.risk
 console.log(`Prior calendar day ${yesterdayIso} composite (for 较上期): ${priorDayComposite}`);
 console.log(`Today: ${todayNy}, D${correctConflictDay}, version=${version}`);
 console.log(`History: ${store.history.length} points; prevTrendLast4: ${JSON.stringify(prevTrendLast4)}`);
-console.log(
-  AION_USE_OPENAI_WEBSEARCH
-    ? "Oil: WTI/Brent from model (OpenAI web_search; no commodity API; keyStats[2] unit canonicalized)."
-    : "Oil: WTI/Brent via Gemini Google Search grounding only (no commodity API; keyStats[2] value from model, unit canonicalized).",
-);
+
+const AION_OIL_FEED = parseOilFeedMode(process.env.AION_OIL_FEED);
+let priorOilFromDataTs = null;
+try {
+  priorOilFromDataTs = parsePriorOilFromDataTs(await readFile(PATHS.dataTs, "utf8"));
+} catch {
+  priorOilFromDataTs = null;
+}
+const oilResolution = await resolveOilFactsForRun({
+  mode: AION_OIL_FEED,
+  priorFromStore: parsePriorOilFromStore(store),
+  priorFromDataTs,
+});
+const oilFacts = oilResolution.facts;
+console.log(`Oil: ${summarizeOilResolution(oilResolution)}`);
+if (AION_OIL_FEED === "off") {
+  console.log(
+    AION_USE_OPENAI_WEBSEARCH
+      ? "Oil: WTI/Brent from model (OpenAI web_search; AION_OIL_FEED=off; keyStats[2] unit canonicalized)."
+      : "Oil: WTI/Brent via Gemini Google Search grounding only (AION_OIL_FEED=off; keyStats[2] value from model, unit canonicalized).",
+  );
+}
 if (!AION_USE_OPENAI_WEBSEARCH) {
   console.log(
     `Model: base=${GEMINI_MODEL}, escalation=${GEMINI_ESCALATION_MODEL}, active=${ACTIVE_GEMINI_MODEL}, ` +
@@ -578,7 +605,11 @@ const oilPromptBlock = `
 - **keyStats[2]**：**value** **仅** \`WTI $低–$高 · Brent $低–$高\`（半角 $，区间用 **–** 连接）；**趋势、叙事、补充说明写入 riskFactors[2] 的 evidence/description**，**不要**塞进 keyStats[2].value（仪表盘油价卡只突出价格区间）。**unit** 中文固定 \`参考\`、英文固定 \`Ref.\`（须与 dataEn 一致）；**脚本只统一 unit**；禁止空值、禁止与接地图无关的臆造区间。
 - **evidence**（riskFactors[2]）须含上述区间与趋势的**文字依据**，并附 **至少一条接地 URL**（可末句）。
 - **脚本硬校验（发布门禁）**：会解析 keyStats[2] 的 WTI/Brent 美元区间并对照上方能源 rubric。若区间中位落入 <$75 而能源分仍为 4（$100–120 危机带）等 **跨 ≥2 档**矛盾，任务 **失败**，不把该快照当作 clean live 写入 data.ts。无油价接地 URL 时能源项不得标 confirmed（降为 unverified / degraded-oil）。
-- 若接地无法形成可信区间，keyStats[2] value 须诚实说明「搜索未获可靠现价」等，该因子 \`sourceVerification\` 标 \`unverified\`，分数不得相对昨日上调。${prevOilHint}`;
+- 若接地无法形成可信区间，keyStats[2] value 须诚实说明「搜索未获可靠现价」等，该因子 \`sourceVerification\` 标 \`unverified\`，分数不得相对昨日上调。${prevOilHint}${buildOilFactPromptBlock(oilResolution)}`;
+
+const oilUserHint = AION_OIL_FEED === "on"
+  ? `\n\n**油价数字**：系统提示中的 IMMUTABLE OIL FACTS / 上一期收盘区间为唯一价格源；keyStats[2] 必须逐字使用给定字符串。检索仅用于能源市场**叙事/趋势**与接地 URL，禁止另编价格。脚本将覆盖 keyStats[2]。`
+  : "";
 
 const systemPrompt = `${AION_USE_OPENAI_WEBSEARCH ? "【数据源】本任务使用 OpenAI API 内置 **web_search** 检索公开网页；下文「Google 搜索接地」请理解为等价的联网检索义务。\n\n" : ""}[System Role]
 你是 **机构级**地缘情报与结构化数据引擎（AION Geo-Conflict Monitor）。输出用于 **真实资金决策**，因此：**禁止臆测、禁止故事化叙事、禁止无法在多源或 Tier1 官方声明中对齐的事实**；信息不足时须明确写「公开数据不足」类表述。
@@ -741,7 +772,7 @@ async function callGemini(withWeb) {
     config.responseJsonSchema = outputSchema;
   }
   const userText = withWeb
-    ? `请生成 ${todayNy} 的 AION 日报。\n\n**务必先通过 Google 搜索接地**：检索 WTI、Brent 的**日内或近日美元/桶区间**（高低、振幅或多源合并区间均可）及**趋势**（企稳/上行/回落/剧烈波动等），引用一级财经/通讯社来源，再写入 riskFactors 能源项与 keyStats[2]（区间格式，勿写死单一精确价作为主展示）。\n\n**版面**：reportMarkdownZh 须严格按系统提示中专节所列 **### 小节标题与顺序**；dataZh.situations 每条 point 须以 **「延续：」或「变化：」** 开头（dataEn 用 **Continue:** / **Change:**）；dataZh/dataEn 的 **investmentSignal** 必须以 **→** 开头并含方向/部位词；warPhase.level/targetLevel 须从系统提示枚举中逐字选取。\n\n**输出**：只输出一个 JSON 对象（不要 markdown 围栏、不要前后说明），顶层键为 reportMarkdownZh、dataZh、dataEn，结构与系统提示中的 Schema 完全一致。`
+    ? `请生成 ${todayNy} 的 AION 日报。\n\n**务必先通过 Google 搜索接地**：检索 WTI、Brent 的**日内或近日美元/桶区间**（高低、振幅或多源合并区间均可）及**趋势**（企稳/上行/回落/剧烈波动等），引用一级财经/通讯社来源，再写入 riskFactors 能源项与 keyStats[2]（区间格式，勿写死单一精确价作为主展示）。${oilUserHint}\n\n**版面**：reportMarkdownZh 须严格按系统提示中专节所列 **### 小节标题与顺序**；dataZh.situations 每条 point 须以 **「延续：」或「变化：」** 开头（dataEn 用 **Continue:** / **Change:**）；dataZh/dataEn 的 **investmentSignal** 必须以 **→** 开头并含方向/部位词；warPhase.level/targetLevel 须从系统提示枚举中逐字选取。\n\n**输出**：只输出一个 JSON 对象（不要 markdown 围栏、不要前后说明），顶层键为 reportMarkdownZh、dataZh、dataEn，结构与系统提示中的 Schema 完全一致。`
     : `请生成 ${todayNy} 的 AION 日报。`;
   return genai.models.generateContent({
     model: ACTIVE_GEMINI_MODEL,
@@ -783,7 +814,7 @@ async function callOpenAI() {
       temperature: 0.2,
       messages: [
         { role: "system", content: systemPrompt },
-        { role: "user", content: `请生成 ${todayNy} 的 AION 日报。\n\nreportMarkdownZh 须含系统提示规定的 ### 小节顺序；situations 每条以「延续：」或「变化：」开头（英文 Continue:/Change:）；investmentSignal 以 → 开头；warPhase 阶段名须取自枚举。\n\n输出仅为 JSON 对象，键为 reportMarkdownZh、dataZh、dataEn。` },
+        { role: "user", content: `请生成 ${todayNy} 的 AION 日报。\n\nreportMarkdownZh 须含系统提示规定的 ### 小节顺序；situations 每条以「延续：」或「变化：」开头（英文 Continue:/Change:）；investmentSignal 以 → 开头；warPhase 阶段名须取自枚举。${oilUserHint}\n\n输出仅为 JSON 对象，键为 reportMarkdownZh、dataZh、dataEn。` },
       ],
       response_format: {
         type: "json_schema",
@@ -872,7 +903,7 @@ function extractOpenAIWebSourcesFromResponse(data) {
  */
 async function callOpenAIResponsesWebSearch() {
   if (!OPENAI_API_KEY) throw new Error("Missing OPENAI_API_KEY");
-  const userContent = `请生成 ${todayNy} 的 AION 日报。\n\n**务必先使用联网搜索**：检索近 24h 美伊局势公开报道、以及 WTI/Brent 油价区间与趋势（优先一级财经/通讯社）。\n\n**版面**：reportMarkdownZh 按系统提示 ### 顺序；situations 每条 point 以「延续：」或「变化：」（英文 Continue:/Change:）；investmentSignal 以 → 开头；warPhase 取自枚举。\n\n**输出**：只输出一个 JSON 对象（不要 markdown 围栏、不要前后说明），顶层键为 reportMarkdownZh、dataZh、dataEn，结构与系统提示中的 Schema 完全一致。`;
+  const userContent = `请生成 ${todayNy} 的 AION 日报。\n\n**务必先使用联网搜索**：检索近 24h 美伊局势公开报道、以及 WTI/Brent 油价区间与趋势（优先一级财经/通讯社）。${oilUserHint}\n\n**版面**：reportMarkdownZh 按系统提示 ### 顺序；situations 每条 point 以「延续：」或「变化：」（英文 Continue:/Change:）；investmentSignal 以 → 开头；warPhase 取自枚举。\n\n**输出**：只输出一个 JSON 对象（不要 markdown 围栏、不要前后说明），顶层键为 reportMarkdownZh、dataZh、dataEn，结构与系统提示中的 Schema 完全一致。`;
 
   const resp = await fetch("https://api.openai.com/v1/responses", {
     method: "POST",
@@ -1294,6 +1325,24 @@ if (Math.abs(adjustedFinalRiskScore - priorDayComposite) > 20) {
 }
 console.log(`Final: factors=[${adjustedFinalFactors.join(",")}] riskScore=${adjustedFinalRiskScore} (priorDay=${priorDayComposite}, Δ=${adjustedFinalRiskScore - priorDayComposite})`);
 
+// Hybrid oil feed: deterministic prices overwrite the model card when AION_OIL_FEED=on.
+// Shadow: log-compare only. Fetch failure never aborts the day by itself.
+if (AION_OIL_FEED === "on" && oilFacts?.keyStatValue) {
+  for (const r of validResults) {
+    if (r?.parsed) applyOilFactsToPayload(r.parsed, oilFacts);
+  }
+  const applied = applyOilFactsToPayload(payload, oilFacts);
+  console.log(
+    `Oil feed on: overwrote keyStats[2] → ${oilFacts.keyStatValue}` +
+      ` (fromPrior=${Boolean(oilFacts.fromPrior)} stale=${Boolean(oilFacts.stale)} prevZh=${JSON.stringify(applied.previous.zh)})`,
+  );
+} else if (AION_OIL_FEED === "shadow") {
+  const modelVal = payload?.dataZh?.keyStats?.[2]?.value ?? null;
+  console.log(
+    `Oil feed shadow compare: model=${JSON.stringify(modelVal)} api=${JSON.stringify(oilFacts?.keyStatValue ?? null)} fetchFailed=${Boolean(oilResolution.fetchFailed)}`,
+  );
+}
+
 // Oil vs shipped energy score: abort inconsistent $70s-vs-score-4 style bands before history/data.ts write.
 let oilQualityVerdict = oilQualityFromResult({ parsed: payload, grounding: winningGrounding }, adjustedFinalFactors[2]);
 {
@@ -1305,19 +1354,32 @@ let oilQualityVerdict = oilQualityFromResult({ parsed: payload, grounding: winni
   );
   payload = picked.result.parsed;
   winningGrounding = picked.result.grounding || winningGrounding;
-  oilQualityVerdict = picked.verdict;
+  if (AION_OIL_FEED === "on" && oilFacts?.keyStatValue) {
+    applyOilFactsToPayload(payload, oilFacts);
+    oilQualityVerdict = oilQualityFromResult({ parsed: payload, grounding: winningGrounding }, energyScore);
+  } else {
+    oilQualityVerdict = picked.verdict;
+  }
   console.log(`  ${summarizeOilQuality(oilQualityVerdict)} (vs shipped energy=${energyScore})`);
 
   if (oilQualityVerdict.hardFail && generationMode !== "fallback") {
-    await mkdir(PATHS.reports, { recursive: true });
-    await writeFile(
-      path.join(PATHS.reports, `${todayNy}.oil-quality-fail.json`),
-      JSON.stringify({ energyScore, verdict: oilQualityVerdict, keyStats: payload?.dataZh?.keyStats?.[2] }, null, 2),
-      "utf8",
-    );
-    throw new Error(
-      `Oil quality hard-fail: refusing clean live publish. ${summarizeOilQuality(oilQualityVerdict)}`,
-    );
+    if (AION_OIL_FEED === "on" && oilResolution.fetchFailed) {
+      console.warn(
+        `Oil quality hard-fail not aborting day: oil feed fetch failed (prior=${oilResolution.usedPrior}). ${summarizeOilQuality(oilQualityVerdict)}`,
+      );
+      generationMode = oilResolution.usedPrior ? "degraded-oil-prior" : "degraded-oil";
+      degradeEnergyVerification(payload, "oil-feed-fetch-failed-quality-mismatch");
+    } else {
+      await mkdir(PATHS.reports, { recursive: true });
+      await writeFile(
+        path.join(PATHS.reports, `${todayNy}.oil-quality-fail.json`),
+        JSON.stringify({ energyScore, verdict: oilQualityVerdict, keyStats: payload?.dataZh?.keyStats?.[2], oilResolution: summarizeOilResolution(oilResolution) }, null, 2),
+        "utf8",
+      );
+      throw new Error(
+        `Oil quality hard-fail: refusing clean live publish. ${summarizeOilQuality(oilQualityVerdict)}`,
+      );
+    }
   }
 
   if (oilQualityVerdict.publish === "degraded" && generationMode === "live") {
@@ -1325,6 +1387,10 @@ let oilQualityVerdict = oilQualityFromResult({ parsed: payload, grounding: winni
   }
   if (!oilQualityVerdict.hasOilSourceUrl || !oilQualityVerdict.parseOk) {
     degradeEnergyVerification(payload, oilQualityVerdict.reasons.join(";") || "ungrounded-oil");
+  }
+  if (AION_OIL_FEED === "on" && oilResolution.fetchFailed && generationMode !== "fallback") {
+    generationMode = oilResolution.usedPrior ? "degraded-oil-prior" : (generationMode === "live" ? "degraded-oil" : generationMode);
+    degradeEnergyVerification(payload, oilResolution.error || "oil-feed-fetch-failed");
   }
 }
 
@@ -1343,6 +1409,7 @@ for (const lang of ["dataZh", "dataEn"]) {
 const histMap = new Map(store.history.map(p => [p.date, p.score]));
 histMap.set(todayNy, adjustedFinalRiskScore);
 store.history = [...histMap.entries()].map(([date, score]) => ({ date, score })).sort((a, b) => a.date.localeCompare(b.date)).slice(-120);
+const oilPriceRecord = oilFactsToHistoryRecord(oilFacts, AION_OIL_FEED, oilResolution);
 store.latest = {
   date: todayNy,
   appVersion: version,
@@ -1352,6 +1419,7 @@ store.latest = {
   factorScores: [...adjustedFinalFactors],
   generationMode,
   oilQuality: oilQualityHistoryRecord(oilQualityVerdict),
+  ...(oilPriceRecord ? { oilPrice: oilPriceRecord } : {}),
 };
 store.version = 2;
 store.lockedDates = normalizeLockedDates(store.lockedDates);

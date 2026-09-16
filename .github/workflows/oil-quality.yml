@@ -7,8 +7,11 @@ on:
     paths:
       - ".github/scripts/oil-quality.mjs"
       - ".github/scripts/oil-quality.test.mjs"
+      - ".github/scripts/oil-facts.mjs"
+      - ".github/scripts/oil-facts.test.mjs"
       - ".github/scripts/generate-aion-daily.mjs"
       - ".github/workflows/oil-quality.yml"
+      - "package.json"
 
 jobs:
   oil-quality:
@@ -18,5 +21,5 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 22
-      - name: Run oil-price quality assertions
-        run: node .github/scripts/oil-quality.test.mjs
+      - name: Run oil-price quality + hybrid feed assertions
+        run: npm run test:oil
