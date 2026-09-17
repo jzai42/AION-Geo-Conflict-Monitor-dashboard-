@@ -2,7 +2,7 @@
   "version": 2,
   "latest": {
     "date": "2026-09-17",
-    "appVersion": "v2.194",
+    "appVersion": "v2.195",
     "riskScore": 80,
     "prevRiskScore": 82,
     "conflictDay": 201,
@@ -34,15 +34,15 @@
       "stale": false,
       "fromPrior": false,
       "fetchFailed": false,
-      "asOf": "2026-09-17T13:26:39.213Z",
-      "wti": 100.33,
-      "brent": 102.62,
+      "asOf": "2026-09-17T13:57:59.786Z",
+      "wti": 100.75,
+      "brent": 103.11,
       "wtiLow": 99.1,
       "wtiHigh": 102.47,
       "brentLow": 101.55,
       "brentHigh": 106,
       "keyStatValue": "WTI $99.10–$102.47 · Brent $101.55–$106.00",
-      "updatedAt": "2026-09-17T13:28:50.703Z"
+      "updatedAt": "2026-09-17T13:59:43.904Z"
     }
   },
   "lockedDates": [
