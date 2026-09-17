@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  GEMINI_MODEL: gemini-3.5-flash
+  GEMINI_MODEL: gemini-3.8-flash
   GEMINI_ESCALATION_MODEL: gemini-3.1-pro-preview
   AION_ENSEMBLE_N: "3"
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
