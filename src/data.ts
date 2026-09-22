@@ -65,27 +65,27 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-09-21",
-  version: "v2.199",
-  riskScore: 76,
-  keyChange: "美伊元首在联大前夕释放间接对话意向，油价自高位回撤，但海峡运费破纪录与军事戒备使综合风险维持76分高位黏滞。",
-  investmentSignal: "→ 维持能源与大宗商品的防御性配置底仓，适度对冲高位供应链运输溢价，暂不盲目增持风险资产。",
+  date: "2026-09-22",
+  version: "v2.200",
+  riskScore: 66,
+  change: "none",
+  keyChange: "联大外交试探与海峡袭船并存，综合风险分保持76分黏滞态势",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D205",
+      value: "D206",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "持平",
+      value: "↓10",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $91.59–$97.22 · Brent $99.54–$104.99",
+      value: "WTI $89.16–$93.84 · Brent $97.44–$102.29",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -100,19 +100,19 @@ export const DATA_ZH: DashboardData = {
   riskFactors: [
     {
       name: "军事升级烈度",
-      score: 5,
+      score: 4,
       prev: 5,
       weight: 0.2,
-      description: "战区直接交火与区域多线打击持续，美军与伊朗革命卫队维持全域高度互备戒备状态（依据：AP、CBS News）。",
+      description: "美伊两军处于直接对峙与威慑交火状态，伊朗军方公开警告美方若发动新打击将招致无限制报复，战区战备等级极高（来源：Gulf News、Reuters）。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "霍尔木兹航运扰动",
-      score: 4,
+      score: 3,
       prev: 4,
       weight: 0.2,
-      description: "商业通航维持高压许可与护航体制，超大型油轮运价创历史纪录，商业自由通行量不足正常水准五成（依据：US CENTCOM、Bloomberg）。",
+      description: "UKMTO确认油轮LR Stephanie在海峡遭抛射物袭击，商业通航量被压制在历史低位，主要班轮公司继续绕行（来源：UKMTO、JMIC）。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -121,7 +121,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "WTI日内区间91.59–97.22美元，布伦特99.54–104.99美元，主力价格主体落在85–100美元偏强区间并自前高回撤，供应担忧持续但外交预期挤出投机溢价（依据：Reuters、Bloomberg，参考信源：https://unn.ua/news/oil-prices-fell-to-an-11-day-low-what-contributed）。",
+      description: "原油价格区间主体落在85–100美元/桶偏强区间，因联大接触预期与沙特部分增运，布伦特合约自百元上方温和回落（来源：Reuters、Yahoo Finance）。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -130,64 +130,29 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美军持续执行区域护航和防空拦截任务，多国保持武器支持与联合情报共享（依据：US CENTCOM、Reuters）。",
+      description: "美军直接维持舰机护航与战术预警，欧洲大国提出防御性安保协同，未演变为多大国正面交火（来源：CENTCOM、Gulf News）。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "降级/谈判前景",
-      score: 4,
+      score: 3.5,
       prev: 4,
       weight: 0.2,
-      description: "部分证实：美伊领导层虽释放联大偶遇或间接谈判意愿，但停火先决条件南辕北辙，破裂与僵持风险依然居高不下（依据：Reuters、Al Jazeera）。",
+      description: "伊朗通过斡旋方提议在美方解除封锁前提下7日内开峡，但双方在先决条件上立场对立，谈判实质突破风险高（来源：Reuters、CBS News）。",
       status: "FAST",
-      sourceVerification: "partial"
-    }
-  ],
-  events: [
-    {
-      id: "EVT-01",
-      title: "联大前夕美伊释放接触信号但伴随威慑表态",
-      description: "路透社与CBS新闻报道，美国总统表示对在联合国大会期间接触伊朗总统持开放态度，但强调仍在评估包括严厉经济施压或军事行动在内的选项；伊朗革命卫队同日警告若遭新袭击将扩大冲突地理范围。",
-      verification: "confirmed",
-      timestamp: "2026-09-21T06:00:00Z",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-02",
-      title: "国际油价自高位回撤试探百美元关口",
-      description: "彭博社与路透社报道，WTI日内运行于91.59–97.22美元/桶，布伦特回落至99.54–104.99美元/桶区间，因市场消化沙特部分出口恢复预期及联大潜在外交斡旋，风险溢价短线挤出。",
-      verification: "confirmed",
-      timestamp: "2026-09-21T09:00:00Z",
-      significance: ""
-    },
-    {
-      id: "EVT-03",
-      title: "美军中央司令部通报霍尔木兹护航规模",
-      description: "美军中央司令部官方发布声明，过去数月已护航逾2000艘商船和10亿桶原油出海；但彭博行业分析指出霍尔木兹海峡内VLCC超大型油轮单日租金仍突破百万美元天价。",
-      verification: "confirmed",
-      timestamp: "2026-09-20T22:00:00Z",
-      significance: ""
-    },
-    {
-      id: "EVT-04",
-      title: "红海与沙特境内能源基础设施遇袭警报频发",
-      description: "美联社与法新社报道，也门胡塞武装对利雅得及红海延布（Yanbu）炼油枢纽发动导弹与无人机袭击遭防空拦截，美国驻中东多国使馆紧急发布旅行与安全警戒。",
-      verification: "confirmed",
-      timestamp: "2026-09-20T18:00:00Z",
-      significance: ""
+      sourceVerification: "confirmed"
     }
   ],
   warPhase: {
-    level: "高压对峙",
+    level: "海上封锁对抗期",
     targetLevel: "脆弱平衡",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "战场未出现新的多国正规军全面对撞，但代理人战线交火与关键设施袭扰持续。",
-      "航道物流虽然在强行军护航下维持低位通流，但商业保险与租金成本推升至极限。",
-      "外交谈判窗口仅停留在口头试探阶段，缺乏实质信任基础。"
+      "商船袭击事件持续发生，过境安全依然未获根本性保障",
+      "伊方将海峡通行权作为解除经济封锁的外交博弈筹码",
+      "美伊高层政治表态存在温差，缺乏互信导致缓和门槛极高"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -198,8 +163,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：胡塞武装与区域抵抗力量持续以低成本无人机和弹道导弹试探沙特及红海关键设施。",
-        "变化：美军中东各基地进入防空升级戒备，多国使馆同步收紧安全通告级别。"
+        "延续：美军战术战机与护航编队持续在波斯湾执行常态化空中威慑巡逻。",
+        "变化：伊朗军方声明若遭到新一轮打击将对美军在中东全部节点施加无限制报复。"
       ]
     },
     {
@@ -208,8 +173,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：霍尔木兹海峡主要通航高度依赖美军及盟友舰队护航编队通行。",
-        "变化：商业VLCC运价突破110万美元/日纪录，折合单桶运输成本超22美元。"
+        "延续：主流国际航运公会对进入海峡仍维持最高风险预警并限制接单。",
+        "变化：UKMTO证实LR Stephanie油轮遭遇抛射物袭击，为近期第4起商船受损。"
       ]
     },
     {
@@ -218,8 +183,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：海湾原油出口物理受阻导致现货结构性紧平衡，远期曲线深度倒挂。",
-        "变化：WTI与布伦特分别回落至92与100美元附近，联大外交缓和预期促使资金平抑部分风险溢价。"
+        "延续：中东产油国备用管道与绕行港口维持满负荷运转以分流现货。",
+        "变化：联大外交接触预期压制盘中投机多头，布伦特合约下探至百元下方震荡。"
       ]
     },
     {
@@ -228,24 +193,22 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：华盛顿与德黑兰继续以公开声明和代理人动作施压，缺乏直接沟通渠道。",
-        "变化：美总统表态对在联大期间接触伊方持开放态度，但明确重申多项战略强硬选项。"
+        "延续：美国行政当局重申保障国际航道自由与保护盟友安全的既定立场。",
+        "变化：伊朗在联大前夕向美方提出解除港口封锁即可在7天内重开海峡的方案。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美伊双方国内政治强硬派均要求以对方先行实质退让作为正式谈判前提。"
+      "美方要求伊方无条件停止对航运袭扰与支持代理人",
+      "伊方坚持以解除港口封锁与军事施压作为复航先决条件"
     ],
     military: [
-      "美军护航体制与伊朗对海峡事实管控权的不可调和冲突推高偶发擦枪走火概率。"
+      "美军护航防御力量无法百分之百杜绝低成本巡飞弹与无人艇突防",
+      "伊朗非对称反舰火力与美军区域拒止系统形成高损耗消耗战对峙"
     ]
   },
   scoreTrend: [
-    {
-      date: "09-17",
-      score: 80
-    },
     {
       date: "09-18",
       score: 76
@@ -260,44 +223,67 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "09-21",
-      score: 76,
+      score: 76
+    },
+    {
+      date: "09-22",
+      score: 66,
       active: true
     }
   ],
+  investmentSignal: "→ 维持宏观对冲与能源大宗多头底仓，逢高防御性降低风险资产敞口，规避联大政治脉冲扰动。",
   prevRiskScore: 76,
+  events: [
+    {
+      id: "EVT-AUTO-01",
+      title: "美伊两军处于直接对峙与威慑交火状态，伊朗军方公开警告美方若发动新打击将招致无限制报复，战区战备等级极高（来源：Gulf News、Reuters）",
+      description: "美伊两军处于直接对峙与威慑交火状态，伊朗军方公开警告美方若发动新打击将招致无限制报复，战区战备等级极高（来源：Gulf News、Reuters）。",
+      verification: "single",
+      timestamp: "2026-09-22（当日公开报道）",
+      significance: ""
+    },
+    {
+      id: "EVT-AUTO-02",
+      title: "UKMTO确认油轮LR Stephanie在海峡遭抛射物袭击，商业通航量被压制在历史低位，主要班轮公司继续绕行（来源：UKMTO、JMIC）",
+      description: "UKMTO确认油轮LR Stephanie在海峡遭抛射物袭击，商业通航量被压制在历史低位，主要班轮公司继续绕行（来源：UKMTO、JMIC）。",
+      verification: "single",
+      timestamp: "2026-09-22（当日公开报道）",
+      significance: ""
+    }
+  ],
   webSources: [],
   webSearchQueries: []
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-09-21",
-  version: "v2.199",
-  riskScore: 76,
-  keyChange: "US and Iranian leaders signaled potential UNGA interactions as crude pared gains, yet record shipping premiums and elevated defense alerts kept risk scores locked at 76.",
-  investmentSignal: "→ Maintain defensive allocations in energy and commodities while hedging persistent maritime transportation premiums, refraining from premature additions to risk assets.",
+  date: "2026-09-22",
+  version: "v2.200",
+  riskScore: 66,
+  change: "none",
+  keyChange: "UNGA diplomatic feelers coexist with Hormuz tanker strikes; composite risk score sticky at 76",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D205",
+      value: "D206",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "Flat",
+      value: "↓10",
       unit: "vs Prev",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $91.59–$97.22 · Brent $99.54–$104.99",
+      value: "WTI $89.16–$93.84 · Brent $97.44–$102.29",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
-      value: "Severely Restricted",
+      value: "严重受限",
       unit: "Transit Status",
       color: "#ffdc00"
     }
@@ -305,19 +291,19 @@ export const DATA_EN: DashboardData = {
   riskFactors: [
     {
       name: "Military Escalation Intensity",
-      score: 5,
+      score: 4,
       prev: 5,
       weight: 0.2,
-      description: "Direct combat theater and multi-front missile skirmishes persist, keeping US and Iranian forces at maximum readiness (Sources: AP, CBS News).",
+      description: "Direct US-Iran standoff remains acute, with Iranian military commanders vowing limitless retaliation against potential renewed US strikes (Sources: Gulf News, Reuters).",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "Hormuz Disruption",
-      score: 4,
+      score: 3,
       prev: 4,
       weight: 0.2,
-      description: "Commercial passage remains severely restricted under escorted operations, with VLCC day-rates hitting all-time highs and free commercial transit under 50% (Sources: US CENTCOM, Bloomberg).",
+      description: "UKMTO confirmed the tanker LR Stephanie was struck by a projectile, suppressing commercial transit to single-digit daily flows (Sources: UKMTO, JMIC).",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -326,7 +312,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "WTI session traded at $91.59–$97.22 with Brent at $99.54–$104.99; trading primarily resides in the $85–$100 band as diplomatic hopes trimmed geopolitical premiums (Sources: Reuters, Bloomberg, Ref URL: https://unn.ua/news/oil-prices-fell-to-an-11-day-low-what-contributed).",
+      description: "Crude benchmarks traded primarily within the elevated $85–100/bbl band, with Brent pulling back below $100 on diplomatic hopes (Sources: Reuters, Yahoo Finance).",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -335,64 +321,29 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "US military maintains ongoing maritime convoy protection and air defense interceptions across the Persian Gulf (Sources: US CENTCOM, Reuters).",
+      description: "The US military maintains active maritime escorts and base defense, while European allies offer defensive security assistance (Sources: CENTCOM, Gulf News).",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "De-escalation Probability",
-      score: 4,
+      score: 3.5,
       prev: 4,
       weight: 0.2,
-      description: "Partial verification: While leaders signaled potential UNGA interactions, preconditions remain incompatible, maintaining elevated risk of stalemate (Sources: Reuters, Al Jazeera).",
+      description: "Iran proposed reopening Hormuz within 7 days if the US lifts port blockades, but mutual preconditions leave talks stalled (Sources: Reuters, CBS News).",
       status: "FAST",
-      sourceVerification: "partial"
-    }
-  ],
-  events: [
-    {
-      id: "EVT-01",
-      title: "US and Iran Signal Potential UNGA Contact Amid Lingering Threats",
-      description: "Reuters and CBS News reported President Trump expressed openness to meeting Iran's President Pezeshkian at the UN General Assembly while weighing severe options, as IRGC commanders warned of widening the war's geography if attacked.",
-      verification: "confirmed",
-      timestamp: "2026-09-21T06:00:00Z",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-02",
-      title: "Crude Benchmarks Retreat Toward $100 Psychological Mark",
-      description: "Bloomberg and Reuters reported WTI fluctuating in the $91.59–$97.22 range and Brent at $99.54–$104.99, easing on hopes of diplomatic progress and partial Saudi export resumption.",
-      verification: "confirmed",
-      timestamp: "2026-09-21T09:00:00Z",
-      significance: ""
-    },
-    {
-      id: "EVT-03",
-      title: "US CENTCOM Releases Hormuz Escort Milestones",
-      description: "US Central Command announced it has escorted over 2,000 commercial vessels and 1 billion barrels of oil, though Bloomberg reported VLCC tanker day-rates within Hormuz remain at historic highs above $1.1 million.",
-      verification: "confirmed",
-      timestamp: "2026-09-20T22:00:00Z",
-      significance: ""
-    },
-    {
-      id: "EVT-04",
-      title: "Regional Infrastructure Alerts Trigger Embassy Warnings",
-      description: "AP and AFP reported Houthi missile and drone launches targeting Riyadh and Yanbu were intercepted, prompting US regional embassies to issue elevated security advisories for Americans.",
-      verification: "confirmed",
-      timestamp: "2026-09-20T18:00:00Z",
-      significance: ""
+      sourceVerification: "confirmed"
     }
   ],
   warPhase: {
-    level: "High-Pressure Standoff",
+    level: "Maritime Blockade Confrontation",
     targetLevel: "Fragile Balance",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Direct peer-to-peer combat escalation has plateaued, but asymmetric strikes against infrastructure persist.",
-      "Maritime transit functions under heavy military escort while freight and insurance surcharges stay near peaks.",
-      "Diplomatic signaling remains preliminary and transactional without structural alignment."
+      "Persistent maritime attacks sustain severe commercial transit friction",
+      "Tehran leverages maritime chokehold as collateral to negotiate sanctions relief",
+      "Mutual lack of strategic trust keeps de-escalation bar exceptionally high"
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -403,8 +354,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Houthi and regional aligned groups sustain missile and drone probes against strategic Gulf infrastructure.",
-        "Change: US embassies issued heightened security alerts as regional defense detachments tightened intercept postures."
+        "Continue: US tactical air wings and naval escort groups sustain routine combat patrols in the Gulf.",
+        "Change: Iranian armed forces issued an explicit warning of unconstrained retaliation if struck again."
       ]
     },
     {
@@ -413,8 +364,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Hormuz commercial transits remain constrained under bilateral escort operations.",
-        "Change: VLCC daily charter costs cleared $1.1 million, setting an unprecedented freight penalty."
+        "Continue: Major international shipping carriers continue to route vessels around the Cape of Good Hope.",
+        "Change: UKMTO confirmed the tanker LR Stephanie sustained projectile damage, the 4th incident since Sept 17."
       ]
     },
     {
@@ -423,8 +374,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Persian Gulf crude outflows maintain backwardation due to persistent logistics friction.",
-        "Change: Paper crude retreated toward $92 (WTI) and $100 (Brent) as diplomatic hopes unwound immediate risk premiums."
+        "Continue: Regional producers run bypass pipelines at maximum capacity to preserve export continuity.",
+        "Change: Diplomatic expectations ahead of UNGA talks pulled Brent futures modestly under the $100 threshold."
       ]
     },
     {
@@ -433,24 +384,22 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Public posturing between Washington and Tehran emphasizes deterrence and retaliatory threats.",
-        "Change: White House indicated conditional willingness to engage Iranian leadership at the UN General Assembly."
+        "Continue: The US administration reiterates commitments to freedom of navigation and regional defense.",
+        "Change: Iran conveyed an offer via intermediaries to reopen Hormuz within 7 days if US pressure ceases."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Domestic hardliners in both capitals demand unilateral concessions before committing to structured peace talks."
+      "Washington demands an unconditional halt to Iranian maritime harassment and regional proxy funding",
+      "Tehran insists on the full lifting of naval blockades and military pressure prior to corridor reopening"
     ],
     military: [
-      "The friction between US freedom-of-navigation escorts and Iranian de facto maritime control sustains continuous miscalculation risks."
+      "Coalition air defense escorts cannot achieve 100% interception against low-cost loitering munitions",
+      "Iranian asymmetric coastal firepower confronts US forward posture in a protracted war of attrition"
     ]
   },
   scoreTrend: [
-    {
-      date: "09-17",
-      score: 80
-    },
     {
       date: "09-18",
       score: 76
@@ -465,11 +414,34 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "09-21",
-      score: 76,
+      score: 76
+    },
+    {
+      date: "09-22",
+      score: 66,
       active: true
     }
   ],
+  investmentSignal: "→ Maintain defensive macro hedges and core energy commodity exposure while trimming risk assets on UNGA headline volatility.",
   prevRiskScore: 76,
+  events: [
+    {
+      id: "EVT-AUTO-01",
+      title: "Direct US-Iran standoff remains acute, with Iranian military commanders vowing limitless retali…",
+      description: "Direct US-Iran standoff remains acute, with Iranian military commanders vowing limitless retaliation against potential renewed US strikes (Sources: Gulf News, Reuters).",
+      verification: "single",
+      timestamp: "2026-09-22 (same-day reporting)",
+      significance: ""
+    },
+    {
+      id: "EVT-AUTO-02",
+      title: "UKMTO confirmed the tanker LR Stephanie was struck by a projectile, suppressing commercial tran…",
+      description: "UKMTO confirmed the tanker LR Stephanie was struck by a projectile, suppressing commercial transit to single-digit daily flows (Sources: UKMTO, JMIC).",
+      verification: "single",
+      timestamp: "2026-09-22 (same-day reporting)",
+      significance: ""
+    }
+  ],
   webSources: [],
   webSearchQueries: []
 };
@@ -479,7 +451,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "9月21日节点",
+    node406: "9月22日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -513,16 +485,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.199 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.200 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 76（持平）：美伊元首在联大前夕释放间接对话意向，油价自高位回撤，但海峡运费破纪录与军事戒备使综合风险维持76分高位黏滞。",
-    bannerWarning: "→ 维持能源与大宗商品的防御性配置底仓，适度对冲高位供应链运输溢价，暂不盲目增持风险资产。",
-    deescalationIntent: "美伊双方国内政治强硬派均要求以对方先行实质退让作为正式谈判前提。",
-    structuralRisk: "商业通航维持高压许可与护航体制，超大型油轮运价创历史纪录，商业自由通行量不足正常水准五成（依据：US CENTCOM、Bloomberg）。",
-    contradictionNote: "美伊双方国内政治强硬派均要求以对方先行实质退让作为正式谈判前提。；美军护航体制与伊朗对海峡事实管控权的不可调和冲突推高偶发擦枪走火概率。",
+    bannerSignal: "综合评分 66（↓10）：联大外交试探与海峡袭船并存，综合风险分保持76分黏滞态势",
+    bannerWarning: "→ 维持宏观对冲与能源大宗多头底仓，逢高防御性降低风险资产敞口，规避联大政治脉冲扰动。",
+    deescalationIntent: "美方要求伊方无条件停止对航运袭扰与支持代理人",
+    structuralRisk: "UKMTO确认油轮LR Stephanie在海峡遭抛射物袭击，商业通航量被压制在历史低位，主要班轮公司继续绕行（来源：UKMTO、JMIC）。",
+    contradictionNote: "美方要求伊方无条件停止对航运袭扰与支持代理人；美军护航防御力量无法百分之百杜绝低成本巡飞弹与无人艇突防",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -530,7 +502,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第205天",
+    dayCount: "第206天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -538,7 +510,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Sep 21 Node",
+    node406: "Sep 22 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -572,16 +544,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.199 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.200 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 76 (Flat): US and Iranian leaders signaled potential UNGA interactions as crude pared gains, yet record shipping premiums and elevated defense alerts …",
-    bannerWarning: "→ Maintain defensive allocations in energy and commodities while hedging persistent maritime transportation premiums, r…",
-    deescalationIntent: "Domestic hardliners in both capitals demand unilateral concessions before commi…",
-    structuralRisk: "Commercial passage remains severely restricted under escorted operations, with VLCC day-rates hitti…",
-    contradictionNote: "Domestic hardliners in both capitals demand unilateral concessions before committing to structured peace talks.; The friction between US freedom-of-navigation …",
+    bannerSignal: "Composite 66 (↓10): UNGA diplomatic feelers coexist with Hormuz tanker strikes; composite risk score sticky at 76",
+    bannerWarning: "→ Maintain defensive macro hedges and core energy commodity exposure while trimming risk assets on UNGA headline volati…",
+    deescalationIntent: "Washington demands an unconditional halt to Iranian maritime harassment and reg…",
+    structuralRisk: "UKMTO confirmed the tanker LR Stephanie was struck by a projectile, suppressing commercial transit …",
+    contradictionNote: "Washington demands an unconditional halt to Iranian maritime harassment and regional proxy funding; Coalition air defense escorts cannot achieve 100% intercept…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -589,7 +561,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 205",
+    dayCount: "Day 206",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
