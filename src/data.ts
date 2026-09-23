@@ -65,34 +65,31 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-09-22",
-  version: "v2.200",
-  riskScore: 66,
-  change: "none",
-  keyChange: "联大外交试探与海峡袭船并存，综合风险分保持76分黏滞态势",
+  date: "2026-09-23",
+  version: "v2.201",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D206",
+      value: "D207",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↓10",
+      value: "↓8",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $89.16–$93.84 · Brent $97.44–$102.29",
+      value: "WTI $88.71–$91.93 · Brent $94.10–$97.33",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "霍尔木兹",
-      value: "严重受限",
+      value: "部分受限",
       unit: "通行状态",
       color: "#ffdc00"
     }
@@ -100,19 +97,19 @@ export const DATA_ZH: DashboardData = {
   riskFactors: [
     {
       name: "军事升级烈度",
-      score: 4,
-      prev: 5,
+      score: 3,
+      prev: 4,
       weight: 0.2,
-      description: "美伊两军处于直接对峙与威慑交火状态，伊朗军方公开警告美方若发动新打击将招致无限制报复，战区战备等级极高（来源：Gulf News、Reuters）。",
+      description: "双方暂停直接交火，进入外交试探期",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "霍尔木兹航运扰动",
       score: 3,
-      prev: 4,
+      prev: 3,
       weight: 0.2,
-      description: "UKMTO确认油轮LR Stephanie在海峡遭抛射物袭击，商业通航量被压制在历史低位，主要班轮公司继续绕行（来源：UKMTO、JMIC）。",
+      description: "出现解封提议但当前依旧受限",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -121,7 +118,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "原油价格区间主体落在85–100美元/桶偏强区间，因联大接触预期与沙特部分增运，布伦特合约自百元上方温和回落（来源：Reuters、Yahoo Finance）。",
+      description: "风险溢价消退，区间回落",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -130,29 +127,58 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美军直接维持舰机护航与战术预警，欧洲大国提出防御性安保协同，未演变为多大国正面交火（来源：CENTCOM、Gulf News）。",
+      description: "外部大国维持外交斡旋角色",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "降级/谈判前景",
-      score: 3.5,
-      prev: 4,
+      score: 2.5,
+      prev: 3.5,
       weight: 0.2,
-      description: "伊朗通过斡旋方提议在美方解除封锁前提下7日内开峡，但双方在先决条件上立场对立，谈判实质突破风险高（来源：Reuters、CBS News）。",
+      description: "达成实质性高级别接触",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
+  riskScore: 58,
+  events: [
+    {
+      id: "EVT-01",
+      title: "美伊代表团在联合国大会举行三小时会谈",
+      description: "美国官方与伊朗代表团在联合国大会场边进行了长达三小时的会面，标志着冲突爆发以来最高级别的实质性外交接触。（Gulf News, NDTV）",
+      verification: "confirmed",
+      timestamp: "2026-09-23T08:00:00Z",
+      significance: "",
+      highlight: true,
+      critical: true
+    },
+    {
+      id: "EVT-02",
+      title: "伊朗提议条件性重启霍尔木兹海峡",
+      description: "伊朗高级官员向媒体表示，若美国实质性放松军事与经济压力，伊朗愿在七天内全面解除对海峡的封锁。（Reuters, Grafa）",
+      verification: "confirmed",
+      timestamp: "2026-09-23T11:00:00Z",
+      significance: "",
+      highlight: true
+    },
+    {
+      id: "EVT-03",
+      title: "美国对伊朗航空网络实施次级制裁",
+      description: "美财政部正式启动针对伊朗民用航空网络的二级制裁，以在谈判窗口期继续维持经济高压。（US Treasury, Gulf News）",
+      verification: "confirmed",
+      timestamp: "2026-09-23T13:00:00Z",
+      significance: ""
+    }
+  ],
   warPhase: {
-    level: "海上封锁对抗期",
-    targetLevel: "脆弱平衡",
+    level: "谈判窗口期",
+    targetLevel: "缓和态势",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "商船袭击事件持续发生，过境安全依然未获根本性保障",
-      "伊方将海峡通行权作为解除经济封锁的外交博弈筹码",
-      "美伊高层政治表态存在温差，缺乏互信导致缓和门槛极高"
+      "美伊双方在联大期间的实质性接触宣告双边关系进入政治谈判主导期",
+      "霍尔木兹海峡解封首次被明确提上时间表，为冲突降温提供锚点"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -163,8 +189,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：美军战术战机与护航编队持续在波斯湾执行常态化空中威慑巡逻。",
-        "变化：伊朗军方声明若遭到新一轮打击将对美军在中东全部节点施加无限制报复。"
+        "变化：美伊在联合国大会期间暂停直接军事打击，前线转入静默与外交试探。"
       ]
     },
     {
@@ -173,8 +198,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：主流国际航运公会对进入海峡仍维持最高风险预警并限制接单。",
-        "变化：UKMTO证实LR Stephanie油轮遭遇抛射物袭击，为近期第4起商船受损。"
+        "变化：伊朗首次提出重新开放海峡的具体时间表（7天），但附带美方施压解除的前提条件。",
+        "延续：实际物理通行状况目前仍维持部分受限状态。"
       ]
     },
     {
@@ -183,8 +208,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：中东产油国备用管道与绕行港口维持满负荷运转以分流现货。",
-        "变化：联大外交接触预期压制盘中投机多头，布伦特合约下探至百元下方震荡。"
+        "变化：受海峡复航预期及外交破冰影响，油市恐慌情绪消散，区间显著回落。"
       ]
     },
     {
@@ -193,26 +217,19 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：美国行政当局重申保障国际航道自由与保护盟友安全的既定立场。",
-        "变化：伊朗在联大前夕向美方提出解除港口封锁即可在7天内重开海峡的方案。"
+        "变化：双方高层在联大期间的直接接触打破了前期的高压对峙僵局，展现出明确的外交意愿。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美方要求伊方无条件停止对航运袭扰与支持代理人",
-      "伊方坚持以解除港口封锁与军事施压作为复航先决条件"
+      "美国实施的新一轮航空次级制裁与联合国外交接触之间的双轨政策冲突"
     ],
     military: [
-      "美军护航防御力量无法百分之百杜绝低成本巡飞弹与无人艇突防",
-      "伊朗非对称反舰火力与美军区域拒止系统形成高损耗消耗战对峙"
+      "伊朗海峡解封承诺的落实与美军在该地区前沿威慑部署的对立"
     ]
   },
   scoreTrend: [
-    {
-      date: "09-18",
-      score: 76
-    },
     {
       date: "09-19",
       score: 76
@@ -227,63 +244,48 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "09-22",
-      score: 66,
+      score: 66
+    },
+    {
+      date: "09-23",
+      score: 58,
       active: true
     }
   ],
-  investmentSignal: "→ 维持宏观对冲与能源大宗多头底仓，逢高防御性降低风险资产敞口，规避联大政治脉冲扰动。",
-  prevRiskScore: 76,
-  events: [
-    {
-      id: "EVT-AUTO-01",
-      title: "美伊两军处于直接对峙与威慑交火状态，伊朗军方公开警告美方若发动新打击将招致无限制报复，战区战备等级极高（来源：Gulf News、Reuters）",
-      description: "美伊两军处于直接对峙与威慑交火状态，伊朗军方公开警告美方若发动新打击将招致无限制报复，战区战备等级极高（来源：Gulf News、Reuters）。",
-      verification: "single",
-      timestamp: "2026-09-22（当日公开报道）",
-      significance: ""
-    },
-    {
-      id: "EVT-AUTO-02",
-      title: "UKMTO确认油轮LR Stephanie在海峡遭抛射物袭击，商业通航量被压制在历史低位，主要班轮公司继续绕行（来源：UKMTO、JMIC）",
-      description: "UKMTO确认油轮LR Stephanie在海峡遭抛射物袭击，商业通航量被压制在历史低位，主要班轮公司继续绕行（来源：UKMTO、JMIC）。",
-      verification: "single",
-      timestamp: "2026-09-22（当日公开报道）",
-      significance: ""
-    }
-  ],
+  keyChange: "美伊代表团在联合国大会取得实质性外交突破，且伊朗提出霍尔木兹海峡的条件性重启时间表，推动风险分大幅下行。",
+  investmentSignal: "→ 随着美伊在联大展开实质性会晤及霍尔木兹海峡释放重启信号，建议适度减持能源与防御性头寸，逐步将资金向风险资产转移。",
+  change: "down",
+  prevRiskScore: 66,
   webSources: [],
   webSearchQueries: []
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-09-22",
-  version: "v2.200",
-  riskScore: 66,
-  change: "none",
-  keyChange: "UNGA diplomatic feelers coexist with Hormuz tanker strikes; composite risk score sticky at 76",
+  date: "2026-09-23",
+  version: "v2.201",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D206",
+      value: "D207",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "↓10",
+      value: "↓8",
       unit: "vs Prev",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $89.16–$93.84 · Brent $97.44–$102.29",
+      value: "WTI $88.71–$91.93 · Brent $94.10–$97.33",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
-      value: "严重受限",
+      value: "Partially Restricted",
       unit: "Transit Status",
       color: "#ffdc00"
     }
@@ -291,19 +293,19 @@ export const DATA_EN: DashboardData = {
   riskFactors: [
     {
       name: "Military Escalation Intensity",
-      score: 4,
-      prev: 5,
+      score: 3,
+      prev: 4,
       weight: 0.2,
-      description: "Direct US-Iran standoff remains acute, with Iranian military commanders vowing limitless retaliation against potential renewed US strikes (Sources: Gulf News, Reuters).",
+      description: "Direct fire paused as focus shifts to diplomatic probing",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "Hormuz Disruption",
       score: 3,
-      prev: 4,
+      prev: 3,
       weight: 0.2,
-      description: "UKMTO confirmed the tanker LR Stephanie was struck by a projectile, suppressing commercial transit to single-digit daily flows (Sources: UKMTO, JMIC).",
+      description: "Reopening proposed but currently remains restricted",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -312,7 +314,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Crude benchmarks traded primarily within the elevated $85–100/bbl band, with Brent pulling back below $100 on diplomatic hopes (Sources: Reuters, Yahoo Finance).",
+      description: "Risk premium fades, price band declines",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -321,29 +323,58 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "The US military maintains active maritime escorts and base defense, while European allies offer defensive security assistance (Sources: CENTCOM, Gulf News).",
+      description: "External powers maintain diplomatic mediation roles",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "De-escalation Probability",
-      score: 3.5,
-      prev: 4,
+      score: 2.5,
+      prev: 3.5,
       weight: 0.2,
-      description: "Iran proposed reopening Hormuz within 7 days if the US lifts port blockades, but mutual preconditions leave talks stalled (Sources: Reuters, CBS News).",
+      description: "Substantive high-level contact achieved",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
+  riskScore: 58,
+  events: [
+    {
+      id: "EVT-01",
+      title: "US and Iran Delegations Hold Three-Hour Meeting at UNGA",
+      description: "US officials and the Iranian delegation met for three hours on the sidelines of the UN General Assembly, marking the highest level of substantive diplomatic contact since the conflict began. (Gulf News, NDTV)",
+      verification: "confirmed",
+      timestamp: "2026-09-23T08:00:00Z",
+      significance: "",
+      highlight: true,
+      critical: true
+    },
+    {
+      id: "EVT-02",
+      title: "Iran Proposes Conditional Reopening of Strait of Hormuz",
+      description: "Senior Iranian officials told media that Iran is willing to lift the blockade on the Strait of Hormuz within seven days if the US substantially eases military and economic pressure. (Reuters, Grafa)",
+      verification: "confirmed",
+      timestamp: "2026-09-23T11:00:00Z",
+      significance: "",
+      highlight: true
+    },
+    {
+      id: "EVT-03",
+      title: "US Imposes Secondary Sanctions on Iranian Aviation Network",
+      description: "The US Treasury officially launched secondary sanctions targeting Iran's civil aviation network to maintain severe economic pressure during the negotiation window. (US Treasury, Gulf News)",
+      verification: "confirmed",
+      timestamp: "2026-09-23T13:00:00Z",
+      significance: ""
+    }
+  ],
   warPhase: {
-    level: "Maritime Blockade Confrontation",
-    targetLevel: "Fragile Balance",
+    level: "Negotiation Window",
+    targetLevel: "Easing Posture",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Persistent maritime attacks sustain severe commercial transit friction",
-      "Tehran leverages maritime chokehold as collateral to negotiate sanctions relief",
-      "Mutual lack of strategic trust keeps de-escalation bar exceptionally high"
+      "Substantive contacts between the US and Iran at the UNGA signal the bilateral relationship is shifting toward a phase dominated by political negotiations.",
+      "The conditional unblocking of the Strait of Hormuz has been put on a definite timeline for the first time, offering an anchor for conflict de-escalation."
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -354,8 +385,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: US tactical air wings and naval escort groups sustain routine combat patrols in the Gulf.",
-        "Change: Iranian armed forces issued an explicit warning of unconstrained retaliation if struck again."
+        "Change: Direct US-Iran military strikes paused during the UN General Assembly as frontlines shift toward silence and diplomatic probing."
       ]
     },
     {
@@ -364,8 +394,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Major international shipping carriers continue to route vessels around the Cape of Good Hope.",
-        "Change: UKMTO confirmed the tanker LR Stephanie sustained projectile damage, the 4th incident since Sept 17."
+        "Change: Iran introduced a specific 7-day timeline for reopening the strait, contingent upon the lifting of US pressure.",
+        "Continue: Actual physical transit conditions currently remain partially restricted."
       ]
     },
     {
@@ -374,8 +404,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Regional producers run bypass pipelines at maximum capacity to preserve export continuity.",
-        "Change: Diplomatic expectations ahead of UNGA talks pulled Brent futures modestly under the $100 threshold."
+        "Change: Driven by anticipated transit resumption and diplomatic ice-breaking, fear in the oil markets dissipated, causing price bands to drop significantly."
       ]
     },
     {
@@ -384,26 +413,19 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: The US administration reiterates commitments to freedom of navigation and regional defense.",
-        "Change: Iran conveyed an offer via intermediaries to reopen Hormuz within 7 days if US pressure ceases."
+        "Change: Direct contacts between senior officials at the UNGA broke the earlier high-pressure deadlock, demonstrating clear willingness to negotiate."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Washington demands an unconditional halt to Iranian maritime harassment and regional proxy funding",
-      "Tehran insists on the full lifting of naval blockades and military pressure prior to corridor reopening"
+      "The conflict between the new US secondary aviation sanctions and the dual-track diplomatic contacts at the UN."
     ],
     military: [
-      "Coalition air defense escorts cannot achieve 100% interception against low-cost loitering munitions",
-      "Iranian asymmetric coastal firepower confronts US forward posture in a protracted war of attrition"
+      "The tension between fulfilling Iran's promise to unblock the strait and the forward deterrence deployments of US forces in the region."
     ]
   },
   scoreTrend: [
-    {
-      date: "09-18",
-      score: 76
-    },
     {
       date: "09-19",
       score: 76
@@ -418,30 +440,18 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "09-22",
-      score: 66,
+      score: 66
+    },
+    {
+      date: "09-23",
+      score: 58,
       active: true
     }
   ],
-  investmentSignal: "→ Maintain defensive macro hedges and core energy commodity exposure while trimming risk assets on UNGA headline volatility.",
-  prevRiskScore: 76,
-  events: [
-    {
-      id: "EVT-AUTO-01",
-      title: "Direct US-Iran standoff remains acute, with Iranian military commanders vowing limitless retali…",
-      description: "Direct US-Iran standoff remains acute, with Iranian military commanders vowing limitless retaliation against potential renewed US strikes (Sources: Gulf News, Reuters).",
-      verification: "single",
-      timestamp: "2026-09-22 (same-day reporting)",
-      significance: ""
-    },
-    {
-      id: "EVT-AUTO-02",
-      title: "UKMTO confirmed the tanker LR Stephanie was struck by a projectile, suppressing commercial tran…",
-      description: "UKMTO confirmed the tanker LR Stephanie was struck by a projectile, suppressing commercial transit to single-digit daily flows (Sources: UKMTO, JMIC).",
-      verification: "single",
-      timestamp: "2026-09-22 (same-day reporting)",
-      significance: ""
-    }
-  ],
+  keyChange: "Substantive diplomatic breakthroughs between US and Iranian delegations at the UNGA, paired with Iran's conditional timeline to reopen the Strait of Hormuz, drove a significant downward shift in the risk score.",
+  investmentSignal: "→ As the US and Iran engage in substantive talks at the UNGA and Hormuz reopening signals emerge, it is recommended to reduce energy and defensive positions, gradually shifting capital toward risk assets.",
+  change: "down",
+  prevRiskScore: 66,
   webSources: [],
   webSearchQueries: []
 };
@@ -451,7 +461,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "9月22日节点",
+    node406: "9月23日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -485,16 +495,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.200 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.201 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 66（↓10）：联大外交试探与海峡袭船并存，综合风险分保持76分黏滞态势",
-    bannerWarning: "→ 维持宏观对冲与能源大宗多头底仓，逢高防御性降低风险资产敞口，规避联大政治脉冲扰动。",
-    deescalationIntent: "美方要求伊方无条件停止对航运袭扰与支持代理人",
-    structuralRisk: "UKMTO确认油轮LR Stephanie在海峡遭抛射物袭击，商业通航量被压制在历史低位，主要班轮公司继续绕行（来源：UKMTO、JMIC）。",
-    contradictionNote: "美方要求伊方无条件停止对航运袭扰与支持代理人；美军护航防御力量无法百分之百杜绝低成本巡飞弹与无人艇突防",
+    bannerSignal: "综合评分 58（↓8）：美伊代表团在联合国大会取得实质性外交突破，且伊朗提出霍尔木兹海峡的条件性重启时间表，推动风险分大幅下行。",
+    bannerWarning: "→ 随着美伊在联大展开实质性会晤及霍尔木兹海峡释放重启信号，建议适度减持能源与防御性头寸，逐步将资金向风险资产转移。",
+    deescalationIntent: "美国实施的新一轮航空次级制裁与联合国外交接触之间的双轨政策冲突",
+    structuralRisk: "出现解封提议但当前依旧受限",
+    contradictionNote: "美国实施的新一轮航空次级制裁与联合国外交接触之间的双轨政策冲突；伊朗海峡解封承诺的落实与美军在该地区前沿威慑部署的对立",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -502,7 +512,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第206天",
+    dayCount: "第207天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -510,7 +520,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Sep 22 Node",
+    node406: "Sep 23 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -544,16 +554,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.200 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.201 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 66 (↓10): UNGA diplomatic feelers coexist with Hormuz tanker strikes; composite risk score sticky at 76",
-    bannerWarning: "→ Maintain defensive macro hedges and core energy commodity exposure while trimming risk assets on UNGA headline volati…",
-    deescalationIntent: "Washington demands an unconditional halt to Iranian maritime harassment and reg…",
-    structuralRisk: "UKMTO confirmed the tanker LR Stephanie was struck by a projectile, suppressing commercial transit …",
-    contradictionNote: "Washington demands an unconditional halt to Iranian maritime harassment and regional proxy funding; Coalition air defense escorts cannot achieve 100% intercept…",
+    bannerSignal: "Composite 58 (↓8): Substantive diplomatic breakthroughs between US and Iranian delegations at the UNGA, paired with Iran's conditional timeline to reopen the …",
+    bannerWarning: "→ As the US and Iran engage in substantive talks at the UNGA and Hormuz reopening signals emerge, it is recommended to …",
+    deescalationIntent: "The conflict between the new US secondary aviation sanctions and the dual-track…",
+    structuralRisk: "Reopening proposed but currently remains restricted",
+    contradictionNote: "The conflict between the new US secondary aviation sanctions and the dual-track diplomatic contacts at the UN.; The tension between fulfilling Iran's promise t…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -561,7 +571,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 206",
+    dayCount: "Day 207",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }

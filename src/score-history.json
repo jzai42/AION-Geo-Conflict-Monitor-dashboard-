@@ -1,27 +1,37 @@
 {
   "version": 2,
   "latest": {
-    "date": "2026-09-22",
-    "appVersion": "v2.200",
-    "riskScore": 66,
-    "prevRiskScore": 76,
-    "conflictDay": 206,
+    "date": "2026-09-23",
+    "appVersion": "v2.201",
+    "riskScore": 58,
+    "prevRiskScore": 66,
+    "conflictDay": 207,
     "factorScores": [
-      4,
       3,
       3,
       3,
-      3.5
+      3,
+      2.5
     ],
     "generationMode": "live",
+    "rawModelScore": 58,
+    "rawModelFactors": [
+      3,
+      3,
+      3,
+      3,
+      2.5
+    ],
+    "finalRiskScore": 58,
+    "adjustmentReason": null,
     "oilQuality": {
       "publish": "live",
       "parseOk": true,
-      "combinedMid": 95.6825,
-      "combinedHigh": 102.29,
+      "combinedMid": 93.0175,
+      "combinedHigh": 97.33,
       "midBand": 3,
-      "highBand": 4,
-      "oilDirection": "firm",
+      "highBand": 3,
+      "oilDirection": "mid",
       "narrativeConflict": false,
       "hasOilSourceUrl": true,
       "markdownMismatch": false,
@@ -34,15 +44,15 @@
       "stale": false,
       "fromPrior": false,
       "fetchFailed": false,
-      "asOf": "2026-09-22T13:46:53.541Z",
-      "wti": 90.31,
-      "brent": 98.72,
-      "wtiLow": 89.16,
-      "wtiHigh": 93.84,
-      "brentLow": 97.44,
-      "brentHigh": 102.29,
-      "keyStatValue": "WTI $89.16–$93.84 · Brent $97.44–$102.29",
-      "updatedAt": "2026-09-22T13:49:18.152Z"
+      "asOf": "2026-09-23T13:58:35.418Z",
+      "wti": 91.89,
+      "brent": 97.29,
+      "wtiLow": 88.71,
+      "wtiHigh": 91.93,
+      "brentLow": 94.1,
+      "brentHigh": 97.33,
+      "keyStatValue": "WTI $88.71–$91.93 · Brent $94.10–$97.33",
+      "updatedAt": "2026-09-23T14:03:32.272Z"
     }
   },
   "lockedDates": [
@@ -58,10 +68,6 @@
     "2026-05-23"
   ],
   "history": [
-    {
-      "date": "2026-05-25",
-      "score": 48
-    },
     {
       "date": "2026-05-27",
       "score": 48
@@ -537,6 +543,10 @@
     {
       "date": "2026-09-22",
       "score": 66
+    },
+    {
+      "date": "2026-09-23",
+      "score": 58
     }
   ]
 }
