@@ -20,6 +20,14 @@ import {
   resolveOilFactsForRun,
   summarizeOilResolution,
 } from "./oil-facts.mjs";
+import {
+  assertScoreConsistency,
+  buildAdjustmentReason,
+  compositeFromFactors,
+  syncKeyChangeToFinalScore,
+  syncMarkdownCompositeScores,
+  upsertZhReportDataAppendix,
+} from "./score-consistency.mjs";
 
 // ── CONFIG ─────────────────────────────────────────────────────────
 const CONFIG = {
@@ -419,32 +427,9 @@ function normalizeInvestmentSignal(text, lang) {
   return clip(t, 420);
 }
 
-/** 在中文日报末追加可审计的近5日分数表（避免模型四舍五入与存档不一致） */
+/** 在中文日报末写入可审计近5日分数表（已存在则替换，保证与 finalRiskScore 一致） */
 function appendZhReportDataAppendix(md, historyArr, todayIso, priorScore, todayScore) {
-  const m = s(md).trimEnd();
-  if (m.includes("### 附录：近5个公历日综合分")) return m;
-  const dates = [4, 3, 2, 1, 0].map((k) => addDaysIso(todayIso, -k));
-  const rows = dates.map((iso) => {
-    const sc = scoreForDate(historyArr, iso);
-    return `| ${iso} | ${sc ?? "—"} |`;
-  }).join("\n");
-  const nums = dates.map((iso) => scoreForDate(historyArr, iso)).filter((x) => x != null);
-  const lo = nums.length ? Math.min(...nums) : "—";
-  const hi = nums.length ? Math.max(...nums) : "—";
-  const delta = priorScore != null && todayScore != null ? todayScore - priorScore : null;
-  const deltaStr = delta == null ? "N/A" : (delta > 0 ? `+${delta}` : `${delta}`);
-  const appendix = `
-
-### 附录：近5个公历日综合分（脚本据 score-history 填写，可审计）
-
-| 日期 | 综合分 |
-|------|--------|
-${rows}
-
-- **区间（有数据日）**：${lo}–${hi}
-- **较昨日 Δ**：${deltaStr}（今日落盘分 **${todayScore}**）
-`;
-  return m + appendix;
+  return upsertZhReportDataAppendix(md, historyArr, todayIso, priorScore, todayScore, addDaysIso, scoreForDate);
 }
 
 // ── Load prev from score-history.json ──────────────────────────────
@@ -1264,6 +1249,12 @@ for (const r of validResults) {
   }
 }
 
+/** Ensemble 原始分（secondary / sourceVerification / lock 之前）— 仅审计，不得当作主文最终分 */
+const rawModelFactors = [...finalFactors];
+const rawModelScore = compositeFromFactors(rawModelFactors);
+let secondaryBlended = false;
+let sourceVerificationClamped = false;
+
 // 历史多日同分时，median 易与 Gemini 簇合、secondary 难单独拉动总分；与 adjudication 做逐维均值再量化，便于打破粘滞（仍走后述 sourceVerification）。
 if (
   !isTodayLocked &&
@@ -1276,6 +1267,7 @@ if (
   finalFactors = finalFactors.map((sc, i) =>
     quantizeFactorScore(i, (sc + (secondary[i] ?? 3)) / 2),
   );
+  secondaryBlended = true;
   console.log(`Stale high: blended factors with secondary adjudication → [${finalFactors.join(",")}]`);
 }
 
@@ -1307,6 +1299,7 @@ finalFactors = finalFactors.map((sc, i) => {
     return sc;
   }
   if (sc !== prev) {
+    sourceVerificationClamped = true;
     console.warn(`  ⚠ ${factorNamesZh[i]}: sourceVerification=${legacy ?? "missing"} → clamp to prev=${prev} (需要已证实)`);
   }
   return prev;
@@ -1335,7 +1328,18 @@ if (isTodayLocked) {
 if (Math.abs(adjustedFinalRiskScore - priorDayComposite) > 20) {
   console.warn(`  ⚠ Large swing vs prior day: ${priorDayComposite} → ${adjustedFinalRiskScore}`);
 }
-console.log(`Final: factors=[${adjustedFinalFactors.join(",")}] riskScore=${adjustedFinalRiskScore} (priorDay=${priorDayComposite}, Δ=${adjustedFinalRiskScore - priorDayComposite})`);
+const scoreAdjustmentReason = buildAdjustmentReason({
+  rawFactors: rawModelFactors,
+  finalFactors: adjustedFinalFactors,
+  secondaryBlended,
+  sourceVerificationClamped,
+  locked: isTodayLocked,
+});
+console.log(
+  `Final: factors=[${adjustedFinalFactors.join(",")}] riskScore=${adjustedFinalRiskScore}` +
+    ` (priorDay=${priorDayComposite}, Δ=${adjustedFinalRiskScore - priorDayComposite}` +
+    `, rawModelScore=${rawModelScore}, adjustment=${scoreAdjustmentReason || "none"})`,
+);
 
 // Hybrid oil feed: deterministic prices overwrite the model card when AION_OIL_FEED=on.
 // Shadow: log-compare only. Fetch failure never aborts the day by itself.
@@ -1430,6 +1434,11 @@ store.latest = {
   conflictDay: correctConflictDay,
   factorScores: [...adjustedFinalFactors],
   generationMode,
+  /** 审计：调整前 ensemble 分，不得被主报告当作最终分 */
+  rawModelScore,
+  rawModelFactors: [...rawModelFactors],
+  finalRiskScore: adjustedFinalRiskScore,
+  adjustmentReason: scoreAdjustmentReason || null,
   oilQuality: oilQualityHistoryRecord(oilQualityVerdict),
   ...(oilPriceRecord ? { oilPrice: oilPriceRecord } : {}),
 };
@@ -1668,6 +1677,48 @@ function enforceLayout(d, lang) {
 enforceLayout(payload.dataZh, "zh");
 enforceLayout(payload.dataEn, "en");
 
+// ── Single Source of Truth: finalResult → keyChange + markdown + appendix ──
+{
+  const zhKc = syncKeyChangeToFinalScore(payload.dataZh.keyChange, {
+    lang: "zh",
+    finalScore: adjustedFinalRiskScore,
+    priorScore: priorDayComposite,
+    rawScore: rawModelScore,
+    adjustmentReason: scoreAdjustmentReason,
+  });
+  payload.dataZh.keyChange = zhKc.text;
+  const enKc = syncKeyChangeToFinalScore(payload.dataEn.keyChange, {
+    lang: "en",
+    finalScore: adjustedFinalRiskScore,
+    priorScore: priorDayComposite,
+    rawScore: rawModelScore,
+    adjustmentReason: scoreAdjustmentReason,
+  });
+  payload.dataEn.keyChange = enKc.text;
+  if (zhKc.changed || enKc.changed) {
+    console.warn(
+      `Score SSOT: rebuilt keyChange from finalRiskScore=${adjustedFinalRiskScore}` +
+        ` (rawModelScore=${rawModelScore}${scoreAdjustmentReason ? `; ${scoreAdjustmentReason}` : ""})`,
+    );
+  }
+
+  const mdSync = syncMarkdownCompositeScores(payload.reportMarkdownZh, {
+    finalScore: adjustedFinalRiskScore,
+    priorScore: priorDayComposite,
+    rawScore: rawModelScore,
+    factors: adjustedFinalFactors,
+    scoreTrend: payload.dataZh.scoreTrend,
+    todayIso: todayNy,
+    adjustmentReason: scoreAdjustmentReason,
+  });
+  payload.reportMarkdownZh = mdSync.markdown;
+  if (mdSync.changed) {
+    console.warn(
+      `Score SSOT: synced reportMarkdownZh composite ${mdSync.previousHeadline ?? "?"} → ${adjustedFinalRiskScore}`,
+    );
+  }
+}
+
 // Sync: EN gets all numeric fields from ZH
 const zh = payload.dataZh;
 const en = payload.dataEn;
@@ -1748,6 +1799,18 @@ payload.reportMarkdownZh = appendZhReportDataAppendix(
   priorDayComposite,
   adjustedFinalRiskScore,
 );
+
+// Fail closed: headline / trend / appendix / dashboard / keyChange must all equal finalRiskScore
+assertScoreConsistency({
+  finalRiskScore: adjustedFinalRiskScore,
+  markdown: payload.reportMarkdownZh,
+  todayIso: todayNy,
+  scoreTrend: zh.scoreTrend,
+  dashboardRiskScore: zh.riskScore,
+  keyChange: zh.keyChange,
+});
+console.log(`Score SSOT invariant OK: finalRiskScore=${adjustedFinalRiskScore}`);
+
 await mkdir(PATHS.reports, { recursive: true });
 await writeFile(path.join(PATHS.reports, `${todayNy}.md`), payload.reportMarkdownZh + "\n", "utf8");
 

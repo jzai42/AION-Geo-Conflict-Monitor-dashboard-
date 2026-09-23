@@ -63,7 +63,7 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Oil-price quality unit tests
+      - name: Pipeline unit tests (oil + score SSOT)
         if: steps.ny_guard.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
         run: npm run test:oil
 
