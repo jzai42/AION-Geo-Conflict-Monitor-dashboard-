@@ -65,24 +65,24 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-09-23",
-  version: "v2.201",
+  date: "2026-09-24",
+  version: "v2.202",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D207",
+      value: "D208",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↓8",
+      value: "↑4",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $88.71–$91.93 · Brent $94.10–$97.33",
+      value: "WTI $91.23–$94.69 · Brent $97.10–$100.85",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -98,9 +98,9 @@ export const DATA_ZH: DashboardData = {
     {
       name: "军事升级烈度",
       score: 3,
-      prev: 4,
+      prev: 3,
       weight: 0.2,
-      description: "双方暂停直接交火，进入外交试探期",
+      description: "胡塞武装威胁对美利益进行打击，伊朗警告周边国家机场，维持在代理冲突级别。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -109,16 +109,16 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "出现解封提议但当前依旧受限",
+      description: "多国斡旋复航条件，海峡通行依旧受阻。",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "partial"
     },
     {
       name: "能源冲击",
-      score: 3,
+      score: 4,
       prev: 3,
       weight: 0.2,
-      description: "风险溢价消退，区间回落",
+      description: "国际油价上探高位，布伦特原油区间触及100美元以上。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -127,58 +127,68 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "外部大国维持外交斡旋角色",
+      description: "美方以航空制裁施压，无实质性大规模兵力新增参战。",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "partial"
     },
     {
       name: "降级/谈判前景",
       score: 2.5,
-      prev: 3.5,
+      prev: 2.5,
       weight: 0.2,
-      description: "达成实质性高级别接触",
+      description: "联大期间展现间接沟通意愿，但缺乏实质妥协。",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
-  riskScore: 58,
+  riskScore: 62,
   events: [
     {
-      id: "EVT-01",
-      title: "美伊代表团在联合国大会举行三小时会谈",
-      description: "美国官方与伊朗代表团在联合国大会场边进行了长达三小时的会面，标志着冲突爆发以来最高级别的实质性外交接触。（Gulf News, NDTV）",
+      id: "evt-1",
+      title: "伊朗威胁中东地区民航枢纽",
+      description: "伊朗官方警告，若周边国家配合美国针对伊朗航空的制裁，将采取反制措施瘫痪其机场功能。（Tier2: Reuters, STL News）",
       verification: "confirmed",
-      timestamp: "2026-09-23T08:00:00Z",
+      timestamp: "2026-09-24",
       significance: "",
       highlight: true,
       critical: true
     },
     {
-      id: "EVT-02",
-      title: "伊朗提议条件性重启霍尔木兹海峡",
-      description: "伊朗高级官员向媒体表示，若美国实质性放松军事与经济压力，伊朗愿在七天内全面解除对海峡的封锁。（Reuters, Grafa）",
-      verification: "confirmed",
-      timestamp: "2026-09-23T11:00:00Z",
-      significance: "",
-      highlight: true
+      id: "evt-2",
+      title: "胡塞武装对美发出直接警告",
+      description: "胡塞武装宣称，若美国介入也门内战以支持沙特，将对美在中东的利益目标发动打击。（Tier2: CBS News）",
+      verification: "partial",
+      timestamp: "2026-09-24",
+      significance: ""
     },
     {
-      id: "EVT-03",
-      title: "美国对伊朗航空网络实施次级制裁",
-      description: "美财政部正式启动针对伊朗民用航空网络的二级制裁，以在谈判窗口期继续维持经济高压。（US Treasury, Gulf News）",
+      id: "evt-3",
+      title: "伊朗总统联大表态双轨策略",
+      description: "伊朗总统在联合国大会重申对外交谈判的承诺，但强调绝不会屈服于美国压力。（Tier1: UN; Tier2: Al Arabiya, AP）",
       verification: "confirmed",
-      timestamp: "2026-09-23T13:00:00Z",
+      timestamp: "2026-09-23",
       significance: ""
+    },
+    {
+      id: "evt-4",
+      title: "布伦特原油上探百元危机带",
+      description: "受地区冲突外溢及断供担忧影响，国际油价重拾涨势，布伦特原油触及100美元以上。（Tier2: Reuters, Bloomberg）",
+      verification: "confirmed",
+      timestamp: "2026-09-24",
+      significance: "",
+      highlight: true,
+      critical: true
     }
   ],
   warPhase: {
-    level: "谈判窗口期",
-    targetLevel: "缓和态势",
+    level: "高压对峙",
+    targetLevel: "结构性紧张",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "美伊双方在联大期间的实质性接触宣告双边关系进入政治谈判主导期",
-      "霍尔木兹海峡解封首次被明确提上时间表，为冲突降温提供锚点"
+      "冲突向民用基础设施及次生制裁领域外溢，代理人阵线维持活跃。",
+      "能源计价反馈出市场对长期断供风险的担忧，上探100美元关口。",
+      "联大期间展现的外交接触与区域内相互威慑并存，局势处于黏滞状态。"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -189,7 +199,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美伊在联合国大会期间暂停直接军事打击，前线转入静默与外交试探。"
+        "变化：伊朗警告将瘫痪配合美国制裁的周边国家机场，扩大了报复潜在目标范围。",
+        "变化：胡塞武装首次明确将美军列为也门战场若遭干预后的直接打击对象。"
       ]
     },
     {
@@ -198,8 +209,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：伊朗首次提出重新开放海峡的具体时间表（7天），但附带美方施压解除的前提条件。",
-        "延续：实际物理通行状况目前仍维持部分受限状态。"
+        "延续：国际社会推动复航的提案仍在发酵，但海峡实质通行许可状态未见放松。"
       ]
     },
     {
@@ -208,7 +218,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：受海峡复航预期及外交破冰影响，油市恐慌情绪消散，区间显著回落。"
+        "变化：避险情绪升温导致油价区间显著上移，布伦特原油区间触碰100美元危机带。"
       ]
     },
     {
@@ -217,23 +227,19 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：双方高层在联大期间的直接接触打破了前期的高压对峙僵局，展现出明确的外交意愿。"
+        "延续：伊朗政府在联合国大会平台重申维持谈判敞口，但核心立场保持强硬。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美国实施的新一轮航空次级制裁与联合国外交接触之间的双轨政策冲突"
+      "联大框架下的间接接触意愿与地区制裁相互施压的矛盾。"
     ],
     military: [
-      "伊朗海峡解封承诺的落实与美军在该地区前沿威慑部署的对立"
+      "代理人武装强硬威慑与大国意图控制直接冲突规模之间的平衡。"
     ]
   },
   scoreTrend: [
-    {
-      date: "09-19",
-      score: 76
-    },
     {
       date: "09-20",
       score: 76
@@ -248,37 +254,41 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "09-23",
-      score: 58,
+      score: 58
+    },
+    {
+      date: "09-24",
+      score: 62,
       active: true
     }
   ],
-  keyChange: "美伊代表团在联合国大会取得实质性外交突破，且伊朗提出霍尔木兹海峡的条件性重启时间表，推动风险分大幅下行。",
-  investmentSignal: "→ 随着美伊在联大展开实质性会晤及霍尔木兹海峡释放重启信号，建议适度减持能源与防御性头寸，逐步将资金向风险资产转移。",
-  change: "down",
-  prevRiskScore: 66,
+  keyChange: "布伦特原油价格突破100美元危机线拉高能源得分；伊朗与代理人加码向美及周边国家发出不对称威慑。",
+  investmentSignal: "→ 能源风险溢价突破百元关口，建议增持原油与防御性大宗商品头寸，警惕风险资产回调。",
+  change: "up",
+  prevRiskScore: 58,
   webSources: [],
   webSearchQueries: []
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-09-23",
-  version: "v2.201",
+  date: "2026-09-24",
+  version: "v2.202",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D207",
+      value: "D208",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "↓8",
+      value: "↑4",
       unit: "vs Prev",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $88.71–$91.93 · Brent $94.10–$97.33",
+      value: "WTI $91.23–$94.69 · Brent $97.10–$100.85",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -294,9 +304,9 @@ export const DATA_EN: DashboardData = {
     {
       name: "Military Escalation Intensity",
       score: 3,
-      prev: 4,
+      prev: 3,
       weight: 0.2,
-      description: "Direct fire paused as focus shifts to diplomatic probing",
+      description: "Houthi rebels threatened to strike US interests, and Iran warned regional airports, maintaining conflict at a proxy and limited threat level.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -305,16 +315,16 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Reopening proposed but currently remains restricted",
+      description: "Multinational efforts to restore transit continue, but Strait passage remains constrained.",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "partial"
     },
     {
       name: "Energy Shock",
-      score: 3,
+      score: 4,
       prev: 3,
       weight: 0.2,
-      description: "Risk premium fades, price band declines",
+      description: "International oil prices surged, with Brent crude touching above $100.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -323,58 +333,68 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "External powers maintain diplomatic mediation roles",
+      description: "The US advances aviation sanctions without new massive military deployments.",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "partial"
     },
     {
       name: "De-escalation Probability",
       score: 2.5,
-      prev: 3.5,
+      prev: 2.5,
       weight: 0.2,
-      description: "Substantive high-level contact achieved",
+      description: "Indirect communication intent displayed during the UNGA, but substantial compromise is lacking.",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
-  riskScore: 58,
+  riskScore: 62,
   events: [
     {
-      id: "EVT-01",
-      title: "US and Iran Delegations Hold Three-Hour Meeting at UNGA",
-      description: "US officials and the Iranian delegation met for three hours on the sidelines of the UN General Assembly, marking the highest level of substantive diplomatic contact since the conflict began. (Gulf News, NDTV)",
+      id: "evt-1",
+      title: "Iran Threatens Regional Civil Aviation Hubs",
+      description: "Iranian officials warned that if neighboring countries cooperate with US sanctions on Iranian aviation, counter-measures would paralyze their airports. (Tier2: Reuters, STL News)",
       verification: "confirmed",
-      timestamp: "2026-09-23T08:00:00Z",
+      timestamp: "2026-09-24",
       significance: "",
       highlight: true,
       critical: true
     },
     {
-      id: "EVT-02",
-      title: "Iran Proposes Conditional Reopening of Strait of Hormuz",
-      description: "Senior Iranian officials told media that Iran is willing to lift the blockade on the Strait of Hormuz within seven days if the US substantially eases military and economic pressure. (Reuters, Grafa)",
-      verification: "confirmed",
-      timestamp: "2026-09-23T11:00:00Z",
-      significance: "",
-      highlight: true
+      id: "evt-2",
+      title: "Houthis Issue Direct Warning to US",
+      description: "Houthi rebels declared they would target US interests in the Middle East if Washington intervenes in the Yemeni civil war to support Saudi Arabia. (Tier2: CBS News)",
+      verification: "partial",
+      timestamp: "2026-09-24",
+      significance: ""
     },
     {
-      id: "EVT-03",
-      title: "US Imposes Secondary Sanctions on Iranian Aviation Network",
-      description: "The US Treasury officially launched secondary sanctions targeting Iran's civil aviation network to maintain severe economic pressure during the negotiation window. (US Treasury, Gulf News)",
+      id: "evt-3",
+      title: "Iran President Signals Dual-Track Strategy at UN",
+      description: "At the UN General Assembly, the Iranian president reaffirmed a commitment to diplomacy but stressed Iran would not bow to US pressure. (Tier1: UN; Tier2: Al Arabiya, AP)",
       verification: "confirmed",
-      timestamp: "2026-09-23T13:00:00Z",
+      timestamp: "2026-09-23",
       significance: ""
+    },
+    {
+      id: "evt-4",
+      title: "Brent Crude Approaches $100 Crisis Zone",
+      description: "Driven by conflict spillovers and supply disruption fears, international oil prices resumed their rally, with Brent touching above $100. (Tier2: Reuters, Bloomberg)",
+      verification: "confirmed",
+      timestamp: "2026-09-24",
+      significance: "",
+      highlight: true,
+      critical: true
     }
   ],
   warPhase: {
-    level: "Negotiation Window",
-    targetLevel: "Easing Posture",
+    level: "High-Pressure Standoff",
+    targetLevel: "Structural Tension",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Substantive contacts between the US and Iran at the UNGA signal the bilateral relationship is shifting toward a phase dominated by political negotiations.",
-      "The conditional unblocking of the Strait of Hormuz has been put on a definite timeline for the first time, offering an anchor for conflict de-escalation."
+      "The conflict is spilling over into civilian infrastructure and secondary sanctions, with proxy fronts remaining active.",
+      "Energy pricing reflects market fears of long-term supply disruptions, testing the $100 threshold.",
+      "The situation remains sticky, balancing diplomatic contacts during the UNGA with ongoing regional deterrence."
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -385,7 +405,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Direct US-Iran military strikes paused during the UN General Assembly as frontlines shift toward silence and diplomatic probing."
+        "Change: Iran warned it would paralyze neighboring countries' airports that cooperate with US sanctions, expanding the potential target scope.",
+        "Change: Houthi rebels explicitly identified US forces as direct targets if Washington intervenes in the Yemeni battlefield."
       ]
     },
     {
@@ -394,8 +415,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Iran introduced a specific 7-day timeline for reopening the strait, contingent upon the lifting of US pressure.",
-        "Continue: Actual physical transit conditions currently remain partially restricted."
+        "Continue: International proposals for restoring navigation remain under discussion, but practical passage restrictions in the Strait have not eased."
       ]
     },
     {
@@ -404,7 +424,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Driven by anticipated transit resumption and diplomatic ice-breaking, fear in the oil markets dissipated, causing price bands to drop significantly."
+        "Change: Risk aversion pushed oil price ranges significantly higher, with the upper bound of Brent crude touching the $100 crisis zone."
       ]
     },
     {
@@ -413,23 +433,19 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Direct contacts between senior officials at the UNGA broke the earlier high-pressure deadlock, demonstrating clear willingness to negotiate."
+        "Continue: The Iranian government reiterated its openness to negotiations at the UN General Assembly platform while maintaining a hardline core stance."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "The conflict between the new US secondary aviation sanctions and the dual-track diplomatic contacts at the UN."
+      "The contradiction between the willingness for indirect contact under the UN framework and the mutual pressure of regional sanctions."
     ],
     military: [
-      "The tension between fulfilling Iran's promise to unblock the strait and the forward deterrence deployments of US forces in the region."
+      "The balance between hardline deterrence by proxy forces and major powers' intent to control the scale of direct conflict."
     ]
   },
   scoreTrend: [
-    {
-      date: "09-19",
-      score: 76
-    },
     {
       date: "09-20",
       score: 76
@@ -444,14 +460,18 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "09-23",
-      score: 58,
+      score: 58
+    },
+    {
+      date: "09-24",
+      score: 62,
       active: true
     }
   ],
-  keyChange: "Substantive diplomatic breakthroughs between US and Iranian delegations at the UNGA, paired with Iran's conditional timeline to reopen the Strait of Hormuz, drove a significant downward shift in the risk score.",
-  investmentSignal: "→ As the US and Iran engage in substantive talks at the UNGA and Hormuz reopening signals emerge, it is recommended to reduce energy and defensive positions, gradually shifting capital toward risk assets.",
-  change: "down",
-  prevRiskScore: 66,
+  keyChange: "Brent crude prices breaking the $100 crisis line drove the energy score higher; Iran and proxies intensified asymmetric deterrence against the US and neighbors.",
+  investmentSignal: "→ With the energy risk premium breaking the $100 mark, we recommend overweighting crude and defensive commodity positions while remaining cautious of risk asset pullbacks.",
+  change: "up",
+  prevRiskScore: 58,
   webSources: [],
   webSearchQueries: []
 };
@@ -461,7 +481,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "9月23日节点",
+    node406: "9月24日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -495,16 +515,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.201 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.202 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 58（↓8）：美伊代表团在联合国大会取得实质性外交突破，且伊朗提出霍尔木兹海峡的条件性重启时间表，推动风险分大幅下行。",
-    bannerWarning: "→ 随着美伊在联大展开实质性会晤及霍尔木兹海峡释放重启信号，建议适度减持能源与防御性头寸，逐步将资金向风险资产转移。",
-    deescalationIntent: "美国实施的新一轮航空次级制裁与联合国外交接触之间的双轨政策冲突",
-    structuralRisk: "出现解封提议但当前依旧受限",
-    contradictionNote: "美国实施的新一轮航空次级制裁与联合国外交接触之间的双轨政策冲突；伊朗海峡解封承诺的落实与美军在该地区前沿威慑部署的对立",
+    bannerSignal: "综合评分 62（↑4）：布伦特原油价格突破100美元危机线拉高能源得分；伊朗与代理人加码向美及周边国家发出不对称威慑。",
+    bannerWarning: "→ 能源风险溢价突破百元关口，建议增持原油与防御性大宗商品头寸，警惕风险资产回调。",
+    deescalationIntent: "联大框架下的间接接触意愿与地区制裁相互施压的矛盾。",
+    structuralRisk: "多国斡旋复航条件，海峡通行依旧受阻。",
+    contradictionNote: "联大框架下的间接接触意愿与地区制裁相互施压的矛盾。；代理人武装强硬威慑与大国意图控制直接冲突规模之间的平衡。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -512,7 +532,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第207天",
+    dayCount: "第208天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -520,7 +540,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Sep 23 Node",
+    node406: "Sep 24 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -554,16 +574,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.201 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.202 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 58 (↓8): Substantive diplomatic breakthroughs between US and Iranian delegations at the UNGA, paired with Iran's conditional timeline to reopen the …",
-    bannerWarning: "→ As the US and Iran engage in substantive talks at the UNGA and Hormuz reopening signals emerge, it is recommended to …",
-    deescalationIntent: "The conflict between the new US secondary aviation sanctions and the dual-track…",
-    structuralRisk: "Reopening proposed but currently remains restricted",
-    contradictionNote: "The conflict between the new US secondary aviation sanctions and the dual-track diplomatic contacts at the UN.; The tension between fulfilling Iran's promise t…",
+    bannerSignal: "Composite 62 (↑4): Brent crude prices breaking the $100 crisis line drove the energy score higher; Iran and proxies intensified asymmetric deterrence against …",
+    bannerWarning: "→ With the energy risk premium breaking the $100 mark, we recommend overweighting crude and defensive commodity positio…",
+    deescalationIntent: "The contradiction between the willingness for indirect contact under the UN fra…",
+    structuralRisk: "Multinational efforts to restore transit continue, but Strait passage remains constrained.",
+    contradictionNote: "The contradiction between the willingness for indirect contact under the UN framework and the mutual pressure of regional sanctions.; The balance between hardl…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -571,7 +591,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 207",
+    dayCount: "Day 208",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }

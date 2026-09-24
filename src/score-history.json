@@ -1,37 +1,37 @@
 {
   "version": 2,
   "latest": {
-    "date": "2026-09-23",
-    "appVersion": "v2.201",
-    "riskScore": 58,
-    "prevRiskScore": 66,
-    "conflictDay": 207,
+    "date": "2026-09-24",
+    "appVersion": "v2.202",
+    "riskScore": 62,
+    "prevRiskScore": 58,
+    "conflictDay": 208,
     "factorScores": [
       3,
       3,
-      3,
+      4,
       3,
       2.5
     ],
     "generationMode": "live",
-    "rawModelScore": 58,
+    "rawModelScore": 62,
     "rawModelFactors": [
       3,
       3,
-      3,
+      4,
       3,
       2.5
     ],
-    "finalRiskScore": 58,
+    "finalRiskScore": 62,
     "adjustmentReason": null,
     "oilQuality": {
       "publish": "live",
       "parseOk": true,
-      "combinedMid": 93.0175,
-      "combinedHigh": 97.33,
+      "combinedMid": 95.9675,
+      "combinedHigh": 100.85,
       "midBand": 3,
-      "highBand": 3,
-      "oilDirection": "mid",
+      "highBand": 4,
+      "oilDirection": "firm",
       "narrativeConflict": false,
       "hasOilSourceUrl": true,
       "markdownMismatch": false,
@@ -44,15 +44,15 @@
       "stale": false,
       "fromPrior": false,
       "fetchFailed": false,
-      "asOf": "2026-09-23T13:58:35.418Z",
-      "wti": 91.89,
-      "brent": 97.29,
-      "wtiLow": 88.71,
-      "wtiHigh": 91.93,
-      "brentLow": 94.1,
-      "brentHigh": 97.33,
-      "keyStatValue": "WTI $88.71–$91.93 · Brent $94.10–$97.33",
-      "updatedAt": "2026-09-23T14:03:32.272Z"
+      "asOf": "2026-09-24T13:55:02.510Z",
+      "wti": 94.28,
+      "brent": 100,
+      "wtiLow": 91.23,
+      "wtiHigh": 94.69,
+      "brentLow": 97.1,
+      "brentHigh": 100.85,
+      "keyStatValue": "WTI $91.23–$94.69 · Brent $97.10–$100.85",
+      "updatedAt": "2026-09-24T14:00:22.926Z"
     }
   },
   "lockedDates": [
@@ -68,10 +68,6 @@
     "2026-05-23"
   ],
   "history": [
-    {
-      "date": "2026-05-27",
-      "score": 48
-    },
     {
       "date": "2026-05-28",
       "score": 72
@@ -547,6 +543,10 @@
     {
       "date": "2026-09-23",
       "score": 58
+    },
+    {
+      "date": "2026-09-24",
+      "score": 62
     }
   ]
 }
