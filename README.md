@@ -8,7 +8,7 @@ Geo-conflict risk dashboard for tracking geopolitical conflict risks, energy sho
 
 ## Product scope (MVP)
 
-The shipped static dashboard prioritizes **shareable URLs** (copy link / system share) and the core monitoring UI. Click **Share → Generate today's snapshot** to render a client-side PNG of the current day's report (no PDF API required), then share via the system sheet (mobile), copy the image, download it, or copy the snapshot page link.
+The shipped static dashboard prioritizes **shareable URLs** (copy link / system share) and the core monitoring UI. Click **Share → Download snapshot** to save today's report as a PNG (no PDF API required). **Share → Generate today's snapshot** opens a preview so you can copy the image, copy the snapshot page link, or share via the system sheet (mobile).
 
 **Server-side PDF export is an enhancement:** the Share menu shows “Generate PDF” only when a PDF API is available — locally via `npm run dev`, or in production when the frontend is built with **`VITE_API_BASE`** pointing at a deployed PDF service (see below).
 

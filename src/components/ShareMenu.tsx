@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Share2, Link2, FileDown, Loader2, Smartphone, ImagePlus } from 'lucide-react';
+import { Share2, Link2, FileDown, Loader2, Smartphone, ImagePlus, Download } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { buildCopyLinkUrl, buildSnapshotViewUrl, tabToShareView } from '../lib/share-url';
 import type { DashboardData } from '../data';
@@ -210,18 +210,45 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
     }
   }, [snapshot, language]);
 
+  const startSnapshotFileDownload = useCallback(
+    (blob: Blob) => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = snapshotFilename(data.date);
+      a.rel = 'noopener';
+      a.click();
+      window.setTimeout(() => URL.revokeObjectURL(url), 30_000);
+      setToast({
+        message: language === 'zh' ? '快照已开始下载' : 'Snapshot downloading',
+        tone: 'success',
+      });
+    },
+    [data.date, language]
+  );
+
   const downloadSnapshot = useCallback(() => {
     if (!snapshot) return;
-    const a = document.createElement('a');
-    a.href = snapshot.url;
-    a.download = snapshotFilename(data.date);
-    a.rel = 'noopener';
-    a.click();
-    setToast({
-      message: language === 'zh' ? '快照已开始下载' : 'Snapshot downloading',
-      tone: 'success',
-    });
-  }, [snapshot, data.date, language]);
+    startSnapshotFileDownload(snapshot.blob);
+  }, [snapshot, startSnapshotFileDownload]);
+
+  /** 分享菜单一键下载：生成当日 PNG 并立刻落盘，不打开预览对话框 */
+  const downloadSnapshotFromMenu = useCallback(async () => {
+    setOpen(false);
+    setSnapshotLoading(true);
+    try {
+      const blob = await captureDailySnapshotPng(data, language);
+      startSnapshotFileDownload(blob);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      setToast({
+        message: language === 'zh' ? `快照下载失败：${msg}` : `Snapshot download failed: ${msg}`,
+        tone: 'error',
+      });
+    } finally {
+      setSnapshotLoading(false);
+    }
+  }, [data, language, startSnapshotFileDownload]);
 
   const copySnapshotLink = useCallback(async () => {
     try {
@@ -300,6 +327,21 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
             testId="share-generate-snapshot"
           />
           <MenuRow icon={<Link2 className="h-3.5 w-3.5" />} label={language === 'zh' ? '复制链接' : 'Copy link'} onClick={copyLink} />
+          <MenuRow
+            icon={snapshotLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Download className="h-3.5 w-3.5" />}
+            label={
+              snapshotLoading
+                ? language === 'zh'
+                  ? '正在下载快照...'
+                  : 'Downloading snapshot...'
+                : language === 'zh'
+                  ? '下载快照'
+                  : 'Download snapshot'
+            }
+            onClick={() => !snapshotLoading && void downloadSnapshotFromMenu()}
+            disabled={snapshotLoading}
+            testId="share-download-snapshot"
+          />
           {showPdfActions && (
             <MenuRow
               icon={pdfLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <FileDown className="h-3.5 w-3.5" />}
