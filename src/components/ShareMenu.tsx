@@ -192,6 +192,24 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
     }
   }, [snapshot, data.date, language, snapshotPageUrl]);
 
+  const copySnapshotImage = useCallback(async () => {
+    if (!snapshot) return;
+    try {
+      await navigator.clipboard.write([
+        new ClipboardItem({ 'image/png': snapshot.blob }),
+      ]);
+      setToast({
+        message: language === 'zh' ? '已复制快照图片，可直接粘贴分享' : 'Snapshot image copied — paste to share',
+        tone: 'success',
+      });
+    } catch {
+      setToast({
+        message: language === 'zh' ? '复制图片失败，请改用下载' : 'Could not copy image — download instead',
+        tone: 'error',
+      });
+    }
+  }, [snapshot, language]);
+
   const downloadSnapshot = useCallback(() => {
     if (!snapshot) return;
     const a = document.createElement('a');
@@ -315,6 +333,7 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
           language={language}
           canShare={canShareSnapshot}
           onShare={() => void shareSnapshot()}
+          onCopyImage={() => void copySnapshotImage()}
           onDownload={downloadSnapshot}
           onCopyLink={() => void copySnapshotLink()}
           onClose={closeSnapshot}

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Download, Link2, Share2, X } from 'lucide-react';
+import { Copy, Download, Link2, Share2, X } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 interface SnapshotShareDialogProps {
@@ -8,6 +8,7 @@ interface SnapshotShareDialogProps {
   language: 'zh' | 'en';
   canShare: boolean;
   onShare: () => void;
+  onCopyImage: () => void;
   onDownload: () => void;
   onCopyLink: () => void;
   onClose: () => void;
@@ -19,6 +20,7 @@ export function SnapshotShareDialog({
   language,
   canShare,
   onShare,
+  onCopyImage,
   onDownload,
   onCopyLink,
   onClose,
@@ -81,6 +83,13 @@ export function SnapshotShareDialog({
               primary
             />
           )}
+          <ActionButton
+            testId="snapshot-copy-image"
+            icon={<Copy className="h-3.5 w-3.5" />}
+            label={zh ? '复制图片' : 'Copy image'}
+            onClick={onCopyImage}
+            primary={!canShare}
+          />
           <ActionButton
             testId="snapshot-download"
             icon={<Download className="h-3.5 w-3.5" />}
