@@ -4,7 +4,6 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { Moon, Sun } from "lucide-react";
 import type { DashboardData } from "../../data";
 import { cn } from "../../lib/utils";
 
@@ -14,8 +13,6 @@ export function Header({
   warPhase,
   language,
   setLanguage,
-  theme,
-  setTheme,
   t,
   share,
 }: {
@@ -24,8 +21,6 @@ export function Header({
   warPhase: DashboardData["warPhase"];
   language: "zh" | "en";
   setLanguage: (l: "zh" | "en") => void;
-  theme: "dark" | "light";
-  setTheme: (t: "dark" | "light") => void;
   t: Record<string, string>;
   share: React.ReactNode;
 }) {
@@ -59,22 +54,6 @@ export function Header({
 
       <div className="flex min-w-0 w-full flex-wrap items-center justify-start gap-x-4 gap-y-2 sm:w-auto sm:justify-end sm:gap-6">
         <div className="flex shrink-0 items-center gap-4">
-          <button
-            type="button"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="shrink-0 rounded-sm border border-aion-gray p-2 text-aion-text-dim transition-colors hover:bg-aion-text/5 hover:text-aion-text"
-            title={
-              language === "zh"
-                ? theme === "dark"
-                  ? "切换为浅色模式"
-                  : "切换为深色模式"
-                : theme === "dark"
-                  ? "Switch to Light Mode"
-                  : "Switch to Dark Mode"
-            }
-          >
-            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-          </button>
           <div className="flex items-center gap-1 bg-aion-text/5 p-1 rounded-sm border border-aion-gray/50">
             <button
               onClick={() => setLanguage("zh")}

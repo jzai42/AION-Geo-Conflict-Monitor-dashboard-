@@ -32,23 +32,6 @@
   --aion-green: #39ff14;
 }
 
-.light {
-  /* 大背景纯白，模块卡片用边框/阴影与淡色阶区分层次 */
-  --aion-bg: #ffffff;
-  --aion-card: #ffffff;
-  --aion-gray: #e4e7ec;
-  --aion-text: #030712;
-  --aion-text-dim: #182230;
-  --aion-stripe: rgba(0, 0, 0, 0.04);
-  /* 主红略收一点，白底上更稳 */
-  --aion-red: #dc2626;
-  /* 类比暖色带（橙↔琥珀↔黄）与互补绿：白底可读、卡片 tint 仍和谐 */
-  --aion-orange: #c2410c;
-  --aion-amber: #b45309;
-  --aion-yellow: #a16207;
-  --aion-green: #15803d;
-}
-
 @layer base {
   body {
     @apply bg-aion-bg text-aion-text font-sans antialiased transition-colors duration-300;
@@ -58,13 +41,6 @@
 @layer components {
   .aion-card {
     @apply bg-aion-card border border-aion-gray rounded-[20px] p-8 transition-all duration-300;
-  }
-
-  /* 浅色模式：白底上的卡片轻微浮起，便于与页面底色区分 */
-  .light .aion-card {
-    box-shadow:
-      0 1px 2px rgba(16, 24, 40, 0.05),
-      0 1px 3px rgba(16, 24, 40, 0.08);
   }
 
   .aion-label {
