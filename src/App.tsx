@@ -48,15 +48,9 @@ export default function App() {
     return navigator.language.toLowerCase().startsWith("zh") ? "zh" : "en";
   });
 
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
-
   useEffect(() => {
-    if (theme === "light") {
-      document.documentElement.classList.add("light");
-    } else {
-      document.documentElement.classList.remove("light");
-    }
-  }, [theme]);
+    document.documentElement.classList.remove("light");
+  }, []);
 
   const data = language === "zh" ? DATA_ZH : DATA_EN;
 
@@ -106,8 +100,6 @@ export default function App() {
         warPhase={data.warPhase}
         language={language}
         setLanguage={setLanguage}
-        theme={theme}
-        setTheme={setTheme}
         t={t}
         share={<ShareMenu data={data} language={language} activeTab={activeTab} />}
       />
