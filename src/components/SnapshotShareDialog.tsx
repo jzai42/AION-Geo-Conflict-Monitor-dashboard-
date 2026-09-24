@@ -73,7 +73,7 @@ export function SnapshotShareDialog({
           />
         </div>
 
-        <div className="flex flex-wrap gap-2 border-t border-aion-gray px-4 py-3">
+        <div className="flex flex-col gap-2 border-t border-aion-gray px-4 py-3 sm:flex-row">
           {canShare && (
             <ActionButton
               testId="snapshot-share"
@@ -127,7 +127,7 @@ function ActionButton({
       data-testid={testId}
       onClick={onClick}
       className={cn(
-        'inline-flex flex-1 items-center justify-center gap-1.5 rounded-sm border px-3 py-2 font-mono text-[10px] transition-colors',
+        'inline-flex w-full items-center justify-center gap-1.5 rounded-sm border px-3 py-2 font-mono text-[10px] transition-colors sm:flex-1',
         primary
           ? 'border-aion-orange/70 bg-aion-orange/15 text-aion-orange hover:bg-aion-orange/25'
           : 'border-aion-gray/60 text-aion-text hover:bg-aion-text/10'
