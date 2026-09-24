@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Share2, Link2, FileDown, Loader2, Smartphone } from 'lucide-react';
+import { Share2, Link2, FileDown, Loader2, Smartphone, ImagePlus } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { buildCopyLinkUrl, tabToShareView } from '../lib/share-url';
+import { buildCopyLinkUrl, buildSnapshotViewUrl, tabToShareView } from '../lib/share-url';
 import type { DashboardData } from '../data';
 import { readFetchErrorMessage } from '../lib/api-error';
 import { apiAbsoluteUrl, canGeneratePdf } from '../lib/api-url';
+import { captureDailySnapshotPng } from '../lib/capture-snapshot';
+import { canShareFiles, snapshotFilename, snapshotShareText } from '../lib/snapshot-share';
+import { SnapshotShareDialog } from './SnapshotShareDialog';
 import { Toast, type ToastTone } from './Toast';
 
 type PdfStatusResponse =
@@ -22,6 +25,8 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
   const [open, setOpen] = useState(false);
   const [toast, setToast] = useState<{ message: string; tone: ToastTone } | null>(null);
   const [pdfLoading, setPdfLoading] = useState(false);
+  const [snapshotLoading, setSnapshotLoading] = useState(false);
+  const [snapshot, setSnapshot] = useState<{ url: string; blob: Blob } | null>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -31,6 +36,12 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
     document.addEventListener('mousedown', onDoc);
     return () => document.removeEventListener('mousedown', onDoc);
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (snapshot?.url) URL.revokeObjectURL(snapshot.url);
+    };
+  }, [snapshot?.url]);
 
   const copyLink = useCallback(async () => {
     const url = buildCopyLinkUrl();
@@ -113,6 +124,102 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
     }
   }, [data.date, data.version, language, activeTab, pollStatus]);
 
+  const snapshotPageUrl = buildSnapshotViewUrl({
+    lang: language,
+    date: data.date,
+    version: data.version,
+    view: tabToShareView(activeTab),
+  });
+
+  const generateSnapshot = useCallback(async () => {
+    setOpen(false);
+    setSnapshotLoading(true);
+    try {
+      const blob = await captureDailySnapshotPng(data, language);
+      setSnapshot((prev) => {
+        if (prev?.url) URL.revokeObjectURL(prev.url);
+        return { url: URL.createObjectURL(blob), blob };
+      });
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      setToast({
+        message: language === 'zh' ? `快照生成失败：${msg}` : `Snapshot failed: ${msg}`,
+        tone: 'error',
+      });
+    } finally {
+      setSnapshotLoading(false);
+    }
+  }, [data, language]);
+
+  const closeSnapshot = useCallback(() => {
+    setSnapshot((prev) => {
+      if (prev?.url) URL.revokeObjectURL(prev.url);
+      return null;
+    });
+  }, []);
+
+  const shareSnapshot = useCallback(async () => {
+    if (!snapshot) return;
+    const file = new File([snapshot.blob], snapshotFilename(data.date), { type: 'image/png' });
+    const text = snapshotShareText(data.date, language);
+    try {
+      if (canShareFiles(file)) {
+        await navigator.share({
+          title: 'AION Geo-Conflict Monitor',
+          text,
+          files: [file],
+        });
+        return;
+      }
+      if (typeof navigator.share === 'function') {
+        await navigator.share({
+          title: 'AION Geo-Conflict Monitor',
+          text,
+          url: snapshotPageUrl,
+        });
+        return;
+      }
+      setToast({
+        message: language === 'zh' ? '当前浏览器不支持系统分享，请下载图片或复制链接' : 'System share unavailable — download or copy link',
+        tone: 'info',
+      });
+    } catch (e) {
+      if (e instanceof DOMException && e.name === 'AbortError') return;
+      setToast({
+        message: language === 'zh' ? '分享已取消或失败' : 'Share cancelled or failed',
+        tone: 'info',
+      });
+    }
+  }, [snapshot, data.date, language, snapshotPageUrl]);
+
+  const downloadSnapshot = useCallback(() => {
+    if (!snapshot) return;
+    const a = document.createElement('a');
+    a.href = snapshot.url;
+    a.download = snapshotFilename(data.date);
+    a.rel = 'noopener';
+    a.click();
+    setToast({
+      message: language === 'zh' ? '快照已开始下载' : 'Snapshot downloading',
+      tone: 'success',
+    });
+  }, [snapshot, data.date, language]);
+
+  const copySnapshotLink = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(snapshotPageUrl);
+      setToast({
+        message: language === 'zh' ? '已复制当日快照链接' : 'Snapshot link copied',
+        tone: 'success',
+      });
+    } catch {
+      setToast({
+        message: language === 'zh' ? '复制失败，请手动复制地址栏' : 'Copy failed',
+        tone: 'error',
+      });
+    }
+  }, [language, snapshotPageUrl]);
+
   const systemShare = useCallback(async () => {
     const url = buildCopyLinkUrl();
     if (navigator.share) {
@@ -130,6 +237,12 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
   }, [language]);
 
   const canShare = typeof navigator !== 'undefined' && !!navigator.share;
+  const snapshotFile = snapshot
+    ? new File([snapshot.blob], snapshotFilename(data.date), { type: 'image/png' })
+    : null;
+  const canShareSnapshot = Boolean(
+    snapshotFile && (canShareFiles(snapshotFile) || canShare)
+  );
   /** MVP：线上静态站以复制链接为主；PDF 需自建 API（VITE_API_BASE）或本地 dev，此时才展示入口 */
   const showPdfActions = canGeneratePdf();
 
@@ -137,6 +250,7 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
     <div className="relative" ref={wrapRef}>
       <button
         type="button"
+        data-testid="share-menu-button"
         onClick={() => setOpen((o) => !o)}
         className={cn(
           'flex items-center gap-1.5 rounded-sm border border-aion-gray/50 bg-aion-text/5 px-3 py-1.5',
@@ -144,16 +258,29 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
         )}
         aria-expanded={open}
         aria-haspopup="menu"
+        disabled={snapshotLoading}
       >
-        <Share2 className="h-3.5 w-3.5" />
-        {language === 'zh' ? '分享' : 'Share'}
+        {snapshotLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Share2 className="h-3.5 w-3.5" />}
+        {snapshotLoading
+          ? language === 'zh'
+            ? '生成快照中...'
+            : 'Capturing...'
+          : language === 'zh'
+            ? '分享'
+            : 'Share'}
       </button>
 
       {open && (
         <div
-          className="absolute right-0 top-full z-[100] mt-1 min-w-[200px] rounded-sm border border-aion-gray/60 bg-aion-bg py-1 shadow-xl"
+          className="absolute right-0 top-full z-[100] mt-1 min-w-[220px] rounded-sm border border-aion-gray/60 bg-aion-bg py-1 shadow-xl"
           role="menu"
         >
+          <MenuRow
+            icon={<ImagePlus className="h-3.5 w-3.5" />}
+            label={language === 'zh' ? '生成当日快照' : "Generate today's snapshot"}
+            onClick={() => void generateSnapshot()}
+            testId="share-generate-snapshot"
+          />
           <MenuRow icon={<Link2 className="h-3.5 w-3.5" />} label={language === 'zh' ? '复制链接' : 'Copy link'} onClick={copyLink} />
           {showPdfActions && (
             <MenuRow
@@ -181,6 +308,19 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
         </div>
       )}
 
+      {snapshot && (
+        <SnapshotShareDialog
+          imageUrl={snapshot.url}
+          date={data.date}
+          language={language}
+          canShare={canShareSnapshot}
+          onShare={() => void shareSnapshot()}
+          onDownload={downloadSnapshot}
+          onCopyLink={() => void copySnapshotLink()}
+          onClose={closeSnapshot}
+        />
+      )}
+
       {toast && <Toast message={toast.message} tone={toast.tone} onClose={() => setToast(null)} />}
     </div>
   );
@@ -191,16 +331,19 @@ function MenuRow({
   label,
   onClick,
   disabled,
+  testId,
 }: {
   icon: React.ReactNode;
   label: string;
   onClick: () => void;
   disabled?: boolean;
+  testId?: string;
 }) {
   return (
     <button
       type="button"
       role="menuitem"
+      data-testid={testId}
       disabled={disabled}
       onClick={onClick}
       className={cn(

@@ -81,6 +81,13 @@ export function buildShareUrl(state: ShareUrlState): string {
   return u.toString();
 }
 
+/** 当日报告快照页（?pdf=geo-monitor），与仪表盘数据同源 */
+export function buildSnapshotViewUrl(state: ShareUrlState): string {
+  const u = new URL(buildShareUrl(state));
+  u.searchParams.set('pdf', 'geo-monitor');
+  return u.toString();
+}
+
 /**
  * 复制链接 / 系统分享用的固定短链（无 query）。可复现状态仍以地址栏 / 完整 GitHub URL 为准。
  * 构建时可设 VITE_SHARE_COPY_URL 覆盖（无尾斜杠），默认 https://qz-l.com/Q54ahm
