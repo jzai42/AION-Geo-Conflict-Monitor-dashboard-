@@ -5,7 +5,7 @@ import { WORLD_MAP } from './world-map';
 /** 页脚展示站点（与模板内容无关，不参与 contentHash） */
 const PDF_SITE_URL = 'https://qz-l.com/Q54ahm';
 
-/** 社交分享海报尺寸（与参考设计一致，9:16） */
+/** 社交分享海报尺寸：与批准的 9:16 demo 保持一致。 */
 export const SNAPSHOT_POSTER_WIDTH = 1080;
 export const SNAPSHOT_POSTER_HEIGHT = 1920;
 
@@ -84,11 +84,11 @@ export function renderReportHtml(s: PdfSnapshot): string {
       margin: 0;
       padding: 0;
       color-scheme: dark;
-      background: #05070c;
+      background: #06111a;
     }
     body {
       font-family: Inter, "SF Pro Display", "PingFang SC", "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
-      color: #ffffff;
+      color: #f4f7fa;
     }
     .sheet {
       position: relative;
@@ -96,18 +96,42 @@ export function renderReportHtml(s: PdfSnapshot): string {
       min-height: ${SNAPSHOT_POSTER_HEIGHT}px;
       overflow: hidden;
       background:
-        radial-gradient(ellipse 90% 55% at 50% 40%, rgba(255, 132, 28, 0.22), transparent 52%),
-        radial-gradient(ellipse 70% 36% at 50% 6%, rgba(18, 32, 58, 0.85), transparent 58%),
-        #05070c;
+        radial-gradient(circle at 50% 35%, rgba(255, 138, 0, 0.09), transparent 34%),
+        radial-gradient(circle at 50% 8%, rgba(15, 67, 92, 0.22), transparent 43%),
+        #06111a;
       display: flex;
       flex-direction: column;
     }
     .world-wrap {
       position: absolute;
-      inset: 16% -10% 18%;
+      left: -8%;
+      right: -8%;
+      top: 280px;
+      height: 720px;
       pointer-events: none;
-      opacity: 0.78;
-      filter: drop-shadow(0 0 18px rgba(255, 140, 30, 0.18));
+      opacity: 0.58;
+      filter: saturate(0.9) drop-shadow(0 0 18px rgba(255, 138, 0, 0.18));
+    }
+    .world-wrap::before,
+    .world-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 10% 2%;
+      pointer-events: none;
+    }
+    .world-wrap::before {
+      background:
+        linear-gradient(13deg, transparent 49.82%, rgba(255,94,0,0.28) 49.94%, rgba(255,94,0,0.28) 50.06%, transparent 50.18%),
+        linear-gradient(-9deg, transparent 49.86%, rgba(255,138,0,0.18) 49.95%, rgba(255,138,0,0.18) 50.05%, transparent 50.14%);
+      opacity: 0.75;
+    }
+    .world-wrap::after {
+      background:
+        radial-gradient(circle at 12% 42%, rgba(255,130,0,0.95) 0 2px, rgba(255,90,0,0.28) 3px, transparent 12px),
+        radial-gradient(circle at 34% 30%, rgba(255,130,0,0.95) 0 2px, rgba(255,90,0,0.25) 3px, transparent 11px),
+        radial-gradient(circle at 52% 48%, rgba(255,130,0,0.95) 0 2px, rgba(255,90,0,0.28) 3px, transparent 13px),
+        radial-gradient(circle at 72% 36%, rgba(255,130,0,0.95) 0 2px, rgba(255,90,0,0.24) 3px, transparent 11px),
+        radial-gradient(circle at 88% 52%, rgba(255,130,0,0.95) 0 2px, rgba(255,90,0,0.28) 3px, transparent 13px);
     }
     .world-map { width: 100%; height: 100%; display: block; }
     .sheet-inner {
@@ -116,7 +140,7 @@ export function renderReportHtml(s: PdfSnapshot): string {
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 48px 52px 36px;
+      padding: 44px 52px 34px;
     }
 
     .head {
@@ -124,22 +148,23 @@ export function renderReportHtml(s: PdfSnapshot): string {
       justify-content: space-between;
       align-items: flex-start;
       gap: 24px;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
     .head-title {
       margin: 0;
-      font-size: 36px;
+      font-size: 35px;
       font-weight: 800;
       letter-spacing: 0.01em;
       text-transform: uppercase;
       line-height: 1.05;
-      color: #ffffff;
+      color: #f4f7fa;
     }
+    .brand-accent { color: #ff9e22; }
     .head-sub {
       margin: 12px 0 0;
       font-size: 18px;
       font-weight: 500;
-      color: rgba(255,255,255,0.48);
+      color: #b8c3cf;
     }
     .head-right { text-align: right; }
     .head-link {
@@ -149,85 +174,109 @@ export function renderReportHtml(s: PdfSnapshot): string {
       font-size: 20px;
       font-weight: 700;
       letter-spacing: -0.01em;
+      padding: 8px 14px;
+      border: 1px solid rgba(255,138,0,0.72);
+      border-radius: 8px;
+      background: rgba(255,138,0,0.06);
     }
     .head-meta {
       margin-top: 12px;
       font-size: 14px;
       line-height: 1.6;
-      color: rgba(255,255,255,0.38);
+      color: #7e8b98;
     }
-    .head-meta b { color: rgba(255,255,255,0.52); font-weight: 600; }
+    .head-meta b { color: #b8c3cf; font-weight: 600; }
 
     .metrics {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 0.9fr 1.1fr;
       gap: 20px;
-      margin-bottom: 36px;
+      margin-bottom: 30px;
+    }
+    .metric-stack {
+      display: grid;
+      grid-template-rows: 1.2fr 0.8fr;
+      gap: 12px;
+      min-height: 196px;
     }
     .metric-card {
-      background: #ffffff;
-      color: #111318;
-      border-radius: 24px;
-      padding: 26px 28px 22px;
+      background: #0b1924;
+      color: #f4f7fa;
+      border: 1px solid #1b3b50;
+      border-radius: 14px;
+      padding: 24px 26px 20px;
       min-height: 196px;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.32);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.16);
+    }
+    .metric-card.compact {
+      min-height: 0;
+      padding: 17px 20px;
+      justify-content: center;
+    }
+    .metric-card.compact .metric-top {
+      align-items: center;
+    }
+    .metric-card.compact .metric-ico {
+      width: 30px;
+      height: 30px;
+      margin-top: 0;
     }
     .metric-top { display: flex; align-items: flex-start; gap: 16px; }
     .metric-ico {
       width: 34px;
       height: 34px;
-      color: #1a1d24;
+      color: #69a9d0;
       flex: 0 0 auto;
       margin-top: 6px;
     }
     .metric-value {
-      font-size: 42px;
+      font-size: 48px;
       font-weight: 800;
       line-height: 0.95;
       letter-spacing: -0.04em;
-      color: #111318;
+      color: #ff9e22;
     }
     .metric-value.oil {
-      font-size: 22px;
+      font-size: 20px;
       letter-spacing: -0.03em;
-      color: #f08a12;
+      color: #ff9e22;
       line-height: 1.25;
       font-weight: 800;
     }
     .metric-unit {
       margin-top: 8px;
       font-size: 15px;
-      color: #6b7280;
+      color: #7e8b98;
       font-weight: 500;
     }
     .metric-split {
       margin-top: auto;
       padding-top: 16px;
-      border-top: 1px solid #ececee;
+      border-top: 1px solid #1b3b50;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
       gap: 12px;
     }
     .metric-left-lbl {
-      font-size: 17px;
+      font-size: 19px;
       font-weight: 600;
-      color: #1f2430;
+      color: #b8c3cf;
     }
     .metric-right { text-align: right; }
     .metric-delta {
-      font-size: 30px;
+      font-size: 38px;
       font-weight: 800;
-      color: #111318;
+      color: #ff9e22;
       line-height: 1;
       letter-spacing: -0.03em;
     }
     .metric-delta-sub {
       margin-top: 5px;
       font-size: 13px;
-      color: #6b7280;
+      color: #7e8b98;
       line-height: 1.3;
     }
     .hormuz-row {
@@ -236,9 +285,19 @@ export function renderReportHtml(s: PdfSnapshot): string {
       gap: 8px;
       font-size: 16px;
       font-weight: 700;
-      color: #1f2430;
+      color: #b8c3cf;
     }
-    .hormuz-row svg { width: 22px; height: 22px; color: #1a1d24; }
+    .hormuz-row svg { width: 22px; height: 22px; color: #69a9d0; }
+    .hormuz-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .hormuz-card .metric-right {
+      padding-left: 18px;
+      border-left: 1px solid #1b3b50;
+    }
 
     .score-block {
       position: relative;
@@ -246,7 +305,7 @@ export function renderReportHtml(s: PdfSnapshot): string {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 4px 0 18px;
+      padding: 4px 0 24px;
       min-height: 420px;
     }
     .score-halo {
@@ -254,7 +313,7 @@ export function renderReportHtml(s: PdfSnapshot): string {
       width: 520px;
       height: 520px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,140,20,0.34) 0%, rgba(255,110,0,0.10) 38%, transparent 68%);
+      background: radial-gradient(circle, rgba(255,138,0,0.22) 0%, rgba(255,100,0,0.08) 42%, transparent 69%);
       pointer-events: none;
     }
     .score-ring {
@@ -265,70 +324,116 @@ export function renderReportHtml(s: PdfSnapshot): string {
       padding: 14px;
       background: conic-gradient(from 210deg, #ff5a00, #ff9d00, #ffd05a, #ff8a00, #ff5a00);
       box-shadow:
-        0 0 28px rgba(255, 150, 30, 0.95),
-        0 0 70px rgba(255, 120, 0, 0.48),
-        0 0 140px rgba(255, 110, 0, 0.24);
+        0 0 32px rgba(255,116,0,0.48),
+        0 0 70px rgba(255,100,0,0.20),
+        0 0 130px rgba(255,90,0,0.12);
+      outline: 1px dotted rgba(255,158,34,0.56);
+      outline-offset: 18px;
     }
     .score-inner {
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      background: radial-gradient(circle at 50% 44%, #10141c 0%, #07090e 72%);
+      background: radial-gradient(circle at center, #542000 0%, #291205 48%, #07111a 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: inset 0 0 28px rgba(0,0,0,0.55);
+      box-shadow:
+        inset 0 0 72px rgba(255,90,0,0.24),
+        inset 0 0 28px rgba(0,0,0,0.55);
     }
     .score-num {
       font-size: 108px;
       font-weight: 800;
       line-height: 0.86;
       letter-spacing: -0.05em;
-      color: #ffffff;
+      color: #f4f7fa;
     }
     .score-lbl {
       margin-top: 12px;
       text-align: center;
-      font-size: 17px;
+      font-size: 19px;
       font-weight: 600;
-      color: rgba(255,255,255,0.48);
+      color: #b8c3cf;
       line-height: 1.25;
     }
 
     .phase-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
       text-align: center;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
       letter-spacing: 0.02em;
-      color: rgba(255,255,255,0.40);
+      color: #7e8b98;
       margin: 2px 0 14px;
+    }
+    .phase-kicker::before,
+    .phase-kicker::after {
+      content: "";
+      width: 245px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,158,34,0.82));
+    }
+    .phase-kicker::after {
+      transform: scaleX(-1);
     }
     .phase-bar {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 14px;
-      background: #ff8a00;
-      color: #ffffff;
-      border-radius: 12px;
-      padding: 20px 28px;
-      font-size: 28px;
+      background:
+        radial-gradient(circle at 18% 50%, rgba(255,138,0,0.18), transparent 28%),
+        linear-gradient(90deg, rgba(105,40,0,0.78), rgba(45,22,7,0.75));
+      color: #f4f7fa;
+      border: 1px solid #ff8a00;
+      border-radius: 14px;
+      min-height: 130px;
+      padding: 30px 34px;
+      font-size: 34px;
       font-weight: 800;
       letter-spacing: -0.01em;
       margin-bottom: 20px;
-      box-shadow: 0 10px 28px rgba(255, 120, 0, 0.30);
+      box-shadow:
+        0 0 24px rgba(255,120,0,0.16),
+        inset 0 0 24px rgba(255,138,0,0.05);
     }
-    .phase-bar svg { width: 32px; height: 32px; flex: 0 0 auto; }
+    .phase-bar svg {
+      width: 48px;
+      height: 48px;
+      flex: 0 0 auto;
+      color: #ff9e22;
+      box-sizing: content-box;
+      padding-right: 22px;
+      border-right: 1px solid rgba(255,158,34,0.42);
+    }
 
-    .block { border-radius: 14px; overflow: hidden; margin-bottom: 20px; }
+    .block {
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .block.structural {
+      background: linear-gradient(180deg, rgba(12,72,32,0.55), rgba(5,22,20,0.85));
+      border: 1px solid rgba(69,220,88,0.75);
+      box-shadow: 0 0 18px rgba(52,220,82,0.08);
+    }
+    .block.investment {
+      background: linear-gradient(180deg, rgba(105,45,0,0.52), rgba(24,17,12,0.88));
+      border: 1px solid rgba(255,138,0,0.75);
+      box-shadow: 0 0 20px rgba(255,120,0,0.08);
+    }
     .block-head {
       display: flex;
       align-items: center;
       gap: 12px;
       padding: 18px 24px;
-      color: #ffffff;
-      font-size: 26px;
+      color: #f4f7fa;
+      font-size: 30px;
       font-weight: 800;
     }
     .block-head svg { width: 28px; height: 28px; flex: 0 0 auto; }
@@ -336,19 +441,32 @@ export function renderReportHtml(s: PdfSnapshot): string {
       margin-left: auto;
       width: 88px;
       height: 28px;
-      color: rgba(255,255,255,0.34);
+      color: currentColor;
+      opacity: 0.32;
     }
     .block-head .mini-chart.spark {
       width: 150px;
       height: 32px;
     }
-    .block-head.green { background: #17a344; }
-    .block-head.orange { background: #ff8a00; }
+    .block-head.green {
+      color: #f4f7fa;
+      background: rgba(7, 35, 22, 0.46);
+      border-bottom: 1px solid rgba(69,220,88,0.36);
+    }
+    .block-head.orange {
+      color: #f4f7fa;
+      background: rgba(57, 27, 5, 0.40);
+      border-bottom: 1px solid rgba(255,138,0,0.36);
+    }
+    .block-head.green > svg:first-child,
+    .block-head.green .mini-chart { color: #56e15f; }
+    .block-head.orange > svg:first-child,
+    .block-head.orange .mini-chart { color: #ff9e22; }
     .block-body {
-      background: #0b0f16;
-      color: rgba(255,255,255,0.90);
+      background: transparent;
+      color: #b8c3cf;
       padding: 22px 26px 24px;
-      font-size: 18px;
+      font-size: 20px;
       line-height: 1.55;
     }
     .block-body p { margin: 0 0 14px; }
@@ -364,21 +482,21 @@ export function renderReportHtml(s: PdfSnapshot): string {
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background: #22c55e;
+      background: #56e15f;
       flex: 0 0 auto;
       margin-top: 7px;
       box-shadow: 0 0 10px rgba(34, 197, 94, 0.7);
     }
 
     .foot {
-      margin-top: auto;
+      margin-top: 84px;
       padding-top: 16px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
       gap: 16px;
       font-size: 13px;
-      color: rgba(255,255,255,0.32);
+      color: #586674;
     }
     .foot-hash {
       font-family: ui-monospace, "SF Mono", Menlo, monospace;
@@ -392,7 +510,7 @@ export function renderReportHtml(s: PdfSnapshot): string {
     <div class="sheet-inner">
       <header class="head">
         <div>
-          <h1 class="head-title">AION Geo-Conflict Monitor</h1>
+          <h1 class="head-title"><span class="brand-accent">AION</span> Geo-Conflict Monitor</h1>
           <p class="head-sub">${esc(headerSub)}</p>
         </div>
         <div class="head-right">
@@ -422,21 +540,23 @@ export function renderReportHtml(s: PdfSnapshot): string {
             </div>
           </div>
         </article>
-        <article class="metric-card">
-          <div class="metric-top">
-            ${icon('oil', 'metric-ico')}
-            <div>
-              <div class="metric-value oil">${esc(k2.value)}</div>
-              <div class="metric-unit">${esc(k2.unit)} ${esc(k2.label)}</div>
+        <div class="metric-stack">
+          <article class="metric-card compact">
+            <div class="metric-top">
+              ${icon('oil', 'metric-ico')}
+              <div>
+                <div class="metric-value oil">${esc(k2.value)}</div>
+                <div class="metric-unit">${esc(k2.unit)} ${esc(k2.label)}</div>
+              </div>
             </div>
-          </div>
-          <div class="metric-split">
+          </article>
+          <article class="metric-card compact hormuz-card">
             <div class="hormuz-row">${icon('ship', '')}<span>${esc(k3.value)} · ${esc(k3.label)}</span></div>
             <div class="metric-right">
               <div class="metric-delta-sub">${esc(k3.unit)}<br/>${esc(lbl.oilRisk)}</div>
             </div>
-          </div>
-        </article>
+          </article>
+        </div>
       </section>
 
       <section class="score-block">
@@ -455,7 +575,7 @@ export function renderReportHtml(s: PdfSnapshot): string {
         <span>${esc(phaseLine)}</span>
       </div>
 
-      <section class="block">
+      <section class="block structural">
         <div class="block-head green">${icon('bars', '')}<span>${esc(lbl.struct)}</span>${MINI_BARS}</div>
         <div class="block-body">
           <p>${esc(s.keyChange)}</p>
@@ -463,7 +583,7 @@ export function renderReportHtml(s: PdfSnapshot): string {
         </div>
       </section>
 
-      <section class="block">
+      <section class="block investment">
         <div class="block-head orange">${icon('trend', '')}<span>${esc(lbl.invest)}</span>${MINI_SPARK}</div>
         <div class="block-body">
           <p style="margin:0">${esc(s.investmentSignal)}</p>
