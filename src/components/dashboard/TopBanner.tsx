@@ -14,14 +14,14 @@ export function TopBanner({ t, delta }: { t: Record<string, string>; delta: numb
         delta > 0
           ? "bg-aion-red/10 border-aion-red/20"
           : delta < 0
-            ? "bg-green-500/10 border-green-500/20"
+            ? "bg-aion-green/10 border-aion-green/20"
             : "bg-aion-gray/10 border-aion-gray/20",
       )}
     >
       <div
         className={cn(
           "flex items-center gap-2",
-          delta > 0 ? "text-aion-red" : delta < 0 ? "text-green-500" : "text-aion-text-dim",
+          delta > 0 ? "text-aion-red" : delta < 0 ? "text-aion-green" : "text-aion-text-dim",
         )}
       >
         {delta > 0 ? <ChevronUp className="w-3 h-3" /> : delta < 0 ? <ChevronDown className="w-3 h-3" /> : null}

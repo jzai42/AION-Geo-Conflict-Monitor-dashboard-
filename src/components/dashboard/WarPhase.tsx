@@ -21,7 +21,7 @@ export function WarPhase({
     <div
       className={cn(
         "aion-card flex-1 flex flex-col p-6 border-t-4 transition-all",
-        "border-t-aion-orange border-x-aion-gray/20 border-b-aion-gray/20 bg-aion-text/5",
+        "border-t-aion-orange border-x-aion-gray/20 border-b-aion-gray/20",
       )}
     >
       <div className="flex items-center justify-between mb-6">
@@ -35,13 +35,13 @@ export function WarPhase({
       <div className="flex items-baseline gap-4 mb-2">
         <span className="text-2xl font-mono font-bold text-aion-red">{phase.level}</span>
         <span className="text-xl font-mono text-aion-text-dim">→</span>
-        <span className="text-2xl font-mono font-bold text-green-500">{phase.targetLevel}</span>
+        <span className="text-2xl font-mono font-bold text-aion-green">{phase.targetLevel}</span>
         <span className="text-sm font-mono text-aion-text tracking-widest uppercase ml-2">{phase.title}</span>
       </div>
       <div className="text-xs font-mono text-aion-orange mb-6 tracking-widest">{phase.subTitle}</div>
 
-      <div className="bg-green-500/10 border border-green-500/20 p-4 rounded-sm mb-6">
-        <div className="text-[9px] font-mono text-green-500 uppercase mb-2 tracking-widest">{t.importantChange}</div>
+      <div className="mb-6 rounded-sm border border-aion-green/20 bg-aion-green/10 p-4">
+        <div className="mb-2 font-mono text-[9px] uppercase tracking-widest text-aion-green">{t.importantChange}</div>
         <div className="text-sm text-aion-text/90 font-mono leading-relaxed">{keyChange}</div>
       </div>
 

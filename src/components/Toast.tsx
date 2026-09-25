@@ -22,8 +22,8 @@ export function Toast({
   return (
     <div
       className={cn(
-        'fixed left-1/2 top-6 z-[200] -translate-x-1/2 px-4 py-2 rounded-sm border font-mono text-[11px] shadow-lg',
-        tone === 'success' && 'border-green-500/40 bg-green-500/15 text-green-400',
+        'fixed left-1/2 top-6 z-[200] -translate-x-1/2 rounded-lg border px-4 py-2 font-mono text-[11px]',
+        tone === 'success' && 'border-aion-green/40 bg-aion-green/15 text-aion-green',
         tone === 'error' && 'border-aion-red/40 bg-aion-red/15 text-aion-red',
         tone === 'info' && 'border-aion-orange/40 bg-aion-orange/10 text-aion-text'
       )}

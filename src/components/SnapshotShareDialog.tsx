@@ -47,7 +47,7 @@ export function SnapshotShareDialog({
         aria-modal="true"
         aria-labelledby="snapshot-dialog-title"
         data-testid="snapshot-dialog"
-        className="flex max-h-[92vh] w-full max-w-lg flex-col overflow-hidden rounded-sm border border-aion-gray bg-aion-card shadow-2xl"
+        className="flex max-h-[92vh] w-full max-w-lg flex-col overflow-hidden rounded-[14px] border border-aion-gray bg-aion-card"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between border-b border-aion-gray px-4 py-3">

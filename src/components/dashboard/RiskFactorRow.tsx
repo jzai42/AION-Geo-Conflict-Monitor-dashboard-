@@ -39,13 +39,13 @@ export function RiskFactorRow({ factor, t }: { factor: RiskFactor; t: Record<str
             </div>
           )}
           {factor.status === "SLOW" && (
-            <div className="px-2 py-0.5 rounded-sm text-[8px] font-mono bg-blue-500/10 border border-blue-500/30 text-blue-400">
+            <div className="rounded-sm border border-aion-blue/30 bg-aion-blue/10 px-2 py-0.5 font-mono text-[8px] text-aion-blue">
               {t.slowVar}
             </div>
           )}
           {factor.sourceVerification === "confirmed" && (
-            <div className="px-2 py-0.5 rounded-sm text-[8px] font-mono bg-green-500/10 border border-green-500/30 text-green-500 flex items-center gap-1">
-              <CheckCircle2 className="w-2.5 h-2.5" />
+            <div className="flex items-center gap-1 rounded-sm border border-aion-green/30 bg-aion-green/10 px-2 py-0.5 font-mono text-[8px] text-aion-green">
+              <CheckCircle2 className="h-2.5 w-2.5" />
               {t.factorVerified}
             </div>
           )}
@@ -72,7 +72,7 @@ export function RiskFactorRow({ factor, t }: { factor: RiskFactor; t: Record<str
                 <span
                   className={cn(
                     "pb-0.5 text-[10px] font-mono leading-none",
-                    delta > 0 ? "text-aion-red" : "text-green-500",
+                    delta > 0 ? "text-aion-red" : "text-aion-green",
                   )}
                 >
                   {delta > 0 ? "▲" : "▼"}

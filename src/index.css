@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "SF Pro Display", "SF Pro Text", "PingFang SC", "SF Pro SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   --color-aion-bg: var(--aion-bg);
@@ -15,52 +15,192 @@
   --color-aion-gray: var(--aion-gray);
   --color-aion-text: var(--aion-text);
   --color-aion-text-dim: var(--aion-text-dim);
+  --color-aion-blue: var(--aion-blue);
 }
 
 :root {
-  --aion-bg: #0a0a0a;
-  --aion-card: #141414;
-  --aion-gray: #262626;
-  --aion-text: #ffffff;
-  --aion-text-dim: #888888;
-  --aion-stripe: rgba(255, 255, 255, 0.05);
-  --aion-red: #ff3333;
-  /* 霓虹色：深色背景用 */
-  --aion-orange: #ff8800;
-  --aion-amber: #ffcc00;
-  --aion-yellow: #ffdc00;
-  --aion-green: #39ff14;
+  --bg-primary: #06111A;
+  --bg-secondary: #081722;
+  --bg-panel: #0B1924;
+  --bg-panel-hover: #0E202D;
+
+  --text-primary: #F4F7FA;
+  --text-secondary: #B8C3CF;
+  --text-muted: #7E8B98;
+  --text-faint: #586674;
+
+  --border-primary: #1B3B50;
+  --border-secondary: #244A61;
+  --divider: #294252;
+
+  --orange-primary: #FF8A00;
+  --orange-bright: #FF9E22;
+  --orange-deep: #E85D00;
+  --orange-dark: #7A3100;
+  --orange-soft: rgba(255, 138, 0, 0.08);
+  --orange-medium: rgba(255, 138, 0, 0.15);
+  --orange-border: rgba(255, 138, 0, 0.72);
+  --orange-glow: rgba(255, 115, 0, 0.28);
+
+  --green-primary: #56E15F;
+  --green-secondary: #35C64B;
+  --green-deep: #0D6E2C;
+  --green-soft: rgba(47, 210, 83, 0.07);
+  --green-border: rgba(69, 220, 88, 0.75);
+  --green-glow: rgba(52, 220, 82, 0.16);
+
+  --blue-accent: #69A9D0;
+  --red-primary: #FF4D4F;
+
+  --radius-card: 14px;
+  --radius-large: 16px;
+
+  --aion-bg: var(--bg-primary);
+  --aion-card: var(--bg-panel);
+  --aion-gray: var(--border-primary);
+  --aion-text: var(--text-primary);
+  --aion-text-dim: var(--text-muted);
+  --aion-stripe: rgba(255, 255, 255, 0.04);
+  --aion-red: var(--red-primary);
+  --aion-orange: var(--orange-primary);
+  --aion-amber: var(--orange-bright);
+  --aion-yellow: var(--orange-bright);
+  --aion-green: var(--green-primary);
+  --aion-blue: var(--blue-accent);
 }
 
 @layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  html,
   body {
-    @apply bg-aion-bg text-aion-text font-sans antialiased transition-colors duration-300;
+    min-height: 100%;
+    background-color: var(--bg-primary);
+    background-image: radial-gradient(circle at 50% 10%, rgba(15, 67, 92, 0.18), transparent 45%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+  }
+
+  body {
+    @apply font-sans antialiased;
+    font-feature-settings: "tnum" 1;
+  }
+
+  ::selection {
+    background: var(--orange-medium);
+    color: var(--text-primary);
   }
 }
 
 @layer components {
   .aion-card {
-    @apply bg-aion-card border border-aion-gray rounded-[20px] p-8 transition-all duration-300;
+    background: linear-gradient(180deg, rgba(13, 29, 41, 0.98), rgba(7, 20, 29, 0.98));
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-card);
+    padding: 32px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    transition:
+      border-color 160ms ease,
+      box-shadow 160ms ease,
+      background-color 160ms ease;
+  }
+
+  .aion-card:hover {
+    border-color: #315d77;
+  }
+
+  .aion-card.border-t-aion-orange,
+  .aion-card.border-l-aion-amber {
+    background: linear-gradient(90deg, rgba(100, 40, 0, 0.35), rgba(30, 18, 10, 0.55));
+    box-shadow:
+      0 0 22px rgba(255, 120, 0, 0.08),
+      inset 0 0 20px rgba(255, 120, 0, 0.03);
+  }
+
+  .aion-card.border-t-aion-orange:hover,
+  .aion-card.border-l-aion-amber:hover {
+    border-color: var(--orange-border);
+    box-shadow:
+      0 0 26px rgba(255, 120, 0, 0.14),
+      inset 0 0 20px rgba(255, 120, 0, 0.05);
+  }
+
+  .aion-card.border-t-aion-green {
+    background: linear-gradient(180deg, rgba(16, 80, 35, 0.28), rgba(5, 25, 20, 0.45));
+    box-shadow: 0 0 18px rgba(70, 220, 90, 0.06);
+  }
+
+  .aion-card.border-t-aion-green:hover {
+    border-color: var(--green-border);
+    box-shadow: 0 0 22px rgba(70, 220, 90, 0.12);
+  }
+
+  .lucide {
+    stroke-width: 1.75;
   }
 
   .aion-label {
-    @apply font-sans text-[13px] font-medium tracking-normal text-aion-text-dim;
+    @apply font-sans text-[13px] font-medium tracking-normal;
+    color: var(--text-muted);
   }
 
   .aion-value {
-    @apply font-sans text-3xl font-semibold tracking-tight;
+    @apply font-sans text-3xl font-extrabold tracking-tight tabular-nums;
   }
 
   .glow-red {
-    box-shadow: 0 0 20px rgba(255, 51, 51, 0.2);
+    box-shadow: 0 0 18px rgba(255, 77, 79, 0.16);
   }
 
   .glow-orange {
-    box-shadow: 0 0 20px rgba(255, 136, 0, 0.2);
+    box-shadow: 0 0 22px rgba(255, 120, 0, 0.08);
   }
 
   .glow-green {
-    box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+    box-shadow: 0 0 18px rgba(70, 220, 90, 0.06);
+  }
+
+  .aion-score {
+    isolation: isolate;
+  }
+
+  .aion-score-glow {
+    position: absolute;
+    inset: 14px;
+    border-radius: 50%;
+    background:
+      conic-gradient(from 210deg, #ff5a00, #ff9d00, #ffd05a, #ff8a00, #ff5a00);
+    padding: 11px;
+    box-shadow:
+      0 0 32px rgba(255, 116, 0, 0.36),
+      0 0 70px rgba(255, 100, 0, 0.12);
+    animation: aion-score-breathe 7s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .aion-score-glow::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, #542000 0%, #291205 48%, #0b141c 100%);
+  }
+
+  .aion-live-dot {
+    animation: aion-score-breathe 4.5s ease-in-out infinite;
   }
 }
 
+@keyframes aion-score-breathe {
+  0%,
+  100% {
+    opacity: 0.88;
+  }
+  50% {
+    opacity: 1;
+  }
+}
