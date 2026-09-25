@@ -1,11 +1,14 @@
 import { toBlob } from 'html-to-image';
 import { TRANSLATIONS, type DashboardData } from '../data';
 import { buildPdfSnapshot } from '../pdf/buildSnapshot';
-import { renderReportHtml } from '../pdf/reportHtml';
+import {
+  renderReportHtml,
+  SNAPSHOT_POSTER_HEIGHT,
+  SNAPSHOT_POSTER_WIDTH,
+} from '../pdf/reportHtml';
 
-/** A4 @ 96dpi — 与报告模板 210mm × 297mm 对齐 */
-export const SNAPSHOT_WIDTH_PX = 794;
-export const SNAPSHOT_HEIGHT_PX = 1123;
+export const SNAPSHOT_WIDTH_PX = SNAPSHOT_POSTER_WIDTH;
+export const SNAPSHOT_HEIGHT_PX = SNAPSHOT_POSTER_HEIGHT;
 
 function mountReportOffscreen(html: string): HTMLElement {
   const parsed = new DOMParser().parseFromString(html, 'text/html');
@@ -16,7 +19,7 @@ function mountReportOffscreen(html: string): HTMLElement {
     `left:-10000px`,
     'top:0',
     `width:${SNAPSHOT_WIDTH_PX}px`,
-    'background:#e9e9e9',
+    'background:#05070c',
     'pointer-events:none',
     'z-index:-1',
   ].join(';');
@@ -61,7 +64,7 @@ export async function captureDailySnapshotPng(
       cacheBust: true,
       width: SNAPSHOT_WIDTH_PX,
       height,
-      backgroundColor: '#e9e9e9',
+      backgroundColor: '#05070c',
     });
     if (!blob) throw new Error('snapshot empty');
     return blob;
