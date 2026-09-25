@@ -317,7 +317,7 @@ export function ShareMenu({ data, language, activeTab }: ShareMenuProps) {
 
       {open && (
         <div
-          className="absolute right-0 top-full z-[100] mt-1 min-w-[220px] rounded-[14px] border border-aion-gray bg-[color:var(--bg-panel)] py-1"
+          className="absolute left-1/2 top-full z-[100] mt-1 min-w-[220px] -translate-x-1/2 rounded-[14px] border border-aion-gray bg-[color:var(--bg-panel)] py-1 sm:left-auto sm:right-0 sm:translate-x-0"
           role="menu"
         >
           <MenuRow
