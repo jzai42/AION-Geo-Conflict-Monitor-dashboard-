@@ -16,13 +16,13 @@ export const SITUATION_TONE: Record<
     bullet: "bg-aion-yellow",
   },
   orange: {
-    card: "border-t-aion-orange border-x-aion-orange/30 border-b-aion-orange/30 bg-aion-orange/10",
+    card: "border-t-aion-orange border-x-aion-orange/30 border-b-aion-orange/30",
     tag: "bg-aion-orange/10 border-aion-orange/30 text-aion-orange",
     bullet: "bg-aion-orange",
   },
   green: {
-    card: "border-t-aion-green border-x-aion-green/30 border-b-aion-green/30 bg-aion-green/10",
-    tag: "bg-green-500/10 border-green-500/30 text-green-500",
+    card: "border-t-aion-green border-x-aion-green/30 border-b-aion-green/30",
+    tag: "bg-aion-green/10 border-aion-green/30 text-aion-green",
     bullet: "bg-aion-green",
   },
 };

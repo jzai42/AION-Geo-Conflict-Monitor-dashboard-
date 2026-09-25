@@ -64,8 +64,8 @@ export function SituationTab({
         </div>
 
         <div className="flex flex-col md:flex-row items-center gap-8 relative">
-          <div className="flex-1 w-full bg-green-500/5 border border-green-500/20 p-6 rounded-sm">
-            <div className="text-[10px] font-mono text-green-500 uppercase mb-4">{t.politicalLevel}</div>
+          <div className="w-full flex-1 rounded-sm border border-aion-green/20 bg-aion-green/5 p-6">
+            <div className="mb-4 font-mono text-[10px] uppercase text-aion-green">{t.politicalLevel}</div>
             <ul className="space-y-2">
               {coreContradiction.political.map((p, i) => (
                 <li key={i} className="text-xs text-aion-text/80 font-mono">
@@ -73,7 +73,7 @@ export function SituationTab({
                 </li>
               ))}
             </ul>
-            <div className="mt-4 text-[10px] font-mono text-green-500/70">{t.deescalationIntent}</div>
+            <div className="mt-4 font-mono text-[10px] text-aion-green/70">{t.deescalationIntent}</div>
           </div>
 
           <div className="text-3xl font-mono text-aion-amber">≠</div>

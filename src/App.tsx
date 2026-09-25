@@ -131,7 +131,7 @@ export default function App() {
           <div className="lg:col-span-9 flex flex-col gap-6">
             <WarPhase phase={data.warPhase} keyChange={data.keyChange} t={t} />
 
-            <div className="aion-card border-l-4 border-l-aion-amber bg-aion-amber/5">
+            <div className="aion-card border-l-4 border-l-aion-amber">
               <div className="flex items-center gap-2 mb-2">
                 <TrendingUp className="w-4 h-4 text-aion-amber" />
                 <span className="aion-label text-aion-amber">{t.investmentSignal}</span>
@@ -234,7 +234,7 @@ export default function App() {
                       <div className="text-[10px] font-mono text-aion-text-dim mb-2">
                         {t.weightedFormula} = {weightedAvg}
                       </div>
-                      <div className="text-7xl font-mono font-bold text-aion-orange mb-1">{data.riskScore}</div>
+                      <div className="mb-1 text-7xl font-extrabold tabular-nums tracking-[-0.04em] text-aion-orange">{data.riskScore}</div>
                       <div className="aion-label text-aion-orange">{t.riskScoreTitle.replace("\n", " ")}</div>
                     </div>
 
@@ -250,8 +250,8 @@ export default function App() {
                           <RiskLegendCell
                             range="<40"
                             label={t.lowRisk}
-                            barClass="border-green-500/30 bg-green-500/5"
-                            textClass="text-green-400"
+                            barClass="border-aion-green/30 bg-aion-green/5"
+                            textClass="text-aion-green"
                           />
                           <RiskLegendCell
                             range="40-70"

@@ -54,8 +54,9 @@ export function RiskGauge({
     <div className="aion-card flex flex-col items-center justify-center p-6 relative overflow-hidden">
       <div className="aion-label mb-6 text-center whitespace-pre-line">{t.riskScoreTitle}</div>
 
-      <div className="relative flex items-center justify-center">
-        <svg className="w-48 h-48 transform -rotate-90">
+      <div className="aion-score relative flex items-center justify-center">
+        <div className="aion-score-glow" aria-hidden="true" />
+        <svg className="relative z-[1] h-48 w-48 -rotate-90 transform">
           <circle cx="96" cy="96" r={radius} stroke="currentColor" strokeWidth="12" fill="transparent" className="text-aion-gray" />
           <motion.circle
             cx="96"
@@ -68,12 +69,12 @@ export function RiskGauge({
             initial={{ strokeDashoffset: circumference }}
             animate={{ strokeDashoffset: offset }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="text-aion-orange drop-shadow-[0_0_8px_rgba(255,136,0,0.5)]"
+            className="text-aion-orange drop-shadow-[0_0_8px_rgba(255,116,0,0.36)]"
           />
         </svg>
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-6xl font-mono font-bold">{score}</span>
-          <span className="aion-label text-[10px] mt-1">{t.weightedScore}</span>
+        <div className="absolute inset-0 z-[2] flex flex-col items-center justify-center">
+          <span className="text-6xl font-extrabold tabular-nums tracking-[-0.04em]">{score}</span>
+          <span className="aion-label mt-1 text-[10px]">{t.weightedScore}</span>
         </div>
       </div>
 
@@ -84,19 +85,19 @@ export function RiskGauge({
             delta > 0
               ? "bg-aion-red/10 border-aion-red/30"
               : delta < 0
-                ? "bg-green-500/10 border-green-500/30"
+                ? "bg-aion-green/10 border-aion-green/30"
                 : "bg-aion-gray/20 border-aion-gray/40",
           )}
         >
           {delta > 0 ? (
             <ChevronUp className="w-3 h-3 text-aion-red" />
           ) : delta < 0 ? (
-            <ChevronDown className="w-3 h-3 text-green-500" />
+            <ChevronDown className="w-3 h-3 text-aion-green" />
           ) : null}
           <span
             className={cn(
               "font-mono text-xs",
-              delta > 0 ? "text-aion-red" : delta < 0 ? "text-green-500" : "text-aion-text-dim",
+              delta > 0 ? "text-aion-red" : delta < 0 ? "text-aion-green" : "text-aion-text-dim",
             )}
           >
             {delta === 0 ? "—" : Math.abs(delta)} {t.vsPrev}

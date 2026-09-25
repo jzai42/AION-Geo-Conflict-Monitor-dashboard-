@@ -53,9 +53,9 @@ export function EventItem({
               {t.event} {String(index + 1).padStart(2, "0")}
             </span>
             {event.verification === "confirmed" && (
-              <div className="flex shrink-0 items-center gap-1 rounded-sm border border-green-500/30 bg-green-500/10 px-2 py-0.5">
-                <CheckCircle2 className="h-2.5 w-2.5 text-green-500" />
-                <span className="text-[8px] font-mono uppercase text-green-500">{t.verified}</span>
+              <div className="flex shrink-0 items-center gap-1 rounded-sm border border-aion-green/30 bg-aion-green/10 px-2 py-0.5">
+                <CheckCircle2 className="h-2.5 w-2.5 text-aion-green" />
+                <span className="font-mono text-[8px] uppercase text-aion-green">{t.verified}</span>
               </div>
             )}
             {event.verification === "single" && (

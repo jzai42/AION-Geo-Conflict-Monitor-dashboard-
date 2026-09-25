@@ -46,7 +46,7 @@ export function TrendChart({
               className={cn(
                 "text-[10px] font-mono mb-1 font-bold transition-colors",
                 t.active
-                  ? "text-aion-green drop-shadow-[0_0_5px_rgba(57,255,20,0.5)]"
+                  ? "text-aion-green drop-shadow-[0_0_5px_rgba(52,220,82,0.16)]"
                   : "text-aion-text-dim group-hover:text-aion-text/70",
               )}
             >
@@ -59,7 +59,7 @@ export function TrendChart({
               className={cn(
                 "w-full max-w-[36px] rounded-t-[4px] transition-all duration-500",
                 t.active
-                  ? "bg-aion-green shadow-[0_0_20px_rgba(57,255,20,0.6)]"
+                  ? "bg-aion-green shadow-[0_0_18px_rgba(70,220,90,0.06)]"
                   : "bg-aion-gray border-t border-x border-aion-text/5",
               )}
             />
