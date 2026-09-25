@@ -19,7 +19,7 @@ function mountReportOffscreen(html: string): HTMLElement {
     `left:-10000px`,
     'top:0',
     `width:${SNAPSHOT_WIDTH_PX}px`,
-    'background:#05070c',
+    'background:#06111A',
     'pointer-events:none',
     'z-index:-1',
   ].join(';');
@@ -64,7 +64,7 @@ export async function captureDailySnapshotPng(
       cacheBust: true,
       width: SNAPSHOT_WIDTH_PX,
       height,
-      backgroundColor: '#05070c',
+      backgroundColor: '#06111A',
     });
     if (!blob) throw new Error('snapshot empty');
     return blob;
