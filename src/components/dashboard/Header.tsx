@@ -33,12 +33,17 @@ export function Header({
     return () => clearInterval(timer);
   }, []);
 
+  const [brand, ...titleWords] = t.title.split(" ");
+
   return (
     <header className="sticky top-0 z-50 flex min-w-0 flex-col gap-4 border-b border-aion-gray bg-[color:var(--bg-secondary)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
       <div className="flex min-w-0 flex-1 items-center gap-4">
         <div className="flex min-w-0 flex-col">
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-extrabold tracking-[-0.02em] text-aion-text">{t.title}</h1>
+            <h1 className="whitespace-nowrap text-[clamp(1rem,5vw,1.25rem)] font-extrabold uppercase leading-tight tracking-[-0.02em] text-aion-text">
+              <span className="text-aion-orange">{brand}</span>
+              {titleWords.length > 0 && ` ${titleWords.join(" ")}`}
+            </h1>
           </div>
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
             <span className="aion-label text-[9px]">{t.conflictName}</span>
