@@ -32,11 +32,15 @@ export function WarPhase({
         </div>
       </div>
 
-      <div className="flex items-baseline gap-4 mb-2">
-        <span className="text-2xl font-mono font-bold text-aion-red">{phase.level}</span>
-        <span className="text-xl font-mono text-aion-text-dim">→</span>
-        <span className="text-2xl font-mono font-bold text-aion-green">{phase.targetLevel}</span>
-        <span className="text-sm font-mono text-aion-text tracking-widest uppercase ml-2">{phase.title}</span>
+      <div className="mb-2 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-baseline sm:gap-4">
+        <div className="grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 sm:flex sm:w-auto sm:items-baseline sm:gap-4">
+          <span className="break-words text-xl font-mono font-bold leading-tight text-aion-red sm:text-2xl">{phase.level}</span>
+          <span className="text-lg font-mono text-aion-text-dim sm:text-xl">→</span>
+          <span className="break-words text-xl font-mono font-bold leading-tight text-aion-green sm:text-2xl">{phase.targetLevel}</span>
+        </div>
+        <span className="w-full break-words text-xs font-mono uppercase tracking-[0.16em] text-aion-text sm:ml-2 sm:w-auto sm:text-sm sm:tracking-widest">
+          {phase.title}
+        </span>
       </div>
       <div className="text-xs font-mono text-aion-orange mb-6 tracking-widest">{phase.subTitle}</div>
 
