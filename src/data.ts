@@ -65,18 +65,16 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-09-26",
-  version: "v2.203",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D210",
+      value: "D211",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↓2",
+      value: "持平",
       unit: "较上期",
       color: "#ff4136"
     },
@@ -89,7 +87,7 @@ export const DATA_ZH: DashboardData = {
     },
     {
       label: "霍尔木兹",
-      value: "部分限制",
+      value: "部分受限/谈判中",
       unit: "通行状态",
       color: "#ffdc00"
     }
@@ -100,25 +98,25 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "双方维持低烈度代理人袭扰与防御性部署。",
+      description: "军事行动处于静默期，主要表现为口头与防御性威慑。",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "partial"
     },
     {
       name: "霍尔木兹航运扰动",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "海峡维持部分许可制通行状态。",
+      description: "霍尔木兹海峡封锁未解，但已成为美伊外交谈判的核心筹码。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "能源冲击",
       score: 3.5,
-      prev: 4,
+      prev: 3.5,
       weight: 0.2,
-      description: "和谈受挫预期升温，Brent触及100美元危机带下沿。",
+      description: "停火预期带动部分风险溢价回吐，但宽阔的WTI/Brent价差显示地缘不确定性仍在支撑市场。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -127,7 +125,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "多国继续通过外交与情报渠道进行周边斡旋。",
+      description: "美国聚焦于通过卡塔尔等中间方推动停火协议，军事姿态转为观望。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -136,7 +134,7 @@ export const DATA_ZH: DashboardData = {
       score: 2.5,
       prev: 2.5,
       weight: 0.2,
-      description: "美方拒绝分阶段停火方案，谈判进程实质性受挫。",
+      description: "双方释放明确善意并提出重返6月框架的可能，但距离最终签署正式协议仍存核心阻力。",
       status: "FAST",
       sourceVerification: "confirmed"
     }
@@ -145,8 +143,8 @@ export const DATA_ZH: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "特朗普拒绝分阶段停火提议",
-      description: "美国总统公开拒绝了伊朗关于重新开放霍尔木兹海峡并解除封锁的提议，要求对方无条件让步 (Fox News, Reuters)。",
+      title: "伊朗提出霍尔木兹海峡解封方案",
+      description: "伊朗外长阿拉格齐在联合国提出，若美国满足条件，可在一周内恢复霍尔木兹海峡正常航运（BBC / The Business Times）。",
       verification: "confirmed",
       timestamp: "2026-09-26T14:00:00Z",
       significance: "",
@@ -155,30 +153,21 @@ export const DATA_ZH: DashboardData = {
     },
     {
       id: "EVT-02",
-      title: "伊朗重申恢复谈判前提",
-      description: "伊朗高层表示，任何实质性降级必须以美国解除海上封锁和释放冻结资产为前提 (Amwaj, Al Jazeera)。",
+      title: "美方对解封提议保持谨慎",
+      description: "美国总统据报对伊朗满足停火条件持怀疑态度，美伊双方谈判代表在纽约继续探索分阶段降级路径（WSJ / Reuters）。",
       verification: "confirmed",
-      timestamp: "2026-09-25T22:00:00Z",
+      timestamp: "2026-09-26T16:00:00Z",
       significance: ""
-    },
-    {
-      id: "EVT-03",
-      title: "布伦特原油上探$100关口",
-      description: "因和谈受挫预期升温，布伦特原油主力合约盘中触及$100.26，市场地缘风险溢价居高不下 (Bloomberg, WSJ)。",
-      verification: "confirmed",
-      timestamp: "2026-09-26T17:30:00Z",
-      significance: "",
-      highlight: true
     }
   ],
   warPhase: {
-    level: "高压对峙",
-    targetLevel: "结构性紧张",
+    level: "谈判窗口期",
+    targetLevel: "脆弱平衡",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "联合国大会期间的外交接触未能突破核心分歧，导致短期停火预期落空。",
-      "双方虽避免了直接军事升级，但在霍尔木兹海峡控制权问题上互不让步。"
+      "美伊在联合国大会期间的间接谈判成为当前局势焦点。",
+      "海峡通行权被用作核心外交筹码，实质性让步仍需高层政治决断。"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -189,7 +178,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：双方维持防御性警戒与低烈度代理人袭扰，未爆发新一轮直接交火。"
+        "延续：伊朗军方警告若美方采取新行动将打击其地区资产，前线暂无新交火。"
       ]
     },
     {
@@ -198,7 +187,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：航道维持部分许可通行状态，主干商业班轮持续避开该海域。"
+        "变化：伊朗明确提出七日内解封海峡的时间表，前提是满足制裁解除等条件。"
       ]
     },
     {
@@ -207,7 +196,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：和谈乐观情绪消退导致油价重新冲高，Brent触及$100危机带下沿。"
+        "变化：停火谈判推进促使Brent与WTI高位承压回落，但Brent中枢仍在百元附近。"
       ]
     },
     {
@@ -216,23 +205,19 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美方表态趋于强硬，公开拒绝分阶段协议降低了短期达成框架停火的概率。"
+        "变化：伊朗高层通过多渠道释放谈判条件，美方高层虽有质疑但未关闭接触窗口。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美国要求全面无条件退让与伊朗坚持解除海上封锁作为先决条件之间的矛盾难以弥合。"
+      "美国大选前控制油价的需求与伊朗谋求解除制裁的底线博弈。"
     ],
     military: [
-      "联大外交斡旋期间的停火克制与霍尔木兹海峡实质性军事封锁之间的张力持续存在。"
+      "伊朗维系区域威慑的需要与美军在海湾保持压倒性部署的冲突。"
     ]
   },
   scoreTrend: [
-    {
-      date: "09-21",
-      score: 76
-    },
     {
       date: "09-22",
       score: 66
@@ -247,31 +232,35 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "09-26",
+      score: 60
+    },
+    {
+      date: "09-27",
       score: 60,
       active: true
     }
   ],
-  keyChange: "联合国大会期间美方拒绝分阶段停火提议，谈判进程遇阻导致地缘风险预期重估，综合分小幅上修。",
-  investmentSignal: "→ 维持对防御性资产与能源板块的对冲配置，和谈僵局与Brent触及$100关口限制了风险资产的实质性反弹。",
-  change: "up",
-  prevRiskScore: 62,
+  keyChange: "美伊在联合国大会的谈判触及霍尔木兹海峡解封，外交渠道活跃但未达实质性停火协议。",
+  investmentSignal: "→ 维持防御性资产配置，由于地缘停火协议仍未落地，建议投资者对冲能源多头头寸以应对盘面波动。",
+  change: "none",
+  date: "2026-09-27",
+  version: "v2.204",
+  prevRiskScore: 60,
   webSources: [],
   webSearchQueries: []
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-09-26",
-  version: "v2.203",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D210",
+      value: "D211",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "↓2",
+      value: "Flat",
       unit: "vs Prev",
       color: "#ff4136"
     },
@@ -284,8 +273,8 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Hormuz",
-      value: "Partially Restricted",
-      unit: "Transit Status",
+      value: "Partially Restricted/In Talks",
+      unit: "Transit",
       color: "#ffdc00"
     }
   ],
@@ -295,25 +284,25 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Both sides maintain low-intensity proxy harassment and defensive postures.",
+      description: "Military actions are in a quiet period, characterized mainly by verbal and defensive deterrence.",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "partial"
     },
     {
       name: "Hormuz Disruption",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "The strait maintains a partially restricted transit status under permit systems.",
+      description: "The Strait blockade persists but has become a core bargaining chip in US-Iran diplomacy.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "Energy Shock",
       score: 3.5,
-      prev: 4,
+      prev: 3.5,
       weight: 0.2,
-      description: "Fading peace talk optimism pushed Brent to touch the $100 crisis boundary.",
+      description: "Ceasefire expectations prompted some risk premium unwinding, though a wide WTI-Brent spread indicates lingering geopolitical uncertainty.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -322,7 +311,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Multiple nations continue diplomatic and intelligence mediation on the periphery.",
+      description: "The US is focused on advancing a ceasefire deal via intermediaries, adopting a watchful military posture.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -331,7 +320,7 @@ export const DATA_EN: DashboardData = {
       score: 2.5,
       prev: 2.5,
       weight: 0.2,
-      description: "US rejection of the phased ceasefire proposal stalled substantial negotiation progress.",
+      description: "Both sides sent clear goodwill signals and floated a return to the June framework, but core disagreements prevent a formal agreement.",
       status: "FAST",
       sourceVerification: "confirmed"
     }
@@ -340,8 +329,8 @@ export const DATA_EN: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "US President Rejects Phased Ceasefire Proposal",
-      description: "The US President publicly rejected Iran's proposal to reopen the Strait of Hormuz, demanding unconditional surrender and stalling peace talks (Fox News, Reuters).",
+      title: "Iran Proposes Strait of Hormuz Reopening Plan",
+      description: "Iranian FM Araghchi told the UN that the Strait could reopen within a week if the US meets preconditions (BBC / The Business Times).",
       verification: "confirmed",
       timestamp: "2026-09-26T14:00:00Z",
       significance: "",
@@ -350,30 +339,21 @@ export const DATA_EN: DashboardData = {
     },
     {
       id: "EVT-02",
-      title: "Iran Reiterates Preconditions for Talks",
-      description: "Iranian officials stated that any substantive de-escalation must be preceded by the lifting of the US naval blockade and release of frozen assets (Amwaj, Al Jazeera).",
+      title: "US Cautious on Blockade Lift Proposal",
+      description: "The US President reportedly expressed skepticism regarding Iran's commitment to ceasefire conditions as talks continue in NY (WSJ / Reuters).",
       verification: "confirmed",
-      timestamp: "2026-09-25T22:00:00Z",
+      timestamp: "2026-09-26T16:00:00Z",
       significance: ""
-    },
-    {
-      id: "EVT-03",
-      title: "Brent Crude Tests $100 Threshold",
-      description: "Geopolitical risk premiums spiked as peace talks hit a bottleneck, pushing Brent crude futures to touch $100.26 intraday (Bloomberg, WSJ).",
-      verification: "confirmed",
-      timestamp: "2026-09-26T17:30:00Z",
-      significance: "",
-      highlight: true
     }
   ],
   warPhase: {
-    level: "High-Pressure Standoff",
-    targetLevel: "Structural Tension",
+    level: "Negotiation Window",
+    targetLevel: "Fragile Balance",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Diplomatic engagements during the UNGA failed to break the deadlock on core differences, diminishing short-term ceasefire hopes.",
-      "Although direct military escalation is avoided, both sides refuse to compromise on control over the Strait of Hormuz."
+      "Indirect negotiations at the UN General Assembly have become the focal point of the current situation.",
+      "Transit rights are leveraged as core diplomatic chips, requiring high-level political resolve for substantial concessions."
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -384,7 +364,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Both ground and naval forces maintain defensive alert postures with no major direct crossfire."
+        "Continue: The Iranian military warned of retaliation against regional US assets if new actions are taken; frontlines remain quiet."
       ]
     },
     {
@@ -393,7 +373,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: The transit channel remains under partial permit control, forcing major commercial liners to avoid the area."
+        "Change: Iran explicitly outlined a 7-day timeline for unblocking the Strait, conditioned on sanctions relief."
       ]
     },
     {
@@ -402,7 +382,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Fading optimism over peace talks pushed oil prices higher, with Brent touching the lower boundary of the $100 crisis band."
+        "Change: Progress in negotiations caused Brent and WTI to dip from highs, though Brent's upper bound remains near $100."
       ]
     },
     {
@@ -411,23 +391,19 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: The US stance has hardened, heavily reducing the probability of reaching a short-term framework agreement."
+        "Change: Iranian leadership communicated negotiation terms through multiple channels; US officials maintained contact despite skepticism."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "The gap between the US demand for unconditional concession and Iran's demand for an immediate blockade lifting remains unbridgeable."
+      "The friction between US pre-election needs to control oil prices and Iran's bottom line for sanctions relief."
     ],
     military: [
-      "Tension persists between the restraint shown during UNGA diplomacy and the ongoing substantial military blockade in the Strait of Hormuz."
+      "The clash between Iran's need to maintain regional deterrence and the overwhelming US military deployment in the Gulf."
     ]
   },
   scoreTrend: [
-    {
-      date: "09-21",
-      score: 76
-    },
     {
       date: "09-22",
       score: 66
@@ -442,14 +418,20 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "09-26",
+      score: 60
+    },
+    {
+      date: "09-27",
       score: 60,
       active: true
     }
   ],
-  keyChange: "US rejection of the phased ceasefire proposal at the UNGA stalled diplomatic momentum, pushing the composite score slightly higher due to renewed negotiation pessimism.",
-  investmentSignal: "→ Maintain hedge allocations in defensive assets and energy sectors, as the negotiation deadlock and Brent touching $100 limit substantial de-risking for risk assets.",
-  change: "up",
-  prevRiskScore: 62,
+  keyChange: "US-Iran talks at the UNGA addressed unblocking the Strait of Hormuz; diplomatic channels are highly active despite no final ceasefire agreement.",
+  investmentSignal: "→ Maintain a defensive asset allocation; with a formal ceasefire pending, hedging energy positions is recommended against market volatility.",
+  change: "none",
+  date: "2026-09-27",
+  version: "v2.204",
+  prevRiskScore: 60,
   webSources: [],
   webSearchQueries: []
 };
@@ -459,7 +441,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "9月26日节点",
+    node406: "9月27日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -493,16 +475,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.203 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.204 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 60（↓2）：联合国大会期间美方拒绝分阶段停火提议，谈判进程遇阻导致地缘风险预期重估，综合分小幅上修。",
-    bannerWarning: "→ 维持对防御性资产与能源板块的对冲配置，和谈僵局与Brent触及$100关口限制了风险资产的实质性反弹。",
-    deescalationIntent: "美国要求全面无条件退让与伊朗坚持解除海上封锁作为先决条件之间的矛盾难以弥合。",
-    structuralRisk: "海峡维持部分许可制通行状态。",
-    contradictionNote: "美国要求全面无条件退让与伊朗坚持解除海上封锁作为先决条件之间的矛盾难以弥合。；联大外交斡旋期间的停火克制与霍尔木兹海峡实质性军事封锁之间的张力持续存在。",
+    bannerSignal: "综合评分 60（持平）：美伊在联合国大会的谈判触及霍尔木兹海峡解封，外交渠道活跃但未达实质性停火协议。",
+    bannerWarning: "→ 维持防御性资产配置，由于地缘停火协议仍未落地，建议投资者对冲能源多头头寸以应对盘面波动。",
+    deescalationIntent: "美国大选前控制油价的需求与伊朗谋求解除制裁的底线博弈。",
+    structuralRisk: "霍尔木兹海峡封锁未解，但已成为美伊外交谈判的核心筹码。",
+    contradictionNote: "美国大选前控制油价的需求与伊朗谋求解除制裁的底线博弈。；伊朗维系区域威慑的需要与美军在海湾保持压倒性部署的冲突。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -510,7 +492,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第210天",
+    dayCount: "第211天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -518,7 +500,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Sep 26 Node",
+    node406: "Sep 27 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -552,16 +534,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.203 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.204 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 60 (↓2): US rejection of the phased ceasefire proposal at the UNGA stalled diplomatic momentum, pushing the composite score slightly higher due to r…",
-    bannerWarning: "→ Maintain hedge allocations in defensive assets and energy sectors, as the negotiation deadlock and Brent touching $10…",
-    deescalationIntent: "The gap between the US demand for unconditional concession and Iran's demand fo…",
-    structuralRisk: "The strait maintains a partially restricted transit status under permit systems.",
-    contradictionNote: "The gap between the US demand for unconditional concession and Iran's demand for an immediate blockade lifting remains unbridgeable.; Tension persists between …",
+    bannerSignal: "Composite 60 (Flat): US-Iran talks at the UNGA addressed unblocking the Strait of Hormuz; diplomatic channels are highly active despite no final ceasefire agree…",
+    bannerWarning: "→ Maintain a defensive asset allocation; with a formal ceasefire pending, hedging energy positions is recommended again…",
+    deescalationIntent: "The friction between US pre-election needs to control oil prices and Iran's bot…",
+    structuralRisk: "The Strait blockade persists but has become a core bargaining chip in US-Iran diplomacy.",
+    contradictionNote: "The friction between US pre-election needs to control oil prices and Iran's bottom line for sanctions relief.; The clash between Iran's need to maintain region…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -569,7 +551,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 210",
+    dayCount: "Day 211",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
