@@ -65,16 +65,12 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-09-28",
-  version: "v2.205",
-  riskScore: 60,
-  keyChange: "美伊在纽约围绕霍尔木兹海峡分阶段开放展开斡旋接触，油价高位震荡但未脱离中高风险带，五维评分全面持平昨日。",
-  change: "none",
-  investmentSignal: "→ 维持防御资产与能源大宗对冲敞口，防范霍尔木兹谈判拉锯带来的脉冲性波动。",
+  date: "2026-09-29",
+  version: "v2.206",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D212",
+      value: "D213",
       unit: "2月28日起",
       color: "#ff851b"
     },
@@ -86,7 +82,7 @@ export const DATA_ZH: DashboardData = {
     },
     {
       label: "油价",
-      value: "WTI $91.99–$96.54 · Brent $96.96–$101.24",
+      value: "WTI $90.13–$94.74 · Brent $95.86–$100.29",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -98,13 +94,28 @@ export const DATA_ZH: DashboardData = {
       color: "#ffdc00"
     }
   ],
+  riskScore: 60,
+  keyChange: "美伊否认重大妥协让步传闻，间接斡旋维持脆弱拉锯，中东海运绕行推高物流溢价，油价在90-100美元宽幅盘整。",
+  investmentSignal: "→ 维持大宗商品与能源多头仓位作为地缘对冲，风险资产采取防御性低配配置。",
+  warPhase: {
+    level: "受控冲突",
+    targetLevel: "脆弱平衡",
+    title: "美伊地缘风险监测",
+    subTitle: "基于公开报道综合研判",
+    points: [
+      "美伊两军避免发生无预警直接交火，威慑与护航维持在固定接触面。",
+      "霍尔木兹海峡主航道通行审查与配额限制延续，油轮主要依靠过驳与管道绕行缓解。",
+      "卡塔尔斡旋下的间接接触依然存在，但双方在制裁解除与核监管问题上分歧未见缩小。"
+    ],
+    note: "监测用途，不构成投资建议。"
+  },
   riskFactors: [
     {
       name: "军事升级烈度",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美军与伊朗军方维持战备威慑对峙，局部防空交火受控未向第三国纵深外溢。",
+      description: "双方近24小时未爆发新的大规模直接空袭，军事活动以防空拦截与警戒巡逻为主。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -113,7 +124,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "海峡仍处于许可制与高风险绕行状态，商业通航量较战前依然显著承压。",
+      description: "主航道通行能力维持在战前水平的50%–90%，主要依靠绕行和转运缓解供给压力。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -122,7 +133,7 @@ export const DATA_ZH: DashboardData = {
       score: 3.5,
       prev: 3.5,
       weight: 0.2,
-      description: "WTI与Brent盘中宽幅震荡，中位维持在$95上方，布伦特盘中刺入$100上方后遇阻回落。",
+      description: "WTI震荡于$90–$95区间，布伦特测试$100关口，现货溢价显著反映地缘物流阻滞成本。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -131,7 +142,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "外部大国维持海空护航及情报支援，未发生与区域大国的正面军事冲突。",
+      description: "美军保持战备警戒并继续向盟友提供防空情报支持，外部大国均力避卷入直接热战。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -140,23 +151,11 @@ export const DATA_ZH: DashboardData = {
       score: 2.5,
       prev: 2.5,
       weight: 0.2,
-      description: "美伊代表在联大周边通过中间人展开接触，但核心诉求差距过大，进展实质缓慢。",
+      description: "间接谈判渠道维持开放，但双方公开声明仍高度对立，停火框架达成尚待时日。",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
-  warPhase: {
-    level: "受控冲突",
-    targetLevel: "脆弱平衡",
-    title: "美伊地缘风险监测",
-    subTitle: "基于公开报道综合研判",
-    points: [
-      "美伊双方均有意控制正面军事行动烈度，避免滑向全面战端",
-      "博弈筹码集中于霍尔木兹海峡通行权与原油旁路输出通道的控制力",
-      "外交谈判渠道虽保持运作，但双方底线交集有限，短期内缺乏决定性破局驱动"
-    ],
-    note: "监测用途，不构成投资建议。"
-  },
   situations: [
     {
       title: "军事行动",
@@ -164,7 +163,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美军与伊朗军方维持战备威慑对峙，局部防空交火受控未向第三国纵深外溢。"
+        "延续：红海及波斯湾周边保持高戒备反导巡航，美军与伊朗常规力量未发生直接交火。",
+        "延续：也门胡塞武装零星无人机活动受到联军雷达追踪与拦截，未酿成重大设施损毁。"
       ]
     },
     {
@@ -173,7 +173,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：海峡仍处于许可制与高风险绕行状态，商业通航量较战前依然显著承压。"
+        "变化：Kpler追踪显示部分原油转向沙特东西管线及外海船对船转运，局部缓解出口堵塞。",
+        "延续：霍尔木兹狭窄主航道仍处高风险禁区，商业油轮保险费率与安保护航成本居高不下。"
       ]
     },
     {
@@ -182,7 +183,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：WTI与Brent盘中宽幅震荡，中位维持在$95上方，布伦特盘中刺入$100上方后遇阻回落。"
+        "延续：国际油价维持偏强震荡，WTI与Brent盘中宽幅拉锯，炼厂裂解价差居于高位。",
+        "变化：美国政府释放考虑允许使用红色染色柴油等监管放宽信号以平抑国内燃油价格。"
       ]
     },
     {
@@ -191,23 +193,20 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：外部大国维持海空护航及情报支援，未发生与区域大国的正面军事冲突。"
+        "变化：美方高层公开驳斥向伊朗提供全面经济制裁解除的传言，强调谈判底线未变。",
+        "延续：伊朗外交部门表态维持防务自卫能力的同时不关闭多边外交接触渠道。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美方要求德黑兰永久放弃海峡封锁与区域代理人威胁，与伊朗要求优先无条件解除核心经济制裁存在结构性死结。"
+      "美方要求伊朗彻底放弃对海峡航运施加军事控制，而德黑兰将海峡通行权视作迫使解除制裁的关键杠杆。"
     ],
     military: [
-      "美军区域前沿军力部署必须维持对航道的威慑存在，而伊朗反舰与无人机阵地构成的非对称拒止威慑难以单方面撤除。"
+      "美军区域防空力量的常态化部署与伊朗非对称反舰无人艇/导弹力量形成高灵敏度动态僵局。"
     ]
   },
   scoreTrend: [
-    {
-      date: "09-23",
-      score: 58
-    },
     {
       date: "09-24",
       score: 62
@@ -222,6 +221,10 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "09-28",
+      score: 60
+    },
+    {
+      date: "09-29",
       score: 60,
       active: true
     }
@@ -229,27 +232,26 @@ export const DATA_ZH: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "美伊代表围绕海峡通行提议在纽约展开间接接触",
-      description: "据彭博社与金融时报报道，伊朗代表团在联合国大会期间向中间斡旋方递交分阶段缓解海峡对峙的方案，美方表示关切重点仍在全面通航保障，双方立场仍有明显温差。",
+      title: "白宫澄清对伊制裁豁免传闻，外交缓和预期降温",
+      description: "路透社与彭博社报道，美国官方驳斥了关于准备解除经济制裁以换取霍尔木兹海峡全面通航的报道，重申必须取得具体不可逆的安全保证。",
       verification: "confirmed",
-      timestamp: "2026-09-28T12:00:00Z",
-      significance: "",
-      highlight: true
+      timestamp: "2026-09-29T10:22:00Z",
+      significance: ""
     },
     {
       id: "EVT-02",
-      title: "沙特经红海延布港东西输油管道恢复常态化输送",
-      description: "路透社报道，沙特国家石油公司（Aramco）已完成遇袭管线的检修测试，东西管道日均输油量回升至约 350 万桶，有效缓解了波斯湾内部原油积压压力。",
+      title: "Kpler报告9月中东原油海运出口逆势回升",
+      description: "追踪机构Kpler数据显示，沙特与阿联酋通过红海管线及船对船转运使出口量升至1280万桶/日，但霍尔木兹航道通行风险未见实质解除。",
       verification: "confirmed",
-      timestamp: "2026-09-28T08:30:00Z",
+      timestamp: "2026-09-29T08:30:00Z",
       significance: ""
     },
     {
       id: "EVT-03",
-      title: "国际原油基准呈宽幅震荡态势",
-      description: "Barchart 与 Trading Economics 行情数据显示，WTI 在 $91.99–$96.54 区间运行，Brent 在 $96.96–$101.24 之间剧烈震荡，地缘溢价与供需博弈使油价徘徊在危机临界线附近。",
+      title: "油价维持高位盘整，WTI与Brent呈现宽幅震荡",
+      description: "纽约商业交易所数据显示，WTI日内处于$90.13–$94.74，布伦特处于$95.86–$100.29，市场在战事溢价与宏观通胀干预预期之间反复权衡。",
       verification: "confirmed",
-      timestamp: "2026-09-28T16:30:00Z",
+      timestamp: "2026-09-29T15:14:47Z",
       significance: ""
     }
   ],
@@ -259,16 +261,12 @@ export const DATA_ZH: DashboardData = {
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-09-28",
-  version: "v2.205",
-  riskScore: 60,
-  keyChange: "US-Iran mediation around phased Strait of Hormuz access continues in New York; oil prices fluctuate near the high risk band while five-factor scores remain unchanged.",
-  change: "none",
-  investmentSignal: "→ Maintain defensive positioning and energy commodity hedges against diplomatic impasse volatility.",
+  date: "2026-09-29",
+  version: "v2.206",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D212",
+      value: "D213",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
@@ -280,7 +278,7 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Oil",
-      value: "WTI $91.99–$96.54 · Brent $96.96–$101.24",
+      value: "WTI $90.13–$94.74 · Brent $95.86–$100.29",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -292,13 +290,28 @@ export const DATA_EN: DashboardData = {
       color: "#ffdc00"
     }
   ],
+  riskScore: 60,
+  keyChange: "US refutes sanctions relief concessions while indirect talks persist; Middle East crude export rerouting offsets part of maritime bottlenecks as oil consolidates in the $90-$100 range.",
+  investmentSignal: "→ Maintain long commodity and energy hedges while adopting a defensive underweight posture across broader risk assets.",
+  warPhase: {
+    level: "Controlled Conflict",
+    targetLevel: "Fragile Balance",
+    title: "US–Iran geo-risk snapshot",
+    subTitle: "Synthesized from public sources",
+    points: [
+      "Both US and Iranian forces avoid direct unannounced military escalation, maintaining defensive containment.",
+      "Passage via Hormuz remains restricted with tight vetting, relying on bypass pipelines and ship-to-ship transfers.",
+      "Qatari-mediated backchannel talks continue without consensus on sanctions relief or nuclear oversight."
+    ],
+    note: "For monitoring only; not investment advice."
+  },
   riskFactors: [
     {
       name: "Military Escalation Intensity",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "US and Iranian militaries maintain defensive alert with limited air defense engagements that remain contained.",
+      description: "No major strategic direct strikes occurred over the past 24 hours; military engagement remains limited to defensive patrols and interception.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -307,7 +320,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "The strait remains subject to strict transit permits and extensive commercial rerouting.",
+      description: "Shipping transit remains between 50% and 90% of pre-war capacity, sustained by rerouting and transfer workarounds.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -316,7 +329,7 @@ export const DATA_EN: DashboardData = {
       score: 3.5,
       prev: 3.5,
       weight: 0.2,
-      description: "WTI and Brent trade in a wide band above $95, with Brent testing the $100 threshold before pulling back.",
+      description: "WTI fluctuates between $90 and $95 while Brent tests $100, reflecting persistent physical waterborne risk premiums.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -325,7 +338,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "External powers provide maritime patrol presence and intelligence coordination without direct interstate warfare.",
+      description: "US naval forces maintain defensive escort readiness and coalition intelligence sharing without expanding offensive combat operations.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -334,23 +347,11 @@ export const DATA_EN: DashboardData = {
       score: 2.5,
       prev: 2.5,
       weight: 0.2,
-      description: "Indirect communications continue via mediators in New York, but substantial divergences preclude immediate breakthrough.",
+      description: "Indirect communication channels remain functional, but contradictory public stances impede near-term breakthrough.",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
-  warPhase: {
-    level: "Controlled Conflict",
-    targetLevel: "Fragile Balance",
-    title: "US–Iran geo-risk snapshot",
-    subTitle: "Synthesized from public sources",
-    points: [
-      "Both parties avoid unconstrained military escalation to prevent a wider regional conflict",
-      "Strategic leverage centers on Strait of Hormuz navigation access and bypass pipeline flows",
-      "Diplomatic channels operate continuously but minimal overlap in red lines keeps progress incremental"
-    ],
-    note: "For monitoring only; not investment advice."
-  },
   situations: [
     {
       title: "Military Action",
@@ -358,7 +359,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: US and Iranian militaries maintain defensive alert with limited air defense engagements that remain contained."
+        "Continue: High-readiness naval and air defense patrols remain active across regional choke points without direct bilateral strikes.",
+        "Continue: Sporadic Houthi drone and missile sorties are tracked and intercepted by coalition air defenses."
       ]
     },
     {
@@ -367,7 +369,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: The strait remains subject to strict transit permits and extensive commercial rerouting."
+        "Change: Kpler tracking indicates Gulf exporters are expanding reliance on the East-West pipeline and offshore ship-to-ship transfers.",
+        "Continue: The primary Hormuz passage stays designated as high-risk, keeping vessel insurance premiums elevated."
       ]
     },
     {
@@ -376,7 +379,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: WTI and Brent trade in a wide band above $95, with Brent testing the $100 threshold before pulling back."
+        "Continue: Crude benchmarks oscillate in a strong consolidation zone, sustained by robust crack spreads and tanker war premiums.",
+        "Change: US authorities consider regulatory relief on red-dyed diesel to mitigate domestic price pressures as an alternative to export curbs."
       ]
     },
     {
@@ -385,23 +389,20 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: External powers provide maritime patrol presence and intelligence coordination without direct interstate warfare."
+        "Change: US leadership explicitly rejects rumors of unconditional sanctions relief, maintaining maximalist preconditions for peace.",
+        "Continue: Iranian officials assert ready defensive readiness while keeping diplomatic mediation channels intact."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "US insistence on verifiable cessation of regional choke-point threats directly clashes with Iran's prerequisite of comprehensive economic sanctions relief."
+      "The US insists on unconditional maritime freedom through Hormuz, while Tehran maintains maritime chokepoint leverage to force comprehensive sanctions relief."
     ],
     military: [
-      "US naval forward presence must enforce sea lane security while Iranian asymmetric missile and drone deterrent forces remain locked in place."
+      "Coalition air defense and escort capabilities stand in persistent tension against Iranian asymmetric coastal and drone assets."
     ]
   },
   scoreTrend: [
-    {
-      date: "09-23",
-      score: 58
-    },
     {
       date: "09-24",
       score: 62
@@ -416,6 +417,10 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "09-28",
+      score: 60
+    },
+    {
+      date: "09-29",
       score: 60,
       active: true
     }
@@ -423,27 +428,26 @@ export const DATA_EN: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "US and Iran Maintain Indirect Technical Talks in New York Over Strait Reopening",
-      description: "According to Bloomberg and the Financial Times, Iranian diplomats submitted a phased proposal to mediators regarding maritime passage, though the US remains cautious regarding enforcement conditions.",
+      title: "White House Denies Sanctions Relief Reports, Cooling Truce Hopes",
+      description: "Reuters and Bloomberg report that US officials rejected claims that Washington offered sanctions relief in exchange for reopening Hormuz, reaffirming strict security conditions.",
       verification: "confirmed",
-      timestamp: "2026-09-28T12:00:00Z",
-      significance: "",
-      highlight: true
+      timestamp: "2026-09-29T10:22:00Z",
+      significance: ""
     },
     {
       id: "EVT-02",
-      title: "Saudi Arabia Sustains 3.5 mb/d Flows on East-West Bypass Pipeline",
-      description: "Reuters reports Aramco has brought its repaired East-West pipeline to regular 3.5 mb/d bypass capacity toward Yanbu on the Red Sea, mitigating Gulf bottleneck exposure.",
+      title: "Kpler Reports Middle East Crude Exports Rose to 12.8M bpd in September",
+      description: "Analytics firm Kpler reported higher shipments from Saudi Arabia and the UAE using bypass infrastructure, though Hormuz transit constraints continue.",
       verification: "confirmed",
-      timestamp: "2026-09-28T08:30:00Z",
+      timestamp: "2026-09-29T08:30:00Z",
       significance: ""
     },
     {
       id: "EVT-03",
-      title: "Global Crude Benchmarks Show Wide-Band Volatility Near Highs",
-      description: "Barchart and Trading Economics data record WTI trading between $91.99 and $96.54, while Brent fluctuated between $96.96 and $101.24 as geopolitical tension offsets temporary pipeline relief.",
+      title: "Crude Benchmarks Consolidate as Market Balances War Premium and Demand Risks",
+      description: "Exchange data shows WTI traded between $90.13 and $94.74 while Brent spanned $95.86 to $100.29 amid Middle East shipping uncertainties and US diesel supply discussions.",
       verification: "confirmed",
-      timestamp: "2026-09-28T16:30:00Z",
+      timestamp: "2026-09-29T15:14:47Z",
       significance: ""
     }
   ],
@@ -457,7 +461,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "9月28日节点",
+    node406: "9月29日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -491,16 +495,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.205 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.206 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 60（持平）：美伊在纽约围绕霍尔木兹海峡分阶段开放展开斡旋接触，油价高位震荡但未脱离中高风险带，五维评分全面持平昨日。",
-    bannerWarning: "→ 维持防御资产与能源大宗对冲敞口，防范霍尔木兹谈判拉锯带来的脉冲性波动。",
-    deescalationIntent: "美方要求德黑兰永久放弃海峡封锁与区域代理人威胁，与伊朗要求优先无条件解除核心经济制裁存在结构性死结。",
-    structuralRisk: "海峡仍处于许可制与高风险绕行状态，商业通航量较战前依然显著承压。",
-    contradictionNote: "美方要求德黑兰永久放弃海峡封锁与区域代理人威胁，与伊朗要求优先无条件解除核心经济制裁存在结构性死结。；美军区域前沿军力部署必须维持对航道的威慑存在，而伊朗反舰与无人机阵地构成的非对称拒止威慑难以单方面撤除。",
+    bannerSignal: "综合评分 60（持平）：美伊否认重大妥协让步传闻，间接斡旋维持脆弱拉锯，中东海运绕行推高物流溢价，油价在90-100美元宽幅盘整。",
+    bannerWarning: "→ 维持大宗商品与能源多头仓位作为地缘对冲，风险资产采取防御性低配配置。",
+    deescalationIntent: "美方要求伊朗彻底放弃对海峡航运施加军事控制，而德黑兰将海峡通行权视作迫使解除制裁的关键杠杆。",
+    structuralRisk: "主航道通行能力维持在战前水平的50%–90%，主要依靠绕行和转运缓解供给压力。",
+    contradictionNote: "美方要求伊朗彻底放弃对海峡航运施加军事控制，而德黑兰将海峡通行权视作迫使解除制裁的关键杠杆。；美军区域防空力量的常态化部署与伊朗非对称反舰无人艇/导弹力量形成高灵敏度动态僵局。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -508,7 +512,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第212天",
+    dayCount: "第213天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -516,7 +520,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Sep 28 Node",
+    node406: "Sep 29 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -550,16 +554,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.205 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.206 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 60 (Flat): US-Iran mediation around phased Strait of Hormuz access continues in New York; oil prices fluctuate near the high risk band while five-fact…",
-    bannerWarning: "→ Maintain defensive positioning and energy commodity hedges against diplomatic impasse volatility.",
-    deescalationIntent: "US insistence on verifiable cessation of regional choke-point threats directly …",
-    structuralRisk: "The strait remains subject to strict transit permits and extensive commercial rerouting.",
-    contradictionNote: "US insistence on verifiable cessation of regional choke-point threats directly clashes with Iran's prerequisite of comprehensive economic sanctions relief.; US…",
+    bannerSignal: "Composite 60 (Flat): US refutes sanctions relief concessions while indirect talks persist; Middle East crude export rerouting offsets part of maritime bottlenec…",
+    bannerWarning: "→ Maintain long commodity and energy hedges while adopting a defensive underweight posture across broader risk assets.",
+    deescalationIntent: "The US insists on unconditional maritime freedom through Hormuz, while Tehran m…",
+    structuralRisk: "Shipping transit remains between 50% and 90% of pre-war capacity, sustained by rerouting and transf…",
+    contradictionNote: "The US insists on unconditional maritime freedom through Hormuz, while Tehran maintains maritime chokepoint leverage to force comprehensive sanctions relief.; …",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -567,7 +571,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 212",
+    dayCount: "Day 213",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
