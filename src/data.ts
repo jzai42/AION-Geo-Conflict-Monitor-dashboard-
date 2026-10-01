@@ -65,13 +65,15 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-09-30",
-  version: "v2.207",
+  date: "2026-10-01",
+  version: "v2.208",
   riskScore: 60,
+  keyChange: "沙特Yanbu港恢复原油装运缓和即期供应恐慌，但美伊多哈间接接触仍陷技术僵局，海峡封锁风险高位黏滞。",
+  investmentSignal: "→ 维持防御性大宗商品与能源头寸，利用地缘预期差对冲风险资产波动风险。",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D214",
+      value: "D215",
       unit: "2月28日起",
       color: "#ff851b"
     },
@@ -83,7 +85,7 @@ export const DATA_ZH: DashboardData = {
     },
     {
       label: "油价",
-      value: "WTI $88.58–$91.76 · Brent $95.14–$99.22",
+      value: "WTI $88.79–$92.90 · Brent $96.56–$101.86",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -101,7 +103,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美军按期完成在伊拉克部队撤出交接，战线以局部防空截击与代理交火为主，未发生超出交战规则的大规模纵深打击。",
+      description: "双方军事行动局限于受控接触与外围反舰威胁，未发生大规模基础设施打击升级。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -110,7 +112,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "霍尔木兹海峡维持高度管制与选择性许可通航，常规商业班轮绕行非洲好望角，通行量较战前受限约50%至90%。",
+      description: "通行量维持在常态水平的50%–70%，商船依赖护航与绕行避险，封锁未完全解除。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -119,7 +121,7 @@ export const DATA_ZH: DashboardData = {
       score: 3.5,
       prev: 3.5,
       weight: 0.2,
-      description: "油价整体在$88–$99美元区间高位震荡，沙特东西管线扩能350万桶/日缓解即期断供担忧，遏制了向$100以上危机带的急剧突破。",
+      description: "原油价格处于高位震荡格局，WTI维持在90美元上方，布伦特短时破百后盘整。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -128,7 +130,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美军保持战区海上封锁执行力与前沿防御编队，并协同卡塔尔与巴基斯坦进行外交信件传递，大国对抗维持在威慑与调解通道内。",
+      description: "美军维持波斯湾外围巡航与护航行动，主要大国保持外交与经济施压层级。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -137,23 +139,46 @@ export const DATA_ZH: DashboardData = {
       score: 2.5,
       prev: 2.5,
       weight: 0.2,
-      description: "德黑兰官方证实收到美方关于七日停火与海峡通航的反提案，双边谈判渠道未断裂，但双方核心底线分歧巨大，尚未达成任何执行协议。",
+      description: "间接谈判渠道保持活跃，卡塔尔调解方持续传递方案，但核心条款分歧依然显著。",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
-  warPhase: {
-    level: "海上封锁对抗期",
-    targetLevel: "脆弱平衡",
-    title: "美伊地缘风险监测",
-    subTitle: "基于公开报道综合研判",
-    points: [
-      "美军撤出伊拉克驻地，美伊前沿直接摩擦触点技术性减少。",
-      "美伊双方围绕霍尔木兹海峡7日通航提议交换反提案，间接斡旋通道保持运作。",
-      "沙特延布港装运放量与东西管线投产对冲了海峡断航对全球原油的部分供给缺口。"
-    ],
-    note: "监测用途，不构成投资建议。"
-  },
+  events: [
+    {
+      id: "EVT-01",
+      title: "沙特东西管道恢复 Yanbu 装船缓解现货紧缺",
+      description: "路透社与ICIS报道，沙特阿美恢复红海 Yanbu 港原油装卸作业，中东避开霍尔木兹海峡的出口能力有所改善，全球即期断供担忧降温。",
+      verification: "confirmed",
+      timestamp: "2026-10-01T04:42:00Z",
+      significance: "",
+      highlight: true
+    },
+    {
+      id: "EVT-02",
+      title: "国际基准油价于90至100美元区间盘整震荡",
+      description: "彭博社报道，WTI期价于$88.79–$92.90区间博弈，布伦特录得$96.56–$101.86，市场在供给恢复与中东长期地缘溢价之间寻找平衡。",
+      verification: "confirmed",
+      timestamp: "2026-10-01T10:57:00Z",
+      significance: ""
+    },
+    {
+      id: "EVT-03",
+      title: "美伊多哈间接渠道传递路线图反案",
+      description: "CBS新闻与中东区域媒体报道，伊朗外交团队离开纽约转道多哈，卡塔尔调解机构向双方转交关于海峡通行与制裁豁免的修正案文。",
+      verification: "partial",
+      timestamp: "2026-10-01T11:27:00Z",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "UKMTO通报霍尔木兹周边商业船舶防御性夜航",
+      description: "英国海事贸易行动办公室与美联社报道，海峡周边零星安全警报频发，绝大多数商业油轮依然采取集结护航及静默航行方式通行。",
+      verification: "confirmed",
+      timestamp: "2026-10-01T10:59:00Z",
+      significance: ""
+    }
+  ],
   situations: [
     {
       title: "军事行动",
@@ -161,8 +186,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：红海及波斯湾空域维持局部防空雷达锁定与防空截击对峙态势。",
-        "变化：美军正式完成伊拉克全部驻军撤离并向伊拉克军方完成基地交接。"
+        "延续：美伊两军在霍尔木兹外围维持非接触式高压巡航，未爆发新增重大正面战事。",
+        "延续：也门与伊拉克方向区域民兵维持低烈度战术骚扰，防空拦截体系运转平稳。"
       ]
     },
     {
@@ -171,8 +196,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：霍尔木兹主航道受伊朗海上封锁与高额战险制约，常态商船通行量维持低位。",
-        "变化：沙特东西输油管道恢复至约350万桶/日，部分原油转由红海延布港外运。"
+        "变化：沙特红海管道运力恢复分流约300万桶/日原油，海峡内直接商业通航率略微改善。",
+        "延续：船东战险附加费率高企，过境船只普遍依赖美军及多国联军特定护航窗口。"
       ]
     },
     {
@@ -181,8 +206,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：国际油价基准维持在$85–$100显著偏强区间。",
-        "变化：Brent自百元关口上方回踩至$95–$99区间整理，WTI震荡收敛于$88–$92一带。"
+        "变化：WTI与布伦特月差结构性倒挂收窄，成品油短缺担忧部分替代原油断供叙事。",
+        "延续：欧美战略库存投放预期压制油价单边暴涨空间，油价主体落在88-102美元区间。"
       ]
     },
     {
@@ -191,63 +216,32 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：华盛顿与德黑兰高层继续在公开舆论场展示坚定威慑立场。",
-        "变化：伊朗总统佩泽什基安内阁正式审阅美方经卡塔尔递交的停火反提案文本。"
+        "变化：联大会晤告一段落后，美伊双方重心重回卡塔尔多哈秘密间接磋商渠道。",
+        "延续：美方高层公开表态重申完全掌控海峡安全，伊朗坚持挂钩解封与制裁豁免。"
       ]
     }
   ],
+  warPhase: {
+    level: "海上封锁对抗期",
+    targetLevel: "脆弱平衡",
+    title: "美伊地缘风险监测",
+    subTitle: "基于公开报道综合研判",
+    points: [
+      "双方均未展示发动大规模全面军事升级的意图，海空力量集中于制海权博弈与封锁反封锁。",
+      "原油出口替代通道逐步走通，降低了封锁对全球能源供应的瞬时致命冲击。",
+      "多哈技术谈判保持兜底对话机制，阻止对抗向失控状态滑落。"
+    ],
+    note: "监测用途，不构成投资建议。"
+  },
   coreContradiction: {
     political: [
-      "德黑兰要求全面解除海上封锁与经济制裁作为恢复海峡航行安全的前提条件。",
-      "华盛顿坚持要求伊朗先行保障霍尔木兹无限制无差别自由通航方可启动全面核与安全谈判。"
+      "美方要求伊朗无条件保证霍尔木兹航行安全，德黑兰要求以解除单边海空封锁与出口制裁为前置条件。"
     ],
     military: [
-      "美军在战区部署的封锁舰队与伊朗岸基反舰导弹系统形成相互威慑锁定。",
-      "沙特旁路管道的输送能力与海峡全面瘫痪带来的每日1500万桶短缺缺口之间的物理极限对抗。"
+      "美军区域护航存在力量拉伸极限，与伊朗及其代理人非对称饱和骚扰能力形成长期消耗僵局。"
     ]
   },
-  keyChange: "美伊通过多哈间接渠道正式交换书面反提案，同时沙特东西输油管道恢复至350万桶/日，供给避险与外交探底共同将油价锁定在$88–$99的高位震荡区间。",
-  investmentSignal: "→ 维持能源上游与防御性资产底仓配置，在大宗商品宽幅震荡与间接谈判反复中逢高适度对冲风险资产敞口。",
-  events: [
-    {
-      id: "EVT-01",
-      title: "美方递交海峡通行反提案",
-      description: "伊朗外长阿拉格齐向总统佩泽什基安递交经由卡塔尔调解人转交的美方书面反提案，双方就分阶段通航展开新一轮间接接触。",
-      verification: "confirmed",
-      timestamp: "2026-09-30T04:41:00Z",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-02",
-      title: "沙特东西管道恢复至350万桶/日",
-      description: "沙特阿美恢复延布方向管道输量并向客户确认10月红海港口装船计划，有效缓释了波斯湾出口受阻带来的即期恐慌。",
-      verification: "confirmed",
-      timestamp: "2026-09-30T05:06:00Z",
-      significance: ""
-    },
-    {
-      id: "EVT-03",
-      title: "美军完成伊拉克撤军任务",
-      description: "美军宣布结束在伊拉克长达12年的既定军事任务，将剩余防务设施移交伊拉克安全部队，减少了美伊陆上直接摩擦接点。",
-      verification: "confirmed",
-      timestamp: "2026-09-30T05:44:00Z",
-      significance: ""
-    },
-    {
-      id: "EVT-04",
-      title: "原油基准于$88–$99区间宽幅震荡",
-      description: "WTI与Brent期货分别在$88.58–$91.76及$95.14–$99.22之间波动，地缘风险溢价与替代供应增量呈现动态抗衡。",
-      verification: "confirmed",
-      timestamp: "2026-09-30T15:28:00Z",
-      significance: ""
-    }
-  ],
   scoreTrend: [
-    {
-      date: "09-26",
-      score: 60
-    },
     {
       date: "09-27",
       score: 60
@@ -262,6 +256,10 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "09-30",
+      score: 60
+    },
+    {
+      date: "10-01",
       score: 60,
       active: true
     }
@@ -272,13 +270,15 @@ export const DATA_ZH: DashboardData = {
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-09-30",
-  version: "v2.207",
+  date: "2026-10-01",
+  version: "v2.208",
   riskScore: 60,
+  keyChange: "Saudi crude loadings resume at Yanbu easing physical shortage fears, but US-Iran indirect talks via Doha remain locked in a technical stalemate, keeping maritime blockade risks steady.",
+  investmentSignal: "→ Maintain defensive allocations in energy and commodities while hedging geopolitical volatility and Hormuz tail risks.",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D214",
+      value: "D215",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
@@ -290,15 +290,15 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Oil",
-      value: "WTI $88.58–$91.76 · Brent $95.14–$99.22",
+      value: "WTI $88.79–$92.90 · Brent $96.56–$101.86",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
-      value: "严重受限",
-      unit: "Transit",
+      value: "Severely Restricted",
+      unit: "Transit Status",
       color: "#ffdc00"
     }
   ],
@@ -308,7 +308,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "U.S. forces completed their withdrawal from Iraq as scheduled, while active combat remained limited to standoff air-defense intercepts and proxy skirmishes.",
+      description: "Military engagement remains strictly bounded within localized interdiction and maritime standoffs without strategic strikes.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -317,7 +317,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "The Strait of Hormuz remained under tight Iranian military scrutiny and selective transit controls, keeping commercial flow within the 50–90% constrained corridor.",
+      description: "Traffic volume sits at 50%–70% of pre-war norms as commercial fleets depend on convoys and bypass pipelines.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -326,7 +326,7 @@ export const DATA_EN: DashboardData = {
       score: 3.5,
       prev: 3.5,
       weight: 0.2,
-      description: "Oil prices fluctuated in the $88–$99 range as Saudi pipeline flows of 3.5m bpd to Yanbu relieved prompt physical supply distress, capping further moves past $100.",
+      description: "Crude prices oscillate near the $90–$100 threshold, with WTI above $88 and Brent briefly piercing $101 before consolidating.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -335,7 +335,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "The U.S. maintained naval deployment and regional blockade enforcement while conducting indirect diplomacy via Qatar, avoiding unilateral ground escalation.",
+      description: "US CENTCOM enforces maritime cordons and naval escorts, while European partners coordinate on strategic fuel reserves.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -344,23 +344,46 @@ export const DATA_EN: DashboardData = {
       score: 2.5,
       prev: 2.5,
       weight: 0.2,
-      description: "Tehran confirmed receipt of the formal U.S. counterproposal on Hormuz navigation and ceasefire staging, keeping channels open despite substantial divergence on terms.",
+      description: "Indirect communication channels in Doha remain active with revised roadmap proposals circulating between delegations.",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
-  warPhase: {
-    level: "Maritime Blockade Confrontation",
-    targetLevel: "Fragile Balance",
-    title: "US–Iran geo-risk snapshot",
-    subTitle: "Synthesized from public sources",
-    points: [
-      "U.S. forces completed troop withdrawal from Iraq bases, lowering direct land contact surfaces.",
-      "Tehran and Washington exchanged formal counterproposals on a 7-day Hormuz corridor through Qatari mediation.",
-      "Saudi pipeline bypass expansion to Yanbu offset partial crude export losses from the Persian Gulf."
-    ],
-    note: "For monitoring only; not investment advice."
-  },
+  events: [
+    {
+      id: "EVT-01",
+      title: "Saudi East-West Pipeline Restores Yanbu Loadings",
+      description: "Reuters and ICIS report Saudi Aramco resumed tanker operations at Yanbu, elevating non-Hormuz crude export volumes and dampening immediate supply panic.",
+      verification: "confirmed",
+      timestamp: "2026-10-01T04:42:00Z",
+      significance: "",
+      highlight: true
+    },
+    {
+      id: "EVT-02",
+      title: "Global Crude Benchmarks Fluctuate Across $90-$100 Band",
+      description: "Bloomberg reports WTI trading between $88.79 and $92.90 while Brent holds $96.56 to $101.86 as markets balance supply rerouting against persistent geopolitical risks.",
+      verification: "confirmed",
+      timestamp: "2026-10-01T10:57:00Z",
+      significance: ""
+    },
+    {
+      id: "EVT-03",
+      title: "US and Iran Exchange Counter-Proposals via Qatari Mediators",
+      description: "CBS News and regional outlets confirm the Iranian delegation departed New York for Doha, where technical counter-proposals regarding the 7-day Hormuz roadmap were transmitted.",
+      verification: "partial",
+      timestamp: "2026-10-01T11:27:00Z",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "UKMTO Confirms Defensive Night Transits in Hormuz",
+      description: "UK Maritime Trade Operations and AP report commercial tankers are maintaining darkened transits and naval escort protocols amid lingering peripheral drone threats.",
+      verification: "confirmed",
+      timestamp: "2026-10-01T10:59:00Z",
+      significance: ""
+    }
+  ],
   situations: [
     {
       title: "Military Action",
@@ -368,8 +391,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Regional air-defense intercepts and proxy border posturing persisted across the Persian Gulf and Red Sea.",
-        "Change: U.S. forces formally completed troop withdrawal and base handovers in Iraq."
+        "Continue: US and Iranian forces maintain standoff deterrence across Gulf waters without direct inland strike escalation.",
+        "Continue: Regional proxy skirmishes remain localized and contained by maritime interception rings."
       ]
     },
     {
@@ -378,8 +401,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Strait transit remained constrained under selective clearance protocols and prohibitive war-risk insurance.",
-        "Change: Saudi East-West pipeline expanded operations to 3.5m bpd, diverting crude loadings toward Yanbu."
+        "Change: Red Sea pipeline bypass volumes ease transit constraints, though direct passage in the chokepoint remains guarded.",
+        "Continue: Marine hull and war-risk insurance premiums remain elevated across Persian Gulf routes."
       ]
     },
     {
@@ -388,8 +411,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Benchmark crude remained elevated in the noticeably firm $85–$100 price band.",
-        "Change: Brent consolidated below the $100 threshold into $95–$99 while WTI fluctuated between $88–$92."
+        "Change: Crude prompt time-spreads compress slightly as refined product deficits take precedence over headline crude shortages.",
+        "Continue: Strategic petroleum reserve discussions anchor prices within the $88-$102 corridor."
       ]
     },
     {
@@ -398,63 +421,32 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Public statements from Washington and Tehran maintained firm deterrent postures.",
-        "Change: President Pezeshkian's cabinet reviewed the formal U.S. counterproposal received via Doha."
+        "Change: Post-UNGA diplomatic engagement shifts back to indirect technical exchanges in Doha.",
+        "Continue: Washington maintains strict naval blockade enforcement while Tehran conditions transit opening on sanctions relief."
       ]
     }
   ],
+  warPhase: {
+    level: "Maritime Blockade Confrontation",
+    targetLevel: "Fragile Balance",
+    title: "US–Iran geo-risk snapshot",
+    subTitle: "Synthesized from public sources",
+    points: [
+      "Neither side seeks a wider regional conflagration, concentrating operations on economic and naval deterrence.",
+      "Alternative regional energy delivery mechanisms prevent an outright physical collapse of global supply.",
+      "Active Qatari backchannels provide an operational safety valve preventing accidental escalation."
+    ],
+    note: "For monitoring only; not investment advice."
+  },
   coreContradiction: {
     political: [
-      "Tehran demands full relief from maritime blockades and economic sanctions before committing to permanent Hormuz freedom of navigation.",
-      "Washington demands immediate, unconditional civilian transit guarantees through the Strait of Hormuz before advancing nuclear and security talks."
+      "Washington demands unhindered international navigation guarantees, while Tehran conditions maritime easing on lifting the naval blockade and sanctions."
     ],
     military: [
-      "U.S. naval blockade forces and Iranian coastal anti-ship missile batteries remain locked in mutual deterrence.",
-      "Physical throughput capacity of regional bypass pipelines limits how much of the 15m bpd Gulf export volume can be diverted indefinitely."
+      "US naval escort assets face logistical endurance limits against persistent, low-cost asymmetric drone and missile harassment."
     ]
   },
-  keyChange: "Washington transmitted a formal counterproposal to Tehran via Qatari mediation as Saudi Arabia expanded Yanbu pipeline bypass flows to 3.5m bpd, anchoring crude within the $88–$99 band.",
-  investmentSignal: "→ Maintain baseline exposure to upstream energy and defensive assets while selectively hedging risk asset portfolios against ongoing commodity volatility and diplomatic swings.",
-  events: [
-    {
-      id: "EVT-01",
-      title: "U.S. Delivers Hormuz Counterproposal",
-      description: "Iranian Foreign Minister Araghchi presented a formal U.S. counterproposal received via Qatari mediators to President Pezeshkian regarding phased maritime reopening.",
-      verification: "confirmed",
-      timestamp: "2026-09-30T04:41:00Z",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-02",
-      title: "Saudi East-West Pipeline Restores 3.5m bpd",
-      description: "Saudi Aramco restored East-West pipeline throughput to 3.5m bpd and scheduled October loadings at Yanbu, easing immediate supply shortage anxiety.",
-      verification: "confirmed",
-      timestamp: "2026-09-30T05:06:00Z",
-      significance: ""
-    },
-    {
-      id: "EVT-03",
-      title: "U.S. Troops Complete Iraq Mission",
-      description: "The U.S. military finalized its planned troop redeployment out of Iraq bases, concluding a 12-year counter-ISIS mission and reducing direct tactical friction points.",
-      verification: "confirmed",
-      timestamp: "2026-09-30T05:44:00Z",
-      significance: ""
-    },
-    {
-      id: "EVT-04",
-      title: "Crude Benchmarks Consolidate in $88–$99 Range",
-      description: "WTI and Brent traded within $88.58–$91.76 and $95.14–$99.22 respectively as regional bypass volumes balanced persistent geopolitical risk premia.",
-      verification: "confirmed",
-      timestamp: "2026-09-30T15:28:00Z",
-      significance: ""
-    }
-  ],
   scoreTrend: [
-    {
-      date: "09-26",
-      score: 60
-    },
     {
       date: "09-27",
       score: 60
@@ -469,6 +461,10 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "09-30",
+      score: 60
+    },
+    {
+      date: "10-01",
       score: 60,
       active: true
     }
@@ -483,7 +479,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "9月30日节点",
+    node406: "10月1日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -517,16 +513,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.207 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.208 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 60（持平）：美伊通过多哈间接渠道正式交换书面反提案，同时沙特东西输油管道恢复至350万桶/日，供给避险与外交探底共同将油价锁定在$88–$99的高位震荡区间。",
-    bannerWarning: "→ 维持能源上游与防御性资产底仓配置，在大宗商品宽幅震荡与间接谈判反复中逢高适度对冲风险资产敞口。",
-    deescalationIntent: "德黑兰要求全面解除海上封锁与经济制裁作为恢复海峡航行安全的前提条件。",
-    structuralRisk: "霍尔木兹海峡维持高度管制与选择性许可通航，常规商业班轮绕行非洲好望角，通行量较战前受限约50%至90%。",
-    contradictionNote: "德黑兰要求全面解除海上封锁与经济制裁作为恢复海峡航行安全的前提条件。；美军在战区部署的封锁舰队与伊朗岸基反舰导弹系统形成相互威慑锁定。",
+    bannerSignal: "综合评分 60（持平）：沙特Yanbu港恢复原油装运缓和即期供应恐慌，但美伊多哈间接接触仍陷技术僵局，海峡封锁风险高位黏滞。",
+    bannerWarning: "→ 维持防御性大宗商品与能源头寸，利用地缘预期差对冲风险资产波动风险。",
+    deescalationIntent: "美方要求伊朗无条件保证霍尔木兹航行安全，德黑兰要求以解除单边海空封锁与出口制裁为前置条件。",
+    structuralRisk: "通行量维持在常态水平的50%–70%，商船依赖护航与绕行避险，封锁未完全解除。",
+    contradictionNote: "美方要求伊朗无条件保证霍尔木兹航行安全，德黑兰要求以解除单边海空封锁与出口制裁为前置条件。；美军区域护航存在力量拉伸极限，与伊朗及其代理人非对称饱和骚扰能力形成长期消耗僵局。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -534,7 +530,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第214天",
+    dayCount: "第215天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -542,7 +538,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Sep 30 Node",
+    node406: "Oct 1 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -576,16 +572,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.207 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.208 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 60 (Flat): Washington transmitted a formal counterproposal to Tehran via Qatari mediation as Saudi Arabia expanded Yanbu pipeline bypass flows to 3.5m…",
-    bannerWarning: "→ Maintain baseline exposure to upstream energy and defensive assets while selectively hedging risk asset portfolios ag…",
-    deescalationIntent: "Tehran demands full relief from maritime blockades and economic sanctions befor…",
-    structuralRisk: "The Strait of Hormuz remained under tight Iranian military scrutiny and selective transit controls,…",
-    contradictionNote: "Tehran demands full relief from maritime blockades and economic sanctions before committing to permanent Hormuz freedom of navigation.; U.S. naval blockade for…",
+    bannerSignal: "Composite 60 (Flat): Saudi crude loadings resume at Yanbu easing physical shortage fears, but US-Iran indirect talks via Doha remain locked in a technical stale…",
+    bannerWarning: "→ Maintain defensive allocations in energy and commodities while hedging geopolitical volatility and Hormuz tail risks.",
+    deescalationIntent: "Washington demands unhindered international navigation guarantees, while Tehran…",
+    structuralRisk: "Traffic volume sits at 50%–70% of pre-war norms as commercial fleets depend on convoys and bypass p…",
+    contradictionNote: "Washington demands unhindered international navigation guarantees, while Tehran conditions maritime easing on lifting the naval blockade and sanctions.; US nav…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -593,7 +589,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 214",
+    dayCount: "Day 215",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
