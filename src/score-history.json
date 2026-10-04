@@ -1,11 +1,11 @@
 {
   "version": 2,
   "latest": {
-    "date": "2026-10-03",
-    "appVersion": "v2.210",
+    "date": "2026-10-04",
+    "appVersion": "v2.211",
     "riskScore": 64,
-    "prevRiskScore": 60,
-    "conflictDay": 217,
+    "prevRiskScore": 64,
+    "conflictDay": 218,
     "factorScores": [
       4,
       3,
@@ -14,16 +14,16 @@
       2.5
     ],
     "generationMode": "live",
-    "rawModelScore": 60,
+    "rawModelScore": 64,
     "rawModelFactors": [
-      3,
+      4,
       3,
       3.5,
       3,
       2.5
     ],
     "finalRiskScore": 64,
-    "adjustmentReason": "staleDays≥4 与 OpenAI 副审逐维均值",
+    "adjustmentReason": null,
     "oilQuality": {
       "publish": "live",
       "parseOk": true,
@@ -44,7 +44,7 @@
       "stale": false,
       "fromPrior": false,
       "fetchFailed": false,
-      "asOf": "2026-10-03T14:04:59.405Z",
+      "asOf": "2026-10-04T14:30:54.983Z",
       "wti": 91.11,
       "brent": 102.25,
       "wtiLow": 88.06,
@@ -52,7 +52,7 @@
       "brentLow": 98.43,
       "brentHigh": 103.05,
       "keyStatValue": "WTI $88.06–$93.51 · Brent $98.43–$103.05",
-      "updatedAt": "2026-10-03T14:06:46.642Z"
+      "updatedAt": "2026-10-04T14:32:49.204Z"
     }
   },
   "lockedDates": [
@@ -68,10 +68,6 @@
     "2026-05-23"
   ],
   "history": [
-    {
-      "date": "2026-06-05",
-      "score": 76
-    },
     {
       "date": "2026-06-06",
       "score": 76
@@ -546,6 +542,10 @@
     },
     {
       "date": "2026-10-03",
+      "score": 64
+    },
+    {
+      "date": "2026-10-04",
       "score": 64
     }
   ]
