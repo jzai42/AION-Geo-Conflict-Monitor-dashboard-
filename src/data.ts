@@ -65,24 +65,27 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-10-07",
-  version: "v2.214",
+  date: "2026-10-08",
+  version: "v2.215",
+  riskScore: 70,
+  keyChange: "霍尔木兹袭船频次创战时周峰推动布伦特油价重返105美元，但大国未直接交火；综合风险分落盘 70（较昨日 +6）；调整前模型分 64（staleDays≥4 与 OpenAI 副审逐维均值）",
+  investmentSignal: "→ 维持大宗商品与能源资产对冲多头，对高估值权益等风险资产采取防御性仓位控制。",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D221",
+      value: "D222",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "持平",
+      value: "↑6",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $88.93–$90.98 · Brent $100.78–$102.59",
+      value: "WTI $88.77–$93.20 · Brent $100.75–$105.91",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -94,57 +97,31 @@ export const DATA_ZH: DashboardData = {
       color: "#ffdc00"
     }
   ],
-  riskScore: 64,
-  change: "none",
-  keyChange: "布伦特原油重上101美元关口，霍尔木兹单周袭船频次创开战以来新高；综合风险分落盘 64（较昨日 持平（+0））",
-  scoreTrend: [
-    {
-      date: "10-03",
-      score: 64
-    },
-    {
-      date: "10-04",
-      score: 64
-    },
-    {
-      date: "10-05",
-      score: 64
-    },
-    {
-      date: "10-06",
-      score: 64
-    },
-    {
-      date: "10-07",
-      score: 64,
-      active: true
-    }
-  ],
   riskFactors: [
     {
       name: "军事升级烈度",
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "胡塞武装导弹袭击亚丁机场，美伊海空力量在波斯湾对峙依旧活跃。",
+      description: "依据路透社与军方通报，胡塞武装持续向沙特腹地与周边发动多波次袭击，多战线交火维持高烈度态势。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "霍尔木兹航运扰动",
-      score: 3,
+      score: 4,
       prev: 3,
       weight: 0.2,
-      description: "过去一周海峡油轮遇袭与骚扰事件达9至12起，但护航下整体原油流量维持50%-90%。",
+      description: "依据UKMTO与Kpler数据，商船在海峡附近遭遇抛射物袭击出现伤亡，海峡依赖军舰护航，流量维持在50–90%受限区间。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "能源冲击",
-      score: 3.5,
+      score: 4,
       prev: 3.5,
       weight: 0.2,
-      description: "WTI在89-91美元盘整，布伦特重新进入100-103美元危机带下沿。",
+      description: "依据雅虎财经及路透社，WTI处于$88.77–$93.20，布伦特进入$100.75–$105.91危机带，取舍兼顾双油种维持3.5档。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -153,7 +130,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美军在中东维持三支航母打击群战备威慑并主导商船防卫护航。",
+      description: "依据美国防部消息，美军中央司令部维持对商船巡航护航与反导预警援助，大国未实施全面直接军事参战。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -162,20 +139,48 @@ export const DATA_ZH: DashboardData = {
       score: 2.5,
       prev: 2.5,
       weight: 0.2,
-      description: "美方释出浓缩铀削减试探，伊朗高级官员予以强硬驳回，谈判未现实质破局。",
+      description: "依据半岛电视台报道，外交沟通渠道低速运转，缺乏全面停火政治意愿，实质谈判陷入僵局但未彻底关闭。",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
+  events: [
+    {
+      id: "EVT-01",
+      title: "海峡及周边油轮遇袭频次激增创战时周峰",
+      description: "UKMTO证实一艘油轮在卡塔尔马迪纳特阿沙马尔以北94公里处遭抛射物袭击并造成伤亡，路透社报道海峡周边袭船次数创战时单周最高。",
+      verification: "confirmed",
+      timestamp: "2026-10-08（当日公开报道）",
+      significance: "",
+      highlight: true,
+      critical: true
+    },
+    {
+      id: "EVT-02",
+      title: "布伦特原油冲破105美元进入危机带",
+      description: "受波斯湾航运风险升级与美墨湾海上油田停产双重驱动，布伦特原油大涨逾4%触及105.91美元高位，美联社与路透社均予以确认。",
+      verification: "confirmed",
+      timestamp: "2026-10-08（当日公开报道）",
+      significance: "",
+      highlight: true
+    },
+    {
+      id: "EVT-03",
+      title: "美媒报道白宫指示军方制定对伊打击预案",
+      description: "《大西洋月刊》报道白宫已要求五角大楼在11月中期选举前规划打击伊朗方案，路透社跟进引述，该消息属于匿名信源披露。",
+      verification: "partial",
+      timestamp: "2026-10-08（当日公开报道）",
+      significance: ""
+    }
+  ],
   warPhase: {
-    level: "海上封锁对抗期",
+    level: "高压对峙",
     targetLevel: "脆弱平衡",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "霍尔木兹海峡单周油轮骚扰与遭袭事件升至阶段高位",
-      "国际油价在百元关口获得地缘溢价支撑呈现高位震荡",
-      "停火条件互不相让，大国护航维系原油基本运力"
+      "霍尔木兹海峡袭击频度反弹，美军护航体制面临更大物流保全成本考验。",
+      "国际能源市场对断供忧虑增强，布伦特原油重新站上105美元危机警戒位。"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -186,8 +191,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：也门胡塞武装对亚丁国际机场发动导弹与无人机袭击，曼德海峡周边安全摩擦加剧。",
-        "延续：美伊海空部队在波斯湾公海与沿岸空域保持贴近对峙，未发生直接主权基地交火。"
+        "延续：也门胡塞武装对周边要道及沙特目标持续施加非对称打击压力。",
+        "延续：美军中央司令部加强波斯湾及红海防空联防与战巡警戒。"
       ]
     },
     {
@@ -196,8 +201,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：UKMTO确认近7天记录9至12起涉海峡船只遇袭与无线电拦截，为冲突爆发以来单周最高。",
-        "延续：商业船队继续依赖美军护航及东西管线分流，实际出口通航率维持在50%-90%区间。"
+        "变化：卡塔尔北部海域商船遭袭出现人员伤亡，周度遇袭强度创开战以来新高。",
+        "延续：商业船只依赖护航及管网绕行，通道流量保持在受控但受限状态。"
       ]
     },
     {
@@ -206,8 +211,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：布伦特期货重返101美元上方，地缘不确定性压过沙特降价增供预期。",
-        "延续：成品油特别是柴油裂解价差居高不下，跨区域海运成本高企维持通胀压力。"
+        "变化：布伦特触及$105.91高点，地缘溢价抵消国际能源署释储平抑效应。",
+        "延续：WTI维持在$88–$93区间，全球原油跨区价差持续走阔。"
       ]
     },
     {
@@ -216,100 +221,20 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：伊朗高官公开驳回美方削减浓缩铀以换取停火的构想，声明双方核心诉求冲突。",
-        "延续：美国白宫坚持要求德黑兰实质约束核活动，未开辟高级别正式谈判通道。"
+        "延续：美伊双方均展现高调战备威慑姿态，未释放主动实质妥协让步意图。",
+        "延续：第三方斡旋管道保持技术性联络，但缺乏高级别突破动能。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美方要求实质削减浓缩铀为停火前提，与伊朗坚持保留核权利及解除全额制裁不可调和。"
+      "美伊双方均受制于国内政治压力，在中期选举窗口期前缺乏单边让步空间。"
     ],
     military: [
-      "伊朗伊斯兰革命卫队以非对称破袭施压海峡航运，与美军强制护航及反封锁行动针锋相对。"
+      "低成本无人机与弹道武器封锁通道意图与美军高成本护航拦截能力之间的非对称消耗。"
     ]
   },
-  events: [
-    {
-      id: "EVT-01",
-      title: "布伦特原油站稳100美元，WTI高位震荡",
-      description: "伦敦ICE布伦特原油期货触及101.60美元/桶，受中东袭击风险与海湾风暴预期支撑；WTI交投于89-91美元区间。",
-      verification: "confirmed",
-      timestamp: "2026-10-07T12:00:00Z",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-02",
-      title: "霍尔木兹海峡单周油轮遭袭事件达战时新高",
-      description: "UKMTO与JMIC记录显示过去一周发生9-12起船只遭无人机、弹体或无线电逼停事件，袭船频率显著攀升。",
-      verification: "confirmed",
-      timestamp: "2026-10-07T10:24:00Z",
-      significance: "",
-      highlight: true,
-      critical: true
-    },
-    {
-      id: "EVT-03",
-      title: "胡塞武装导弹袭击也门亚丁机场",
-      description: "也门交通部门证实胡塞武装向亚丁国际机场发射弹道导弹与自杀式无人机，红海反舰与陆上打击双线活跃。",
-      verification: "confirmed",
-      timestamp: "2026-10-07T08:30:00Z",
-      significance: ""
-    },
-    {
-      id: "EVT-04",
-      title: "德黑兰否决美方非公开核停火提议",
-      description: "针对美方关于限制核浓缩结束冲突的言论，伊朗官员向媒体证实双方立场差距过大，谈判缺乏破局条件。",
-      verification: "confirmed",
-      timestamp: "2026-10-07T11:46:00Z",
-      significance: ""
-    }
-  ],
-  investmentSignal: "→ 维持能源与大宗商品结构性对冲敞口，防范海峡破袭脉冲驱动油价二次冲高，对高贝塔风险资产保持防御配置。",
-  prevRiskScore: 64,
-  webSources: [],
-  webSearchQueries: []
-};
-
-export const DATA_EN: DashboardData = {
-  date: "2026-10-07",
-  version: "v2.214",
-  keyStats: [
-    {
-      label: "Conflict Days",
-      value: "D221",
-      unit: "Since Feb 28",
-      color: "#ff851b"
-    },
-    {
-      label: "Score Change",
-      value: "Flat",
-      unit: "vs Prev",
-      color: "#ff4136"
-    },
-    {
-      label: "Oil",
-      value: "WTI $88.93–$90.98 · Brent $100.78–$102.59",
-      unit: "Ref.",
-      color: "#ff4136",
-      layout: "unitPrimary"
-    },
-    {
-      label: "Hormuz",
-      value: "Severely Restricted",
-      unit: "Transit Status",
-      color: "#ffdc00"
-    }
-  ],
-  riskScore: 64,
-  change: "none",
-  keyChange: "Brent crude rebounded above $101/bbl while Hormuz tanker harassment incidents touched a fresh weekly high, locking the; composite risk score prints at 64 (vs prior day flat (+0))",
   scoreTrend: [
-    {
-      date: "10-03",
-      score: 64
-    },
     {
       date: "10-04",
       score: 64
@@ -324,8 +249,50 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "10-07",
-      score: 64,
+      score: 64
+    },
+    {
+      date: "10-08",
+      score: 70,
       active: true
+    }
+  ],
+  prevRiskScore: 64,
+  webSources: [],
+  webSearchQueries: []
+};
+
+export const DATA_EN: DashboardData = {
+  date: "2026-10-08",
+  version: "v2.215",
+  riskScore: 70,
+  keyChange: "Surging tanker attacks around Hormuz pushed Brent back above $105, but absence of direct superpower combat leaves the; composite risk score prints at 70 (vs prior day +6); pre-adjustment model score 64 (staleDays≥4 与 OpenAI 副审逐维均值)",
+  investmentSignal: "→ Maintain hedges in energy and commodities while keeping a defensive posture on risk assets.",
+  keyStats: [
+    {
+      label: "Conflict Days",
+      value: "D222",
+      unit: "Since Feb 28",
+      color: "#ff851b"
+    },
+    {
+      label: "Score Change",
+      value: "↑6",
+      unit: "vs Prev",
+      color: "#ff4136"
+    },
+    {
+      label: "Oil",
+      value: "WTI $88.77–$93.20 · Brent $100.75–$105.91",
+      unit: "Ref.",
+      color: "#ff4136",
+      layout: "unitPrimary"
+    },
+    {
+      label: "Hormuz",
+      value: "严重受限",
+      unit: "Transit Status",
+      color: "#ffdc00"
     }
   ],
   riskFactors: [
@@ -334,25 +301,25 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Houthi missile barrage struck Aden airport while US-Iran frontline forces maintained high alert across regional hubs.",
+      description: "According to Reuters and military dispatches, multi-front exchanges and Houthi strikes remain highly active across the theater.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "Hormuz Disruption",
-      score: 3,
+      score: 4,
       prev: 3,
       weight: 0.2,
-      description: "Weekly maritime harassment reached 9-12 events, though naval escorts maintain commercial throughput around 50%-90%.",
+      description: "According to UKMTO and Kpler, commercial tankers face sustained projectile attacks with transit volumes limited to 50–90%.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "Energy Shock",
-      score: 3.5,
+      score: 4,
       prev: 3.5,
       weight: 0.2,
-      description: "WTI traded in the $89-$91 band while Brent moved above the $100 threshold into the lower crisis band.",
+      description: "According to Yahoo Finance and Reuters, Brent traded into the $100.75–$105.91 band while WTI settled at $88.77–$93.20, warranting a 3.5 score.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -361,7 +328,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "US forces sustain three carrier strike groups and continue active escort and intelligence coordination in Gulf waters.",
+      description: "According to DoD releases, US forces focus on maritime convoy protection and air defense intelligence without entering direct combat.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -370,20 +337,48 @@ export const DATA_EN: DashboardData = {
       score: 2.5,
       prev: 2.5,
       weight: 0.2,
-      description: "Diplomatic signals surfaced on nuclear thresholds, but senior Iranian statements confirmed direct deadlock remains unresolved.",
+      description: "According to Al Jazeera and Reuters, back-channel talks continue but lack substantive diplomatic momentum for a formal truce.",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
+  events: [
+    {
+      id: "EVT-01",
+      title: "Tanker Attacks Around Hormuz Reach War-Time Weekly Peak",
+      description: "UKMTO confirmed a tanker was struck by projectiles 94km north of Qatar causing casualties, with Reuters reporting weekly attacks reached a conflict high.",
+      verification: "confirmed",
+      timestamp: "2026-10-08 (same-day reporting)",
+      significance: "",
+      highlight: true,
+      critical: true
+    },
+    {
+      id: "EVT-02",
+      title: "Brent Crude Crosses $105 Crisis Threshold on Supply Concerns",
+      description: "Brent jumped over 4% past $105.91 driven by Persian Gulf shipping risk and US Gulf shut-ins, as reported by Reuters and AP.",
+      verification: "confirmed",
+      timestamp: "2026-10-08 (same-day reporting)",
+      significance: "",
+      highlight: true
+    },
+    {
+      id: "EVT-03",
+      title: "Media Report Claims White House Directs Pentagon to Draft Strike Options",
+      description: "The Atlantic reported the administration asked for options on potential limited strikes against Iran ahead of midterm elections, citing anonymous officials.",
+      verification: "partial",
+      timestamp: "2026-10-08 (same-day reporting)",
+      significance: ""
+    }
+  ],
   warPhase: {
-    level: "Maritime Blockade Confrontation",
+    level: "High-Pressure Standoff",
     targetLevel: "Fragile Balance",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Hormuz tanker harassment incidents touched a fresh weekly conflict peak",
-      "Global crude benchmarks draw support near $100 psychological thresholds",
-      "Divergent diplomatic baselines leave formal ceasefire frameworks frozen"
+      "Spike in maritime strikes tests the operational capacity of naval escort coalitions in the Gulf.",
+      "Brent surging back above $105 heightens global market anxiety regarding extended supply disruptions."
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -394,8 +389,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Houthi forces launched ballistic missile and drone strikes against Aden International Airport in southern Yemen.",
-        "Continue: US and Iranian conventional air and naval formations maintained tense close-quarters posturing without direct base strikes."
+        "Continue: Houthi forces maintain asymmetric drone and missile harassment across the regional front.",
+        "Continue: US Central Command maintains active air defense readiness and maritime patrol deployments."
       ]
     },
     {
@@ -404,8 +399,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: UKMTO logged 9 to 12 tanker attack and hailing incidents over the past 7 days, setting a new weekly record for the conflict.",
-        "Continue: Commercial shipping traffic relies on military escorts and pipeline diversions, preserving 50%-90% of normalized transit."
+        "Change: Tanker hit north of Qatar results in casualties as weekly incident count touches record highs.",
+        "Continue: Commercial maritime flows remain reliant on naval escorts and overland bypass conduits."
       ]
     },
     {
@@ -414,8 +409,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Brent futures moved back above $101/bbl as geopolitical risk premiums offset Saudi OSP price cuts.",
-        "Continue: Elevated maritime war risk insurance and tight diesel refining margins preserve inflationary friction."
+        "Change: Brent climbed to $105.91 as renewed geopolitical risk overshadowed global strategic reserve releases.",
+        "Continue: WTI traded between $88 and $93 with North American supply providing relative stability."
       ]
     },
     {
@@ -424,57 +419,42 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Senior Iranian officials formally dismissed US proposals demanding uranium enrichment curbs as preconditions for peace.",
-        "Continue: Washington maintains an economic blockade posture without establishing direct bilateral diplomatic tracks."
+        "Continue: Washington and Tehran sustain public deterrence rhetoric without signaling willingness to concede.",
+        "Continue: Third-party intermediaries preserve communication channels despite an absence of diplomatic breakthroughs."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "US demands for verifiable enrichment halts clash directly with Tehran's non-negotiable sovereign enrichment red lines."
+      "Domestic midterm and regional political pressures restrict leadership willingness to offer unilateral concessions."
     ],
     military: [
-      "IRGC asymmetric harassment in vital chokepoints confronts US Navy escort and freedom-of-navigation enforcement."
+      "Asymmetric threat from low-cost missiles against high-cost multi-national naval convoy defense systems."
     ]
   },
-  events: [
+  scoreTrend: [
     {
-      id: "EVT-01",
-      title: "Brent crude futures reclaim $100 threshold",
-      description: "Brent futures rose to $101.60/bbl on heightened Middle East shipping risks and weather threats, while WTI hovered near $90/bbl.",
-      verification: "confirmed",
-      timestamp: "2026-10-07T12:00:00Z",
-      significance: "",
-      highlight: true
+      date: "10-04",
+      score: 64
     },
     {
-      id: "EVT-02",
-      title: "Weekly tanker attacks in Hormuz hit war peak",
-      description: "UKMTO and JMIC recorded 9 to 12 vessel security incidents in the Strait of Hormuz over the past week, marking the most active period of harassment.",
-      verification: "confirmed",
-      timestamp: "2026-10-07T10:24:00Z",
-      significance: "",
-      highlight: true,
-      critical: true
+      date: "10-05",
+      score: 64
     },
     {
-      id: "EVT-03",
-      title: "Houthi missiles target Aden international airport",
-      description: "Yemen transport authorities confirmed ballistic missile and drone attacks on Aden airport amid flared regional confrontation.",
-      verification: "confirmed",
-      timestamp: "2026-10-07T08:30:00Z",
-      significance: ""
+      date: "10-06",
+      score: 64
     },
     {
-      id: "EVT-04",
-      title: "Iran rejects US nuclear conditions for ceasefire",
-      description: "Tehran officials told reporters that US demands regarding nuclear concessions conflict fundamentally with Iranian terms for war termination.",
-      verification: "confirmed",
-      timestamp: "2026-10-07T11:46:00Z",
-      significance: ""
+      date: "10-07",
+      score: 64
+    },
+    {
+      date: "10-08",
+      score: 70,
+      active: true
     }
   ],
-  investmentSignal: "→ Maintain hedges on energy and commodities exposure to guard against maritime flare-ups while preserving a defensive stance on broader risk assets.",
   prevRiskScore: 64,
   webSources: [],
   webSearchQueries: []
@@ -485,7 +465,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "10月7日节点",
+    node406: "10月8日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -519,16 +499,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.214 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.215 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 64（持平）：布伦特原油重上101美元关口，霍尔木兹单周袭船频次创开战以来新高；综合风险分落盘 64（较昨日 持平（+0））",
-    bannerWarning: "→ 维持能源与大宗商品结构性对冲敞口，防范海峡破袭脉冲驱动油价二次冲高，对高贝塔风险资产保持防御配置。",
-    deescalationIntent: "美方要求实质削减浓缩铀为停火前提，与伊朗坚持保留核权利及解除全额制裁不可调和。",
-    structuralRisk: "过去一周海峡油轮遇袭与骚扰事件达9至12起，但护航下整体原油流量维持50%-90%。",
-    contradictionNote: "美方要求实质削减浓缩铀为停火前提，与伊朗坚持保留核权利及解除全额制裁不可调和。；伊朗伊斯兰革命卫队以非对称破袭施压海峡航运，与美军强制护航及反封锁行动针锋相对。",
+    bannerSignal: "综合评分 70（↑6）：霍尔木兹袭船频次创战时周峰推动布伦特油价重返105美元，但大国未直接交火；综合风险分落盘 70（较昨日 +6）；调整前模型分 64（staleDays≥4 与 OpenAI 副审逐维均值）",
+    bannerWarning: "→ 维持大宗商品与能源资产对冲多头，对高估值权益等风险资产采取防御性仓位控制。",
+    deescalationIntent: "美伊双方均受制于国内政治压力，在中期选举窗口期前缺乏单边让步空间。",
+    structuralRisk: "依据UKMTO与Kpler数据，商船在海峡附近遭遇抛射物袭击出现伤亡，海峡依赖军舰护航，流量维持在50–90%受限区间。",
+    contradictionNote: "美伊双方均受制于国内政治压力，在中期选举窗口期前缺乏单边让步空间。；低成本无人机与弹道武器封锁通道意图与美军高成本护航拦截能力之间的非对称消耗。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -536,7 +516,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第221天",
+    dayCount: "第222天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -544,7 +524,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Oct 7 Node",
+    node406: "Oct 8 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -578,16 +558,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.214 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.215 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 64 (Flat): Brent crude rebounded above $101/bbl while Hormuz tanker harassment incidents touched a fresh weekly high, locking the; composite risk scor…",
-    bannerWarning: "→ Maintain hedges on energy and commodities exposure to guard against maritime flare-ups while preserving a defensive s…",
-    deescalationIntent: "US demands for verifiable enrichment halts clash directly with Tehran's non-neg…",
-    structuralRisk: "Weekly maritime harassment reached 9-12 events, though naval escorts maintain commercial throughput…",
-    contradictionNote: "US demands for verifiable enrichment halts clash directly with Tehran's non-negotiable sovereign enrichment red lines.; IRGC asymmetric harassment in vital cho…",
+    bannerSignal: "Composite 70 (↑6): Surging tanker attacks around Hormuz pushed Brent back above $105, but absence of direct superpower combat leaves the; composite risk score…",
+    bannerWarning: "→ Maintain hedges in energy and commodities while keeping a defensive posture on risk assets.",
+    deescalationIntent: "Domestic midterm and regional political pressures restrict leadership willingne…",
+    structuralRisk: "According to UKMTO and Kpler, commercial tankers face sustained projectile attacks with transit vol…",
+    contradictionNote: "Domestic midterm and regional political pressures restrict leadership willingness to offer unilateral concessions.; Asymmetric threat from low-cost missiles ag…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -595,7 +575,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 221",
+    dayCount: "Day 222",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
