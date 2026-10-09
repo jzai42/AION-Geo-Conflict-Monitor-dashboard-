@@ -1,11 +1,11 @@
 {
   "version": 2,
   "latest": {
-    "date": "2026-10-08",
-    "appVersion": "v2.215",
+    "date": "2026-10-09",
+    "appVersion": "v2.216",
     "riskScore": 70,
-    "prevRiskScore": 64,
-    "conflictDay": 222,
+    "prevRiskScore": 70,
+    "conflictDay": 223,
     "factorScores": [
       4,
       4,
@@ -14,30 +14,28 @@
       2.5
     ],
     "generationMode": "live",
-    "rawModelScore": 64,
+    "rawModelScore": 70,
     "rawModelFactors": [
       4,
-      3,
-      3.5,
+      4,
+      4,
       3,
       2.5
     ],
     "finalRiskScore": 70,
-    "adjustmentReason": "staleDays≥4 与 OpenAI 副审逐维均值",
+    "adjustmentReason": null,
     "oilQuality": {
       "publish": "live",
       "parseOk": true,
-      "combinedMid": 97.1575,
-      "combinedHigh": 105.91,
+      "combinedMid": 97.405,
+      "combinedHigh": 105.07,
       "midBand": 3,
       "highBand": 4,
       "oilDirection": "firm",
       "narrativeConflict": false,
       "hasOilSourceUrl": true,
-      "markdownMismatch": true,
-      "reasons": [
-        "markdown-energy-score-mismatch: md=3.5 json=4"
-      ]
+      "markdownMismatch": false,
+      "reasons": []
     },
     "oilPrice": {
       "provider": "yahoo-chart",
@@ -46,15 +44,15 @@
       "stale": false,
       "fromPrior": false,
       "fetchFailed": false,
-      "asOf": "2026-10-08T15:57:52.976Z",
-      "wti": 92.87,
-      "brent": 105.74,
-      "wtiLow": 88.77,
-      "wtiHigh": 93.2,
-      "brentLow": 100.75,
-      "brentHigh": 105.91,
-      "keyStatValue": "WTI $88.77–$93.20 · Brent $100.75–$105.91",
-      "updatedAt": "2026-10-08T16:01:38.966Z"
+      "asOf": "2026-10-09T15:40:20.140Z",
+      "wti": 92.08,
+      "brent": 104.97,
+      "wtiLow": 90.01,
+      "wtiHigh": 92.15,
+      "brentLow": 102.39,
+      "brentHigh": 105.07,
+      "keyStatValue": "WTI $90.01–$92.15 · Brent $102.39–$105.07",
+      "updatedAt": "2026-10-09T15:43:44.386Z"
     }
   },
   "lockedDates": [
@@ -70,10 +68,6 @@
     "2026-05-23"
   ],
   "history": [
-    {
-      "date": "2026-06-10",
-      "score": 76
-    },
     {
       "date": "2026-06-11",
       "score": 82
@@ -548,6 +542,10 @@
     },
     {
       "date": "2026-10-08",
+      "score": 70
+    },
+    {
+      "date": "2026-10-09",
       "score": 70
     }
   ]
