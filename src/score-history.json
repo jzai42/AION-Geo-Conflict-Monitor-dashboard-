@@ -1,11 +1,11 @@
 {
   "version": 2,
   "latest": {
-    "date": "2026-10-10",
-    "appVersion": "v2.217",
+    "date": "2026-10-11",
+    "appVersion": "v2.218",
     "riskScore": 70,
     "prevRiskScore": 70,
-    "conflictDay": 224,
+    "conflictDay": 225,
     "factorScores": [
       4,
       4,
@@ -44,7 +44,7 @@
       "stale": false,
       "fromPrior": false,
       "fetchFailed": false,
-      "asOf": "2026-10-10T14:55:22.245Z",
+      "asOf": "2026-10-11T15:12:13.614Z",
       "wti": 91.85,
       "brent": 104.72,
       "wtiLow": 90.01,
@@ -52,7 +52,7 @@
       "brentLow": 102.39,
       "brentHigh": 105.07,
       "keyStatValue": "WTI $90.01–$92.16 · Brent $102.39–$105.07",
-      "updatedAt": "2026-10-10T14:58:37.516Z"
+      "updatedAt": "2026-10-11T15:15:30.634Z"
     }
   },
   "lockedDates": [
@@ -68,10 +68,6 @@
     "2026-05-23"
   ],
   "history": [
-    {
-      "date": "2026-06-12",
-      "score": 72
-    },
     {
       "date": "2026-06-13",
       "score": 60
@@ -546,6 +542,10 @@
     },
     {
       "date": "2026-10-10",
+      "score": 70
+    },
+    {
+      "date": "2026-10-11",
       "score": 70
     }
   ]

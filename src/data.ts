@@ -65,13 +65,13 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-10-10",
-  version: "v2.217",
+  date: "2026-10-11",
+  version: "v2.218",
   riskScore: 70,
   keyStats: [
     {
       label: "冲突天数",
-      value: "D224",
+      value: "D225",
       unit: "2月28日起",
       color: "#ff851b"
     },
@@ -101,7 +101,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "依据CBS News与Reuters报道，也门胡塞武装向沙特利雅得机场发射弹道导弹造成3人死亡，多战线交火与外溢烈度维持高位。",
+      description: "胡塞武装突袭沙特机场引发战区外溢，美军推进三航母战备集结，多战线交火与打击态势延续。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -110,7 +110,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "依据AP与海事机构报道，霍尔木兹水道周边水雷隐患与爆炸警报频现，商业通航量降至50%以下，依赖军舰护航。",
+      description: "商船通行仍遭受常态化袭击威慑，主要班轮绕行，有效商业通行流量严重受限低于50%。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -119,7 +119,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "依据Yahoo Finance与Trading Economics行情，WTI运行于$90.01–$92.16，Brent运行于$102.39–$105.07，Brent主体进入$100–120危机带，按上沿保守择档判定为4分。接地参考：https://tradingeconomics.com/commodity/crude-oil",
+      description: "布伦特原油区间运行在$102.39–$105.07，处在$100–120危机带，海峡高危溢价牢固。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -128,7 +128,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "依据美军中央司令部（CENTCOM）及WSJ通报，美方持续向海湾增派护航防空编队并提供情报支持，未启动全面作战。",
+      description: "美军调集三航母编队部署并强化区域防空与情报网络，大国军事介入维持深度部署与防御性威慑。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -137,20 +137,65 @@ export const DATA_ZH: DashboardData = {
       score: 2.5,
       prev: 2.5,
       weight: 0.2,
-      description: "依据Al Jazeera及AP报道，美方表态大选前暂缓对伊本土军事打击，伊朗外交部表示正研究美方反馈并准备正式回复，具备接触窗口但未签署协议。",
+      description: "白宫提及期中选举前克制与沟通意向，伊朗审视海峡通行提案，但实质性让步与停火机制仍缺失。",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
+  events: [
+    {
+      id: "EVT-01",
+      title: "霍尔木兹海峡单周商船遇袭创战期峰值",
+      description: "国际海事组织与UKMTO确认海峡及周边10月上旬单周发生12起袭击，伊朗军方公开警告将封堵未经报备通道。",
+      verification: "confirmed",
+      timestamp: "2026-10-10T18:00:00Z",
+      significance: "",
+      highlight: true,
+      critical: true
+    },
+    {
+      id: "EVT-02",
+      title: "也门胡塞武装导弹袭击利雅得机场",
+      description: "胡塞武装对沙特首都机场发动打击导致人员受伤，美国总统特朗普公开表示正研判对也门目标发起直接进攻打击。",
+      verification: "confirmed",
+      timestamp: "2026-10-10T22:30:00Z",
+      significance: "",
+      highlight: true
+    },
+    {
+      id: "EVT-03",
+      title: "美军增派第三航母打击群开赴中东",
+      description: "五角大楼调度罗斯福号航母前往波斯湾外围，为美军2003年以来首次在中东部署三艘航母，以强化前沿封锁能力。",
+      verification: "confirmed",
+      timestamp: "2026-10-09T14:15:00Z",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "特朗普表态期中选举前暂不发起对伊本土新打击",
+      description: "美方释放阶段性克制言论并提及存在接触渠道，伊朗方面表示评估海峡通行草案，但双方在解除封锁上仍存根本分歧。",
+      verification: "confirmed",
+      timestamp: "2026-10-09T19:40:00Z",
+      significance: ""
+    },
+    {
+      id: "EVT-05",
+      title: "国际油价维持高位，布伦特稳固在百美元危机带",
+      description: "尽管外交对话预期压制日内涨幅，但霍尔木兹实际高危运费与供给中断担忧支撑布伦特油价持续运行于102–105美元区间。",
+      verification: "confirmed",
+      timestamp: "2026-10-11T09:00:00Z",
+      significance: ""
+    }
+  ],
   warPhase: {
-    level: "高强度冲突",
+    level: "海上封锁对抗期",
     targetLevel: "脆弱平衡",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "中东防空反导网络持续应对红海及海湾外溢打击",
-      "霍尔木兹海峡处于武装护航下的严重受限运行状态",
-      "美伊高层通过区域中介围绕临时停火条件开展接触"
+      "伊朗以游击袭船战术维系霍尔木兹海峡封锁威慑，多国油轮被迫停航或高价护航。",
+      "美军三航母集结强化区域防空与海上威慑，但受选情牵制短期避免大规模地面与全域空袭。",
+      "外交谈判渠道虽保持技术性接触，但双方核心安全要价互不相让，局势呈高位黏滞平衡。"
     ],
     note: "监测用途，不构成投资建议。"
   },
@@ -161,8 +206,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：沙特首都利雅得遭导弹袭击致人员伤亡，多区域防空警戒升级。",
-        "延续：红海及也门前线针对商船与军事目标的无人机对抗仍在继续。"
+        "变化：胡塞武装导弹突袭沙特利雅得民用机场，美军公开评估对也门目标展开协同攻势打击。",
+        "延续：美伊主力未爆发新一轮直接空袭交火，前沿防空对抗与代理人骚扰保持高烈度。"
       ]
     },
     {
@@ -171,8 +216,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：水道关键节点存在水雷警报，商业班轮自主通行基本停滞。",
-        "变化：多国海军调整伴随护航班次，单日安全疏运原油运量保持低位稳定。"
+        "延续：伊朗海军持续对违规穿行船舶实施无人机与导弹威胁，单周袭船频次创战期新高。",
+        "延续：商业班轮与VLCC超级油轮大面积停滞或绕行，海峡实际通行能力维持严重受限。"
       ]
     },
     {
@@ -181,8 +226,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：布伦特原油稳定在102–105美元危机带，现货溢价形态陡峭。",
-        "延续：全球战略储备释放部分平抑恐慌情绪，但炼厂运费成本依旧高企。"
+        "延续：布伦特原油区间稳固在$102.39–$105.07，中东地缘断供风险主导百美元危机带溢价。",
+        "变化：墨西哥湾受飓风扰动临时减产与海峡运输瓶颈共振，强化了下游成品油结构性紧缺。"
       ]
     },
     {
@@ -191,24 +236,21 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美总统表态中期选举前不对伊本土动武，为外交斡旋释放窗口。",
-        "延续：伊朗外交部明确拒绝单方面妥协，强调护卫主权与反制封锁权利。"
+        "变化：白宫表态期中选举前暂缓直接对伊攻击并提及沟通进展，展现短期战术降温意向。",
+        "延续：德黑兰维持强硬威慑表态，强调唯有彻底解除美方封锁制裁方可恢复海峡全面开放。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "华盛顿政治周期诉求与中东战区威慑有效性之间的权衡"
+      "美方国内选举周期诉求控制通胀与能源成本，与维持中东战略威慑的诉求发生冲突。",
+      "伊朗要求全面解除海上封锁与经济制裁，与美以彻底瓦解其区域同盟网络的战略目标不可调和。"
     ],
     military: [
-      "霍尔木兹海峡实际通航控制权与公海自由航行护航机制的刚性对立"
+      "美军前沿三航母重兵集结形成的防空反导威慑，与伊朗及胡塞不对称导弹、无人机饱和攻击之间的消耗战对抗。"
     ]
   },
   scoreTrend: [
-    {
-      date: "10-06",
-      score: 64
-    },
     {
       date: "10-07",
       score: 64
@@ -223,69 +265,30 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "10-10",
+      score: 70
+    },
+    {
+      date: "10-11",
       score: 70,
       active: true
     }
   ],
-  keyChange: "美伊释放中期选举前战术性降温信号与外溢导弹交火并存，综合地缘风险黏滞于；综合风险分落盘 70（较昨日 持平（+0））",
-  investmentSignal: "→ 维持对冲与防御配置，地缘风险溢价黏滞于高位，对能源与大宗商品敞口保持结构性重估，审慎控制风险资产风险。",
-  events: [
-    {
-      id: "EVT-01",
-      title: "也门导弹袭击沙特利雅得机场造成伤亡",
-      description: "CBS News与Reuters报道，也门胡塞武装弹道导弹碎片击中利雅得机场周边造成3人死亡，红海冲突外溢进一步扩大。",
-      verification: "confirmed",
-      timestamp: "2026-10-10 08:30 UTC",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-02",
-      title: "霍尔木兹水雷隐患与爆炸警报频现",
-      description: "AP与The Times of India报道，海峡内非管制水域多艘油轮报告水雷威胁，商业航运通航率维持在50%以下。",
-      verification: "confirmed",
-      timestamp: "2026-10-10 06:15 UTC",
-      significance: ""
-    },
-    {
-      id: "EVT-03",
-      title: "美方表态中期选举前暂停对伊新打击",
-      description: "WSJ与Reuters报道，美方公开确认正与伊朗进行间接沟通，且在中期选举之前不会发起新攻击。",
-      verification: "confirmed",
-      timestamp: "2026-10-09 21:00 UTC",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-04",
-      title: "伊朗外交部审议美方停火方案回应",
-      description: "Al Jazeera报道，伊朗外长阿拉格齐证实德黑兰正在评估美方反馈，准备就七日停火方案递交正式答复。",
-      verification: "confirmed",
-      timestamp: "2026-10-09 18:40 UTC",
-      significance: ""
-    },
-    {
-      id: "EVT-05",
-      title: "原油基准维持高位震荡布伦特守稳百元关口",
-      description: "Trading Economics报道，WTI位于$90–$92区间，Brent维持在$102–$105，地缘断供隐忧主导远期贴水结构。",
-      verification: "confirmed",
-      timestamp: "2026-10-10 14:55 UTC",
-      significance: ""
-    }
-  ],
+  keyChange: "美伊海峡对抗进入相持封锁阶段，美军集结三航母与胡塞外溢打击沙特机场推升战备烈度，布伦特油价黏滞于102–105美元危机带；综合风险分落盘 70（较昨日 持平（+0））",
+  investmentSignal: "→ 维持能源与大宗商品的结构性对冲头寸，逢油价脉冲调整防御性资产配置，保持宏观风险资产敞口审慎。",
+  change: "none",
   prevRiskScore: 70,
   webSources: [],
   webSearchQueries: []
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-10-10",
-  version: "v2.217",
+  date: "2026-10-11",
+  version: "v2.218",
   riskScore: 70,
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D224",
+      value: "D225",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
@@ -315,7 +318,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "According to CBS News and Reuters, ballistic missile strikes by Houthi allies near Riyadh airport killed 3 people, demonstrating active cross-theater combat.",
+      description: "Houthi missile strike on Riyadh airport broadens regional frontline; US carrier buildup sustains active multi-theater confrontation.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -324,7 +327,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "According to AP and maritime security reports, naval mine hazards and explosion alerts continue across the strait, keeping transit traffic below 50%.",
+      description: "Commercial vessel transit remains severely restricted below 50% capacity under persistent Iranian strike threats and naval harassment.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -333,7 +336,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "According to Yahoo Finance and Trading Economics, WTI trades at $90.01–$92.16 while Brent trades at $102.39–$105.07; Brent sits firmly inside the $100–120 crisis bracket, scored conservatively at 4. Grounding ref: https://tradingeconomics.com/commodity/crude-oil",
+      description: "Brent crude trades within the $102.39–$105.07 crisis band ($100–120), sustained by elevated geopolitical risk premia and maritime constraints.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -342,7 +345,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "According to DoD and CENTCOM statements, US military naval assets provide armed convoys and intelligence sharing without launching direct large-scale ground engagements.",
+      description: "US reinforces forward presence with three carrier strike groups, maintaining deep military aid, intelligence integration, and escort posture.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -351,20 +354,65 @@ export const DATA_EN: DashboardData = {
       score: 2.5,
       prev: 2.5,
       weight: 0.2,
-      description: "According to Al Jazeera and AP, Washington stated it will refrain from direct strikes on Iran before midterms, and Tehran confirmed evaluating the roadmap response.",
+      description: "White House signals pre-midterm restraint and channels for dialogue while Iran reviews transit proposals, yet core terms remain opposed.",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
+  events: [
+    {
+      id: "EVT-01",
+      title: "Hormuz commercial vessel attacks hit weekly war-time high",
+      description: "IMO and UKMTO report 12 maritime attacks in the first week of October, while IRGC Navy threatens strikes against unauthorized transit routes.",
+      verification: "confirmed",
+      timestamp: "2026-10-10T18:00:00Z",
+      significance: "",
+      highlight: true,
+      critical: true
+    },
+    {
+      id: "EVT-02",
+      title: "Houthi missile strikes Riyadh airport terminal",
+      description: "Ballistic missile hits King Khalid International Airport complex in Riyadh, prompting President Trump to consider direct offensive strikes in Yemen.",
+      verification: "confirmed",
+      timestamp: "2026-10-10T22:30:00Z",
+      significance: "",
+      highlight: true
+    },
+    {
+      id: "EVT-03",
+      title: "US deploys third aircraft carrier strike group to Middle East",
+      description: "Pentagon dispatches USS Theodore Roosevelt strike group to reinforce maritime deterrence, marking first three-carrier presence since 2003.",
+      verification: "confirmed",
+      timestamp: "2026-10-09T14:15:00Z",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "Trump signals no pre-midterm strikes on Iran mainland",
+      description: "US administration indicates tactical restraint before November elections and notes diplomatic discussions, while Iran reviews Hormuz transit proposal.",
+      verification: "confirmed",
+      timestamp: "2026-10-09T19:40:00Z",
+      significance: ""
+    },
+    {
+      id: "EVT-05",
+      title: "Crude benchmarks hold in crisis band amid transit risks",
+      description: "Brent crude trades firmly in the $102–105 range as persistent tanker threats and freight premiums outweigh short-term diplomatic rhetoric.",
+      verification: "confirmed",
+      timestamp: "2026-10-11T09:00:00Z",
+      significance: ""
+    }
+  ],
   warPhase: {
-    level: "High-Intensity Conflict",
+    level: "Maritime Blockade Confrontation",
     targetLevel: "Fragile Balance",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Regional air defense grids continuously engage cross-border drone and ballistic missile threats",
-      "Strait of Hormuz commercial traffic operates under restricted naval escort protocols",
-      "Indirect bilateral channels remain open ahead of the US midterm political window"
+      "Iran employs asymmetric naval strikes to maintain transit leverage over the Strait of Hormuz.",
+      "US consolidates a three-carrier forward force for regional air defense and deterrence while deferring large-scale mainland invasion.",
+      "Diplomatic channels conduct tentative reviews, but mutually exclusive core demands maintain a high-level standoff."
     ],
     note: "For monitoring only; not investment advice."
   },
@@ -375,8 +423,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Ballistic missile strikes outside Riyadh resulted in casualties, maintaining regional alert levels.",
-        "Continue: Drone skirmishes and interception engagements continue across the southern theater."
+        "Change: Houthi ballistic missile strike on Riyadh airport triggers active US deliberation over offensive retaliation in Yemen.",
+        "Continue: Direct US-Iran mainland heavy strikes remain paused while multi-front proxy engagements continue."
       ]
     },
     {
@@ -385,8 +433,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Persistent mine hazards halt unescorted commercial liner navigation.",
-        "Change: Coalition naval coordination adjusts transit slots to sustain minimum crude throughput."
+        "Continue: IRGC Navy enforces strict transit restrictions with elevated drone and projectile strikes on non-compliant vessels.",
+        "Continue: Commercial tanker traffic remains severely restricted below 50% of peacetime baselines."
       ]
     },
     {
@@ -395,8 +443,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Brent crude remains firmly in the $102–$105 crisis band with steep backwardation.",
-        "Continue: Strategic reserve releases buffer prompt panic while refining transport spreads stay elevated."
+        "Continue: Brent crude sustains trading inside the $102.39–$105.07 crisis band with solid geopolitical premia.",
+        "Change: Gulf of Mexico weather shut-ins compound refined product tightness alongside persistent Middle East transport risks."
       ]
     },
     {
@@ -405,24 +453,21 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: US leadership rules out strikes before midterm elections, opening a tactical diplomatic window.",
-        "Continue: Iranian leadership maintains insistence on sanctions relief and maritime autonomy."
+        "Change: Trump publicly rules out new strikes on Iran prior to midterms, emphasizing ongoing diplomatic conversations.",
+        "Continue: Tehran affirms that regular strait transits will only resume upon a full lifting of US maritime blockade measures."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "US domestic election window pressures versus long-term deterrence credibility in the Persian Gulf"
+      "US pre-election imperative to curb fuel inflation collides with the strategic necessity to project deterrence.",
+      "Tehran's demand for complete sanctions and blockade relief directly contradicts US-allied regional security objectives."
     ],
     military: [
-      "De facto Iranian maritime denial capabilities versus international coalition escort doctrines"
+      "US forward carrier and air defense posture versus sustained asymmetric drone and ballistic attrition across regional nodes."
     ]
   },
   scoreTrend: [
-    {
-      date: "10-06",
-      score: 64
-    },
     {
       date: "10-07",
       score: 64
@@ -437,56 +482,17 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "10-10",
+      score: 70
+    },
+    {
+      date: "10-11",
       score: 70,
       active: true
     }
   ],
-  keyChange: "Pre-midterm diplomatic pauses counterbalance regional missile strikes, leaving overall risk sticky at 70.",
-  investmentSignal: "→ Maintain defensive hedging positions, as sticky geopolitical risk premiums in energy and commodities warrant structural re-evaluation while limiting risk asset exposure.",
-  events: [
-    {
-      id: "EVT-01",
-      title: "Missile Strike Near Riyadh Airport Causes Casualties",
-      description: "CBS News and Reuters reported that intercepted ballistic missiles fired by Yemeni Houthi forces caused 3 casualties near Riyadh airport.",
-      verification: "confirmed",
-      timestamp: "2026-10-10 08:30 UTC",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-02",
-      title: "Mine Threats and Explosions Reported in Hormuz",
-      description: "AP and The Times of India reported multiple naval mine warnings and explosions in the Strait of Hormuz, suppressing commercial flows below 50%.",
-      verification: "confirmed",
-      timestamp: "2026-10-10 06:15 UTC",
-      significance: ""
-    },
-    {
-      id: "EVT-03",
-      title: "US Administration Pauses Pre-Midterm Strikes on Iran",
-      description: "WSJ and Reuters reported that the US affirmed no direct military strikes on Iran will take place prior to midterm elections amidst ongoing talks.",
-      verification: "confirmed",
-      timestamp: "2026-10-09 21:00 UTC",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-04",
-      title: "Iran Evaluates US Roadmap Counter-Proposal",
-      description: "Al Jazeera reported Iranian Foreign Minister Abbas Araghchi confirmed Tehran is reviewing Washington's diplomatic feedback for formal reply.",
-      verification: "confirmed",
-      timestamp: "2026-10-09 18:40 UTC",
-      significance: ""
-    },
-    {
-      id: "EVT-05",
-      title: "Crude Benchmarks Consolidate at Elevated Levels",
-      description: "Trading Economics and CMB News reported Brent holding between $102 and $105 while WTI trades at $90–$92, supported by war risk premiums.",
-      verification: "confirmed",
-      timestamp: "2026-10-10 14:55 UTC",
-      significance: ""
-    }
-  ],
+  keyChange: "Maritime blockade confrontation remains entrenched as US three-carrier presence offsets Houthi strikes on Riyadh airport, keeping Brent crude inside the $102–105 crisis range.",
+  investmentSignal: "→ Maintain structural hedges in energy and commodities while keeping a defensive posture across risk assets.",
+  change: "none",
   prevRiskScore: 70,
   webSources: [],
   webSearchQueries: []
@@ -497,7 +503,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "10月10日节点",
+    node406: "10月11日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -531,16 +537,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.217 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.218 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 70（持平）：美伊释放中期选举前战术性降温信号与外溢导弹交火并存，综合地缘风险黏滞于；综合风险分落盘 70（较昨日 持平（+0））",
-    bannerWarning: "→ 维持对冲与防御配置，地缘风险溢价黏滞于高位，对能源与大宗商品敞口保持结构性重估，审慎控制风险资产风险。",
-    deescalationIntent: "华盛顿政治周期诉求与中东战区威慑有效性之间的权衡",
-    structuralRisk: "依据AP与海事机构报道，霍尔木兹水道周边水雷隐患与爆炸警报频现，商业通航量降至50%以下，依赖军舰护航。",
-    contradictionNote: "华盛顿政治周期诉求与中东战区威慑有效性之间的权衡；霍尔木兹海峡实际通航控制权与公海自由航行护航机制的刚性对立",
+    bannerSignal: "综合评分 70（持平）：美伊海峡对抗进入相持封锁阶段，美军集结三航母与胡塞外溢打击沙特机场推升战备烈度，布伦特油价黏滞于102–105美元危机带；综合风险分落盘 70（较昨日 持平（+0））",
+    bannerWarning: "→ 维持能源与大宗商品的结构性对冲头寸，逢油价脉冲调整防御性资产配置，保持宏观风险资产敞口审慎。",
+    deescalationIntent: "美方国内选举周期诉求控制通胀与能源成本，与维持中东战略威慑的诉求发生冲突。",
+    structuralRisk: "商船通行仍遭受常态化袭击威慑，主要班轮绕行，有效商业通行流量严重受限低于50%。",
+    contradictionNote: "美方国内选举周期诉求控制通胀与能源成本，与维持中东战略威慑的诉求发生冲突。；美军前沿三航母重兵集结形成的防空反导威慑，与伊朗及胡塞不对称导弹、无人机饱和攻击之间的消耗战对抗。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -548,7 +554,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第224天",
+    dayCount: "第225天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -556,7 +562,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Oct 10 Node",
+    node406: "Oct 11 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -590,16 +596,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.217 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.218 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 70 (Flat): Pre-midterm diplomatic pauses counterbalance regional missile strikes, leaving overall risk sticky at 70.",
-    bannerWarning: "→ Maintain defensive hedging positions, as sticky geopolitical risk premiums in energy and commodities warrant structur…",
-    deescalationIntent: "US domestic election window pressures versus long-term deterrence credibility i…",
-    structuralRisk: "According to AP and maritime security reports, naval mine hazards and explosion alerts continue acr…",
-    contradictionNote: "US domestic election window pressures versus long-term deterrence credibility in the Persian Gulf; De facto Iranian maritime denial capabilities versus interna…",
+    bannerSignal: "Composite 70 (Flat): Maritime blockade confrontation remains entrenched as US three-carrier presence offsets Houthi strikes on Riyadh airport, keeping Brent cru…",
+    bannerWarning: "→ Maintain structural hedges in energy and commodities while keeping a defensive posture across risk assets.",
+    deescalationIntent: "US pre-election imperative to curb fuel inflation collides with the strategic n…",
+    structuralRisk: "Commercial vessel transit remains severely restricted below 50% capacity under persistent Iranian s…",
+    contradictionNote: "US pre-election imperative to curb fuel inflation collides with the strategic necessity to project deterrence.; US forward carrier and air defense posture vers…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -607,7 +613,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 224",
+    dayCount: "Day 225",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
