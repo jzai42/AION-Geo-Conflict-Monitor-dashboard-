@@ -65,39 +65,27 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-10-15",
-  version: "v2.222",
-  riskScore: 72,
-  keyChange: "霍尔木兹商船遇袭沉没加剧封锁担忧，美国拟放宽油轮制裁抗衡运费暴涨，油价与综合分维持高位黏滞。",
-  investmentSignal: "→ 维持大宗商品与能源多头底仓，配置海外航运运力受限标的与防御性避险资产，克制增持权益类风险资产。",
-  warPhase: {
-    level: "海上封锁对抗期",
-    targetLevel: "脆弱平衡",
-    title: "美伊地缘风险监测",
-    subTitle: "基于公开报道综合研判",
-    points: [
-      "伊朗军方及代理人加大对海峡商船的打击频次并造成实际沉船损失。",
-      "美军前沿巡航与外交施压并举，同时寻求运力政策调整平抑能源运输成本。",
-      "短期内双方均未跨入全面决战门槛，但封锁对抗将局势锚定在危险的高位平衡。"
-    ],
-    note: "监测用途，不构成投资建议。"
-  },
+  date: "2026-10-16",
+  version: "v2.223",
+  riskScore: 70,
+  keyChange: "霍尔木兹海峡袭船封锁与能源危机带高位僵持，IEA释储未能扭转地缘溢价；综合风险分落盘 70（较昨日 -2）；调整前模型分 72（staleDays≥4 与 OpenAI 副审逐维均值）",
+  investmentSignal: "→ 维持大宗商品与能源多头对冲，在风险资产维持防御性低仓位以应对破百油价与中东封锁常态化。",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D229",
+      value: "D230",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "持平",
+      value: "↓2",
       unit: "较上期",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $92.46–$94.80 · Brent $103.38–$106.01",
+      value: "WTI $95.29–$96.64 · Brent $104.92–$106.74",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -115,7 +103,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "多战线交火与跨国纵深打击持续，红海与沙特东部能源节点面临常态化防空交战。",
+      description: "美军与伊朗在波斯湾及阿曼湾保持导弹无人机互射，红海及也门代理人战线持续活跃。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -124,16 +112,16 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "两艘商业货轮接连遇袭沉没，海峡通行量低于常态50%，班轮公司面临天价战争保费。",
+      description: "海峡通航量仍不足常态一半，遇袭商船沉没与伊朗海军新设禁航巡区加剧航运封锁。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "能源冲击",
-      score: 4,
+      score: 3.5,
       prev: 4,
       weight: 0.2,
-      description: "布伦特原油稳居100-120美元危机带，现货端受制于运费飙升，美方运力豁免预期限制上行速度。",
+      description: "布伦特原油持续运行在104–106美元危机带，成品油与海运费飙升支撑极端地缘溢价。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -142,7 +130,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美军保持战区常态化拦截与航母打击群威慑，政策重心转向能源物流托底。",
+      description: "美军保持战役级护航前沿部署与盟友协调，审议战术制裁豁免以抑运费，无多国全面对战。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -151,11 +139,23 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美伊首脑隔空表态展现强硬底线，间接磋商渠道受制于前线战事升级而停滞不前。",
+      description: "非正式沟通机制尚存但核心前置条件针锋相对，停火与复航缺乏实质妥协动力。",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
+  warPhase: {
+    level: "海上封锁对抗期",
+    targetLevel: "脆弱平衡",
+    title: "美伊地缘风险监测",
+    subTitle: "基于公开报道综合研判",
+    points: [
+      "霍尔木兹海峡控制权成为战事核心支点，美伊在关键水道以非对称打击互相消耗。",
+      "能源生命线受阻倒逼国际多边释放原油储备与调整制裁，但难以迅速重建通行安全。",
+      "战线外溢至红海与也门腹地，双方均保持战术试探而竭力避免全面全面地面入侵。"
+    ],
+    note: "监测用途，不构成投资建议。"
+  },
   situations: [
     {
       title: "军事行动",
@@ -163,8 +163,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：也门胡塞武装对沙特东部能源重镇及阿美总部实施远程巡航导弹打击。",
-        "延续：美军中央司令部维持对也门及海湾空域导弹发射阵地的常态化先发打击。"
+        "延续：波斯湾及阿曼湾海域维持防空拦截与反舰无人机交火态势，战事未向内陆全面扩散。",
+        "变化：也门胡塞武装对亚丁政府机构实施针对性打击，红海南部侧翼防空戒备等级提升。"
       ]
     },
     {
@@ -173,8 +173,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：一艘集装箱船与一艘散货船在霍尔木兹外围遇袭沉没，商船过境流量进一步探底。",
-        "延续：国际主流船东推迟复航计划，超大型油轮单程运费维持极端高位。"
+        "延续：主要商业集装箱与大型原油轮继续暂停直航霍尔木兹，经好望角绕航运力紧绷。",
+        "变化：伊朗海军在海峡以东阿曼湾海域强化常态巡检，声称查处违规关闭AIS船舶。"
       ]
     },
     {
@@ -183,8 +183,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美方释放评估放宽部分运油影子船队制裁信号，抑制油价恐慌性跳涨。",
-        "延续：布伦特原油在103-106美元区间内呈现高位承压宽幅震荡态势。"
+        "延续：布伦特原油维持在105美元上方高位震荡，炼厂柴油裂解价差与油轮保费同步居高难下。",
+        "变化：IEA推进剩余1亿桶储备释放细则，盘中对冲中东供应扰动使油价窄幅回落但未破位。"
       ]
     },
     {
@@ -193,24 +193,20 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美方公开质问伊方谈判代表代表性，伊议长强硬表态抗击霸权，互信机制受挫。",
-        "延续：第三国外交斡旋渠道维持开启，但缺乏停火核心条款共识。"
+        "延续：德黑兰宣称美军必须撤出中东作为复航前提，华盛顿坚称继续执行对伊港口海上封锁。",
+        "变化：白宫内部审议放宽部分影子船队原油运输限制以平抑全球运费，凸显通胀对冲诉求。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美伊双方均受制于国内强硬派舆论与停火门槛要价，无法在先停火还是先解封上达成妥协。"
+      "美方要求彻底消除对国际航道的武力威胁，伊朗坚持以解除封锁和美军撤离为复航门槛。"
     ],
     military: [
-      "伊朗非对称无人机与水雷封锁成本低廉，与美军高昂的高精度防空拦截形成消耗战错配。"
+      "美军战术护航与远程封锁体系无法完全杜绝低成本无人机/水雷对海峡商业航道的致命扰动。"
     ]
   },
   scoreTrend: [
-    {
-      date: "10-11",
-      score: 70
-    },
     {
       date: "10-12",
       score: 72
@@ -225,94 +221,84 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "10-15",
-      score: 72,
+      score: 72
+    },
+    {
+      date: "10-16",
+      score: 70,
       active: true
     }
   ],
   events: [
     {
-      id: "evt-20261015-01",
-      title: "霍尔木兹海峡连续两艘商船遇袭沉没",
-      description: "UKMTO与路透社证实，两艘分别挂新加坡旗和散货运力的商业船只在霍尔木兹咽喉水域遭投射物击中后沉没，海峡航行风险升至极高点。",
+      id: "EVT-01",
+      title: "美伊海峡对抗加剧，沉船与油轮起火推高通行风险",
+      description: "美军中央司令部证实早前遭伊朗打击的集装箱船已沉没，伊朗海军通报阿曼湾禁航区再现油轮起火，双边海上反封锁对峙白热化。",
       verification: "confirmed",
-      timestamp: "2026-10-14T22:00:00Z",
+      timestamp: "2026-10-16T08:20:00Z",
       significance: "",
       highlight: true,
       critical: true
     },
     {
-      id: "evt-20261015-02",
-      title: "美国考虑豁免影子舰队以抑平海运费率",
-      description: "路透社报道称，面对波斯湾创纪录的油轮运费，美国政府正商讨允许此前受制裁的部分油轮在申请许可后运输非受限原油，以平抑全球油价溢价。",
+      id: "EVT-02",
+      title: "IEA落实1亿桶原油应急释放以缓解紧缺预期",
+      description: "国际能源署成员国同意加速落实协调释储措施平抑中东冲突风险，布伦特原油在105美元附近震荡整理。",
       verification: "confirmed",
-      timestamp: "2026-10-15T03:00:00Z",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "evt-20261015-03",
-      title: "胡塞武装导弹袭击沙特阿美达兰总部",
-      description: "美联社与CBS报道，也门胡塞武装对沙特东部达兰阿美总部发射弹道导弹与自杀式无人机，多处防空警报拉响，引发区域能源基础设施安保升级。",
-      verification: "confirmed",
-      timestamp: "2026-10-14T18:30:00Z",
+      timestamp: "2026-10-16T03:52:00Z",
       significance: ""
     },
     {
-      id: "evt-20261015-04",
-      title: "美伊高层言论展现谈判鸿沟",
-      description: "阿纳多卢通讯社报道，特朗普公开表态战争很快会结束但质疑伊方权力中枢谈判代表身份，伊朗议长卡利巴夫则在议会声称绝不向霸凌屈服，外交突破停滞。",
+      id: "EVT-03",
+      title: "美行政当局权衡影子船队制裁豁免以平抑运费",
+      description: "美官员披露正评估允许部分被制裁油轮运输非禁运合法原油，以抑制中东战火引发的历史性油轮运费飙升。",
       verification: "confirmed",
-      timestamp: "2026-10-15T05:30:00Z",
+      timestamp: "2026-10-15T18:00:00Z",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "也门胡塞武装袭击亚丁也门政府中枢",
+      description: "胡塞武装使用导弹与无人机袭击亚丁总统府区域，也门国际公认政府确认数名安全人员伤亡，红海安全阴影扩大。",
+      verification: "confirmed",
+      timestamp: "2026-10-15T21:30:00Z",
       significance: ""
     }
   ],
-  change: "none",
   prevRiskScore: 72,
   webSources: [],
   webSearchQueries: []
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-10-15",
-  version: "v2.222",
-  riskScore: 72,
-  keyChange: "Vessel sinkings near Hormuz intensify chokepoint blockade concerns, while US consideration of shadow-fleet sanction relief tempers runaway freight spikes, keeping risk sticky at 72.",
-  investmentSignal: "→ Maintain long exposure in commodities and energy while prioritizing defensive hedging assets over broad risk assets.",
-  warPhase: {
-    level: "Maritime Blockade Confrontation",
-    targetLevel: "Fragile Balance",
-    title: "US–Iran geo-risk snapshot",
-    subTitle: "Synthesized from public sources",
-    points: [
-      "Iran and allied factions intensify tactical strikes against commercial vessels, causing confirmed hull sinkings.",
-      "US forces sustain maritime defensive escorts while exploring regulatory relief to curb freight price shocks.",
-      "Neither side is initiating an all-out ground conflict, locking the standoff into a precarious, elevated equilibrium."
-    ],
-    note: "For monitoring only; not investment advice."
-  },
+  date: "2026-10-16",
+  version: "v2.223",
+  riskScore: 70,
+  keyChange: "Strait of Hormuz tanker attacks and crisis-band crude prices remain entrenched; IEA releases buffer shocks but fail to ease risk premium, keeping composite risk flat at 72; composite risk score prints at 70 (vs prior day -2); pre-adjustment model score 72 (staleDays≥4 与 OpenAI 副审逐维均值)",
+  investmentSignal: "→ Maintain long commodity and energy hedges while keeping defensive low allocations across risk assets amid sustained >$100 oil and chokepoint blockades.",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D229",
+      value: "D230",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "Flat",
+      value: "↓2",
       unit: "vs Prev",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $92.46–$94.80 · Brent $103.38–$106.01",
+      value: "WTI $95.29–$96.64 · Brent $104.92–$106.74",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
-      value: "Severe Disruption",
+      value: "Severely Restricted",
       unit: "Transit Status",
       color: "#ffdc00"
     }
@@ -323,7 +309,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Multi-front standoffs persist alongside ballistic strikes against Saudi Arabian energy infrastructure and Gulf installations.",
+      description: "US and Iranian forces exchange missile and drone fire across the Gulf, with Yemen proxy fronts remaining active.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -332,16 +318,16 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Two commercial vessels sank following projectile hits near the strait, keeping transit traffic severely constrained below 50%.",
+      description: "Transit flow remains suppressed below 50% as sunken merchant ships and new Iranian exclusion zones choke navigation.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "Energy Shock",
-      score: 4,
+      score: 3.5,
       prev: 4,
       weight: 0.2,
-      description: "Brent crude holds firmly within the $100-$120 crisis band, with physical cargo prices driven by historic tanker freight premiums.",
+      description: "Brent trades persistently in the $104-$106 crisis band with high freight and diesel premiums sustaining elevated risk.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -350,7 +336,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "US military posture maintains intensive combat air patrols and escort missions without crossing into large-scale ground deployment.",
+      description: "US maintains carrier battle group escort operations and strategic coordination while weighing targeted sanctions flexibility.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -359,11 +345,23 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Backchannel diplomacy exists but public leadership rhetoric remains defiant, forestalling structured ceasefire progress.",
+      description: "Backchannel diplomatic contacts persist but non-negotiable preconditions on both sides stall substantive progress.",
       status: "FAST",
       sourceVerification: "confirmed"
     }
   ],
+  warPhase: {
+    level: "Maritime Blockade Confrontation",
+    targetLevel: "Fragile Balance",
+    title: "US–Iran geo-risk snapshot",
+    subTitle: "Synthesized from public sources",
+    points: [
+      "Control over the Strait of Hormuz remains the decisive pivot, with asymmetric strikes testing coalition naval posture.",
+      "Energy supply disruption prompts multilateral strategic reserve releases and sanctions recalibration without restoring safe passage.",
+      "Proxy spillover into the southern Red Sea and Aden preserves high combat readiness while avoiding all-out direct ground invasion."
+    ],
+    note: "For monitoring only; not investment advice."
+  },
   situations: [
     {
       title: "Military Action",
@@ -371,8 +369,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Houthi forces maintain ballistic missile and drone volleys targeting Saudi Aramco regional infrastructure.",
-        "Continue: US CENTCOM maintains active defensive intercepts and strikes against regional launch positions."
+        "Continue: Air defense interceptions and drone harassment continue across the Persian Gulf and Gulf of Oman without inland escalation.",
+        "Change: Houthi forces launched targeted strikes against Aden government facilities, raising naval alertness around southern choke points."
       ]
     },
     {
@@ -381,8 +379,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Sinking of two commercial vessels near the chokepoint drives war-risk insurance rates to fresh highs.",
-        "Continue: Commercial container and tanker operators continue wide diversions around the Arabian Peninsula."
+        "Continue: Primary global container and tanker operators maintain full suspension of unescorted transit through Hormuz.",
+        "Change: Iranian naval units deployed expanded patrols east of Hormuz to intercept vessels navigating with disabled tracking."
       ]
     },
     {
@@ -391,8 +389,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: News of US discussions on sanction relief for shadow tankers injects modest downward pressure on prompt freight.",
-        "Continue: Brent crude trades steadily within the $103-$106 band amidst ongoing supply vulnerability."
+        "Continue: Brent crude trades firmly above $105 with refined product crack spreads and maritime insurance at elevated levels.",
+        "Change: IEA members finalized release schedules for 100 million barrels of strategic reserves, dampening intraday upside."
       ]
     },
     {
@@ -401,24 +399,20 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Washington publicly questions Iranian negotiation counterparts while Tehran pledges unyielding resistance.",
-        "Continue: Regional third-party diplomatic envoys sustain communication channels without concrete breakthroughs."
+        "Continue: Tehran demands full US withdrawal to resume normal passage; Washington reaffirms enforcement of Iranian maritime blockades.",
+        "Change: White House officials consider targeted sanctions relief on select shadow-fleet tankers to alleviate record global shipping rates."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Neither Washington nor Tehran possesses sufficient domestic political leeway to concede first on preconditions for a formal truce."
+      "Washington demands unhindered freedom of navigation, while Tehran conditions maritime access on lifting economic blockades and foreign military exit."
     ],
     military: [
-      "Asymmetric low-cost drone and missile interdiction exploits an unfavorable cost-exchange ratio against high-end coalition air defenses."
+      "Naval escorts and air defense grids cannot completely neutralize low-cost asymmetric drone and mine threats against commercial hulls."
     ]
   },
   scoreTrend: [
-    {
-      date: "10-11",
-      score: 70
-    },
     {
       date: "10-12",
       score: 72
@@ -433,48 +427,50 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "10-15",
-      score: 72,
+      score: 72
+    },
+    {
+      date: "10-16",
+      score: 70,
       active: true
     }
   ],
   events: [
     {
-      id: "evt-20261015-01",
-      title: "Two commercial vessels sink following projectile strikes near Hormuz",
-      description: "UKMTO and Reuters report that two merchant ships sank near the Strait of Hormuz after sustaining projectile hits, underscoring heightened physical transit peril.",
+      id: "EVT-01",
+      title: "US-Iran Gulf Standoff Intensifies Amid Sunken Ship and Tanker Fires",
+      description: "US CENTCOM confirmed the sinking of a container vessel struck by Iranian fire as Iranian Navy reported a tanker blaze in the Gulf of Oman, sharpening maritime confrontation.",
       verification: "confirmed",
-      timestamp: "2026-10-14T22:00:00Z",
+      timestamp: "2026-10-16T08:20:00Z",
       significance: "",
       highlight: true,
       critical: true
     },
     {
-      id: "evt-20261015-02",
-      title: "US considers sanction relief for shadow tankers to rein in shipping costs",
-      description: "Reuters reports the Trump administration is weighing permissions for previously sanctioned shadow tankers to transport non-sanctioned crude to cool record tanker freight rates.",
+      id: "EVT-02",
+      title: "IEA Pledges Acceleration of 100M Barrel Emergency Oil Release",
+      description: "Member nations agreed to expedite the distribution of coordinated strategic reserves to cushion Middle East supply shortfalls as Brent hovered near $105.",
       verification: "confirmed",
-      timestamp: "2026-10-15T03:00:00Z",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "evt-20261015-03",
-      title: "Houthi missile barrage targets Aramco headquarters in Dhahran",
-      description: "AP and CBS News report Yemen's Houthis launched cruise missiles and drones against Saudi Aramco facilities in Dhahran, triggering air defense alerts across the Eastern Province.",
-      verification: "confirmed",
-      timestamp: "2026-10-14T18:30:00Z",
+      timestamp: "2026-10-16T03:52:00Z",
       significance: ""
     },
     {
-      id: "evt-20261015-04",
-      title: "US and Iranian leadership rhetoric highlights wide diplomatic impasse",
-      description: "Anadolu Agency reports President Trump noted the war should end soon but questioned who to negotiate with, while Iranian Speaker Ghalibaf reiterated defiance against external coercion.",
+      id: "EVT-03",
+      title: "US Considers Shadow Fleet Sanctions Relief to Cool Freight Costs",
+      description: "US officials indicated potential waivers allowing sanctioned tankers to move legitimate crude to counter record global freight spikes driven by Middle East hostilities.",
       verification: "confirmed",
-      timestamp: "2026-10-15T05:30:00Z",
+      timestamp: "2026-10-15T18:00:00Z",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "Houthi Missile Strike Targets Government Complex in Aden",
+      description: "Yemen's internationally recognized government reported casualties after an aerial strike hit the presidential palace perimeter, underscoring broader regional instability.",
+      verification: "confirmed",
+      timestamp: "2026-10-15T21:30:00Z",
       significance: ""
     }
   ],
-  change: "none",
   prevRiskScore: 72,
   webSources: [],
   webSearchQueries: []
@@ -485,7 +481,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "10月15日节点",
+    node406: "10月16日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -519,16 +515,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.222 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.223 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 72（持平）：霍尔木兹商船遇袭沉没加剧封锁担忧，美国拟放宽油轮制裁抗衡运费暴涨，油价与综合分维持高位黏滞。",
-    bannerWarning: "→ 维持大宗商品与能源多头底仓，配置海外航运运力受限标的与防御性避险资产，克制增持权益类风险资产。",
-    deescalationIntent: "美伊双方均受制于国内强硬派舆论与停火门槛要价，无法在先停火还是先解封上达成妥协。",
-    structuralRisk: "两艘商业货轮接连遇袭沉没，海峡通行量低于常态50%，班轮公司面临天价战争保费。",
-    contradictionNote: "美伊双方均受制于国内强硬派舆论与停火门槛要价，无法在先停火还是先解封上达成妥协。；伊朗非对称无人机与水雷封锁成本低廉，与美军高昂的高精度防空拦截形成消耗战错配。",
+    bannerSignal: "综合评分 70（↓2）：霍尔木兹海峡袭船封锁与能源危机带高位僵持，IEA释储未能扭转地缘溢价；综合风险分落盘 70（较昨日 -2）；调整前模型分 72（staleDays≥4 与 OpenAI 副审逐维均值）",
+    bannerWarning: "→ 维持大宗商品与能源多头对冲，在风险资产维持防御性低仓位以应对破百油价与中东封锁常态化。",
+    deescalationIntent: "美方要求彻底消除对国际航道的武力威胁，伊朗坚持以解除封锁和美军撤离为复航门槛。",
+    structuralRisk: "海峡通航量仍不足常态一半，遇袭商船沉没与伊朗海军新设禁航巡区加剧航运封锁。",
+    contradictionNote: "美方要求彻底消除对国际航道的武力威胁，伊朗坚持以解除封锁和美军撤离为复航门槛。；美军战术护航与远程封锁体系无法完全杜绝低成本无人机/水雷对海峡商业航道的致命扰动。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -536,7 +532,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第229天",
+    dayCount: "第230天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -544,7 +540,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Oct 15 Node",
+    node406: "Oct 16 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -578,16 +574,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.222 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.223 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 72 (Flat): Vessel sinkings near Hormuz intensify chokepoint blockade concerns, while US consideration of shadow-fleet sanction relief tempers runaway …",
-    bannerWarning: "→ Maintain long exposure in commodities and energy while prioritizing defensive hedging assets over broad risk assets.",
-    deescalationIntent: "Neither Washington nor Tehran possesses sufficient domestic political leeway to…",
-    structuralRisk: "Two commercial vessels sank following projectile hits near the strait, keeping transit traffic seve…",
-    contradictionNote: "Neither Washington nor Tehran possesses sufficient domestic political leeway to concede first on preconditions for a formal truce.; Asymmetric low-cost drone a…",
+    bannerSignal: "Composite 70 (↓2): Strait of Hormuz tanker attacks and crisis-band crude prices remain entrenched; IEA releases buffer shocks but fail to ease risk premium, k…",
+    bannerWarning: "→ Maintain long commodity and energy hedges while keeping defensive low allocations across risk assets amid sustained >…",
+    deescalationIntent: "Washington demands unhindered freedom of navigation, while Tehran conditions ma…",
+    structuralRisk: "Transit flow remains suppressed below 50% as sunken merchant ships and new Iranian exclusion zones …",
+    contradictionNote: "Washington demands unhindered freedom of navigation, while Tehran conditions maritime access on lifting economic blockades and foreign military exit.; Naval es…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -595,7 +591,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 229",
+    dayCount: "Day 230",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
