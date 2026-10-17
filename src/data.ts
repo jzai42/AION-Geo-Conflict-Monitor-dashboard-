@@ -41,6 +41,7 @@ export interface DashboardData {
     value: string;
     unit: string;
     color: string;
+    layout?: "default" | "unitPrimary";
   }[];
   warPhase: {
     level: string;
@@ -52,6 +53,7 @@ export interface DashboardData {
   };
   riskScore: number;
   prevRiskScore: number;
+  change?: "up" | "down";
   investmentSignal: string;
   riskFactors: RiskFactor[];
   events: KeyEvent[];
@@ -65,96 +67,166 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-10-16",
-  version: "v2.223",
-  riskScore: 70,
-  keyChange: "霍尔木兹海峡袭船封锁与能源危机带高位僵持，IEA释储未能扭转地缘溢价；综合风险分落盘 70（较昨日 -2）；调整前模型分 72（staleDays≥4 与 OpenAI 副审逐维均值）",
-  investmentSignal: "→ 维持大宗商品与能源多头对冲，在风险资产维持防御性低仓位以应对破百油价与中东封锁常态化。",
+  date: "2026-10-17",
+  version: "v2.224",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D230",
+      value: "D231",
       unit: "2月28日起",
       color: "#ff851b"
     },
     {
       label: "评分变化",
-      value: "↓2",
-      unit: "较上期",
+      value: "↑16",
+      unit: "较10月16日",
       color: "#ff4136"
     },
     {
       label: "油价",
-      value: "WTI $95.29–$96.64 · Brent $104.92–$106.74",
-      unit: "参考",
+      value: "WTI $101.41 · Brent $109.86",
+      unit: "10月16日收盘",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "霍尔木兹",
-      value: "严重受限",
-      unit: "通行状态",
+      value: "较战前−70%",
+      unit: "周内12次袭船",
       color: "#ffdc00"
     }
   ],
   riskFactors: [
     {
-      name: "军事升级烈度",
-      score: 4,
-      prev: 4,
-      weight: 0.2,
-      description: "美军与伊朗在波斯湾及阿曼湾保持导弹无人机互射，红海及也门代理人战线持续活跃。",
-      status: "FAST",
-      sourceVerification: "confirmed"
-    },
-    {
-      name: "霍尔木兹航运扰动",
-      score: 4,
-      prev: 4,
-      weight: 0.2,
-      description: "海峡通航量仍不足常态一半，遇袭商船沉没与伊朗海军新设禁航巡区加剧航运封锁。",
-      status: "FAST",
-      sourceVerification: "confirmed"
-    },
-    {
-      name: "能源冲击",
-      score: 3.5,
-      prev: 4,
-      weight: 0.2,
-      description: "布伦特原油持续运行在104–106美元危机带，成品油与海运费飙升支撑极端地缘溢价。",
-      status: "FAST",
-      sourceVerification: "confirmed"
-    },
-    {
-      name: "大国介入深度",
+      name: "美伊直接军事冲突",
       score: 3,
       prev: 3,
-      weight: 0.2,
-      description: "美军保持战役级护航前沿部署与盟友协调，审议战术制裁豁免以抑运费，无多国全面对战。",
+      weight: 1 / 7,
+      description: "持续对抗，但过去24小时未确认新增大规模直接打击；美方仍保留打击地下核设施选项。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
-      name: "降级/谈判前景",
-      score: 3,
-      prev: 3,
-      weight: 0.2,
-      description: "非正式沟通机制尚存但核心前置条件针锋相对，停火与复航缺乏实质妥协动力。",
+      name: "霍尔木兹航运安全",
+      score: 5,
+      prev: 5,
+      weight: 1 / 7,
+      description: "UKMTO周报记录12次船舶遇袭，其中10次发生在海峡；通行量仍较战前低约70%。",
+      status: "AT CEILING",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "地区冲突扩散",
+      score: 5,
+      prev: 5,
+      weight: 1 / 7,
+      description: "胡塞武装、沙特支持力量与也门战场持续升级，沙特石油运输节点面临导弹威胁。",
+      status: "AT CEILING",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "石油及能源供应",
+      score: 5,
+      prev: 5,
+      weight: 1 / 7,
+      description: "Brent收于109.86美元、WTI收于101.41美元，航运与供应风险溢价继续上升。",
+      status: "AT CEILING",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "美国海上封锁及军事态势",
+      score: 4,
+      prev: 4,
+      weight: 1 / 7,
+      description: "针对伊朗港口的海上封锁持续，经济施压与军事威慑并行。",
       status: "FAST",
       sourceVerification: "confirmed"
+    },
+    {
+      name: "领导人言论与核设施威胁",
+      score: 4,
+      prev: 4,
+      weight: 1 / 7,
+      description: "特朗普称可能打击Pickaxe Mountain，但排除核武器和地面部队，尚未确认行动授权。",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "外交谈判失败风险",
+      score: 4,
+      prev: 4,
+      weight: 1 / 7,
+      description: "调停渠道仍在运作，但双方对提案回复状态表述不一，尚无可验证突破。",
+      status: "SLOW",
+      sourceVerification: "partial"
+    }
+  ],
+  riskScore: 86,
+  events: [
+    {
+      id: "evt-1",
+      title: "霍尔木兹海峡一周报告12次袭船",
+      description: "UKMTO最新周报记录12次船舶遇袭，其中10次在霍尔木兹海峡；125次出港与129次入港通行，合计仍较战前低约70%。（Tier1: UKMTO；Tier2: AP, Anadolu）",
+      verification: "confirmed",
+      timestamp: "2026-10-17",
+      significance: "",
+      highlight: true,
+      critical: true
+    },
+    {
+      id: "evt-2",
+      title: "波斯湾商船遇袭风险继续上升",
+      description: "UKMTO通报多起商船遭不明投射物袭击，部分船舶失去动力或结局尚未确认；多数事件的袭击者仍未确认。（Tier1: UKMTO；Tier2: AP）",
+      verification: "confirmed",
+      timestamp: "2026-10-16",
+      significance: ""
+    },
+    {
+      id: "evt-3",
+      title: "特朗普保留打击Pickaxe Mountain选项",
+      description: "特朗普称美国可能打击伊朗地下核设施Pickaxe Mountain，同时排除核武器和地面部队；未确认已授权执行。（Tier2: Reuters, Al-Monitor）",
+      verification: "confirmed",
+      timestamp: "2026-10-16",
+      significance: ""
+    },
+    {
+      id: "evt-4",
+      title: "Brent逼近110美元",
+      description: "Brent收于109.86美元，WTI收于101.41美元；霍尔木兹袭船、地区基础设施风险与供应担忧推动能源重新定价。（Tier2: Reuters）",
+      verification: "confirmed",
+      timestamp: "2026-10-16",
+      significance: "",
+      highlight: true,
+      critical: true
+    },
+    {
+      id: "evt-5",
+      title: "也门与沙特方向冲突外溢",
+      description: "胡塞武装与沙特支持力量持续交战，亚丁与沙特石油运输相关目标面临导弹威胁，地区代理冲突继续扩大。（Tier2: AP, Reuters）",
+      verification: "confirmed",
+      timestamp: "2026-10-16",
+      significance: ""
+    },
+    {
+      id: "evt-6",
+      title: "调停继续但提案状态存在分歧",
+      description: "卡塔尔等调停渠道仍在运作；美方媒体称等待伊朗答复，伊方则称美方回复不充分，尚无双方共同确认的突破。（Tier2: Reuters, Axios）",
+      verification: "partial",
+      timestamp: "2026-10-17",
+      significance: ""
     }
   ],
   warPhase: {
-    level: "海上封锁对抗期",
-    targetLevel: "脆弱平衡",
+    level: "持续对抗",
+    targetLevel: "海运与区域冲突升级",
     title: "美伊地缘风险监测",
-    subTitle: "基于公开报道综合研判",
+    subTitle: "过去24小时公开来源交叉核验",
     points: [
-      "霍尔木兹海峡控制权成为战事核心支点，美伊在关键水道以非对称打击互相消耗。",
-      "能源生命线受阻倒逼国际多边释放原油储备与调整制裁，但难以迅速重建通行安全。",
-      "战线外溢至红海与也门腹地，双方均保持战术试探而竭力避免全面全面地面入侵。"
+      "过去24小时未确认新一轮美伊直接大规模空袭，但美国封锁持续，地下核设施打击威胁上升。",
+      "霍尔木兹一周报告12次袭船，通行量仍较战前低约70%，海上消耗战风险进一步加剧。",
+      "也门与沙特方向冲突扩大，Brent逼近110美元，外交调停尚未形成可验证突破。"
     ],
-    note: "监测用途，不构成投资建议。"
+    note: "Strong risk-off为地缘冲突模块信号，不构成全市场最终评级或投资建议。"
   },
   situations: [
     {
@@ -163,8 +235,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：波斯湾及阿曼湾海域维持防空拦截与反舰无人机交火态势，战事未向内陆全面扩散。",
-        "变化：也门胡塞武装对亚丁政府机构实施针对性打击，红海南部侧翼防空戒备等级提升。"
+        "延续：过去24小时未确认新增美伊直接大规模空袭，美国针对伊朗港口的海上封锁仍在持续。",
+        "变化：特朗普公开保留打击Pickaxe Mountain的选项，但排除核武器和地面部队。"
       ]
     },
     {
@@ -173,8 +245,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：主要商业集装箱与大型原油轮继续暂停直航霍尔木兹，经好望角绕航运力紧绷。",
-        "变化：伊朗海军在海峡以东阿曼湾海域强化常态巡检，声称查处违规关闭AIS船舶。"
+        "变化：UKMTO一周报告12次袭船，其中10次发生在海峡；实际事件数可能更高。",
+        "延续：125次出港与129次入港通行，合计仍较战前低约70%，海峡并非完全关闭。"
       ]
     },
     {
@@ -183,8 +255,8 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：布伦特原油维持在105美元上方高位震荡，炼厂柴油裂解价差与油轮保费同步居高难下。",
-        "变化：IEA推进剩余1亿桶储备释放细则，盘中对冲中东供应扰动使油价窄幅回落但未破位。"
+        "变化：Brent收于109.86美元、WTI收于101.41美元，航运保险、运输与供应风险溢价继续抬升。",
+        "风险：沙特绕开霍尔木兹的重要石油运输节点也受到导弹威胁。"
       ]
     },
     {
@@ -193,24 +265,20 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：德黑兰宣称美军必须撤出中东作为复航前提，华盛顿坚称继续执行对伊港口海上封锁。",
-        "变化：白宫内部审议放宽部分影子船队原油运输限制以平抑全球运费，凸显通胀对冲诉求。"
+        "延续：卡塔尔等间接渠道仍在运作，但美伊双方对谁在等待答复的表述相互冲突。",
+        "判断：外交窗口尚未关闭，但缺少双方共同确认的实质进展。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美方要求彻底消除对国际航道的武力威胁，伊朗坚持以解除封锁和美军撤离为复航门槛。"
+      "间接谈判渠道仍然存在，但封锁、制裁与提案回复争议阻止外交缓冲转化为可验证降级。"
     ],
     military: [
-      "美军战术护航与远程封锁体系无法完全杜绝低成本无人机/水雷对海峡商业航道的致命扰动。"
+      "美国海上封锁与伊朗航运施压相互强化，同时也门—沙特代理冲突扩大直接军事升级的外溢面。"
     ]
   },
   scoreTrend: [
-    {
-      date: "10-12",
-      score: 72
-    },
     {
       date: "10-13",
       score: 72
@@ -225,142 +293,209 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "10-16",
-      score: 70,
+      score: 70
+    },
+    {
+      date: "10-17",
+      score: 86,
       active: true
     }
   ],
-  events: [
+  keyChange: "霍尔木兹一周报告12次袭船、通行量较战前低约70%，Brent收于109.86美元；海运风险与也门—沙特方向冲突同步升级。",
+  investmentSignal: "→ Strong risk-off：地缘风险正通过能源价格、通胀预期、利率与风险资产估值链条传导；在航运安全改善与油价回落获得确认前，不宜仅凭短期反弹认定风险解除。",
+  change: "up",
+  prevRiskScore: 70,
+  webSources: [
     {
-      id: "EVT-01",
-      title: "美伊海峡对抗加剧，沉船与油轮起火推高通行风险",
-      description: "美军中央司令部证实早前遭伊朗打击的集装箱船已沉没，伊朗海军通报阿曼湾禁航区再现油轮起火，双边海上反封锁对峙白热化。",
-      verification: "confirmed",
-      timestamp: "2026-10-16T08:20:00Z",
-      significance: "",
-      highlight: true,
-      critical: true
+      title: "UKMTO Weekly VRA Overview — 16 October 2026",
+      uri: "https://www.ukmto.org/-/media/ukmto/products/20261016-ukmto_vra_overview_u.pdf"
     },
     {
-      id: "EVT-02",
-      title: "IEA落实1亿桶原油应急释放以缓解紧缺预期",
-      description: "国际能源署成员国同意加速落实协调释储措施平抑中东冲突风险，布伦特原油在105美元附近震荡整理。",
-      verification: "confirmed",
-      timestamp: "2026-10-16T03:52:00Z",
-      significance: ""
+      title: "Oil touches $110 on Middle East supply fears — Reuters syndication",
+      uri: "https://www.investing.com/news/commodities-news/oil-edges-down-as-investors-weigh-possible-us-sanctions-on-shadow-fleet-4952926"
     },
     {
-      id: "EVT-03",
-      title: "美行政当局权衡影子船队制裁豁免以平抑运费",
-      description: "美官员披露正评估允许部分被制裁油轮运输非禁运合法原油，以抑制中东战火引发的历史性油轮运费飙升。",
-      verification: "confirmed",
-      timestamp: "2026-10-15T18:00:00Z",
-      significance: ""
+      title: "Trump says US may need to strike Iran's Pickaxe Mountain — Reuters syndication",
+      uri: "https://www.yahoo.com/news/politics/articles/trump-says-us-may-strike-124150744.html"
     },
     {
-      id: "EVT-04",
-      title: "也门胡塞武装袭击亚丁也门政府中枢",
-      description: "胡塞武装使用导弹与无人机袭击亚丁总统府区域，也门国际公认政府确认数名安全人员伤亡，红海安全阴影扩大。",
-      verification: "confirmed",
-      timestamp: "2026-10-15T21:30:00Z",
-      significance: ""
+      title: "Reported shipping attacks jump in Strait of Hormuz — AP",
+      uri: "https://apnews.com/article/mideast-israel-palestinians-houthis-october-16-2026-5da500114e070ccaa27d36837b095de5"
+    },
+    {
+      title: "Iran says US response to Hormuz proposal was insufficient — Reuters",
+      uri: "https://www.reuters.com/world/middle-east/iran-says-us-response-its-proposal-reopen-hormuz-was-insufficient-2026-10-11/"
     }
   ],
-  prevRiskScore: 72,
-  webSources: [],
-  webSearchQueries: []
+  webSearchQueries: [
+    "2026-10-16 UKMTO weekly 12 attacks Hormuz 70% below pre-conflict",
+    "2026-10-16 Reuters Brent 109.86 WTI 101.41",
+    "2026-10-16 Trump Pickaxe Mountain Reuters",
+    "2026-10-17 Iran US counterproposal Qatar mediation"
+  ]
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-10-16",
-  version: "v2.223",
-  riskScore: 70,
-  keyChange: "Strait of Hormuz tanker attacks and crisis-band crude prices remain entrenched; IEA releases buffer shocks but fail to ease risk premium, keeping composite risk flat at 72; composite risk score prints at 70 (vs prior day -2); pre-adjustment model score 72 (staleDays≥4 与 OpenAI 副审逐维均值)",
-  investmentSignal: "→ Maintain long commodity and energy hedges while keeping defensive low allocations across risk assets amid sustained >$100 oil and chokepoint blockades.",
+  date: "2026-10-17",
+  version: "v2.224",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D230",
+      value: "D231",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
     {
       label: "Score Change",
-      value: "↓2",
-      unit: "vs Prev",
+      value: "↑16",
+      unit: "vs Oct 16",
       color: "#ff4136"
     },
     {
       label: "Oil",
-      value: "WTI $95.29–$96.64 · Brent $104.92–$106.74",
-      unit: "Ref.",
+      value: "WTI $101.41 · Brent $109.86",
+      unit: "Oct 16 close",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
-      value: "Severely Restricted",
-      unit: "Transit Status",
+      value: "−70% vs pre-war",
+      unit: "12 weekly attacks",
       color: "#ffdc00"
     }
   ],
   riskFactors: [
     {
-      name: "Military Escalation Intensity",
-      score: 4,
-      prev: 4,
-      weight: 0.2,
-      description: "US and Iranian forces exchange missile and drone fire across the Gulf, with Yemen proxy fronts remaining active.",
-      status: "FAST",
-      sourceVerification: "confirmed"
-    },
-    {
-      name: "Hormuz Disruption",
-      score: 4,
-      prev: 4,
-      weight: 0.2,
-      description: "Transit flow remains suppressed below 50% as sunken merchant ships and new Iranian exclusion zones choke navigation.",
-      status: "FAST",
-      sourceVerification: "confirmed"
-    },
-    {
-      name: "Energy Shock",
-      score: 3.5,
-      prev: 4,
-      weight: 0.2,
-      description: "Brent trades persistently in the $104-$106 crisis band with high freight and diesel premiums sustaining elevated risk.",
-      status: "FAST",
-      sourceVerification: "confirmed"
-    },
-    {
-      name: "Great Power Involvement",
+      name: "Direct US–Iran Military Conflict",
       score: 3,
       prev: 3,
-      weight: 0.2,
-      description: "US maintains carrier battle group escort operations and strategic coordination while weighing targeted sanctions flexibility.",
+      weight: 1 / 7,
+      description: "Confrontation persists, but no new large-scale direct strike was confirmed in the past 24 hours; the US retains an underground nuclear-site strike option.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
-      name: "De-escalation Probability",
-      score: 3,
-      prev: 3,
-      weight: 0.2,
-      description: "Backchannel diplomatic contacts persist but non-negotiable preconditions on both sides stall substantive progress.",
+      name: "Hormuz Shipping Security",
+      score: 5,
+      prev: 5,
+      weight: 1 / 7,
+      description: "UKMTO recorded 12 attacks this week, including 10 in the Strait; transit remains roughly 70% below pre-conflict levels.",
+      status: "AT CEILING",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "Regional Conflict Spillover",
+      score: 5,
+      prev: 5,
+      weight: 1 / 7,
+      description: "Fighting involving the Houthis, Saudi-backed forces and Yemen is escalating, with missile threats reaching Saudi oil-transit infrastructure.",
+      status: "AT CEILING",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "Oil and Energy Supply",
+      score: 5,
+      prev: 5,
+      weight: 1 / 7,
+      description: "Brent settled at $109.86 and WTI at $101.41 as shipping and supply-risk premia continued to rise.",
+      status: "AT CEILING",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "US Naval Blockade and Posture",
+      score: 4,
+      prev: 4,
+      weight: 1 / 7,
+      description: "The blockade targeting Iranian ports continues alongside economic pressure and military deterrence.",
       status: "FAST",
       sourceVerification: "confirmed"
+    },
+    {
+      name: "Leadership and Nuclear-Site Threats",
+      score: 4,
+      prev: 4,
+      weight: 1 / 7,
+      description: "Trump said the US may strike Pickaxe Mountain, while ruling out nuclear weapons and ground troops; no execution authorization was confirmed.",
+      status: "FAST",
+      sourceVerification: "confirmed"
+    },
+    {
+      name: "Diplomatic Failure Risk",
+      score: 4,
+      prev: 4,
+      weight: 1 / 7,
+      description: "Mediation channels remain active, but the sides give conflicting accounts of the proposal-response status and no verifiable breakthrough has emerged.",
+      status: "SLOW",
+      sourceVerification: "partial"
+    }
+  ],
+  riskScore: 86,
+  events: [
+    {
+      id: "evt-1",
+      title: "UKMTO Records 12 Weekly Vessel Attacks",
+      description: "UKMTO recorded 12 vessel attacks, 10 of them in the Strait of Hormuz; 125 outbound and 129 inbound transits remained roughly 70% below pre-conflict levels. (Tier1: UKMTO; Tier2: AP, Anadolu)",
+      verification: "confirmed",
+      timestamp: "2026-10-17",
+      significance: "",
+      highlight: true,
+      critical: true
+    },
+    {
+      id: "evt-2",
+      title: "Gulf Merchant-Vessel Risk Continues to Rise",
+      description: "UKMTO reported multiple merchant vessels struck by unknown projectiles, with some disabled or their outcomes unconfirmed; attribution remains unresolved in most cases. (Tier1: UKMTO; Tier2: AP)",
+      verification: "confirmed",
+      timestamp: "2026-10-16",
+      significance: ""
+    },
+    {
+      id: "evt-3",
+      title: "Trump Keeps Pickaxe Mountain Strike Option Open",
+      description: "Trump said the US may strike Iran's underground Pickaxe Mountain site, while ruling out nuclear weapons and ground troops; no execution authorization was confirmed. (Tier2: Reuters, Al-Monitor)",
+      verification: "confirmed",
+      timestamp: "2026-10-16",
+      significance: ""
+    },
+    {
+      id: "evt-4",
+      title: "Brent Approaches $110",
+      description: "Brent settled at $109.86 and WTI at $101.41 as Hormuz attacks, regional infrastructure threats and supply concerns repriced energy risk. (Tier2: Reuters)",
+      verification: "confirmed",
+      timestamp: "2026-10-16",
+      significance: "",
+      highlight: true,
+      critical: true
+    },
+    {
+      id: "evt-5",
+      title: "Yemen–Saudi Spillover Intensifies",
+      description: "Fighting between the Houthis and Saudi-backed forces continued, while Aden and Saudi oil-transit-related targets faced missile threats. (Tier2: AP, Reuters)",
+      verification: "confirmed",
+      timestamp: "2026-10-16",
+      significance: ""
+    },
+    {
+      id: "evt-6",
+      title: "Mediation Continues Amid Proposal Dispute",
+      description: "Qatari and other mediation channels remain active; US reporting says Washington awaits Iran, while Tehran says the US response was insufficient. No jointly confirmed breakthrough exists. (Tier2: Reuters, Axios)",
+      verification: "partial",
+      timestamp: "2026-10-17",
+      significance: ""
     }
   ],
   warPhase: {
-    level: "Maritime Blockade Confrontation",
-    targetLevel: "Fragile Balance",
+    level: "Sustained Confrontation",
+    targetLevel: "Maritime and Regional Escalation",
     title: "US–Iran geo-risk snapshot",
-    subTitle: "Synthesized from public sources",
+    subTitle: "Past 24 hours · cross-verified public sources",
     points: [
-      "Control over the Strait of Hormuz remains the decisive pivot, with asymmetric strikes testing coalition naval posture.",
-      "Energy supply disruption prompts multilateral strategic reserve releases and sanctions recalibration without restoring safe passage.",
-      "Proxy spillover into the southern Red Sea and Aden preserves high combat readiness while avoiding all-out direct ground invasion."
+      "No new large-scale direct US–Iran airstrike was confirmed, but the blockade persists and threats against an underground nuclear site have intensified.",
+      "UKMTO recorded 12 weekly vessel attacks while Hormuz transit remained roughly 70% below pre-conflict levels.",
+      "Yemen–Saudi spillover widened, Brent neared $110, and mediation produced no jointly verifiable breakthrough."
     ],
-    note: "For monitoring only; not investment advice."
+    note: "Strong risk-off is a geo-conflict module signal, not a standalone rating for the entire market or investment advice."
   },
   situations: [
     {
@@ -369,8 +504,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Air defense interceptions and drone harassment continue across the Persian Gulf and Gulf of Oman without inland escalation.",
-        "Change: Houthi forces launched targeted strikes against Aden government facilities, raising naval alertness around southern choke points."
+        "Continue: No new large-scale direct US–Iran airstrike was confirmed in the past 24 hours; the US blockade of Iranian ports remains in force.",
+        "Change: Trump publicly kept a Pickaxe Mountain strike option open while ruling out nuclear weapons and ground troops."
       ]
     },
     {
@@ -379,8 +514,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Primary global container and tanker operators maintain full suspension of unescorted transit through Hormuz.",
-        "Change: Iranian naval units deployed expanded patrols east of Hormuz to intercept vessels navigating with disabled tracking."
+        "Change: UKMTO recorded 12 weekly vessel attacks, including 10 in the Strait; the actual total may be higher.",
+        "Continue: 125 outbound and 129 inbound transits remained roughly 70% below pre-conflict levels; the Strait is not fully closed."
       ]
     },
     {
@@ -389,8 +524,8 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Brent crude trades firmly above $105 with refined product crack spreads and maritime insurance at elevated levels.",
-        "Change: IEA members finalized release schedules for 100 million barrels of strategic reserves, dampening intraday upside."
+        "Change: Brent settled at $109.86 and WTI at $101.41 as insurance, freight and supply-risk premia climbed.",
+        "Risk: Saudi oil-transit infrastructure designed to bypass Hormuz also faced missile threats."
       ]
     },
     {
@@ -399,24 +534,20 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Tehran demands full US withdrawal to resume normal passage; Washington reaffirms enforcement of Iranian maritime blockades.",
-        "Change: White House officials consider targeted sanctions relief on select shadow-fleet tankers to alleviate record global shipping rates."
+        "Continue: Qatari and other indirect channels remain active, but Washington and Tehran give conflicting accounts of who owes the next response.",
+        "Assessment: The diplomatic window is not closed, but there is no jointly confirmed material progress."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Washington demands unhindered freedom of navigation, while Tehran conditions maritime access on lifting economic blockades and foreign military exit."
+      "Indirect channels remain open, but blockade, sanctions and proposal-response disputes prevent diplomacy from becoming verifiable de-escalation."
     ],
     military: [
-      "Naval escorts and air defense grids cannot completely neutralize low-cost asymmetric drone and mine threats against commercial hulls."
+      "The US naval blockade and Iranian shipping pressure reinforce each other while Yemen–Saudi proxy escalation broadens the conflict's spillover."
     ]
   },
   scoreTrend: [
-    {
-      date: "10-12",
-      score: 72
-    },
     {
       date: "10-13",
       score: 72
@@ -431,49 +562,46 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "10-16",
-      score: 70,
+      score: 70
+    },
+    {
+      date: "10-17",
+      score: 86,
       active: true
     }
   ],
-  events: [
+  keyChange: "UKMTO recorded 12 weekly vessel attacks, Hormuz transit remained roughly 70% below pre-conflict levels, and Brent settled at $109.86 as maritime and Yemen–Saudi risks escalated together.",
+  investmentSignal: "→ Strong risk-off: geopolitical risk is transmitting through energy prices, inflation expectations, rates and risk-asset valuations; do not treat a short-term rebound as de-risking until shipping security improves and oil prices retreat.",
+  change: "up",
+  prevRiskScore: 70,
+  webSources: [
     {
-      id: "EVT-01",
-      title: "US-Iran Gulf Standoff Intensifies Amid Sunken Ship and Tanker Fires",
-      description: "US CENTCOM confirmed the sinking of a container vessel struck by Iranian fire as Iranian Navy reported a tanker blaze in the Gulf of Oman, sharpening maritime confrontation.",
-      verification: "confirmed",
-      timestamp: "2026-10-16T08:20:00Z",
-      significance: "",
-      highlight: true,
-      critical: true
+      title: "UKMTO Weekly VRA Overview — 16 October 2026",
+      uri: "https://www.ukmto.org/-/media/ukmto/products/20261016-ukmto_vra_overview_u.pdf"
     },
     {
-      id: "EVT-02",
-      title: "IEA Pledges Acceleration of 100M Barrel Emergency Oil Release",
-      description: "Member nations agreed to expedite the distribution of coordinated strategic reserves to cushion Middle East supply shortfalls as Brent hovered near $105.",
-      verification: "confirmed",
-      timestamp: "2026-10-16T03:52:00Z",
-      significance: ""
+      title: "Oil touches $110 on Middle East supply fears — Reuters syndication",
+      uri: "https://www.investing.com/news/commodities-news/oil-edges-down-as-investors-weigh-possible-us-sanctions-on-shadow-fleet-4952926"
     },
     {
-      id: "EVT-03",
-      title: "US Considers Shadow Fleet Sanctions Relief to Cool Freight Costs",
-      description: "US officials indicated potential waivers allowing sanctioned tankers to move legitimate crude to counter record global freight spikes driven by Middle East hostilities.",
-      verification: "confirmed",
-      timestamp: "2026-10-15T18:00:00Z",
-      significance: ""
+      title: "Trump says US may need to strike Iran's Pickaxe Mountain — Reuters syndication",
+      uri: "https://www.yahoo.com/news/politics/articles/trump-says-us-may-strike-124150744.html"
     },
     {
-      id: "EVT-04",
-      title: "Houthi Missile Strike Targets Government Complex in Aden",
-      description: "Yemen's internationally recognized government reported casualties after an aerial strike hit the presidential palace perimeter, underscoring broader regional instability.",
-      verification: "confirmed",
-      timestamp: "2026-10-15T21:30:00Z",
-      significance: ""
+      title: "Reported shipping attacks jump in Strait of Hormuz — AP",
+      uri: "https://apnews.com/article/mideast-israel-palestinians-houthis-october-16-2026-5da500114e070ccaa27d36837b095de5"
+    },
+    {
+      title: "Iran says US response to Hormuz proposal was insufficient — Reuters",
+      uri: "https://www.reuters.com/world/middle-east/iran-says-us-response-its-proposal-reopen-hormuz-was-insufficient-2026-10-11/"
     }
   ],
-  prevRiskScore: 72,
-  webSources: [],
-  webSearchQueries: []
+  webSearchQueries: [
+    "2026-10-16 UKMTO weekly 12 attacks Hormuz 70% below pre-conflict",
+    "2026-10-16 Reuters Brent 109.86 WTI 101.41",
+    "2026-10-16 Trump Pickaxe Mountain Reuters",
+    "2026-10-17 Iran US counterproposal Qatar mediation"
+  ]
 };
 
 export const TRANSLATIONS = {
@@ -481,7 +609,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "10月16日节点",
+    node406: "10月17日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -515,24 +643,24 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.223 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.224 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 70（↓2）：霍尔木兹海峡袭船封锁与能源危机带高位僵持，IEA释储未能扭转地缘溢价；综合风险分落盘 70（较昨日 -2）；调整前模型分 72（staleDays≥4 与 OpenAI 副审逐维均值）",
-    bannerWarning: "→ 维持大宗商品与能源多头对冲，在风险资产维持防御性低仓位以应对破百油价与中东封锁常态化。",
-    deescalationIntent: "美方要求彻底消除对国际航道的武力威胁，伊朗坚持以解除封锁和美军撤离为复航门槛。",
-    structuralRisk: "海峡通航量仍不足常态一半，遇袭商船沉没与伊朗海军新设禁航巡区加剧航运封锁。",
-    contradictionNote: "美方要求彻底消除对国际航道的武力威胁，伊朗坚持以解除封锁和美军撤离为复航门槛。；美军战术护航与远程封锁体系无法完全杜绝低成本无人机/水雷对海峡商业航道的致命扰动。",
-    energyDeadline: "能源基础设施打击截止日",
-    negotiationValidity: "谈判框架有效期",
-    signalConfirmation: "此后信号方向才能确认",
+    bannerSignal: "综合评分 86（较10月16日↑16）：霍尔木兹袭船增加、通行量受限，地区冲突扩大，Brent逼近110美元。",
+    bannerWarning: "→ Strong risk-off：航运安全改善与油价回落确认前，不宜将短期反弹视为风险解除。",
+    deescalationIntent: "间接谈判渠道仍在运作，但双方对提案回复状态表述不一。",
+    structuralRisk: "霍尔木兹一周报告12次袭船，通行量仍较战前低约70%。",
+    contradictionNote: "封锁与航运施压相互强化；也门—沙特代理冲突扩大外溢面。",
+    energyDeadline: "油价与海峡通行改善确认",
+    negotiationValidity: "美伊提案回复状态确认",
+    signalConfirmation: "任一确认后再评估降级",
     clickExpand: "点击展开详情",
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第230天",
+    dayCount: "第231天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -540,7 +668,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Oct 16 Node",
+    node406: "Oct 17 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -574,24 +702,24 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.223 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.224 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 70 (↓2): Strait of Hormuz tanker attacks and crisis-band crude prices remain entrenched; IEA releases buffer shocks but fail to ease risk premium, k…",
-    bannerWarning: "→ Maintain long commodity and energy hedges while keeping defensive low allocations across risk assets amid sustained >…",
-    deescalationIntent: "Washington demands unhindered freedom of navigation, while Tehran conditions ma…",
-    structuralRisk: "Transit flow remains suppressed below 50% as sunken merchant ships and new Iranian exclusion zones …",
-    contradictionNote: "Washington demands unhindered freedom of navigation, while Tehran conditions maritime access on lifting economic blockades and foreign military exit.; Naval es…",
-    energyDeadline: "Energy infrastructure strike deadline",
-    negotiationValidity: "Negotiation framework validity",
-    signalConfirmation: "Signal direction confirmed thereafter",
+    bannerSignal: "Composite 86 (+16 vs Oct 16): Hormuz attacks rose, transit remained constrained, regional spillover widened and Brent neared $110.",
+    bannerWarning: "→ Strong risk-off: do not treat a short-term rebound as de-risking before shipping security improves and oil retreats.",
+    deescalationIntent: "Indirect channels remain active, but the sides dispute the proposal-response status.",
+    structuralRisk: "UKMTO recorded 12 weekly attacks while transit remained about 70% below pre-conflict levels.",
+    contradictionNote: "Blockade and shipping pressure reinforce each other as Yemen–Saudi spillover broadens.",
+    energyDeadline: "Oil and Hormuz improvement confirmed",
+    negotiationValidity: "US–Iran response status confirmed",
+    signalConfirmation: "Reassess de-escalation thereafter",
     clickExpand: "Click to expand details",
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 230",
+    dayCount: "Day 231",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }

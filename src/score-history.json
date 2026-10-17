@@ -1,60 +1,62 @@
 {
   "version": 2,
   "latest": {
-    "date": "2026-10-16",
-    "appVersion": "v2.223",
-    "riskScore": 70,
-    "prevRiskScore": 72,
-    "conflictDay": 230,
+    "date": "2026-10-17",
+    "appVersion": "v2.224",
+    "riskScore": 86,
+    "prevRiskScore": 70,
+    "conflictDay": 231,
     "factorScores": [
-      4,
-      4,
-      3.5,
       3,
-      3
+      5,
+      5,
+      5,
+      4,
+      4,
+      4
     ],
-    "generationMode": "live",
-    "rawModelScore": 72,
+    "generationMode": "manual-verified",
+    "rawModelScore": 86,
     "rawModelFactors": [
-      4,
-      4,
-      4,
       3,
-      3
+      5,
+      5,
+      5,
+      4,
+      4,
+      4
     ],
-    "finalRiskScore": 70,
-    "adjustmentReason": "staleDays≥4 与 OpenAI 副审逐维均值",
+    "finalRiskScore": 86,
+    "adjustmentReason": null,
     "oilQuality": {
       "publish": "live",
       "parseOk": true,
-      "combinedMid": 100.89750000000001,
-      "combinedHigh": 106.74,
+      "combinedMid": 105.635,
+      "combinedHigh": 109.86,
       "midBand": 4,
       "highBand": 4,
       "oilDirection": "firm",
       "narrativeConflict": false,
       "hasOilSourceUrl": true,
-      "markdownMismatch": true,
-      "reasons": [
-        "markdown-energy-score-mismatch: md=4 json=3.5"
-      ]
+      "markdownMismatch": false,
+      "reasons": []
     },
     "oilPrice": {
-      "provider": "yahoo-chart",
-      "mode": "on",
+      "provider": "reuters-settlement",
+      "mode": "manual-verified",
       "ok": true,
       "stale": false,
       "fromPrior": false,
       "fetchFailed": false,
-      "asOf": "2026-10-16T13:38:03.638Z",
-      "wti": 95.98,
-      "brent": 105.69,
-      "wtiLow": 95.29,
-      "wtiHigh": 96.64,
-      "brentLow": 104.92,
-      "brentHigh": 106.74,
-      "keyStatValue": "WTI $95.29–$96.64 · Brent $104.92–$106.74",
-      "updatedAt": "2026-10-16T13:41:30.256Z"
+      "asOf": "2026-10-16T20:00:00.000Z",
+      "wti": 101.41,
+      "brent": 109.86,
+      "wtiLow": 101.41,
+      "wtiHigh": 101.41,
+      "brentLow": 109.86,
+      "brentHigh": 109.86,
+      "keyStatValue": "WTI $101.41 · Brent $109.86",
+      "updatedAt": "2026-10-17T10:30:00.000Z"
     }
   },
   "lockedDates": [
@@ -549,6 +551,10 @@
     {
       "date": "2026-10-16",
       "score": 70
+    },
+    {
+      "date": "2026-10-17",
+      "score": 86
     }
   ]
 }
