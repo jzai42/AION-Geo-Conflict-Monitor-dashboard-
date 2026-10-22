@@ -66,8 +66,11 @@ export interface DashboardData {
 
 export const DATA_ZH: DashboardData = {
   date: "2026-10-22",
-  version: "v2.229",
+  version: "v2.230",
   riskScore: 80,
+  change: "down",
+  keyChange: "美军增派第三艘航母加强中东威慑，霍尔木兹海峡多艘油轮遇袭，美伊间接斡旋维持但；综合风险分落盘 80（较昨日 -6）",
+  investmentSignal: "→ 维持能源与大宗商品结构性对冲头寸，逢高增持防御性资产以对冲海峡航运受阻风险。",
   keyStats: [
     {
       label: "冲突天数",
@@ -83,7 +86,7 @@ export const DATA_ZH: DashboardData = {
     },
     {
       label: "油价",
-      value: "WTI $97.72–$100.09 · Brent $109.73–$112.60",
+      value: "WTI $97.72–$100.09 · Brent $109.73–$112.68",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -101,7 +104,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "多战线交火与打击持续，沙特阿美油田遭无人机袭击外溢加剧。",
+      description: "美军第三艘航母战斗群进驻中东，也门胡塞武装对沙特机场与油田设施发起多波次无人机突袭，美以防空持续拦截。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -110,25 +113,25 @@ export const DATA_ZH: DashboardData = {
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "海峡通航近乎完全瘫痪，夜间多达7艘油轮连续遭水雷及弹药打击受损。",
+      description: "伊朗革命卫队宣布7艘油轮在海峡西侧及阿曼湾受损起火，并警告美军若持续为油轮护航将打击其区域军事基地。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "能源冲击",
       score: 3.5,
-      prev: 4,
+      prev: 3.5,
       weight: 0.2,
-      description: "原油价格处于$100–120危机带，断供恐慌持续推升风险溢价。",
+      description: "国际基准原油处于危机带高位震荡，Brent稳定于110美元上方，WTI触及100美元整数关口。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "大国介入深度",
       score: 3,
-      prev: 4,
+      prev: 3,
       weight: 0.2,
-      description: "美军航母作战群前沿部署并执行封锁与护航，多国军事部署深度交织。",
+      description: "美国显著加强战区海上护航与防空拦截资产部署，同时启动使领馆人员防护，但尚未对伊朗本土展开全面对战。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -137,51 +140,9 @@ export const DATA_ZH: DashboardData = {
       score: 4.5,
       prev: 4.5,
       weight: 0.2,
-      description: "谈判渠道严重停滞，双方立足极高要价拒绝单方面妥协。",
+      description: "多哈与伊斯兰堡维系的间接停火通道依然畅通，但美伊在7日倡议及附加要求上立场对立，互信极度匮乏。",
       status: "FAST",
       sourceVerification: "confirmed"
-    }
-  ],
-  situations: [
-    {
-      title: "军事行动",
-      icon: "Military",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "变化：沙特阿美谢拜油田设施遭自杀式无人机突袭引发火警，区域防御战线外溢。",
-        "延续：美伊海军与防空力量在海湾出入口维持持续接触与战术警戒。"
-      ]
-    },
-    {
-      title: "航运 / 霍尔木兹",
-      icon: "Shipping",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "变化：单日7艘油轮在霍尔木兹水域遭水雷与打击受损，为冲突爆发以来单日新高。",
-        "延续：商业船东绕道非洲好望角，航运保险与战争险费率维持历史极值。"
-      ]
-    },
-    {
-      title: "能源市场",
-      icon: "Energy",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "变化：布伦特原油升至$112上方，WTI盘中突破$100大关，危机溢价快速走高。",
-        "延续：欧美原油与柴油成品油库存维持深度去化态势，供应弹性极低。"
-      ]
-    },
-    {
-      title: "领导层信号",
-      icon: "Leadership",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "延续：美方维持对伊强硬封锁部署，伊朗高层表态将以持久承受力应对封锁。",
-        "延续：第三方斡旋框架因双方互相附加苛刻前提而陷入阶段性僵局。"
-      ]
     }
   ],
   warPhase: {
@@ -190,17 +151,60 @@ export const DATA_ZH: DashboardData = {
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "海上封锁与袭船战术升级为实质性商业航道阻断，对全球能源生命线形成高强度施压。",
-      "战事向周边主权产油国地面能源设施外溢，战术降级窗口被进一步压缩。"
+      "伊朗军方强硬实施海峡航行管辖与水雷封锁，商业通行持续承压。",
+      "美军增加航母打击群压制局势外溢，威慑防线向海湾全面延伸。",
+      "外交斡旋停留在外围间接传话阶段，核心诉求分歧依然巨大。"
     ],
     note: "监测用途，不构成投资建议。"
   },
+  situations: [
+    {
+      title: "军事行动",
+      icon: "Military",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "变化：美军第三艘航母打击群赶赴中东战区强化前沿防空威慑。",
+        "变化：胡塞武装突袭沙特达曼机场与油田设施，多地拉响防空警报。"
+      ]
+    },
+    {
+      title: "航运 / 霍尔木兹",
+      icon: "Shipping",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "变化：伊朗宣称一夜之间7艘油轮在海峡及邻近水域遭打击或触雷受损。",
+        "延续：霍尔木兹海峡商船通航处于高度受控与断续停滞状态。"
+      ]
+    },
+    {
+      title: "能源市场",
+      icon: "Energy",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "延续：布伦特原油在110–112美元区间高位震荡，柴油裂解价差居高不下。",
+        "延续：中东原油海运航线绕行成本与战争险附加费维持极端高位。"
+      ]
+    },
+    {
+      title: "领导层信号",
+      icon: "Leadership",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "延续：伊朗领导层重申海峡通航必须以满足德黑兰安全条件为前提。",
+        "延续：白宫与五角大楼重申保障国际航道航行自由与区域盟友安全的承诺。"
+      ]
+    }
+  ],
   coreContradiction: {
     political: [
-      "美方要求伊方全面恢复海峡通航并限制浓缩铀外运，伊朗坚持美方先撤销全部单边封锁与制裁。"
+      "美方要求恢复海峡无条件自由通航与核遏制，伊朗要求彻底解除制裁与海上封锁。"
     ],
     military: [
-      "美军护航防空部署与伊方非对称水雷/无人机饱和袭船手段之间的反介入消耗战持续。"
+      "伊朗以非对称水雷与反舰手段封锁海峡，美军以航母护航与防空延伸威慑打破封锁。"
     ]
   },
   scoreTrend: [
@@ -226,36 +230,62 @@ export const DATA_ZH: DashboardData = {
       active: true
     }
   ],
-  keyChange: "霍尔木兹海峡7艘油轮受损并叠加沙特油田遭无人机袭击，油价上探危机带，局势高位黏滞；综合风险分落盘 80（较昨日 -6）；调整前模型分 86（staleDays≥4 与 OpenAI 副审逐维均值）",
-  investmentSignal: "→ 维持大宗商品与能源多头对冲部位，防御性增持流动性现金与硬资产，减持高贝塔风险资产。",
-  change: "none",
-  prevRiskScore: 86,
   events: [
     {
-      id: "EVT-AUTO-01",
-      title: "多战线交火与打击持续，沙特阿美油田遭无人机袭击外溢加剧",
-      description: "多战线交火与打击持续，沙特阿美油田遭无人机袭击外溢加剧。",
-      verification: "single",
-      timestamp: "2026-10-22（当日公开报道）",
+      id: "EVT-01",
+      title: "伊朗宣称在霍尔木兹海峡造成7艘油轮受损起火",
+      description: "伊朗革命卫队海军发布战报称打击了4艘违规过驳油轮，另有3艘触水雷受损，并威胁若美军继续护航将袭击美军驻中东基地。",
+      verification: "confirmed",
+      timestamp: "2026-10-22T06:30:00Z",
+      significance: "",
+      critical: true
+    },
+    {
+      id: "EVT-02",
+      title: "布伦特原油站稳111美元，WTI上冲100美元大关",
+      description: "受波斯湾油轮遇袭及沙特设施遭无人机打击影响，布伦特主力合约盘中触及112.68美元，WTI最高探至100.09美元。",
+      verification: "confirmed",
+      timestamp: "2026-10-22T12:00:00Z",
       significance: ""
     },
     {
-      id: "EVT-AUTO-02",
-      title: "海峡通航近乎完全瘫痪，夜间多达7艘油轮连续遭水雷及弹药打击受损",
-      description: "海峡通航近乎完全瘫痪，夜间多达7艘油轮连续遭水雷及弹药打击受损。",
-      verification: "single",
-      timestamp: "2026-10-22（当日公开报道）",
+      id: "EVT-03",
+      title: "美军增派第三艘航母打击群进驻中东战区",
+      description: "五角大楼紧急增调第三艘核动力航空母舰及近万名作战人员入驻海湾，以应对霍尔木兹危机及保护关键盟友。",
+      verification: "confirmed",
+      timestamp: "2026-10-22T08:15:00Z",
+      significance: "",
+      critical: true
+    },
+    {
+      id: "EVT-04",
+      title: "也门胡塞武装袭击沙特机场与油田设施",
+      description: "胡塞武装对沙特东部达曼国际机场和 Shaybah 油田发起无人机突击，沙特防空部队在多处空域实施紧急拦截。",
+      verification: "confirmed",
+      timestamp: "2026-10-22T04:45:00Z",
+      significance: ""
+    },
+    {
+      id: "EVT-05",
+      title: "美伊多哈间接接触持续，停火协议核心分歧未决",
+      description: "伊朗外交部证实经由卡塔尔与巴基斯坦的间接会谈仍在继续，但在美方附加条件及海峡解封时间表上仍陷僵局。",
+      verification: "confirmed",
+      timestamp: "2026-10-22T10:20:00Z",
       significance: ""
     }
   ],
+  prevRiskScore: 86,
   webSources: [],
   webSearchQueries: []
 };
 
 export const DATA_EN: DashboardData = {
   date: "2026-10-22",
-  version: "v2.229",
+  version: "v2.230",
   riskScore: 80,
+  change: "down",
+  keyChange: "US deploys a third carrier strike group to boost deterrence as Iran claims 7 tankers hit in Hormuz; indirect talks persist with deep rifts; composite risk score prints at 80 (vs prior day -6)",
+  investmentSignal: "→ Maintain structural hedging positions in energy and commodities, while increasing defensive asset allocations against blockade risks.",
   keyStats: [
     {
       label: "Conflict Days",
@@ -271,7 +301,7 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Oil",
-      value: "WTI $97.72–$100.09 · Brent $109.73–$112.60",
+      value: "WTI $97.72–$100.09 · Brent $109.73–$112.68",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -289,7 +319,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Multi-front strikes and combat operations persist, with drone strikes on Saudi Aramco facilities widening the conflict.",
+      description: "Direct skirmishes and proxy attacks remain active across multiple fronts with US military reinforcements.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -298,25 +328,25 @@ export const DATA_EN: DashboardData = {
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "Strait passage remains essentially blocked as 7 tankers were damaged overnight by naval mines and projectiles.",
+      description: "Iran claims seven tankers were damaged or struck by naval mines, threatening direct strikes on US regional bases if escorts persist.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "Energy Shock",
       score: 3.5,
-      prev: 4,
+      prev: 3.5,
       weight: 0.2,
-      description: "Crude trades inside the $100–120 crisis band as supply disruption risk premiums expand.",
+      description: "Crude benchmarks remain elevated in the upper crisis range with Brent hovering above $111 and WTI touching $100.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
     {
       name: "Great Power Involvement",
       score: 3,
-      prev: 4,
+      prev: 3,
       weight: 0.2,
-      description: "Direct US military deployments, including carrier strike groups and naval blockade enforcement, remain active.",
+      description: "The US has reinforced carrier and aerial escorts in the theater and ordered embassy staff departures without direct invasion of Iranian soil.",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -325,51 +355,9 @@ export const DATA_EN: DashboardData = {
       score: 4.5,
       prev: 4.5,
       weight: 0.2,
-      description: "Negotiation channels are stalled with rigid preconditions preventing near-term compromises.",
+      description: "Indirect channels via Doha and Islamabad remain open, but conflicting preconditions on maritime access and nuclear terms stall breakthroughs.",
       status: "FAST",
       sourceVerification: "confirmed"
-    }
-  ],
-  situations: [
-    {
-      title: "Military Action",
-      icon: "Military",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "Change: Saudi Aramco's Shaybah oilfield was hit by loitering drones, causing localized damage and casualties.",
-        "Continue: US and Iranian forces maintain active tactical surveillance and air-defense readiness across the Gulf."
-      ]
-    },
-    {
-      title: "Shipping / Hormuz",
-      icon: "Shipping",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "Change: Seven tankers were damaged overnight in the Strait of Hormuz, marking one of the heaviest single-day tolls.",
-        "Continue: Major container and tanker fleets continue full rerouting via the Cape of Good Hope."
-      ]
-    },
-    {
-      title: "Energy Market",
-      icon: "Energy",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "Change: Brent crude tested above $112 per barrel with WTI crossing the $100 psychological threshold.",
-        "Continue: Severe global product and crude inventory drawdowns leave negligible buffer against supply shocks."
-      ]
-    },
-    {
-      title: "Leadership Signals",
-      icon: "Leadership",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "Continue: Washington maintains strict enforcement of maritime blockades while Tehran signals willingness to endure a prolonged standoff.",
-        "Continue: Mediation frameworks mediated by Qatar and Pakistan remain deadlocked over prerequisite terms."
-      ]
     }
   ],
   warPhase: {
@@ -378,17 +366,60 @@ export const DATA_EN: DashboardData = {
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "The maritime choke point confrontation has shifted into widespread tanker attrition, directly suffocating regional crude flows.",
-      "Attacks targeting upstream infrastructure in neighboring Gulf states further narrow the window for diplomatic de-escalation."
+      "IRGC maintains tight maritime denial and sea mine threats across the strategic corridor.",
+      "US surges naval power to protect allied logistics and deter wider escalation.",
+      "Indirect diplomatic efforts remain stalled over non-negotiable security red lines."
     ],
     note: "For monitoring only; not investment advice."
   },
+  situations: [
+    {
+      title: "Military Action",
+      icon: "Military",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "Change: A third US aircraft carrier strike group arrives in theater to bolster maritime deterrence.",
+        "Change: Houthi drones strike Saudi Arabia's Dammam airport and oilfield perimeter."
+      ]
+    },
+    {
+      title: "Shipping / Hormuz",
+      icon: "Shipping",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "Change: Iran claims seven oil tankers were hit or struck sea mines overnight in the waterway.",
+        "Continue: Commercial tanker operations through Hormuz remain constrained under military escort conditions."
+      ]
+    },
+    {
+      title: "Energy Market",
+      icon: "Energy",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "Continue: Brent crude trades firmly in the $110–$112 crisis band with elevated distillate crack spreads.",
+        "Continue: War risk insurance and rerouting expenses keep global maritime freight costs high."
+      ]
+    },
+    {
+      title: "Leadership Signals",
+      icon: "Leadership",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "Continue: Tehran affirms that reopening Hormuz depends strictly on US acceptance of its 7-day plan.",
+        "Continue: Washington reiterates its commitment to securing international sea lanes and defending regional allies."
+      ]
+    }
+  ],
   coreContradiction: {
     political: [
-      "Washington demands the unconditional reopening of the Strait of Hormuz, while Tehran refuses until all sanctions and blockades are lifted."
+      "Washington demands unconditional maritime access and nuclear caps, while Tehran insists on a full end to sanctions and blockades."
     ],
     military: [
-      "US carrier-led naval escort operations clash with Iran's asymmetric mine-laying and uncrewed aerial strike architecture."
+      "Iran relies on asymmetric mine and anti-ship denial tactics, while the US deploys heavy carrier escort groups to break the siege."
     ]
   },
   scoreTrend: [
@@ -414,28 +445,51 @@ export const DATA_EN: DashboardData = {
       active: true
     }
   ],
-  keyChange: "Overnight attacks damaging seven tankers in Hormuz alongside strikes on Saudi oil assets locked crude firmly in the crisis band, anchoring risk at high levels; composite risk score prints at 80 (vs prior day -6); pre-adjustment model score 86 (staleDays≥4 与 OpenAI 副审逐维均值)",
-  investmentSignal: "→ Maintain energy and commodity hedges, defensively increase cash and hard-asset allocations, and trim risk assets.",
-  change: "none",
-  prevRiskScore: 86,
   events: [
     {
-      id: "EVT-AUTO-01",
-      title: "Multi-front strikes and combat operations persist, with drone strikes on Saudi Aramco facilitie…",
-      description: "Multi-front strikes and combat operations persist, with drone strikes on Saudi Aramco facilities widening the conflict.",
-      verification: "single",
-      timestamp: "2026-10-22 (same-day reporting)",
+      id: "EVT-01",
+      title: "Iran Claims 7 Tankers Damaged in Strait of Hormuz",
+      description: "IRGC Navy announced four tankers transferring crude were struck and three hit naval mines, threatening US bases if escorts continue.",
+      verification: "confirmed",
+      timestamp: "2026-10-22T06:30:00Z",
+      significance: "",
+      critical: true
+    },
+    {
+      id: "EVT-02",
+      title: "Brent Crude Holds Above $111, WTI Touches $100 Barrier",
+      description: "Crude futures stay elevated following reported tanker attacks and Saudi facility strikes, with Brent reaching $112.68 and WTI $100.09.",
+      verification: "confirmed",
+      timestamp: "2026-10-22T12:00:00Z",
       significance: ""
     },
     {
-      id: "EVT-AUTO-02",
-      title: "Strait passage remains essentially blocked as 7 tankers were damaged overnight by naval mines a…",
-      description: "Strait passage remains essentially blocked as 7 tankers were damaged overnight by naval mines and projectiles.",
-      verification: "single",
-      timestamp: "2026-10-22 (same-day reporting)",
+      id: "EVT-03",
+      title: "US Deploys Third Carrier Strike Group to Middle East",
+      description: "Pentagon deploys an additional aircraft carrier and thousands of personnel to enhance air defense and deterrence in the Persian Gulf.",
+      verification: "confirmed",
+      timestamp: "2026-10-22T08:15:00Z",
+      significance: "",
+      critical: true
+    },
+    {
+      id: "EVT-04",
+      title: "Houthis Strike Saudi Airport and Oil Infrastructure",
+      description: "Houthi forces launch drone attacks on King Fahd International Airport in Dammam and near the Shaybah oilfield as Saudi defenses intercept projectiles.",
+      verification: "confirmed",
+      timestamp: "2026-10-22T04:45:00Z",
+      significance: ""
+    },
+    {
+      id: "EVT-05",
+      title: "Indirect US-Iran Negotiations Proceed in Doha Without Breakthrough",
+      description: "Iranian officials confirm ongoing diplomatic talks via Qatar and Pakistan, though fundamental disagreements on ceasefire terms persist.",
+      verification: "confirmed",
+      timestamp: "2026-10-22T10:20:00Z",
       significance: ""
     }
   ],
+  prevRiskScore: 86,
   webSources: [],
   webSearchQueries: []
 };
@@ -479,16 +533,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.229 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.230 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 80（↓6）：霍尔木兹海峡7艘油轮受损并叠加沙特油田遭无人机袭击，油价上探危机带，局势高位黏滞；综合风险分落盘 80（较昨日 -6）；调整前模型分 86（staleDays≥4 与 OpenAI 副审逐维均值）",
-    bannerWarning: "→ 维持大宗商品与能源多头对冲部位，防御性增持流动性现金与硬资产，减持高贝塔风险资产。",
-    deescalationIntent: "美方要求伊方全面恢复海峡通航并限制浓缩铀外运，伊朗坚持美方先撤销全部单边封锁与制裁。",
-    structuralRisk: "海峡通航近乎完全瘫痪，夜间多达7艘油轮连续遭水雷及弹药打击受损。",
-    contradictionNote: "美方要求伊方全面恢复海峡通航并限制浓缩铀外运，伊朗坚持美方先撤销全部单边封锁与制裁。；美军护航防空部署与伊方非对称水雷/无人机饱和袭船手段之间的反介入消耗战持续。",
+    bannerSignal: "综合评分 80（↓6）：美军增派第三艘航母加强中东威慑，霍尔木兹海峡多艘油轮遇袭，美伊间接斡旋维持但；综合风险分落盘 80（较昨日 -6）",
+    bannerWarning: "→ 维持能源与大宗商品结构性对冲头寸，逢高增持防御性资产以对冲海峡航运受阻风险。",
+    deescalationIntent: "美方要求恢复海峡无条件自由通航与核遏制，伊朗要求彻底解除制裁与海上封锁。",
+    structuralRisk: "伊朗革命卫队宣布7艘油轮在海峡西侧及阿曼湾受损起火，并警告美军若持续为油轮护航将打击其区域军事基地。",
+    contradictionNote: "美方要求恢复海峡无条件自由通航与核遏制，伊朗要求彻底解除制裁与海上封锁。；伊朗以非对称水雷与反舰手段封锁海峡，美军以航母护航与防空延伸威慑打破封锁。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -538,16 +592,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.229 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.230 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 80 (↓6): Overnight attacks damaging seven tankers in Hormuz alongside strikes on Saudi oil assets locked crude firmly in the crisis band, anchoring …",
-    bannerWarning: "→ Maintain energy and commodity hedges, defensively increase cash and hard-asset allocations, and trim risk assets.",
-    deescalationIntent: "Washington demands the unconditional reopening of the Strait of Hormuz, while T…",
-    structuralRisk: "Strait passage remains essentially blocked as 7 tankers were damaged overnight by naval mines and p…",
-    contradictionNote: "Washington demands the unconditional reopening of the Strait of Hormuz, while Tehran refuses until all sanctions and blockades are lifted.; US carrier-led nava…",
+    bannerSignal: "Composite 80 (↓6): US deploys a third carrier strike group to boost deterrence as Iran claims 7 tankers hit in Hormuz; indirect talks persist with deep rifts;…",
+    bannerWarning: "→ Maintain structural hedging positions in energy and commodities, while increasing defensive asset allocations against…",
+    deescalationIntent: "Washington demands unconditional maritime access and nuclear caps, while Tehran…",
+    structuralRisk: "Iran claims seven tankers were damaged or struck by naval mines, threatening direct strikes on US r…",
+    contradictionNote: "Washington demands unconditional maritime access and nuclear caps, while Tehran insists on a full end to sanctions and blockades.; Iran relies on asymmetric mi…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
