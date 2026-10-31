@@ -1,17 +1,17 @@
 {
   "version": 2,
   "latest": {
-    "date": "2026-10-30",
-    "appVersion": "v2.238",
-    "riskScore": 82,
+    "date": "2026-10-31",
+    "appVersion": "v2.239",
+    "riskScore": 80,
     "prevRiskScore": 82,
-    "conflictDay": 244,
+    "conflictDay": 245,
     "factorScores": [
       4,
       5,
       4,
       3,
-      4.5
+      4
     ],
     "generationMode": "live",
     "rawModelScore": 82,
@@ -22,13 +22,13 @@
       3,
       4.5
     ],
-    "finalRiskScore": 82,
-    "adjustmentReason": null,
+    "finalRiskScore": 80,
+    "adjustmentReason": "staleDays≥4 与 OpenAI 副审逐维均值",
     "oilQuality": {
       "publish": "live",
       "parseOk": true,
-      "combinedMid": 108.135,
-      "combinedHigh": 114.07,
+      "combinedMid": 108.19000000000001,
+      "combinedHigh": 114.29,
       "midBand": 4,
       "highBand": 4,
       "oilDirection": "firm",
@@ -44,15 +44,15 @@
       "stale": false,
       "fromPrior": false,
       "fetchFailed": false,
-      "asOf": "2026-10-30T15:26:43.847Z",
-      "wti": 104.19,
-      "brent": 113.66,
+      "asOf": "2026-10-31T14:54:31.901Z",
+      "wti": 104.12,
+      "brent": 113.43,
       "wtiLow": 102.43,
       "wtiHigh": 104.99,
       "brentLow": 111.05,
-      "brentHigh": 114.07,
-      "keyStatValue": "WTI $102.43–$104.99 · Brent $111.05–$114.07",
-      "updatedAt": "2026-10-30T15:30:24.669Z"
+      "brentHigh": 114.29,
+      "keyStatValue": "WTI $102.43–$104.99 · Brent $111.05–$114.29",
+      "updatedAt": "2026-10-31T14:57:42.912Z"
     }
   },
   "lockedDates": [
@@ -68,10 +68,6 @@
     "2026-05-23"
   ],
   "history": [
-    {
-      "date": "2026-07-01",
-      "score": 60
-    },
     {
       "date": "2026-07-02",
       "score": 56
@@ -547,6 +543,10 @@
     {
       "date": "2026-10-30",
       "score": 82
+    },
+    {
+      "date": "2026-10-31",
+      "score": 80
     }
   ]
 }
