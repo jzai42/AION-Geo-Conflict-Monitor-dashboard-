@@ -65,16 +65,13 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-11-07",
-  version: "v2.246",
+  date: "2026-11-08",
+  version: "v2.247",
   riskScore: 74,
-  change: "none",
-  keyChange: "美军成立铁门特遣队封堵伊朗外部补给，多哈间接调解维持但双方战略要价仍存重大鸿沟。",
-  investmentSignal: "→ 维持能源与大宗商品防御性配置，对冲地缘僵局下航运保费与即期原油的波动风险。",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D252",
+      value: "D253",
       unit: "2月28日起",
       color: "#ff851b"
     },
@@ -86,7 +83,7 @@ export const DATA_ZH: DashboardData = {
     },
     {
       label: "油价",
-      value: "WTI $89.07–$92.53 · Brent $96.65–$100.92",
+      value: "WTI $89.08–$92.53 · Brent $96.71–$100.92",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -104,7 +101,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "CENTCOM与AP报道证实美军持续对波斯湾防空资产实施定点压制，伊朗地下军备产能全面启用。",
+      description: "美军中央司令部空袭阿曼湾违规商船 M/V Huda 并空袭南部防空阵地，伊朗军方宣布解除 2000 公里弹道导弹射程限制，战线与威慑未见收缩（来源：CENTCOM, CBS News, ISW）。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -113,7 +110,7 @@ export const DATA_ZH: DashboardData = {
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "Seatrade Maritime与Geopolitical Futures监测确认海峡原油通行量维持在极低水准，商船普遍依靠管线分流与外海驳运。",
+      description: "UKMTO 证实穆桑代姆半岛附近及海峡内多艘油轮遭打击起火，船员弃船，阿联酋海军参与救援，商业航运通航量维持接近停滞（来源：UKMTO, Reuters, Al Arabiya）。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -122,7 +119,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Yahoo Finance数据显示WTI区间$89.07–$92.53、Brent区间$96.65–$100.92，主体处于$85–100显著偏强区间，Reuters指出中期选举后市场对战争溢价再校准但地缘风险托底 https://www.investing.com/commodities/brent-oil。",
+      description: "主力合约 WTI 处于 $89.08–$92.53、Brent 处于 $96.71–$100.92，整体主体落在 $85–100 显著偏强区间，因封锁交火与外交预期平衡而高位震荡（依据：https://energynow.com/2026/11/oil-prices-plunge-13-in-one-week 与 Forbes Advisor 报道）。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -131,7 +128,7 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "DoD公报证实美军成立铁门特遣队联合多机构封锁伊朗物资通道，航母打击群与前沿巡逻保持战备。",
+      description: "美军正式成立铁门特遣队以协同封锁伊朗陆路与里海运输线，对违规商船实施直接武器打击，军事围堵体系进一步制度化（来源：CENTCOM, Fox News）。",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -140,53 +137,45 @@ export const DATA_ZH: DashboardData = {
       score: 3.5,
       prev: 3.5,
       weight: 0.2,
-      description: "卡塔尔外交部官方证实美伊穿梭调解机制仍在运作，但双方停火与豁免诉求存在核心分歧（来源：Qatar MOFA、CBS News）。",
+      description: "部分证实：卡塔尔递交包含海峡复航换取制裁松绑的折中协议草案，但双方在核项目与前置条件上分歧依旧尖锐，实质停火未落地（来源：Bloomberg, Times of Israel）。",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "partial"
     }
   ],
-  situations: [
+  events: [
     {
-      title: "军事行动",
-      icon: "Military",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "变化：美中央司令部建立Task Force Iron Gate，协调跨机构切断伊朗陆路及里海物资调配。",
-        "变化：伊朗革命卫队宣布弹道导弹与攻击型无人机生产全面转移至深层地下基地。",
-        "延续：美伊两军在霍尔木兹入海口保持有限防空对抗与警戒对峙。"
-      ]
+      id: "EVT-01",
+      title: "美军战机在阿曼湾击瘫违反封锁货轮 M/V Huda",
+      description: "美军中央司令部表示，美军战机在阿曼湾对多次无视警告试图突破封锁的圣基茨籍货轮 M/V Huda 实施精准武器打击致其瘫痪（来源：CENTCOM, CBS News）。",
+      verification: "confirmed",
+      timestamp: "2026-11-07 16:00 UTC",
+      significance: "",
+      highlight: true
     },
     {
-      title: "航运 / 霍尔木兹",
-      icon: "Shipping",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "延续：伊朗海峡管理机构对西方及盟友船舶维持禁入或强行报备审查制度。",
-        "延续：主要商业油轮依赖沙特延布港及阿联酋富查伊拉输油管道绕开封锁区。",
-        "延续：水雷威胁与船体损坏风险致使海峡商业战险费率维持在战时最高水准。"
-      ]
+      id: "EVT-02",
+      title: "美军组建“铁门特遣队”扩大对伊陆路与里海封锁",
+      description: "美国国防部宣布成立铁门特遣队，由约20名军民人员统筹，联手切断伊朗经陆地边境与里海获取双用途物资的走私链（来源：CENTCOM, Fox News）。",
+      verification: "confirmed",
+      timestamp: "2026-11-07 18:30 UTC",
+      significance: "",
+      highlight: true
     },
     {
-      title: "能源市场",
-      icon: "Energy",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "延续：国际基准油价在经历剧烈回调后围绕WTI $90、Brent $98一线构筑地缘风险支撑平台。",
-        "延续：现货月逆价差维持，反映出区域物理断流担忧与宏观需求走弱预期的博弈平衡。"
-      ]
+      id: "EVT-03",
+      title: "UKMTO 报告霍尔木兹海峡连续发生油轮遇袭起火",
+      description: "英国海事贸易行动办公室通报，霍尔木兹海峡及周边海域两艘油轮中弹起火，船员被迫弃船并被阿联酋方面安全救助（来源：UKMTO, Reuters, Al Arabiya）。",
+      verification: "confirmed",
+      timestamp: "2026-11-07 20:20 UTC",
+      significance: ""
     },
     {
-      title: "领导层信号",
-      icon: "Leadership",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "变化：多哈调解方公开澄清美伊外交窗口未死，否定彻底脱轨论断。",
-        "延续：美方坚称军事威慑与海上拦截不设让步，伊朗坚守解除制裁为通航先决条件。"
-      ]
+      id: "EVT-04",
+      title: "伊朗革命卫队正式宣布解除弹道导弹射程限制",
+      description: "伊朗革命卫队指挥官公开宣布，废除 2000 公里射程上限，以应对美军对海峡防御工事的持续袭击并建立深层威慑（来源：CBS News, ISW）。",
+      verification: "confirmed",
+      timestamp: "2026-11-07 13:43 UTC",
+      significance: ""
     }
   ],
   warPhase: {
@@ -195,25 +184,67 @@ export const DATA_ZH: DashboardData = {
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "美军建立常态化陆海阻截特遣队，封堵战术取代全面空袭成为近期行动重心。",
-      "霍尔木兹海峡受控通行与外海驳运成为事实上的战时运输妥协状态。",
-      "卡塔尔斡旋管道维持最低限度对话，但双方战略底线未见让步迹象。"
+      "美军封锁由波斯湾海域向里海及陆地运输通道制度化延展",
+      "霍尔木兹海峡商业通行遭受非对称袭船战术持续压制",
+      "第三国外交斡旋方案正在审议但缺乏达成即时停火的互信"
     ],
     note: "监测用途，不构成投资建议。"
   },
+  situations: [
+    {
+      title: "军事行动",
+      icon: "Military",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "变化：美军中央司令部在阿曼湾精准打击并瘫痪违规商船 M/V Huda。",
+        "变化：美军组建铁门特遣队，对伊封锁网络拓展至陆路及里海补给链。",
+        "延续：也门胡塞武装继续向沙特纵深目标发射导弹，红海防空战线持续。"
+      ]
+    },
+    {
+      title: "航运 / 霍尔木兹",
+      icon: "Shipping",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "变化：UKMTO 确认海峡周边再有油轮中弹起火，船员弃船获救。",
+        "延续：商业船队继续全面回避霍尔木兹咽喉，保费维持危机期极端定价。",
+        "延续：主要航运联盟维持好望角绕航方案，海湾始发运力极度短缺。"
+      ]
+    },
+    {
+      title: "能源市场",
+      icon: "Energy",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "延续：WTI 与 Brent 在 $90–$98 平台企稳，供应短缺与停火传闻互为掣肘。",
+        "变化：跨国贸易巨头向美国申请特许令以租用制裁油轮补充运力缺口。",
+        "延续：裂解价差与成品油溢价维持高位，下游炼厂原料采购成本坚挺。"
+      ]
+    },
+    {
+      title: "领导层信号",
+      icon: "Leadership",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "延续：白宫与德黑兰分别权衡卡塔尔斡旋提议，对外口吻兼具强硬与灵活。",
+        "变化：伊朗军方公开废除导弹射程限制，向美军前沿基地施加反威慑。",
+        "延续：海湾调停方加紧穿梭外交，谋求以海峡解封对冲经济制裁。"
+      ]
+    }
+  ],
   coreContradiction: {
     political: [
-      "美方要求全面中止航运威胁与核能力重建，伊朗要求解除全口径经济制裁及封锁管制。"
+      "美方要求彻底消除伊朗核能力并终止区域袭船，伊朗坚持以全面解除封锁和制裁为前置条件。"
     ],
     military: [
-      "美军区域拒止封锁网络与伊朗深层地下军备补充能力之间的持久消耗对峙。"
+      "美军依赖海军精准阻断与特遣队切断供应链，伊朗则依靠水雷、无人机及袭船战维持海峡实质封锁。"
     ]
   },
   scoreTrend: [
-    {
-      date: "11-03",
-      score: 80
-    },
     {
       date: "11-04",
       score: 80
@@ -228,61 +259,30 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "11-07",
+      score: 74
+    },
+    {
+      date: "11-08",
       score: 74,
       active: true
     }
   ],
-  events: [
-    {
-      id: "EVT-01",
-      title: "美军成立铁门特遣队拦截伊朗军备外运通道",
-      description: "美军中央司令部宣布组建Task Force Iron Gate，协调跨机构资源阻断伊朗经由陆路走廊与里海水运获得受制裁武器零部件及资金流向。",
-      verification: "confirmed",
-      timestamp: "2026-11-07 08:30 UTC",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-02",
-      title: "伊朗革命卫队宣布导弹与无人机产线转入地下",
-      description: "伊斯兰革命卫队空天部队宣布，所有核心弹道导弹与作战无人机装配设施已完全转入地下掩体，确保在持续封锁下具备持续打击能力。",
-      verification: "confirmed",
-      timestamp: "2026-11-07 05:15 UTC",
-      significance: ""
-    },
-    {
-      id: "EVT-03",
-      title: "卡塔尔证实美伊秘密斡旋管道维持运转",
-      description: "卡塔尔外交部高级官员公开发言指出，围绕海峡航行权与制裁豁免的多哈非直接接触管道仍在运作，驳斥停火谈判彻底终结的说法。",
-      verification: "confirmed",
-      timestamp: "2026-11-07 03:40 UTC",
-      significance: ""
-    },
-    {
-      id: "EVT-04",
-      title: "霍尔木兹商船通行保持低位并依赖管线替代",
-      description: "航运追踪与卫星数据显示霍尔木兹原油运输量维持在战前约四分之一水准，沙特与阿联酋大幅提升陆上管线负荷以规避南部航道水雷威胁。",
-      verification: "confirmed",
-      timestamp: "2026-11-06 22:00 UTC",
-      significance: ""
-    }
-  ],
+  keyChange: "美军在阿曼湾精确瘫痪违规货船并成立铁门特遣队强化陆海立体封锁，霍尔木兹海峡连续发生油轮遭袭起火，地缘僵局维持高位黏滞。",
+  investmentSignal: "→ 维持能源与大宗商品的防御配置，警惕海峡封锁常态化下的运输溢价黏滞，适度对冲地缘尾部风险。",
+  change: "none",
   prevRiskScore: 74,
   webSources: [],
   webSearchQueries: []
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-11-07",
-  version: "v2.246",
+  date: "2026-11-08",
+  version: "v2.247",
   riskScore: 74,
-  change: "none",
-  keyChange: "US CENTCOM establishes Task Force Iron Gate targeting Iranian supply corridors, while Doha backchannel talks remain intact amid persistent strategic gaps.",
-  investmentSignal: "→ Maintain defensive allocations in energy and commodities to hedge against lingering shipping volatility and prompt crude supply risk.",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D252",
+      value: "D253",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
@@ -294,15 +294,15 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Oil",
-      value: "WTI $89.07–$92.53 · Brent $96.65–$100.92",
+      value: "WTI $89.08–$92.53 · Brent $96.71–$100.92",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
-      value: "严重受限",
-      unit: "通行状态",
+      value: "Severely Restricted",
+      unit: "Transit Status",
       color: "#ffdc00"
     }
   ],
@@ -312,7 +312,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "CENTCOM and AP confirm targeted defensive strikes and interdiction measures while Iran operates fortified underground production facilities.",
+      description: "CENTCOM conducted precision strikes disabling the blockade-violating commercial vessel M/V Huda in the Gulf of Oman, while Iran officially lifted its 2,000 km missile range limit (Sources: CENTCOM, CBS News, ISW).",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -321,7 +321,7 @@ export const DATA_EN: DashboardData = {
       score: 5,
       prev: 5,
       weight: 0.2,
-      description: "Seatrade Maritime and Geopolitical Futures trackings show commercial tanker transits severely suppressed under Iranian permits and mining threats.",
+      description: "UKMTO recorded multiple tanker attacks resulting in fires and crew evacuations off Musandam, with commercial transit continuing to suffer near-total paralysis (Sources: UKMTO, Reuters, Al Arabiya).",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -330,7 +330,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Yahoo Finance data shows WTI at $89.07–$92.53 and Brent at $96.65–$100.92 within the $85–100 elevated band; Reuters reports post-midterm repricing with geopolitical floor https://www.investing.com/commodities/brent-oil.",
+      description: "WTI traded within $89.08–$92.53 and Brent within $96.71–$100.92, firmly within the $85–100 elevated concern tier amid balancing forces of diplomacy and tanker attacks (Sources: EnergyNow, Forbes Advisor, Trading Economics).",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -339,7 +339,7 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "DoD and Gulf News confirm the activation of Task Force Iron Gate for interagency interdiction alongside continuous naval blockade enforcement.",
+      description: "US CENTCOM formally established Task Force Iron Gate to coordinate interagency disruption of Iranian overland and Caspian supply routes (Sources: CENTCOM, Fox News).",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -348,53 +348,45 @@ export const DATA_EN: DashboardData = {
       score: 3.5,
       prev: 3.5,
       weight: 0.2,
-      description: "Qatar MOFA statement confirmed active mediation in Doha between Washington and Tehran, though structural deadlock over sanctions and maritime rights persists.",
+      description: "Partial verification: Qatari mediators submitted a bridge proposal to trade Hormuz reopening for sanctions relief, but core demands remain deeply deadlocked (Sources: Bloomberg, Times of Israel).",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "partial"
     }
   ],
-  situations: [
+  events: [
     {
-      title: "Military Action",
-      icon: "Military",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "Change: CENTCOM activated Task Force Iron Gate to coordinate interagency interdiction of Iranian overland and Caspian weapons routes.",
-        "Change: IRGC confirmed complete transition of missile and combat drone production lines into deep underground facilities.",
-        "Continue: Limited localized air defense exchanges and standoff patrols persist around the Strait of Hormuz entrance."
-      ]
+      id: "EVT-01",
+      title: "US Forces Disable Blockade Runner M/V Huda in Gulf of Oman",
+      description: "US Central Command confirmed an American military aircraft fired precision munitions at the stern of the St. Kitts-flagged cargo ship M/V Huda after repeated warnings (Sources: CENTCOM, CBS News).",
+      verification: "confirmed",
+      timestamp: "2026-11-07 16:00 UTC",
+      significance: "",
+      highlight: true
     },
     {
-      title: "Shipping / Hormuz",
-      icon: "Shipping",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "Continue: Iranian Strait Authority maintains strict transit permit enforcement and selective passage for merchant vessels.",
-        "Continue: Regional producers sustain bypass exports through the Red Sea Yanbu pipeline and UAE Fujairah overland routes.",
-        "Continue: Heightened war-risk insurance premiums and mine threats keep mainstream commercial crude tankers largely sidelined."
-      ]
+      id: "EVT-02",
+      title: "CENTCOM Unveils Task Force Iron Gate to Restrict Land and Caspian Supply",
+      description: "The US military established a new Florida-based task force of ~20 interagency personnel targeting Iranian weapons and dual-use supply corridors across northern routes (Sources: CENTCOM, Fox News).",
+      verification: "confirmed",
+      timestamp: "2026-11-07 18:30 UTC",
+      significance: "",
+      highlight: true
     },
     {
-      title: "Energy Market",
-      icon: "Energy",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "Continue: Benchmark crude consolidates in the WTI low-$90s and Brent high-$90s range following the midterm sell-off.",
-        "Continue: Front-month backwardation persists as physical supply tightens against macro demand headwinds."
-      ]
+      id: "EVT-03",
+      title: "UKMTO Reports Multiple Tankers Ablaze Following Strikes in Hormuz",
+      description: "UKMTO confirmed tankers caught fire and crews abandoned ship off the Musandam Peninsula after being hit by projectiles, with 22 crew members rescued by UAE forces (Sources: UKMTO, Reuters, Al Arabiya).",
+      verification: "confirmed",
+      timestamp: "2026-11-07 20:20 UTC",
+      significance: ""
     },
     {
-      title: "Leadership Signals",
-      icon: "Leadership",
-      tag: "",
-      tagColor: "orange",
-      points: [
-        "Change: Qatari mediators publicly affirmed backchannel dialogue remains active, rejecting claims of collapsed negotiations.",
-        "Continue: Washington maintains strict blockade posture while Tehran demands comprehensive sanctions relief before restoring passage."
-      ]
+      id: "EVT-04",
+      title: "IRGC Lifts Self-Imposed 2,000 km Ballistic Missile Range Cap",
+      description: "Iranian military leaders declared an end to range restrictions on their ballistic missile inventory, signaling broader deterrence against US regional infrastructure (Sources: CBS News, ISW).",
+      verification: "confirmed",
+      timestamp: "2026-11-07 13:43 UTC",
+      significance: ""
     }
   ],
   warPhase: {
@@ -403,25 +395,67 @@ export const DATA_EN: DashboardData = {
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "Task force interdictions institutionalize the maritime and logistical blockade over sustained bombing raids.",
-      "Commercial tanker traffic remains suppressed under an uneasy framework of bypass pipelines and shuttle transfers.",
-      "Doha diplomatic backchannels prevent total diplomatic collapse but lack immediate breakthrough momentum."
+      "US blockade enforcement expands overland and toward the Caspian Sea basin",
+      "Hormuz commercial transit remains severely choked by asymmetric attacks",
+      "Indirect diplomatic tracks via Qatar persist without immediate breakthrough"
     ],
     note: "For monitoring only; not investment advice."
   },
+  situations: [
+    {
+      title: "Military Action",
+      icon: "Military",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "Change: US CENTCOM aircraft disabled commercial vessel M/V Huda in the Gulf of Oman.",
+        "Change: Task Force Iron Gate formed to intercept Iranian military and dual-use supply chains.",
+        "Continue: Houthi forces continue ballistic missile launches toward Saudi Arabian infrastructure."
+      ]
+    },
+    {
+      title: "Shipping / Hormuz",
+      icon: "Shipping",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "Change: UKMTO reported multiple tankers struck by projectiles and abandoned by crews near Musandam.",
+        "Continue: Commercial shipping traffic through the strait remains near complete halt.",
+        "Continue: Global container and tanker routes maintain Cape of Good Hope diversions."
+      ]
+    },
+    {
+      title: "Energy Market",
+      icon: "Energy",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "Continue: WTI and Brent consolidate in the $90–$98 corridor amid competing geopolitical pressures.",
+        "Change: Major commodity traders seek US Treasury licenses to re-flag sanctioned tankers.",
+        "Continue: Product crack spreads and freight rates remain at elevated multi-month premiums."
+      ]
+    },
+    {
+      title: "Leadership Signals",
+      icon: "Leadership",
+      tag: "",
+      tagColor: "orange",
+      points: [
+        "Continue: Washington and Tehran review Qatari proposals while maintaining coercive rhetoric.",
+        "Change: IRGC leadership announced the elimination of its missile range ceiling.",
+        "Continue: Regional Gulf mediators sustain shuttle diplomacy to broker a de-escalation framework."
+      ]
+    }
+  ],
   coreContradiction: {
     political: [
-      "US demands an end to maritime interdiction and nuclear weaponization, while Iran insists on full sanctions lifting."
+      "The US demands verifiable nuclear curtailment and maritime cessation, while Iran demands complete blockade removal and sanctions termination."
     ],
     military: [
-      "US layered choke-point interdiction confronts Iran's dispersed underground strike and mine-warfare capacity."
+      "US enforcement relies on naval blockade interdiction, while Iran responds with naval mining, drone strikes, and asymmetric chokepoint pressure."
     ]
   },
   scoreTrend: [
-    {
-      date: "11-03",
-      score: 80
-    },
     {
       date: "11-04",
       score: 80
@@ -436,45 +470,17 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "11-07",
+      score: 74
+    },
+    {
+      date: "11-08",
       score: 74,
       active: true
     }
   ],
-  events: [
-    {
-      id: "EVT-01",
-      title: "US Establishes Task Force Iron Gate to Choke Iranian Weapons Routes",
-      description: "US Central Command launched Task Force Iron Gate in Tampa to execute interagency disruption of Iranian weapons and dual-use supply chains across land borders and the Caspian Sea.",
-      verification: "confirmed",
-      timestamp: "2026-11-07 08:30 UTC",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-02",
-      title: "IRGC Relocates Missile and Drone Production Lines Underground",
-      description: "IRGC Aerospace Force announced that ballistic missile and UAV manufacturing facilities have been completely sheltered in deep underground bunkers to sustain wartime output.",
-      verification: "confirmed",
-      timestamp: "2026-11-07 05:15 UTC",
-      significance: ""
-    },
-    {
-      id: "EVT-03",
-      title: "Qatar Confirms US-Iran Backchannel Mediation Remains Intact",
-      description: "Qatari Foreign Ministry officials confirmed that indirect consultations regarding maritime de-escalation and inspection protocols remain ongoing, refuting rumors of talks collapsing.",
-      verification: "confirmed",
-      timestamp: "2026-11-07 03:40 UTC",
-      significance: ""
-    },
-    {
-      id: "EVT-04",
-      title: "Hormuz Tanker Shipments Subdued as Bypass Pipeline Usage Surges",
-      description: "Vessel tracking data indicates seaborne crude transiting Hormuz remains around a quarter of normal volume as Gulf exporters maximize Red Sea and Gulf of Oman overland pipelines.",
-      verification: "confirmed",
-      timestamp: "2026-11-06 22:00 UTC",
-      significance: ""
-    }
-  ],
+  keyChange: "US forces disabled a blockade runner in the Gulf of Oman and unveiled Task Force Iron Gate to target overland corridors, while tanker strikes in Hormuz persist, keeping geopolitical risk sticky.",
+  investmentSignal: "→ Maintain defensive allocations in energy and commodities while hedging geopolitical tail risks amid persistent maritime blockade disruptions.",
+  change: "none",
   prevRiskScore: 74,
   webSources: [],
   webSearchQueries: []
@@ -485,7 +491,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "11月7日节点",
+    node406: "11月8日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -519,16 +525,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.246 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.247 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 74（持平）：美军成立铁门特遣队封堵伊朗外部补给，多哈间接调解维持但双方战略要价仍存重大鸿沟。",
-    bannerWarning: "→ 维持能源与大宗商品防御性配置，对冲地缘僵局下航运保费与即期原油的波动风险。",
-    deescalationIntent: "美方要求全面中止航运威胁与核能力重建，伊朗要求解除全口径经济制裁及封锁管制。",
-    structuralRisk: "Seatrade Maritime与Geopolitical Futures监测确认海峡原油通行量维持在极低水准，商船普遍依靠管线分流与外海驳运。",
-    contradictionNote: "美方要求全面中止航运威胁与核能力重建，伊朗要求解除全口径经济制裁及封锁管制。；美军区域拒止封锁网络与伊朗深层地下军备补充能力之间的持久消耗对峙。",
+    bannerSignal: "综合评分 74（持平）：美军在阿曼湾精确瘫痪违规货船并成立铁门特遣队强化陆海立体封锁，霍尔木兹海峡连续发生油轮遭袭起火，地缘僵局维持高位黏滞。",
+    bannerWarning: "→ 维持能源与大宗商品的防御配置，警惕海峡封锁常态化下的运输溢价黏滞，适度对冲地缘尾部风险。",
+    deescalationIntent: "美方要求彻底消除伊朗核能力并终止区域袭船，伊朗坚持以全面解除封锁和制裁为前置条件。",
+    structuralRisk: "UKMTO 证实穆桑代姆半岛附近及海峡内多艘油轮遭打击起火，船员弃船，阿联酋海军参与救援，商业航运通航量维持接近停滞（来源：UKMTO, Reuters, Al Arabiya）。",
+    contradictionNote: "美方要求彻底消除伊朗核能力并终止区域袭船，伊朗坚持以全面解除封锁和制裁为前置条件。；美军依赖海军精准阻断与特遣队切断供应链，伊朗则依靠水雷、无人机及袭船战维持海峡实质封锁。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -536,7 +542,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第252天",
+    dayCount: "第253天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -544,7 +550,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Nov 7 Node",
+    node406: "Nov 8 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -578,16 +584,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.246 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.247 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 74 (Flat): US CENTCOM establishes Task Force Iron Gate targeting Iranian supply corridors, while Doha backchannel talks remain intact amid persistent …",
-    bannerWarning: "→ Maintain defensive allocations in energy and commodities to hedge against lingering shipping volatility and prompt cr…",
-    deescalationIntent: "US demands an end to maritime interdiction and nuclear weaponization, while Ira…",
-    structuralRisk: "Seatrade Maritime and Geopolitical Futures trackings show commercial tanker transits severely suppr…",
-    contradictionNote: "US demands an end to maritime interdiction and nuclear weaponization, while Iran insists on full sanctions lifting.; US layered choke-point interdiction confro…",
+    bannerSignal: "Composite 74 (Flat): US forces disabled a blockade runner in the Gulf of Oman and unveiled Task Force Iron Gate to target overland corridors, while tanker strik…",
+    bannerWarning: "→ Maintain defensive allocations in energy and commodities while hedging geopolitical tail risks amid persistent mariti…",
+    deescalationIntent: "The US demands verifiable nuclear curtailment and maritime cessation, while Ira…",
+    structuralRisk: "UKMTO recorded multiple tanker attacks resulting in fires and crew evacuations off Musandam, with c…",
+    contradictionNote: "The US demands verifiable nuclear curtailment and maritime cessation, while Iran demands complete blockade removal and sanctions termination.; US enforcement r…",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -595,7 +601,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 252",
+    dayCount: "Day 253",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
