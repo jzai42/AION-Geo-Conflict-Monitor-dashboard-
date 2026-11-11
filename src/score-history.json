@@ -1,11 +1,11 @@
 {
   "version": 2,
   "latest": {
-    "date": "2026-11-10",
-    "appVersion": "v2.249",
+    "date": "2026-11-11",
+    "appVersion": "v2.250",
     "riskScore": 68,
-    "prevRiskScore": 74,
-    "conflictDay": 255,
+    "prevRiskScore": 68,
+    "conflictDay": 256,
     "factorScores": [
       4,
       4,
@@ -14,30 +14,28 @@
       3.5
     ],
     "generationMode": "live",
-    "rawModelScore": 74,
+    "rawModelScore": 68,
     "rawModelFactors": [
       4,
-      5,
-      3,
+      4,
+      2.5,
       3,
       3.5
     ],
     "finalRiskScore": 68,
-    "adjustmentReason": "staleDays≥4 与 OpenAI 副审逐维均值",
+    "adjustmentReason": null,
     "oilQuality": {
       "publish": "live",
       "parseOk": true,
-      "combinedMid": 88.19500000000001,
-      "combinedHigh": 92.82,
+      "combinedMid": 90.18750000000001,
+      "combinedHigh": 94.73,
       "midBand": 3,
       "highBand": 3,
       "oilDirection": "mid",
       "narrativeConflict": false,
       "hasOilSourceUrl": true,
-      "markdownMismatch": true,
-      "reasons": [
-        "markdown-energy-score-mismatch: md=3 json=2.5"
-      ]
+      "markdownMismatch": false,
+      "reasons": []
     },
     "oilPrice": {
       "provider": "yahoo-chart",
@@ -46,15 +44,15 @@
       "stale": false,
       "fromPrior": false,
       "fetchFailed": false,
-      "asOf": "2026-11-10T17:31:24.629Z",
-      "wti": 86.32,
-      "brent": 91.79,
-      "wtiLow": 83.88,
-      "wtiHigh": 86.93,
-      "brentLow": 89.15,
-      "brentHigh": 92.82,
-      "keyStatValue": "WTI $83.88–$86.93 · Brent $89.15–$92.82",
-      "updatedAt": "2026-11-10T17:35:15.201Z"
+      "asOf": "2026-11-11T17:44:31.582Z",
+      "wti": 86.82,
+      "brent": 92.82,
+      "wtiLow": 85.81,
+      "wtiHigh": 88.73,
+      "brentLow": 91.48,
+      "brentHigh": 94.73,
+      "keyStatValue": "WTI $85.81–$88.73 · Brent $91.48–$94.73",
+      "updatedAt": "2026-11-11T17:48:31.704Z"
     }
   },
   "lockedDates": [
@@ -70,10 +68,6 @@
     "2026-05-23"
   ],
   "history": [
-    {
-      "date": "2026-07-12",
-      "score": 80
-    },
     {
       "date": "2026-07-13",
       "score": 84
@@ -548,6 +542,10 @@
     },
     {
       "date": "2026-11-10",
+      "score": 68
+    },
+    {
+      "date": "2026-11-11",
       "score": 68
     }
   ]
