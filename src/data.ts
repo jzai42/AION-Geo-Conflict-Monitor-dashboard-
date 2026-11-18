@@ -65,15 +65,12 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-11-17",
-  version: "v2.256",
-  riskScore: 70,
-  riskScoreChange: 0,
-  keyChange: "美军第三航母打击群完成中东集结，美伊在巴林基地与格什姆岛发生战术互攻，霍尔木兹海峡受限状态黏滞；综合风险分落盘 70（较昨日 持平（+0））",
+  date: "2026-11-18",
+  version: "v2.257",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D262",
+      value: "D263",
       unit: "2月28日起",
       color: "#ff851b"
     },
@@ -85,7 +82,7 @@ export const DATA_ZH: DashboardData = {
     },
     {
       label: "油价",
-      value: "WTI $84.68–$87.38 · Brent $91.25–$94.08",
+      value: "WTI $81.20–$84.77 · Brent $87.60–$90.75",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -103,7 +100,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "美军对格什姆岛实施精确空袭，伊朗无人机打击巴林美军雷达设施，双方保持直接交火状态。",
+      description: "",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -112,7 +109,7 @@ export const DATA_ZH: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "商业通航持续受限低于50%，水雷威胁与油轮被袭风险未除，护航行动仍未能消除商业航运避险溢价。",
+      description: "",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -121,41 +118,83 @@ export const DATA_ZH: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "油价整体处于85至94美元区间显著偏强运行，供需盈余预期与红海/海峡地缘运输摩擦形成多空拉锯。",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "unverified"
     },
     {
       name: "大国介入深度",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "美军完成三艘航母群实战部署，深度参与前沿巡航与联合拦截，但尚未启动大规模对伊本土纵深地面干预。",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "unverified"
     },
     {
       name: "降级/谈判前景",
       score: 3.5,
       prev: 3.5,
       weight: 0.2,
-      description: "多方间接接触保持渠道通畅，但停火先决条件差距过大，谈判面临较高停滞风险。",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "unverified"
     }
   ],
+  riskScore: 70,
   warPhase: {
-    level: "霍尔木兹危机",
-    targetLevel: "脆弱平衡",
+    level: "危机升级期",
+    targetLevel: "结构性紧张",
     title: "美伊地缘风险监测",
     subTitle: "基于公开报道综合研判",
     points: [
-      "美军三航母打击群压制海峡制空与制海权，伊朗依托无人机与潜艇袭扰进行反制",
-      "外围替代管线与中转港口遭遇非对称袭扰，区域能源供应链脆弱性维持高位",
-      "双方处于高威慑下的受控交火阶段，外交接触缺乏促成停火协议的实质抓手"
+      "详见下方事件卡片。"
     ],
     note: "监测用途，不构成投资建议。"
   },
+  events: [
+    {
+      id: "EVT-01",
+      title: "美伊在霍尔木兹海峡交火升级",
+      description: "美国空军打击伊朗Qeshm岛导弹基地，伊朗称击落美MQ‑9无人机。",
+      verification: "confirmed",
+      timestamp: "2026‑11‑18",
+      significance: "",
+      critical: true
+    },
+    {
+      id: "EVT-02",
+      title: "伊朗扩大海湾地区攻击目标",
+      description: "伊朗袭击科威特美军基地和巴林设施，冲突范围扩大。",
+      verification: "single",
+      timestamp: "2026‑11‑18",
+      significance: ""
+    },
+    {
+      id: "EVT-03",
+      title: "霍尔木兹海峡船员伤亡事件",
+      description: "霍尔木兹海峡一船只遭袭，1名船员失踪，11人受伤。",
+      verification: "single",
+      timestamp: "2026‑11‑18",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "美国反恐中心主任因战争政策辞职",
+      description: "前国家反恐中心主任Joe Kent辞职，称伊朗无迫在眉睫威胁，战争无益。",
+      verification: "single",
+      timestamp: "2026‑11‑18",
+      significance: ""
+    },
+    {
+      id: "EVT-05",
+      title: "美以军事协调加强",
+      description: "美国中央司令部司令访问以色列，与以军讨论美以在伊朗冲突中的合作。",
+      verification: "single",
+      timestamp: "2026‑11‑18",
+      significance: ""
+    }
+  ],
   situations: [
     {
       title: "军事行动",
@@ -163,8 +202,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美军罗斯福号航母打击群完成进入波斯湾责任区部署，三航母编队形成战略压制态势。",
-        "变化：美军空袭格什姆岛防空及雷达设施以报复伊朗日前对巴林美军外围设施的无人机偷袭。"
+        "变化：美伊在霍尔木兹海峡直接交火升级，冲突范围扩大至科威特与巴林。"
       ]
     },
     {
@@ -173,8 +211,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：霍尔木兹海峡通行量维持低于冲突前水平50%以上，主要集装箱与油轮班轮仍依赖海军编队伴随护航。",
-        "延续：海峡内零星水雷引爆警报频发，高额战险保费阻碍商业自由复航。"
+        "变化：霍尔木兹海峡船只遭袭，船员伤亡，航运风险上升。"
       ]
     },
     {
@@ -183,8 +220,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：胡塞武装无人机袭击沙特东西管线增压泵站，促使替代输油路径风险溢价回升。",
-        "延续：WTI与Brent主力合约在85至94美元带维持宽幅拉锯，IEA供应预测压制单边极端暴涨空间。"
+        "变化：油价回落，WTI/Brent 价格下降，库存上升缓解供应紧张。"
       ]
     },
     {
@@ -193,61 +229,19 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "延续：白宫公开重申拒绝卷入无止境的中东持久战，但强调保留精准打击一切反美设施的选项。",
-        "变化：德黑兰通过阿曼渠道向美方递交关于解除海上封锁的停火磋商草案，美方暂未正式回应。"
+        "变化：美方反恐中心主任辞职，反映内部政策分歧；美以协调加强。"
       ]
-    }
-  ],
-  events: [
-    {
-      id: "EVT-01",
-      title: "美军第三艘航母罗斯福号部署到位",
-      description: "美军中央司令部确认罗斯福号航母抵达中东战区，协同另外两艘航母编队巩固海上封锁与通道防御能力。",
-      verification: "confirmed",
-      timestamp: "2026-11-17T08:30:00Z",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-02",
-      title: "美伊在海湾发生多点战术交火互击",
-      description: "伊朗对巴林驻扎的美军雷达发射无人机，美军随即对伊朗格什姆岛关键军事目标实施外科手术式反击。",
-      verification: "confirmed",
-      timestamp: "2026-11-17T11:15:00Z",
-      significance: ""
-    },
-    {
-      id: "EVT-03",
-      title: "也门胡塞武装宣称袭击沙特东西管道泵站",
-      description: "胡塞武装使用无人机袭扰沙特东西输油干线第8与第9泵站，沙特防空部队实施有效拦截并未造成大规模火灾。",
-      verification: "confirmed",
-      timestamp: "2026-11-17T14:40:00Z",
-      significance: ""
-    },
-    {
-      id: "EVT-04",
-      title: "原油市场消化过剩报告与海峡摩擦溢价",
-      description: "国际能源署报告上调四季度全球供应过剩预期，布伦特原油在91至94美元区间宽幅企稳整理。",
-      verification: "confirmed",
-      timestamp: "2026-11-17T17:00:00Z",
-      significance: ""
     }
   ],
   coreContradiction: {
     political: [
-      "白宫面临中期选后国内反战民意与中东强硬派盟友要求根除威胁的战略拉扯",
-      "伊朗要求解除全面封锁与美方坚持将核设施销毁作为前置谈判条件的根本分歧"
+      "美国内部对战争政策出现分歧（反恐中心主任辞职）"
     ],
     military: [
-      "美军三航母战斗群常规火力优势与伊朗非对称无人机/水雷消耗战术的持久对抗",
-      "霍尔木兹关键航道护航安全需求与也门沙特陆地替代管道频繁受袭的安全脆弱性"
+      "军事行动升级与外交谈判前景改善信号相互矛盾"
     ]
   },
   scoreTrend: [
-    {
-      date: "11-13",
-      score: 68
-    },
     {
       date: "11-14",
       score: 68
@@ -262,26 +256,28 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "11-17",
+      score: 70
+    },
+    {
+      date: "11-18",
       score: 70,
       active: true
     }
   ],
-  investmentSignal: "→ 维持能源大宗防御性头寸并对冲全球风险资产的波动性回撤。",
+  keyChange: "军事与航运风险上升，能源冲击缓和，内部政策分歧显现；综合风险分落盘 70（较昨日 持平（+0））；调整前模型分 66（sourceVerification clamp）",
+  investmentSignal: "→ 防御方向：建议增持能源与大宗商品类资产以对冲地缘风险。",
   prevRiskScore: 70,
   webSources: [],
   webSearchQueries: []
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-11-17",
-  version: "v2.256",
-  riskScore: 70,
-  riskScoreChange: 0,
-  keyChange: "US Theodore Roosevelt Carrier Strike Group completed deployment in the Persian Gulf theater while US-Iran tactical strike exchanges occurred in Bahrain and Qeshm Island; Hormuz disruption remains entrenched.",
+  date: "2026-11-18",
+  version: "v2.257",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D262",
+      value: "D263",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
@@ -293,7 +289,7 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Oil",
-      value: "WTI $84.68–$87.38 · Brent $91.25–$94.08",
+      value: "WTI $81.20–$84.77 · Brent $87.60–$90.75",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -311,7 +307,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Direct tactical cross-strikes continue as US forces hit Iranian assets on Qeshm Island following Iranian drone attacks on radar stations in Bahrain.",
+      description: "",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -320,7 +316,7 @@ export const DATA_EN: DashboardData = {
       score: 4,
       prev: 4,
       weight: 0.2,
-      description: "Commercial vessel traffic remains suppressed over 50% under persistent mine and drone risks, keeping war-risk insurance premiums elevated.",
+      description: "",
       status: "FAST",
       sourceVerification: "confirmed"
     },
@@ -329,41 +325,83 @@ export const DATA_EN: DashboardData = {
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "Oil prices trade firmly in the $85–$94 corridor as market balances supply surplus projections against physical Gulf transport bottlenecks.",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "unverified"
     },
     {
       name: "Great Power Involvement",
       score: 3,
       prev: 3,
       weight: 0.2,
-      description: "US naval deterrence reaches a high plateau with three aircraft carriers active in the theater, though broader ground war actions remain ruled out.",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "unverified"
     },
     {
       name: "De-escalation Probability",
       score: 3.5,
       prev: 3.5,
       weight: 0.2,
-      description: "Backchannel diplomatic contacts mediated by Oman and Qatar persist, but incompatible bottom-line demands leave peace talks stalled.",
+      description: "",
       status: "FAST",
-      sourceVerification: "confirmed"
+      sourceVerification: "unverified"
     }
   ],
+  riskScore: 70,
   warPhase: {
-    level: "Chokepoint Crisis",
-    targetLevel: "Fragile Balance",
+    level: "Escalation Phase",
+    targetLevel: "Structural Tension",
     title: "US–Iran geo-risk snapshot",
     subTitle: "Synthesized from public sources",
     points: [
-      "US three-carrier posture enforces sea control while Iran counters through asymmetric standoff capabilities",
-      "Bypass export logistics face localized attacks, preserving systemic energy supply sensitivity",
-      "Both parties conduct calibrated mutual strikes under heavy deterrence without comprehensive off-ramp mechanisms"
+      "See event cards below."
     ],
     note: "For monitoring only; not investment advice."
   },
+  events: [
+    {
+      id: "EVT-01",
+      title: "US‑Iran Fire Exchange Escalates in Strait of Hormuz",
+      description: "US airstrike on Iran’s Qeshm missile base; Iran claims to have downed a US MQ‑9 drone.",
+      verification: "confirmed",
+      timestamp: "2026‑11‑18",
+      significance: "",
+      critical: true
+    },
+    {
+      id: "EVT-02",
+      title: "Iran Expands Attacks to Gulf Targets",
+      description: "Iran attacks US base in Kuwait and facilities in Bahrain, widening conflict scope.",
+      verification: "single",
+      timestamp: "2026‑11‑18",
+      significance: ""
+    },
+    {
+      id: "EVT-03",
+      title: "Crew Casualties in Strait of Hormuz Incident",
+      description: "Vessel in Strait of Hormuz attacked; one crew missing, 11 injured.",
+      verification: "single",
+      timestamp: "2026‑11‑18",
+      significance: ""
+    },
+    {
+      id: "EVT-04",
+      title: "US Counterterrorism Chief Resigns Over War Policy",
+      description: "Former NCTC director resigns, stating Iran poses no imminent threat and war is not beneficial.",
+      verification: "single",
+      timestamp: "2026‑11‑18",
+      significance: ""
+    },
+    {
+      id: "EVT-05",
+      title: "US‑Israel Military Coordination Intensifies",
+      description: "US CENTCOM commander visits Israel to discuss cooperation in Iran conflict.",
+      verification: "single",
+      timestamp: "2026‑11‑18",
+      significance: ""
+    }
+  ],
   situations: [
     {
       title: "Military Action",
@@ -371,8 +409,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: USS Theodore Roosevelt Carrier Strike Group officially entered the AOR, cementing a 3-carrier concentration.",
-        "Change: US military conducted retaliatory air precision strikes on Qeshm Island targets after Iranian drone attacks on Bahrain base."
+        "Change: US‑Iran direct fire escalates in Strait of Hormuz; conflict expands to Kuwait and Bahrain."
       ]
     },
     {
@@ -381,8 +418,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: Strait transit flow stays below 50% of peacetime baselines under strict convoy escorts.",
-        "Continue: Mine incidents and drone threats along international routes sustain prohibitive war-risk insurance premiums."
+        "Change: Vessel attacked in Strait of Hormuz; crew casualties; shipping risk elevated."
       ]
     },
     {
@@ -391,8 +427,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Houthi claims of drone strikes against Saudi East-West pipeline pump stations elevate alternative route risk premia.",
-        "Continue: WTI and Brent crude futures consolidate in the $85–$94 zone as IEA surplus projections check geopolitical upside."
+        "Change: Oil prices retreat; WTI/Brent decline; inventories rising ease supply tension."
       ]
     },
     {
@@ -401,61 +436,19 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Continue: White House leadership reiterates opposition to protracted engagements while retaining kinetic response options.",
-        "Change: Tehran transmitted an updated ceasefire roadmap through Omani channels, awaiting formal US review."
+        "Change: US counterterrorism chief resigns, indicating internal policy rift; US‑Israel coordination strengthens."
       ]
-    }
-  ],
-  events: [
-    {
-      id: "EVT-01",
-      title: "Third US Aircraft Carrier Arrives in Middle East",
-      description: "US Central Command confirms USS Theodore Roosevelt has joined the naval armada to bolster maritime blockade and defensive patrols.",
-      verification: "confirmed",
-      timestamp: "2026-11-17T08:30:00Z",
-      significance: "",
-      highlight: true
-    },
-    {
-      id: "EVT-02",
-      title: "US and Iran Exchange Targeted Tactical Strikes",
-      description: "Iranian drone strikes on a Bahrain radar installation were followed by US precision strikes against military sites on Qeshm Island.",
-      verification: "confirmed",
-      timestamp: "2026-11-17T11:15:00Z",
-      significance: ""
-    },
-    {
-      id: "EVT-03",
-      title: "Houthis Claim Drone Attacks on Saudi Pipeline",
-      description: "Yemeni Houthis targeted pumping stations 8 and 9 on the Saudi East-West pipeline; air defenses intercepted drones with minimal disruption.",
-      verification: "confirmed",
-      timestamp: "2026-11-17T14:40:00Z",
-      significance: ""
-    },
-    {
-      id: "EVT-04",
-      title: "Oil Benchmarks Steady Amid Conflicting Fundamentals",
-      description: "Crude benchmarks traded near $86 and $93 respectively as IEA expectations of a Q4 global surplus were balanced by regional supply hazards.",
-      verification: "confirmed",
-      timestamp: "2026-11-17T17:00:00Z",
-      significance: ""
     }
   ],
   coreContradiction: {
     political: [
-      "White House faces post-midterm anti-war sentiment balancing regional deterrence imperatives",
-      "Iran demands total blockade cessation while the US insists on upfront nuclear dismantling"
+      "Internal US policy divisions emerge (counterterrorism chief resignation)"
     ],
     military: [
-      "US carrier-based air power superiority versus Iranian asymmetric attrition tactics",
-      "Maritime transit protection needs versus vulnerabilities in overland bypass pipelines"
+      "Military escalation contrasts with any diplomatic de‑escalation signals"
     ]
   },
   scoreTrend: [
-    {
-      date: "11-13",
-      score: 68
-    },
     {
       date: "11-14",
       score: 68
@@ -470,11 +463,16 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "11-17",
+      score: 70
+    },
+    {
+      date: "11-18",
       score: 70,
       active: true
     }
   ],
-  investmentSignal: "→ Maintain defensive allocations in energy commodities and hedge broader cyclical risk asset volatility.",
+  keyChange: "Military and shipping risks rise, energy shock eases, internal policy divisions emerge; composite risk score prints at 70 (vs prior day flat (+0)); pre-adjustment model score 66 (sourceVerification clamp)",
+  investmentSignal: "→ Defensive stance: recommend increasing holdings in energy and commodities to hedge geopolitical risk.",
   prevRiskScore: 70,
   webSources: [],
   webSearchQueries: []
@@ -485,7 +483,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "11月17日节点",
+    node406: "11月18日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -519,16 +517,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.256 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.257 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 70（持平）：美军第三航母打击群完成中东集结，美伊在巴林基地与格什姆岛发生战术互攻，霍尔木兹海峡受限状态黏滞；综合风险分落盘 70（较昨日 持平（+0））",
-    bannerWarning: "→ 维持能源大宗防御性头寸并对冲全球风险资产的波动性回撤。",
-    deescalationIntent: "白宫面临中期选后国内反战民意与中东强硬派盟友要求根除威胁的战略拉扯",
-    structuralRisk: "商业通航持续受限低于50%，水雷威胁与油轮被袭风险未除，护航行动仍未能消除商业航运避险溢价。",
-    contradictionNote: "白宫面临中期选后国内反战民意与中东强硬派盟友要求根除威胁的战略拉扯；美军三航母战斗群常规火力优势与伊朗非对称无人机/水雷消耗战术的持久对抗",
+    bannerSignal: "综合评分 70（持平）：军事与航运风险上升，能源冲击缓和，内部政策分歧显现；综合风险分落盘 70（较昨日 持平（+0））；调整前模型分 66（sourceVerification clamp）",
+    bannerWarning: "→ 防御方向：建议增持能源与大宗商品类资产以对冲地缘风险。",
+    deescalationIntent: "美国内部对战争政策出现分歧（反恐中心主任辞职）",
+    structuralRisk: "咽喉与航运条件仍影响流量。",
+    contradictionNote: "美国内部对战争政策出现分歧（反恐中心主任辞职）；军事行动升级与外交谈判前景改善信号相互矛盾",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -536,7 +534,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第262天",
+    dayCount: "第263天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -544,7 +542,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Nov 17 Node",
+    node406: "Nov 18 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -578,16 +576,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.256 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.257 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 70 (Flat): US Theodore Roosevelt Carrier Strike Group completed deployment in the Persian Gulf theater while US-Iran tactical strike exchanges occurre…",
-    bannerWarning: "→ Maintain defensive allocations in energy commodities and hedge broader cyclical risk asset volatility.",
-    deescalationIntent: "White House faces post-midterm anti-war sentiment balancing regional deterrence…",
-    structuralRisk: "Commercial vessel traffic remains suppressed over 50% under persistent mine and drone risks, keepin…",
-    contradictionNote: "White House faces post-midterm anti-war sentiment balancing regional deterrence imperatives; US carrier-based air power superiority versus Iranian asymmetric a…",
+    bannerSignal: "Composite 70 (Flat): Military and shipping risks rise, energy shock eases, internal policy divisions emerge; composite risk score prints at 70 (vs prior day fla…",
+    bannerWarning: "→ Defensive stance: recommend increasing holdings in energy and commodities to hedge geopolitical risk.",
+    deescalationIntent: "Internal US policy divisions emerge (counterterrorism chief resignation)",
+    structuralRisk: "Chokepoint conditions still matter.",
+    contradictionNote: "Internal US policy divisions emerge (counterterrorism chief resignation); Military escalation contrasts with any diplomatic de‑escalation signals",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -595,7 +593,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 262",
+    dayCount: "Day 263",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
