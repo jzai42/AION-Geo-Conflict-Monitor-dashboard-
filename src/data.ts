@@ -65,12 +65,12 @@ export interface DashboardData {
 }
 
 export const DATA_ZH: DashboardData = {
-  date: "2026-11-18",
-  version: "v2.257",
+  date: "2026-11-19",
+  version: "v2.258",
   keyStats: [
     {
       label: "冲突天数",
-      value: "D263",
+      value: "D264",
       unit: "2月28日起",
       color: "#ff851b"
     },
@@ -82,7 +82,7 @@ export const DATA_ZH: DashboardData = {
     },
     {
       label: "油价",
-      value: "WTI $81.20–$84.77 · Brent $87.60–$90.75",
+      value: "WTI $81.66–$83.89 · Brent $88.51–$90.70",
       unit: "参考",
       color: "#ff4136",
       layout: "unitPrimary"
@@ -155,43 +155,43 @@ export const DATA_ZH: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "美伊在霍尔木兹海峡交火升级",
-      description: "美国空军打击伊朗Qeshm岛导弹基地，伊朗称击落美MQ‑9无人机。",
+      title: "特朗普考虑与以色列联合打击伊朗",
+      description: "公开报道显示，特朗普仍在考虑与以色列联合对伊朗发动新一轮打击，尽管此前称“极不可能”。",
       verification: "confirmed",
-      timestamp: "2026‑11‑18",
+      timestamp: "2026-11-19",
       significance: "",
       critical: true
     },
     {
       id: "EVT-02",
-      title: "伊朗扩大海湾地区攻击目标",
-      description: "伊朗袭击科威特美军基地和巴林设施，冲突范围扩大。",
+      title: "美英法德在IAEA会议上敦促伊朗恢复核设施检查",
+      description: "路透社报道，美国、英国、法国和德国在国际原子能机构会议上联合敦促伊朗允许检查人员重返其去年被轰炸的核设施。",
       verification: "single",
-      timestamp: "2026‑11‑18",
+      timestamp: "2026-11-19",
       significance: ""
     },
     {
       id: "EVT-03",
-      title: "霍尔木兹海峡船员伤亡事件",
-      description: "霍尔木兹海峡一船只遭袭，1名船员失踪，11人受伤。",
+      title: "美国前反恐中心主任因反战辞职",
+      description: "CFR报道，美国前国家反恐中心主任乔·肯特因认为伊朗不构成迫在眉睫威胁并反对战争而辞职。",
       verification: "single",
-      timestamp: "2026‑11‑18",
+      timestamp: "2026-11-19",
       significance: ""
     },
     {
       id: "EVT-04",
-      title: "美国反恐中心主任因战争政策辞职",
-      description: "前国家反恐中心主任Joe Kent辞职，称伊朗无迫在眉睫威胁，战争无益。",
+      title: "IEA称霍尔木兹海峡能源冲击将持续十年",
+      description: "美联社援引IEA观点称，伊朗战争切断霍尔木兹海峡后，能源冲击将持续十年及更久。",
       verification: "single",
-      timestamp: "2026‑11‑18",
+      timestamp: "2026-11-19",
       significance: ""
     },
     {
       id: "EVT-05",
-      title: "美以军事协调加强",
-      description: "美国中央司令部司令访问以色列，与以军讨论美以在伊朗冲突中的合作。",
-      verification: "single",
-      timestamp: "2026‑11‑18",
+      title: "油价因库存上升回落，但中东风险仍支撑价格",
+      description: "路透等报道指出，尽管美国原油库存增加压制油价，但霍尔木兹航运风险仍对油价形成支撑。",
+      verification: "confirmed",
+      timestamp: "2026-11-19",
       significance: ""
     }
   ],
@@ -202,7 +202,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美伊在霍尔木兹海峡直接交火升级，冲突范围扩大至科威特与巴林。"
+        "变化：特朗普考虑联合打击伊朗，军事升级风险上升。"
       ]
     },
     {
@@ -211,7 +211,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：霍尔木兹海峡船只遭袭，船员伤亡，航运风险上升。"
+        "延续：霍尔木兹航运风险持续存在，未见缓解。"
       ]
     },
     {
@@ -220,7 +220,7 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：油价回落，WTI/Brent 价格下降，库存上升缓解供应紧张。"
+        "变化：油价因库存上升略回落，但中东风险仍支撑价格。"
       ]
     },
     {
@@ -229,23 +229,19 @@ export const DATA_ZH: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "变化：美方反恐中心主任辞职，反映内部政策分歧；美以协调加强。"
+        "变化：美国前反恐中心主任辞职，反战声音显现。"
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "美国内部对战争政策出现分歧（反恐中心主任辞职）"
+      "美国政府内部对是否继续军事行动存在分歧。"
     ],
     military: [
-      "军事行动升级与外交谈判前景改善信号相互矛盾"
+      "军事威胁升级与能源市场回落形成矛盾信号。"
     ]
   },
   scoreTrend: [
-    {
-      date: "11-14",
-      score: 68
-    },
     {
       date: "11-15",
       score: 70
@@ -260,24 +256,28 @@ export const DATA_ZH: DashboardData = {
     },
     {
       date: "11-18",
+      score: 70
+    },
+    {
+      date: "11-19",
       score: 70,
       active: true
     }
   ],
-  keyChange: "军事与航运风险上升，能源冲击缓和，内部政策分歧显现；综合风险分落盘 70（较昨日 持平（+0））；调整前模型分 66（sourceVerification clamp）",
-  investmentSignal: "→ 防御方向：建议增持能源与大宗商品类资产以对冲地缘风险。",
+  keyChange: "特朗普考虑军事选项，能源市场虽回落但风险仍在。",
+  investmentSignal: "→ 防御方向：建议维持或增持能源与大宗商品类资产，防御中东风险冲击。",
   prevRiskScore: 70,
   webSources: [],
   webSearchQueries: []
 };
 
 export const DATA_EN: DashboardData = {
-  date: "2026-11-18",
-  version: "v2.257",
+  date: "2026-11-19",
+  version: "v2.258",
   keyStats: [
     {
       label: "Conflict Days",
-      value: "D263",
+      value: "D264",
       unit: "Since Feb 28",
       color: "#ff851b"
     },
@@ -289,15 +289,15 @@ export const DATA_EN: DashboardData = {
     },
     {
       label: "Oil",
-      value: "WTI $81.20–$84.77 · Brent $87.60–$90.75",
+      value: "WTI $81.66–$83.89 · Brent $88.51–$90.70",
       unit: "Ref.",
       color: "#ff4136",
       layout: "unitPrimary"
     },
     {
       label: "Hormuz",
-      value: "Severely Restricted",
-      unit: "Transit Status",
+      value: "Severely restricted",
+      unit: "Transit status",
       color: "#ffdc00"
     }
   ],
@@ -362,43 +362,43 @@ export const DATA_EN: DashboardData = {
   events: [
     {
       id: "EVT-01",
-      title: "US‑Iran Fire Exchange Escalates in Strait of Hormuz",
-      description: "US airstrike on Iran’s Qeshm missile base; Iran claims to have downed a US MQ‑9 drone.",
+      title: "Trump considering joint strike with Israel on Iran",
+      description: "Public reports show Trump is still considering a joint strike with Israel on Iran, despite earlier saying it was “quite unlikely.”",
       verification: "confirmed",
-      timestamp: "2026‑11‑18",
+      timestamp: "2026-11-19",
       significance: "",
       critical: true
     },
     {
       id: "EVT-02",
-      title: "Iran Expands Attacks to Gulf Targets",
-      description: "Iran attacks US base in Kuwait and facilities in Bahrain, widening conflict scope.",
+      title: "US, UK, France, Germany press Iran at IAEA to resume nuclear inspections",
+      description: "Reuters reports that the US, UK, France and Germany jointly urged Iran at the IAEA to allow inspectors back into its bombed nuclear sites.",
       verification: "single",
-      timestamp: "2026‑11‑18",
+      timestamp: "2026-11-19",
       significance: ""
     },
     {
       id: "EVT-03",
-      title: "Crew Casualties in Strait of Hormuz Incident",
-      description: "Vessel in Strait of Hormuz attacked; one crew missing, 11 injured.",
+      title: "Former NCTC director resigns over anti‑war stance",
+      description: "CFR reports that the former US National Counterterrorism Center director resigned, citing that Iran posed no imminent threat and opposing the war.",
       verification: "single",
-      timestamp: "2026‑11‑18",
+      timestamp: "2026-11-19",
       significance: ""
     },
     {
       id: "EVT-04",
-      title: "US Counterterrorism Chief Resigns Over War Policy",
-      description: "Former NCTC director resigns, stating Iran poses no imminent threat and war is not beneficial.",
+      title: "IEA says Hormuz energy shock will last a decade",
+      description: "AP cites IEA saying that energy shock from the Iran war cutting off the Strait of Hormuz will last for the next decade and beyond.",
       verification: "single",
-      timestamp: "2026‑11‑18",
+      timestamp: "2026-11-19",
       significance: ""
     },
     {
       id: "EVT-05",
-      title: "US‑Israel Military Coordination Intensifies",
-      description: "US CENTCOM commander visits Israel to discuss cooperation in Iran conflict.",
-      verification: "single",
-      timestamp: "2026‑11‑18",
+      title: "Oil prices fall on inventory rise but Middle East risks support",
+      description: "Reports from Reuters and EnergyNow indicate that although US crude inventories rose, weighing on oil prices, Middle East shipping risks continue to support them.",
+      verification: "confirmed",
+      timestamp: "2026-11-19",
       significance: ""
     }
   ],
@@ -409,7 +409,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: US‑Iran direct fire escalates in Strait of Hormuz; conflict expands to Kuwait and Bahrain."
+        "Change: Trump considering joint strike on Iran, raising escalation risk."
       ]
     },
     {
@@ -418,7 +418,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Vessel attacked in Strait of Hormuz; crew casualties; shipping risk elevated."
+        "Continue: Hormuz shipping risks persist, no relief."
       ]
     },
     {
@@ -427,7 +427,7 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: Oil prices retreat; WTI/Brent decline; inventories rising ease supply tension."
+        "Change: Oil prices slightly retreat on inventory rise, but Middle East risks still support."
       ]
     },
     {
@@ -436,23 +436,19 @@ export const DATA_EN: DashboardData = {
       tag: "",
       tagColor: "orange",
       points: [
-        "Change: US counterterrorism chief resigns, indicating internal policy rift; US‑Israel coordination strengthens."
+        "Change: Former NCTC director resigns, anti‑war sentiment emerges."
       ]
     }
   ],
   coreContradiction: {
     political: [
-      "Internal US policy divisions emerge (counterterrorism chief resignation)"
+      "US administration divided on whether to continue military action."
     ],
     military: [
-      "Military escalation contrasts with any diplomatic de‑escalation signals"
+      "Escalating military threat contrasts with retreating energy prices."
     ]
   },
   scoreTrend: [
-    {
-      date: "11-14",
-      score: 68
-    },
     {
       date: "11-15",
       score: 70
@@ -467,12 +463,16 @@ export const DATA_EN: DashboardData = {
     },
     {
       date: "11-18",
+      score: 70
+    },
+    {
+      date: "11-19",
       score: 70,
       active: true
     }
   ],
-  keyChange: "Military and shipping risks rise, energy shock eases, internal policy divisions emerge; composite risk score prints at 70 (vs prior day flat (+0)); pre-adjustment model score 66 (sourceVerification clamp)",
-  investmentSignal: "→ Defensive stance: recommend increasing holdings in energy and commodities to hedge geopolitical risk.",
+  keyChange: "Trump considering military option; energy market retreats but risks remain.",
+  investmentSignal: "→ Defensive stance: maintain or increase exposure to energy and commodities to hedge Middle East risk.",
   prevRiskScore: 70,
   webSources: [],
   webSearchQueries: []
@@ -483,7 +483,7 @@ export const TRANSLATIONS = {
     title: "AION 地缘冲突监测系统",
     realtime: "实时",
     phaseTransition: "阶段过渡",
-    node406: "11月18日节点",
+    node406: "11月19日节点",
     riskScoreTitle: "地 缘 冲 突\n风 险 评 分",
     weightedScore: "加 权 评 分",
     vsPrev: "较上期",
@@ -517,16 +517,16 @@ export const TRANSLATIONS = {
     keyEvents: "关键事件",
     riskFactors: "风险因子",
     situationAnalysis: "态势分析",
-    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.257 · Daily",
+    systemInfo: "AION 智能分析系统 · 地缘冲突模块 v2.258 · Daily",
     sources: "来源",
     searchCitations: "当日搜索引用（Google 接地）",
     searchQueriesUsed: "检索词",
     vs: "较",
-    bannerSignal: "综合评分 70（持平）：军事与航运风险上升，能源冲击缓和，内部政策分歧显现；综合风险分落盘 70（较昨日 持平（+0））；调整前模型分 66（sourceVerification clamp）",
-    bannerWarning: "→ 防御方向：建议增持能源与大宗商品类资产以对冲地缘风险。",
-    deescalationIntent: "美国内部对战争政策出现分歧（反恐中心主任辞职）",
+    bannerSignal: "综合评分 70（持平）：特朗普考虑军事选项，能源市场虽回落但风险仍在。",
+    bannerWarning: "→ 防御方向：建议维持或增持能源与大宗商品类资产，防御中东风险冲击。",
+    deescalationIntent: "美国政府内部对是否继续军事行动存在分歧。",
     structuralRisk: "咽喉与航运条件仍影响流量。",
-    contradictionNote: "美国内部对战争政策出现分歧（反恐中心主任辞职）；军事行动升级与外交谈判前景改善信号相互矛盾",
+    contradictionNote: "美国政府内部对是否继续军事行动存在分歧。；军事威胁升级与能源市场回落形成矛盾信号。",
     energyDeadline: "能源基础设施打击截止日",
     negotiationValidity: "谈判框架有效期",
     signalConfirmation: "此后信号方向才能确认",
@@ -534,7 +534,7 @@ export const TRANSLATIONS = {
     eventDetails: "详情",
     noEventDescription: "暂无详细说明。",
     conflictName: "美伊冲突",
-    dayCount: "第263天",
+    dayCount: "第264天",
     weightedFormula: "Σ (评分 × 权重)",
     compositeScore: "加 权 综 合 评 分"
   },
@@ -542,7 +542,7 @@ export const TRANSLATIONS = {
     title: "AION Geo-Conflict Monitor",
     realtime: "LIVE",
     phaseTransition: "Phase Transition",
-    node406: "Nov 18 Node",
+    node406: "Nov 19 Node",
     riskScoreTitle: "GEO-CONFLICT\nRISK SCORE",
     weightedScore: "WEIGHTED SCORE",
     vsPrev: "vs Prev",
@@ -576,16 +576,16 @@ export const TRANSLATIONS = {
     keyEvents: "Key Events",
     riskFactors: "Risk Factors",
     situationAnalysis: "Situation Analysis",
-    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.257 · Daily",
+    systemInfo: "AION Intelligence System · Geo-Conflict Module v2.258 · Daily",
     sources: "Sources",
     searchCitations: "Grounding sources (Google Search)",
     searchQueriesUsed: "Queries used",
     vs: "vs",
-    bannerSignal: "Composite 70 (Flat): Military and shipping risks rise, energy shock eases, internal policy divisions emerge; composite risk score prints at 70 (vs prior day fla…",
-    bannerWarning: "→ Defensive stance: recommend increasing holdings in energy and commodities to hedge geopolitical risk.",
-    deescalationIntent: "Internal US policy divisions emerge (counterterrorism chief resignation)",
+    bannerSignal: "Composite 70 (Flat): Trump considering military option; energy market retreats but risks remain.",
+    bannerWarning: "→ Defensive stance: maintain or increase exposure to energy and commodities to hedge Middle East risk.",
+    deescalationIntent: "US administration divided on whether to continue military action.",
     structuralRisk: "Chokepoint conditions still matter.",
-    contradictionNote: "Internal US policy divisions emerge (counterterrorism chief resignation); Military escalation contrasts with any diplomatic de‑escalation signals",
+    contradictionNote: "US administration divided on whether to continue military action.; Escalating military threat contrasts with retreating energy prices.",
     energyDeadline: "Energy infrastructure strike deadline",
     negotiationValidity: "Negotiation framework validity",
     signalConfirmation: "Signal direction confirmed thereafter",
@@ -593,7 +593,7 @@ export const TRANSLATIONS = {
     eventDetails: "Details",
     noEventDescription: "No detailed description available.",
     conflictName: "US-Iran Conflict",
-    dayCount: "Day 263",
+    dayCount: "Day 264",
     weightedFormula: "Σ (Score × Weight)",
     compositeScore: "WEIGHTED COMPOSITE SCORE"
   }
