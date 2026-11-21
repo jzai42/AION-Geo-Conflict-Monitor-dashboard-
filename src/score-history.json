@@ -1,11 +1,11 @@
 {
   "version": 2,
   "latest": {
-    "date": "2026-11-20",
-    "appVersion": "v2.259",
+    "date": "2026-11-21",
+    "appVersion": "v2.260",
     "riskScore": 70,
     "prevRiskScore": 70,
-    "conflictDay": 265,
+    "conflictDay": 266,
     "factorScores": [
       4,
       4,
@@ -27,8 +27,8 @@
     "oilQuality": {
       "publish": "live",
       "parseOk": true,
-      "combinedMid": 85.495,
-      "combinedHigh": 90.25,
+      "combinedMid": 85.7325,
+      "combinedHigh": 90.38,
       "midBand": 3,
       "highBand": 3,
       "oilDirection": "mid",
@@ -44,15 +44,15 @@
       "stale": false,
       "fromPrior": false,
       "fetchFailed": false,
-      "asOf": "2026-11-20T18:23:14.386Z",
-      "wti": 82.7,
-      "brent": 89.1,
+      "asOf": "2026-11-21T17:09:18.220Z",
+      "wti": 83.41,
+      "brent": 89.95,
       "wtiLow": 80.78,
-      "wtiHigh": 83.25,
+      "wtiHigh": 84.07,
       "brentLow": 87.7,
-      "brentHigh": 90.25,
-      "keyStatValue": "WTI $80.78–$83.25 · Brent $87.70–$90.25",
-      "updatedAt": "2026-11-20T18:27:34.018Z"
+      "brentHigh": 90.38,
+      "keyStatValue": "WTI $80.78–$84.07 · Brent $87.70–$90.38",
+      "updatedAt": "2026-11-21T17:14:14.752Z"
     }
   },
   "lockedDates": [
@@ -68,10 +68,6 @@
     "2026-05-23"
   ],
   "history": [
-    {
-      "date": "2026-07-22",
-      "score": 98
-    },
     {
       "date": "2026-07-23",
       "score": 94
@@ -546,6 +542,10 @@
     },
     {
       "date": "2026-11-20",
+      "score": 70
+    },
+    {
+      "date": "2026-11-21",
       "score": 70
     }
   ]
