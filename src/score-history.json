@@ -1,17 +1,17 @@
 {
   "version": 2,
   "latest": {
-    "date": "2026-11-22",
-    "appVersion": "v2.261",
-    "riskScore": 70,
+    "date": "2026-11-23",
+    "appVersion": "v2.262",
+    "riskScore": 72,
     "prevRiskScore": 70,
-    "conflictDay": 267,
+    "conflictDay": 268,
     "factorScores": [
       4,
       4,
       3,
       3,
-      3.5
+      4
     ],
     "generationMode": "live",
     "rawModelScore": 70,
@@ -22,13 +22,13 @@
       3,
       3.5
     ],
-    "finalRiskScore": 70,
-    "adjustmentReason": null,
+    "finalRiskScore": 72,
+    "adjustmentReason": "staleDays≥4 与 OpenAI 副审逐维均值",
     "oilQuality": {
       "publish": "live",
       "parseOk": true,
-      "combinedMid": 85.7325,
-      "combinedHigh": 90.38,
+      "combinedMid": 85.1275,
+      "combinedHigh": 90.5,
       "midBand": 3,
       "highBand": 3,
       "oilDirection": "mid",
@@ -44,15 +44,15 @@
       "stale": false,
       "fromPrior": false,
       "fetchFailed": false,
-      "asOf": "2026-11-22T17:39:23.255Z",
-      "wti": 83.41,
-      "brent": 89.95,
-      "wtiLow": 80.78,
-      "wtiHigh": 84.07,
-      "brentLow": 87.7,
-      "brentHigh": 90.38,
-      "keyStatValue": "WTI $80.78–$84.07 · Brent $87.70–$90.38",
-      "updatedAt": "2026-11-22T17:42:57.648Z"
+      "asOf": "2026-11-23T21:55:19.813Z",
+      "wti": 80.34,
+      "brent": 86.77,
+      "wtiLow": 79.87,
+      "wtiHigh": 83.95,
+      "brentLow": 86.19,
+      "brentHigh": 90.5,
+      "keyStatValue": "WTI $79.87–$83.95 · Brent $86.19–$90.50",
+      "updatedAt": "2026-11-23T21:59:12.742Z"
     }
   },
   "lockedDates": [
@@ -68,10 +68,6 @@
     "2026-05-23"
   ],
   "history": [
-    {
-      "date": "2026-07-24",
-      "score": 94
-    },
     {
       "date": "2026-07-25",
       "score": 94
@@ -547,6 +543,10 @@
     {
       "date": "2026-11-22",
       "score": 70
+    },
+    {
+      "date": "2026-11-23",
+      "score": 72
     }
   ]
 }
