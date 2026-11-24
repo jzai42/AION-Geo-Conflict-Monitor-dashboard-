@@ -1,11 +1,11 @@
 {
   "version": 2,
   "latest": {
-    "date": "2026-11-23",
-    "appVersion": "v2.262",
+    "date": "2026-11-24",
+    "appVersion": "v2.263",
     "riskScore": 72,
-    "prevRiskScore": 70,
-    "conflictDay": 268,
+    "prevRiskScore": 72,
+    "conflictDay": 269,
     "factorScores": [
       4,
       4,
@@ -14,22 +14,22 @@
       4
     ],
     "generationMode": "live",
-    "rawModelScore": 70,
+    "rawModelScore": 72,
     "rawModelFactors": [
       4,
       4,
       3,
       3,
-      3.5
+      4
     ],
     "finalRiskScore": 72,
-    "adjustmentReason": "staleDays≥4 与 OpenAI 副审逐维均值",
+    "adjustmentReason": null,
     "oilQuality": {
       "publish": "live",
       "parseOk": true,
-      "combinedMid": 85.1275,
-      "combinedHigh": 90.5,
-      "midBand": 3,
+      "combinedMid": 83.9275,
+      "combinedHigh": 88.86,
+      "midBand": 2,
       "highBand": 3,
       "oilDirection": "mid",
       "narrativeConflict": false,
@@ -44,15 +44,15 @@
       "stale": false,
       "fromPrior": false,
       "fetchFailed": false,
-      "asOf": "2026-11-23T21:55:19.813Z",
-      "wti": 80.34,
-      "brent": 86.77,
-      "wtiLow": 79.87,
-      "wtiHigh": 83.95,
-      "brentLow": 86.19,
-      "brentHigh": 90.5,
-      "keyStatValue": "WTI $79.87–$83.95 · Brent $86.19–$90.50",
-      "updatedAt": "2026-11-23T21:59:12.742Z"
+      "asOf": "2026-11-24T20:30:52.474Z",
+      "wti": 81.59,
+      "brent": 88.33,
+      "wtiLow": 79.07,
+      "wtiHigh": 82.13,
+      "brentLow": 85.65,
+      "brentHigh": 88.86,
+      "keyStatValue": "WTI $79.07–$82.13 · Brent $85.65–$88.86",
+      "updatedAt": "2026-11-24T20:34:30.382Z"
     }
   },
   "lockedDates": [
@@ -68,10 +68,6 @@
     "2026-05-23"
   ],
   "history": [
-    {
-      "date": "2026-07-25",
-      "score": 94
-    },
     {
       "date": "2026-07-26",
       "score": 94
@@ -546,6 +542,10 @@
     },
     {
       "date": "2026-11-23",
+      "score": 72
+    },
+    {
+      "date": "2026-11-24",
       "score": 72
     }
   ]
